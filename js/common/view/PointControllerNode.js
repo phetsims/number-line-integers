@@ -17,14 +17,14 @@ define( require => {
   const ShadedSphereNode = require( 'SCENERY_PHET/ShadedSphereNode' );
 
   // constants
-  const DEFAULT_SPHERE_RADIUS = 7.5; // in screen coords, radius of sphere that is used if no controller node is provided
+  const DEFAULT_SPHERE_RADIUS = 10; // in screen coords, radius of sphere that is used if no controller node is provided
 
   class PointControllerNode extends Node {
 
     /**
      * TODO: document when finalized
      */
-    constructor( options ) {
+    constructor( pointController, options ) {
 
       options = _.extend( {
 
@@ -44,10 +44,24 @@ define( require => {
         mainColor: options.baseColor
       } ) );
 
-      // allow dragging of the points
+      // monitor the point controller and adjust position to match
+      pointController.positionProperty.link( position => {
+        this.center = position;
+      } );
+
+      // drag handler
       this.addInputListener( new DragListener( {
-        translateNode: true,
-        dragBoundsProperty: new Property( this.layoutBounds )
+        dragBoundsProperty: new Property( this.layoutBounds ),
+        start: event => {
+          pointController.draggingProperty.set( true );
+          pointController.positionProperty.set( this.globalToParentPoint( event.pointer.point ) );
+        },
+        drag: event => {
+          pointController.positionProperty.set( this.globalToParentPoint( event.pointer.point ) );
+        },
+        end: () => {
+          pointController.draggingProperty.set( false );
+        }
       } ) );
     }
   }

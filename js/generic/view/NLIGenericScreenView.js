@@ -16,6 +16,9 @@ define( function( require ) {
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   const ScreenView = require( 'JOIST/ScreenView' );
 
+  // constants
+  const POINT_CONTROLLER_COLOR_LIST = [ new Color( 'blue' ), new Color( 'magenta' ), new Color( 'orange' ) ];
+
   class NLIGenericScreenView extends ScreenView {
 
     /**
@@ -24,13 +27,6 @@ define( function( require ) {
     constructor( model ) {
 
       super( { layoutBounds: NLIConstants.NLI_BOUNDS } );
-
-      const pointControllerBoxNode = new Rectangle( model.pointControllerBox, {
-        fill: 'white',
-        stroke: 'black',
-        cornerRadius: 6
-      } );
-      this.addChild( pointControllerBoxNode );
 
       // TODO: temporary faked out number line representation
       const numberLineNode = new ArrowNode( -350, 0, 350, 0, {
@@ -44,20 +40,21 @@ define( function( require ) {
       numberLineNode.center = this.layoutBounds.center;
       this.addChild( numberLineNode );
 
+      // add the box where the point controllers hang out when not in use
+      const pointControllerBoxNode = new Rectangle( model.pointControllerBox, {
+        fill: 'white',
+        stroke: 'black',
+        cornerRadius: 6
+      } );
+      this.addChild( pointControllerBoxNode );
 
-      // points
-      const pointControllerNode1 = new PointControllerNode( { baseColor: new Color( 'orange' ) } );
-      pointControllerNode1.center = numberLineNode.center;
-      this.addChild( pointControllerNode1 );
-      const pointControllerNode2 = new PointControllerNode( { baseColor: new Color( 'blue' ) } );
-      pointControllerNode2.centerX = numberLineNode.left + 50;
-      pointControllerNode2.centerY = numberLineNode.centerY;
-      this.addChild( pointControllerNode2 );
-      const pointControllerNode3 = new PointControllerNode( { baseColor: new Color( 'magenta' ) } );
-      pointControllerNode3.centerX = numberLineNode.right - 50;
-      pointControllerNode3.centerY = numberLineNode.centerY;
-      this.addChild( pointControllerNode3 );
+      // add the point controller nodes
+      assert && assert( model.pointControllers.length === POINT_CONTROLLER_COLOR_LIST.length );
+      model.pointControllers.forEach( ( pointController, index ) => {
+        this.addChild( new PointControllerNode( pointController, { baseColor: POINT_CONTROLLER_COLOR_LIST[ index ] } ) );
+      } );
 
+      // reset all button
       const resetAllButton = new ResetAllButton( {
         listener: () => {
           model.reset();
