@@ -11,6 +11,8 @@ define( function( require ) {
   const Color = require( 'SCENERY/util/Color' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
+  const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   const ScreenView = require( 'JOIST/ScreenView' );
 
@@ -21,7 +23,14 @@ define( function( require ) {
      */
     constructor( model ) {
 
-      super();
+      super( { layoutBounds: NLIConstants.NLI_BOUNDS } );
+
+      const pointControllerBoxNode = new Rectangle( model.pointControllerBox, {
+        fill: 'white',
+        stroke: 'black',
+        cornerRadius: 6
+      } );
+      this.addChild( pointControllerBoxNode );
 
       // TODO: temporary faked out number line representation
       const numberLineNode = new ArrowNode( -350, 0, 350, 0, {
