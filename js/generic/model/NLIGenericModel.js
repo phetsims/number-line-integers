@@ -48,6 +48,15 @@ define( require => {
           this.pointControllerBox.centerY
         ) )
       ];
+
+      // for each point controller, watch for it to be released over the point controller box and return to origin
+      this.pointControllers.forEach( pointController => {
+        pointController.draggingProperty.lazyLink( dragging => {
+          if ( !dragging && this.pointControllerBox.containsPoint( pointController.positionProperty.value ) ) {
+            pointController.positionProperty.reset();
+          }
+        } );
+      } );
     }
 
     // @public resets the model
