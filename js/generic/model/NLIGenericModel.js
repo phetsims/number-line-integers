@@ -9,6 +9,7 @@ define( require => {
   // modules
   const Bounds2 = require( 'DOT/Bounds2' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
+  const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
   const Vector2 = require( 'DOT/Vector2' );
@@ -24,6 +25,10 @@ define( require => {
   class NLIGenericModel {
 
     constructor() {
+
+      // TODO: The model itself shouldn't be changed, but it has a lot of settable properties.  Is (read-only) correct?  Or what?
+      // @public {NumberLine} - the number line with which the user will interact
+      this.numberLine = new NumberLine( NLIConstants.NLI_BOUNDS.center );
 
       // @public (read-only) {Bounds2} - the bounds of the box where the point controllers reside when not being used
       this.pointControllerBox = new Bounds2(

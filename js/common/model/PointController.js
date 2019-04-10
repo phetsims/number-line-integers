@@ -15,7 +15,6 @@ define( require => {
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Vector2Property = require( 'DOT/Vector2Property' );
 
-  // constants
   class PointController {
 
     /**

@@ -1,17 +1,19 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
+ * view of the "Generic" screen for the Number Line Integers simulation
+ *
  * @author John Blanco (PhET Interactive Simulations)
  */
 define( function( require ) {
   'use strict';
 
   // modules
-  const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   const Color = require( 'SCENERY/util/Color' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
+  const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   const ScreenView = require( 'JOIST/ScreenView' );
@@ -28,17 +30,10 @@ define( function( require ) {
 
       super( { layoutBounds: NLIConstants.NLI_BOUNDS } );
 
-      // TODO: temporary faked out number line representation
-      const numberLineNode = new ArrowNode( -350, 0, 350, 0, {
-        doubleHead: true,
-        tailWidth: 0.5,
-        headHeight: 6,
-        headWidth: 6,
-        stroke: 'black',
-        fill: 'black'
-      } );
-      numberLineNode.center = this.layoutBounds.center;
-      this.addChild( numberLineNode );
+      // NOTE: There is no model-view transform for this sim.  Model and view space use the same coordinate system.
+
+      // add the number line node
+      this.addChild( new NumberLineNode( model.numberLine, this.layoutBounds.dilated( -70 ) ) );
 
       // add the box where the point controllers hang out when not in use
       const pointControllerBoxNode = new Rectangle( model.pointControllerBox, {
