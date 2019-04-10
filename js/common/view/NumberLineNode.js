@@ -11,7 +11,13 @@ define( require => {
   // modules
   const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+  const Line = require( 'SCENERY/nodes/Line' );
   const Node = require( 'SCENERY/nodes/Node' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Text = require( 'SCENERY/nodes/Text' );
+
+  // constants
+  const TICK_MARK_LABEL_DISTANCE = 5;
 
   class NumberLineNode extends Node {
 
@@ -27,13 +33,16 @@ define( require => {
         // TODO: organize and document when finalized (or close)
         numberLineWidth: 1,
         tickMarkWidth: 1,
+        zeroTickMarkWidth: 2,
+        zeroTickMarkLength: 16,
+        tickMarkLabelFont: new PhetFont( 20 ),
         color: 'black'
       }, options );
 
       // since the position is set based on the model, don't pass options through to parent class
       super();
 
-      // add the number line itself
+      // assemble the options that control the appearance of the main number into one place
       const numberLineOptions = {
         doubleHead: true,
         lineWidth: options.numberLineWidth,
@@ -44,27 +53,55 @@ define( require => {
         fill: options.color
       };
 
-      let numberLineNode = null;
+      // add the number line, and update it if the orientation changes
+      const numberLineNode = new Node();
+      this.addChild( numberLineNode );
       numberLine.orientationProperty.link( orientation => {
 
-        // remove the previous representation if present
-        if ( numberLineNode ) {
-          this.removeChild( numberLineNode );
-        }
+        // remove the previous representation
+        numberLineNode.removeAllChildren();
 
-        // add the arrow node that represents the number line
         if ( orientation === 'horizontal' ) {
-          numberLineNode = new ArrowNode(
+
+          // add the arrow node that represents the number line
+          numberLineNode.addChild( new ArrowNode(
             displayBounds.minX,
             displayBounds.centerY,
             displayBounds.maxX,
             displayBounds.centerY,
             numberLineOptions
+          ) );
+
+          // add the tick mark for the 0 position, which is always visible
+          const zeroTickMark = new Line(
+            numberLineNode.centerX,
+            numberLineNode.centerY - options.zeroTickMarkLength,
+            numberLineNode.centerX,
+            numberLineNode.centerY + options.zeroTickMarkLength,
+            {
+              stroke: options.color,
+              lineWidth: options.zeroTickMarkWidth
+            }
           );
-          numberLineNode.center = displayBounds.center;
-          this.addChild( numberLineNode );
+          numberLineNode.addChild( zeroTickMark );
+          numberLineNode.addChild( new Text( '0', {
+            font: options.tickMarkLabelFont,
+            centerX: zeroTickMark.centerX,
+            top: zeroTickMark.bottom + TICK_MARK_LABEL_DISTANCE
+          } ) );
         }
+        numberLineNode.center = displayBounds.center;
       } );
+
+      // add the tick marks at zero and the ends, which are always visible, and update
+
+      // add the root node for the tick marks
+      const tickMarksNode = new Node();
+      this.addChild( tickMarksNode );
+
+      // only show the
+
+      // the following function closure will update the tick marks when
 
     }
   }
