@@ -37,7 +37,7 @@ define( require => {
         tickMarkLength: 10,
         zeroTickMarkLineWidth: 2,
         zeroTickMarkLength: 16,
-        tickMarkLabelFont: new PhetFont( 20 ),
+        tickMarkLabelFont: new PhetFont( 16 ),
         color: 'black'
       }, options );
 
