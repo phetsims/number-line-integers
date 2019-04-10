@@ -14,6 +14,7 @@ define( require => {
   const Line = require( 'SCENERY/nodes/Line' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Property = require( 'AXON/Property' );
   const Text = require( 'SCENERY/nodes/Text' );
 
   // constants
@@ -32,8 +33,9 @@ define( require => {
 
         // TODO: organize and document when finalized (or close)
         numberLineWidth: 1,
-        tickMarkWidth: 1,
-        zeroTickMarkWidth: 2,
+        tickMarkLineWidth: 1,
+        tickMarkLength: 10,
+        zeroTickMarkLineWidth: 2,
         zeroTickMarkLength: 16,
         tickMarkLabelFont: new PhetFont( 20 ),
         color: 'black'
@@ -66,34 +68,67 @@ define( require => {
           // add the arrow node that represents the number line
           numberLineNode.addChild( new ArrowNode(
             displayBounds.minX,
-            displayBounds.centerY,
+            numberLine.centerPosition.y,
             displayBounds.maxX,
-            displayBounds.centerY,
+            numberLine.centerPosition.y,
             numberLineOptions
           ) );
 
           // add the tick mark for the 0 position, which is always visible
-          const zeroTickMark = new Line(
+          addVerticalTickMark(
+            numberLineNode,
             numberLineNode.centerX,
-            numberLineNode.centerY - options.zeroTickMarkLength,
-            numberLineNode.centerX,
-            numberLineNode.centerY + options.zeroTickMarkLength,
-            {
-              stroke: options.color,
-              lineWidth: options.zeroTickMarkWidth
-            }
+            numberLineNode.centerY,
+            options.zeroTickMarkLength,
+            options.zeroTickMarkLineWidth,
+            options.color,
+            '0',
+            options.tickMarkLabelFont
           );
-          numberLineNode.addChild( zeroTickMark );
-          numberLineNode.addChild( new Text( '0', {
-            font: options.tickMarkLabelFont,
-            centerX: zeroTickMark.centerX,
-            top: zeroTickMark.bottom + TICK_MARK_LABEL_DISTANCE
-          } ) );
         }
-        numberLineNode.center = displayBounds.center;
+        else {
+          assert && assert( false, 'vertical orientation not handled yet (please add it!)' );
+        }
       } );
 
-      // add the tick marks at zero and the ends, which are always visible, and update
+      // handle the tick marks at the ends of the display range
+      const endTickMarksRootNode = new Node();
+      this.addChild( endTickMarksRootNode );
+      Property.multilink(
+        [ numberLine.displayedRangeProperty, numberLine.orientationProperty, numberLine.scaleProperty ],
+        ( displayedRange, orientation, scale ) => {
+          endTickMarksRootNode.removeAllChildren();
+          if ( orientation === 'horizontal' ) {
+            const leftValue = displayedRange.min;
+            const leftXPosition = numberLine.centerPosition.x + scale * leftValue;
+            addVerticalTickMark(
+              endTickMarksRootNode,
+              leftXPosition,
+              numberLine.centerPosition.y,
+              options.tickMarkLength,
+              options.tickMarkLineWidth,
+              options.color,
+              leftValue,
+              options.tickMarkLabelFont
+            );
+            const rightValue = displayedRange.max;
+            const rightXPosition = numberLine.centerPosition.x + scale * rightValue;
+            addVerticalTickMark(
+              endTickMarksRootNode,
+              rightXPosition,
+              numberLine.centerPosition.y,
+              options.tickMarkLength,
+              options.tickMarkLineWidth,
+              options.color,
+              rightValue,
+              options.tickMarkLabelFont
+            );
+          }
+          else {
+            assert && assert( false, 'vertical orientation not handled yet (please add it!)' );
+          }
+        }
+      );
 
       // add the root node for the tick marks
       const tickMarksNode = new Node();
@@ -104,6 +139,20 @@ define( require => {
       // the following function closure will update the tick marks when
 
     }
+  }
+
+  function addVerticalTickMark( parentNode, centerX, centerY, height, lineWidth, stroke, value, labelFont ) {
+    const tickMark = new Line( centerX, centerY - height, centerX, centerY + height, {
+      stroke: stroke,
+      lineWidth: lineWidth
+    } );
+    parentNode.addChild( tickMark );
+    parentNode.addChild( new Text( value, {
+      font: labelFont,
+      centerX: tickMark.centerX,
+      top: tickMark.bottom + TICK_MARK_LABEL_DISTANCE
+    } ) );
+
   }
 
   return numberLineIntegers.register( 'NumberLineNode', NumberLineNode );
