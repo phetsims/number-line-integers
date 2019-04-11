@@ -44,6 +44,12 @@ define( require => {
       // since the position is set based on the model, don't pass options through to parent class
       super();
 
+      // @private {Object} - make options available to methods
+      this.options = options;
+
+      // @private {NumberLine} - make the number line model available to methods
+      this.numberLine = numberLine;
+
       // assemble the options that control the appearance of the main number into one place
       const numberLineOptions = {
         doubleHead: true,
@@ -75,16 +81,7 @@ define( require => {
           ) );
 
           // add the tick mark for the 0 position, which is always visible
-          addVerticalTickMark(
-            numberLineNode,
-            numberLineNode.centerX,
-            numberLineNode.centerY,
-            options.zeroTickMarkLength,
-            options.zeroTickMarkLineWidth,
-            options.color,
-            '0',
-            options.tickMarkLabelFont
-          );
+          this.addTickMark( numberLineNode, 0 );
         }
         else {
           assert && assert( false, 'vertical orientation not handled yet (please add it!)' );
@@ -96,33 +93,13 @@ define( require => {
       this.addChild( endTickMarksRootNode );
       Property.multilink(
         [ numberLine.displayedRangeProperty, numberLine.orientationProperty, numberLine.scaleProperty ],
-        ( displayedRange, orientation, scale ) => {
+        ( displayedRange, orientation ) => {
           endTickMarksRootNode.removeAllChildren();
           if ( orientation === 'horizontal' ) {
             const leftValue = displayedRange.min;
-            const leftXPosition = numberLine.centerPosition.x + scale * leftValue;
-            addVerticalTickMark(
-              endTickMarksRootNode,
-              leftXPosition,
-              numberLine.centerPosition.y,
-              options.tickMarkLength,
-              options.tickMarkLineWidth,
-              options.color,
-              leftValue,
-              options.tickMarkLabelFont
-            );
+            this.addTickMark( endTickMarksRootNode, leftValue );
             const rightValue = displayedRange.max;
-            const rightXPosition = numberLine.centerPosition.x + scale * rightValue;
-            addVerticalTickMark(
-              endTickMarksRootNode,
-              rightXPosition,
-              numberLine.centerPosition.y,
-              options.tickMarkLength,
-              options.tickMarkLineWidth,
-              options.color,
-              rightValue,
-              options.tickMarkLabelFont
-            );
+            this.addTickMark( endTickMarksRootNode, rightValue );
           }
           else {
             assert && assert( false, 'vertical orientation not handled yet (please add it!)' );
@@ -151,16 +128,7 @@ define( require => {
           if ( orientation === 'horizontal' ) {
             for ( let tmValue = minTickMarkValue; tmValue <= maxTickMarkValue; tmValue += tickMarkSpacing ) {
               if ( tmValue !== 0 ) {
-                addVerticalTickMark(
-                  middleTickMarksRoot,
-                  numberLine.centerPosition.x + tmValue * scale,
-                  numberLine.centerPosition.y,
-                  options.tickMarkLength,
-                  options.tickMarkLineWidth,
-                  options.color,
-                  tmValue,
-                  options.tickMarkLabelFont
-                );
+                this.addTickMark( middleTickMarksRoot, tmValue );
               }
             }
           }
@@ -170,20 +138,36 @@ define( require => {
         }
       );
     }
-  }
 
-  function addVerticalTickMark( parentNode, centerX, centerY, height, lineWidth, stroke, value, labelFont ) {
-    const tickMark = new Line( centerX, centerY - height, centerX, centerY + height, {
-      stroke: stroke,
-      lineWidth: lineWidth
-    } );
-    parentNode.addChild( tickMark );
-    parentNode.addChild( new Text( value, {
-      font: labelFont,
-      centerX: tickMark.centerX,
-      top: tickMark.bottom + TICK_MARK_LABEL_DISTANCE
-    } ) );
+    /**
+     * method to add a tick mark to the provided parent node for the provided value
+     * @param {Node} parentNode
+     * @param {number} value
+     * @private
+     */
+    addTickMark( parentNode, value ) {
 
+      if ( this.numberLine.orientationProperty.value === 'horizontal' ) {
+
+        // determine the location of this tick mark
+        const centerX = this.numberLine.centerPosition.x + this.numberLine.scaleProperty.value * value;
+        const centerY = this.numberLine.centerPosition.y;
+
+        // the value for zero is a special case, and uses a longer and thinker tick mark
+        const height = value === 0 ? this.options.zeroTickMarkLength : this.options.tickMarkLength;
+        const lineWidth = value === 0 ? this.options.zeroTickMarkLineWidth : this.options.tickMarkLineWidth;
+        const tickMark = new Line( centerX, centerY - height, centerX, centerY + height, {
+          stroke: this.options.color,
+          lineWidth: lineWidth
+        } );
+        parentNode.addChild( tickMark );
+        parentNode.addChild( new Text( value, {
+          font: this.options.tickMarkLabelFont,
+          centerX: tickMark.centerX,
+          top: tickMark.bottom + TICK_MARK_LABEL_DISTANCE
+        } ) );
+      }
+    }
   }
 
   return numberLineIntegers.register( 'NumberLineNode', NumberLineNode );
