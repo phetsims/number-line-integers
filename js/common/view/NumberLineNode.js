@@ -108,9 +108,9 @@ define( require => {
       );
 
       // add the root node for the tick marks that exist between the middle and the end
-      const middleTickMarksRoot = new Node();
-      numberLine.tickMarksVisibleProperty.linkAttribute( middleTickMarksRoot, 'visible' );
-      this.addChild( middleTickMarksRoot );
+      const middleTickMarksRootNode = new Node();
+      numberLine.tickMarksVisibleProperty.linkAttribute( middleTickMarksRootNode, 'visible' );
+      this.addChild( middleTickMarksRootNode );
 
       // update the middle tick marks based on the properties that affect it
       Property.multilink(
@@ -118,7 +118,7 @@ define( require => {
         ( displayedRange, orientation, scale ) => {
 
           // remove previous representation
-          middleTickMarksRoot.removeAllChildren();
+          middleTickMarksRootNode.removeAllChildren();
 
           // Draw the tick marks.  This could be optimized to be a single Path node for the ticks if a performance
           // improvement is ever needed.
@@ -128,7 +128,7 @@ define( require => {
           if ( orientation === 'horizontal' ) {
             for ( let tmValue = minTickMarkValue; tmValue <= maxTickMarkValue; tmValue += tickMarkSpacing ) {
               if ( tmValue !== 0 ) {
-                this.addTickMark( middleTickMarksRoot, tmValue );
+                this.addTickMark( middleTickMarksRootNode, tmValue );
               }
             }
           }
