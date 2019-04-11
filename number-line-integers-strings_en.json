@@ -1,5 +1,8 @@
 {
   "number-line-integers.title": {
     "value": "Number Line Integers"
+  },
+  "tickMarks": {
+    "value": "Tick Marks"
   }
 }
