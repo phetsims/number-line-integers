@@ -28,7 +28,7 @@ define( require => {
 
       // TODO: The model itself shouldn't be changed, but it has a lot of settable properties.  Is (read-only) correct?  Or what?
       // @public {NumberLine} - the number line with which the user will interact
-      this.numberLine = new NumberLine( NLIConstants.NLI_BOUNDS.center );
+      this.numberLine = new NumberLine( NLIConstants.NLI_BOUNDS.center, { tickMarksInitiallyDisplayed: true } );
 
       // @public (read-only) {Bounds2} - the bounds of the box where the point controllers reside when not being used
       this.pointControllerBox = new Bounds2(

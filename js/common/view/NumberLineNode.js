@@ -130,14 +130,45 @@ define( require => {
         }
       );
 
-      // add the root node for the tick marks
-      const tickMarksNode = new Node();
-      this.addChild( tickMarksNode );
+      // add the root node for the tick marks that exist between the middle and the end
+      const middleTickMarksRoot = new Node();
+      numberLine.tickMarksVisibleProperty.linkAttribute( middleTickMarksRoot, 'visible' );
+      this.addChild( middleTickMarksRoot );
 
-      // only show the
+      // update the middle tick marks based on the properties that affect it
+      Property.multilink(
+        [ numberLine.displayedRangeProperty, numberLine.orientationProperty, numberLine.scaleProperty ],
+        ( displayedRange, orientation, scale ) => {
 
-      // the following function closure will update the tick marks when
+          // remove previous representation
+          middleTickMarksRoot.removeAllChildren();
 
+          // Draw the tick marks.  This could be optimized to be a single Path node for the ticks if a performance
+          // improvement is ever needed.
+          const tickMarkSpacing = numberLine.tickMarkSpacingProperty.value;
+          const minTickMarkValue = numberLine.displayedRangeProperty.value.min + tickMarkSpacing;
+          const maxTickMarkValue = numberLine.displayedRangeProperty.value.max - tickMarkSpacing;
+          if ( orientation === 'horizontal' ) {
+            for ( let tmValue = minTickMarkValue; tmValue <= maxTickMarkValue; tmValue += tickMarkSpacing ) {
+              if ( tmValue !== 0 ) {
+                addVerticalTickMark(
+                  middleTickMarksRoot,
+                  numberLine.centerPosition.x + tmValue * scale,
+                  numberLine.centerPosition.y,
+                  options.tickMarkLength,
+                  options.tickMarkLineWidth,
+                  options.color,
+                  tmValue,
+                  options.tickMarkLabelFont
+                );
+              }
+            }
+          }
+          else {
+            assert && assert( false, 'vertical orientation not handled yet (please add it!)' );
+          }
+        }
+      );
     }
   }
 
