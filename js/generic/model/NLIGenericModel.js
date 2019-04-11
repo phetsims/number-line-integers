@@ -67,6 +67,7 @@ define( require => {
     // @public resets the model
     reset() {
       this.pointControllers.forEach( pointController => { pointController.reset(); } );
+      this.numberLine.reset();
     }
 
     // @public

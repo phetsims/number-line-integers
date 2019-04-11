@@ -71,7 +71,12 @@ define( require => {
      * reset to initial state
      */
     reset() {
-      this.positionProperty.reset();
+      this.scaleProperty.reset();
+      this.orientationProperty.reset();
+      this.displayedRangeProperty.reset();
+      this.tickMarksVisibleProperty.reset();
+      this.tickMarkSpacingProperty.reset();
+      this.showPointLabels.reset();
     }
   }
 
