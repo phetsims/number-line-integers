@@ -10,9 +10,10 @@ define( require => {
 
   // modules
   const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Line = require( 'SCENERY/nodes/Line' );
   const Node = require( 'SCENERY/nodes/Node' );
+  const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+  const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Property = require( 'AXON/Property' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -75,7 +76,7 @@ define( require => {
         // remove the previous representation
         numberLineNode.removeAllChildren();
 
-        if ( orientation === 'horizontal' ) {
+        if ( orientation === NumberLineOrientation.HORIZONTAL ) {
 
           // add the arrow node that represents the number line
           numberLineNode.addChild( new ArrowNode(
@@ -117,7 +118,7 @@ define( require => {
           const tickMarkSpacing = numberLine.tickMarkSpacingProperty.value;
           const minTickMarkValue = numberLine.displayedRangeProperty.value.min + tickMarkSpacing;
           const maxTickMarkValue = numberLine.displayedRangeProperty.value.max - tickMarkSpacing;
-          if ( orientation === 'horizontal' ) {
+          if ( orientation === NumberLineOrientation.HORIZONTAL ) {
 
             // update the scale
             this.numberLineScale = ( displayBounds.width - options.displayedRangeInset * 2 ) / displayedRange.getLength();
@@ -148,7 +149,7 @@ define( require => {
      */
     addTickMark( parentNode, value ) {
 
-      if ( this.numberLine.orientationProperty.value === 'horizontal' ) {
+      if ( this.numberLine.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
 
         // determine the location of this tick mark
         const centerX = this.numberLine.centerPosition.x + this.numberLineScale * value;
