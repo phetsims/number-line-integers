@@ -42,40 +42,75 @@ define( require => {
 
     constructor() {
 
-      // TODO: The model itself shouldn't be changed, but it has a lot of settable properties.  Is (read-only) correct?  Or what?
-      // @public {NumberLine} - the number line with which the user will interact
+      // @public (read-only){NumberLine} - the number line with which the user will interact
       this.numberLine = new NumberLine( NLIConstants.NLI_BOUNDS.center );
 
-      // @public (read-only) {Bounds2} - the bounds of the box where the point controllers reside when not being used
+      // @public (read-only) {Property<Bounds2>} - the bounds of the box where the point controllers reside when not
+      // being used, changes its location when the orientation of the number line changes
       this.pointControllerBoxProperty = new Property( BOTTOM_BOX_BOUNDS );
-      this.numberLine.orientationProperty.link( orientation => {
-        this.pointControllerBoxProperty.value = orientation === NumberLineOrientation.HORIZONTAL ?
-                                                BOTTOM_BOX_BOUNDS : SIDE_BOX_BOUNDS;
-      } );
 
       // @public (read-only) - an array of the point controllers available for manipulation by the user
       this.pointControllers = [
-        new PointController( new Vector2(
-          this.pointControllerBoxProperty.value.centerX - this.pointControllerBoxProperty.value.width / 3,
-          this.pointControllerBoxProperty.value.centerY
-        ) ),
-        new PointController( new Vector2(
-          this.pointControllerBoxProperty.value.centerX,
-          this.pointControllerBoxProperty.value.centerY
-        ) ),
-        new PointController( new Vector2(
-          this.pointControllerBoxProperty.value.centerX + this.pointControllerBoxProperty.value.width / 3,
-          this.pointControllerBoxProperty.value.centerY
-        ) )
+        new PointController(
+          new Vector2( BOTTOM_BOX_BOUNDS.centerX - BOTTOM_BOX_BOUNDS.width / 3, BOTTOM_BOX_BOUNDS.centerY ),
+          {
+            alternativeHome: new Vector2( SIDE_BOX_BOUNDS.centerX, SIDE_BOX_BOUNDS.centerY - SIDE_BOX_BOUNDS.height / 3 )
+          }
+        ),
+        new PointController(
+          new Vector2( BOTTOM_BOX_BOUNDS.centerX, BOTTOM_BOX_BOUNDS.centerY ),
+          {
+            alternativeHome: new Vector2( SIDE_BOX_BOUNDS.centerX, SIDE_BOX_BOUNDS.centerY )
+          }
+        ),
+        new PointController(
+          new Vector2( BOTTOM_BOX_BOUNDS.centerX + BOTTOM_BOX_BOUNDS.width / 3, BOTTOM_BOX_BOUNDS.centerY ),
+          {
+            alternativeHome: new Vector2( SIDE_BOX_BOUNDS.centerX, SIDE_BOX_BOUNDS.centerY + SIDE_BOX_BOUNDS.height / 3 )
+          }
+        )
       ];
 
       // for each point controller, watch for it to be released over the point controller box and return to origin
       this.pointControllers.forEach( pointController => {
         pointController.draggingProperty.lazyLink( dragging => {
-          if ( !dragging && this.pointControllerBoxProperty.value.containsPoint( pointController.positionProperty.value ) ) {
-            pointController.positionProperty.reset();
+          if ( !dragging ) {
+            if ( this.numberLine.orientationProperty.value === NumberLineOrientation.HORIZONTAL &&
+                 BOTTOM_BOX_BOUNDS.containsPoint( pointController.positionProperty.value ) ) {
+
+              pointController.positionProperty.reset();
+            }
+            else if ( this.numberLine.orientationProperty.value === NumberLineOrientation.VERTICAL &&
+                      SIDE_BOX_BOUNDS.containsPoint( pointController.positionProperty.value ) ) {
+
+              pointController.goToAlternativeHome();
+            }
           }
         } );
+      } );
+
+      // reposition the box and any points therein when the number line orientation changes
+      this.numberLine.orientationProperty.link( orientation => {
+        if ( orientation === NumberLineOrientation.HORIZONTAL ) {
+          this.pointControllerBoxProperty.set( BOTTOM_BOX_BOUNDS );
+          this.pointControllers.forEach( pointController => {
+            if ( SIDE_BOX_BOUNDS.containsPoint( pointController.positionProperty.value ) &&
+                 !pointController.draggingProperty.value ) {
+
+              pointController.positionProperty.reset();
+            }
+          } );
+        }
+        else {
+          this.pointControllerBoxProperty.set( SIDE_BOX_BOUNDS );
+          this.pointControllers.forEach( pointController => {
+            if ( BOTTOM_BOX_BOUNDS.containsPoint( pointController.positionProperty.value ) &&
+                 !pointController.draggingProperty.value ) {
+
+              pointController.goToAlternativeHome();
+            }
+          } );
+        }
       } );
     }
 
