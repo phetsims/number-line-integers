@@ -96,13 +96,20 @@ define( function( require ) {
       // add the number line node
       this.addChild( new NumberLineNode( model.numberLine, numberLineBounds ) );
 
-      // add the box where the point controllers hang out when not in use
-      const pointControllerBoxNode = new Rectangle( model.pointControllerBox, {
-        fill: 'white',
-        stroke: 'black',
-        cornerRadius: 6
+      let pointControllerBoxNode = null;
+      model.pointControllerBoxProperty.link( pointControllerBox => {
+        pointControllerBoxNode && this.removeChild( pointControllerBoxNode );
+
+        // add the box where the point controllers hang out when not in use
+        pointControllerBoxNode = new Rectangle( pointControllerBox, {
+          fill: 'white',
+          stroke: 'black',
+          cornerRadius: 6
+        } );
+
+        this.addChild( pointControllerBoxNode );
+        pointControllerBoxNode.moveToBack();
       } );
-      this.addChild( pointControllerBoxNode );
 
       // add the point controller nodes
       assert && assert( model.pointControllers.length === POINT_CONTROLLER_COLOR_LIST.length );
