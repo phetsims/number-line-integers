@@ -73,6 +73,11 @@ define( require => {
       this.addChild( numberLineNode );
       numberLine.orientationProperty.link( orientation => {
 
+        assert && assert(
+          orientation === NumberLineOrientation.HORIZONTAL || orientation === NumberLineOrientation.VERTICAL,
+          `Invalid orientation: ${orientation}`
+        );
+
         // remove the previous representation
         numberLineNode.removeAllChildren();
 
@@ -91,7 +96,18 @@ define( require => {
           this.addTickMark( numberLineNode, 0 );
         }
         else {
-          assert && assert( false, 'vertical orientation not handled yet (please add it!)' );
+
+          // add the arrow node that represents the number line
+          numberLineNode.addChild( new ArrowNode(
+            numberLine.centerPosition.x,
+            displayBounds.minY,
+            numberLine.centerPosition.x,
+            displayBounds.maxY,
+            numberLineOptions
+          ) );
+
+          // add the tick mark for the 0 position, which is always visible
+          this.addTickMark( numberLineNode, 0 );
         }
       } );
 
@@ -109,6 +125,11 @@ define( require => {
         [ numberLine.displayedRangeProperty, numberLine.orientationProperty ],
         ( displayedRange, orientation ) => {
 
+          assert && assert(
+            orientation === NumberLineOrientation.HORIZONTAL || orientation === NumberLineOrientation.VERTICAL,
+            `Invalid orientation: ${orientation}`
+          );
+
           // remove previous representations
           middleTickMarksRootNode.removeAllChildren();
           endTickMarksRootNode.removeAllChildren();
@@ -118,24 +139,25 @@ define( require => {
           const tickMarkSpacing = numberLine.tickMarkSpacingProperty.value;
           const minTickMarkValue = numberLine.displayedRangeProperty.value.min + tickMarkSpacing;
           const maxTickMarkValue = numberLine.displayedRangeProperty.value.max - tickMarkSpacing;
+
           if ( orientation === NumberLineOrientation.HORIZONTAL ) {
 
             // update the scale
             this.numberLineScale = ( displayBounds.width - options.displayedRangeInset * 2 ) / displayedRange.getLength();
-
-            const leftValue = displayedRange.min;
-            this.addTickMark( endTickMarksRootNode, leftValue );
-            const rightValue = displayedRange.max;
-            this.addTickMark( endTickMarksRootNode, rightValue );
-
-            for ( let tmValue = minTickMarkValue; tmValue <= maxTickMarkValue; tmValue += tickMarkSpacing ) {
-              if ( tmValue !== 0 ) {
-                this.addTickMark( middleTickMarksRootNode, tmValue );
-              }
-            }
           }
           else {
-            assert && assert( false, 'vertical orientation not handled yet (please add it!)' );
+
+            // update the scale
+            this.numberLineScale = ( displayBounds.height - options.displayedRangeInset * 2 ) / displayedRange.getLength();
+          }
+
+          this.addTickMark( endTickMarksRootNode, displayedRange.min );
+          this.addTickMark( endTickMarksRootNode, displayedRange.max );
+
+          for ( let tmValue = minTickMarkValue; tmValue <= maxTickMarkValue; tmValue += tickMarkSpacing ) {
+            if ( tmValue !== 0 ) {
+              this.addTickMark( middleTickMarksRootNode, tmValue );
+            }
           }
         }
       );
@@ -149,24 +171,40 @@ define( require => {
      */
     addTickMark( parentNode, value ) {
 
+      // the value for zero is a special case, and uses a longer and thicker tick mark
+      const length = value === 0 ? this.options.zeroTickMarkLength : this.options.tickMarkLength;
+      const lineWidth = value === 0 ? this.options.zeroTickMarkLineWidth : this.options.tickMarkLineWidth;
+      const tickMarkOptions = {
+        stroke: this.options.color,
+        lineWidth: lineWidth
+      };
+
       if ( this.numberLine.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
 
         // determine the location of this tick mark
         const centerX = this.numberLine.centerPosition.x + this.numberLineScale * value;
         const centerY = this.numberLine.centerPosition.y;
 
-        // the value for zero is a special case, and uses a longer and thinker tick mark
-        const height = value === 0 ? this.options.zeroTickMarkLength : this.options.tickMarkLength;
-        const lineWidth = value === 0 ? this.options.zeroTickMarkLineWidth : this.options.tickMarkLineWidth;
-        const tickMark = new Line( centerX, centerY - height, centerX, centerY + height, {
-          stroke: this.options.color,
-          lineWidth: lineWidth
-        } );
+        const tickMark = new Line( centerX, centerY - length, centerX, centerY + length, tickMarkOptions );
         parentNode.addChild( tickMark );
         parentNode.addChild( new Text( value, {
           font: this.options.tickMarkLabelFont,
           centerX: tickMark.centerX,
           top: tickMark.bottom + TICK_MARK_LABEL_DISTANCE
+        } ) );
+      }
+      else {
+
+        // determine the location of this tick mark
+        const centerX = this.numberLine.centerPosition.x;
+        const centerY = this.numberLine.centerPosition.y - this.numberLineScale * value;
+
+        const tickMark = new Line( centerX - length, centerY, centerX + length, centerY, tickMarkOptions );
+        parentNode.addChild( tickMark );
+        parentNode.addChild( new Text( value, {
+          font: this.options.tickMarkLabelFont,
+          left: tickMark.right + 5,
+          centerY: tickMark.centerY
         } ) );
       }
     }
