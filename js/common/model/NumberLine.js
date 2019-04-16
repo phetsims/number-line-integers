@@ -48,9 +48,6 @@ define( require => {
       // @public (read-only) {Vector2} - center in model space where this number line exists
       this.centerPosition = centerPosition;
 
-      // @public {NumberProperty} - the value used to scale from model coordinates to number line distance
-      this.scaleProperty = new NumberProperty( options.initialScale );
-
       // @public {Property} - the value used to scale from model coordinates to number line distance
       this.orientationProperty = new Property( options.initialOrientation );
 
@@ -71,7 +68,6 @@ define( require => {
      * reset to initial state
      */
     reset() {
-      this.scaleProperty.reset();
       this.orientationProperty.reset();
       this.displayedRangeProperty.reset();
       this.tickMarksVisibleProperty.reset();

@@ -54,11 +54,6 @@ define( function( require ) {
       // define the bounds within which the number line will size itself in the horizontal and vertical directions
       const numberLineBounds = this.layoutBounds.dilated( -70 );
 
-      // set the scale of the number line so that the displayed range is near the ends
-      model.numberLine.scaleProperty.set(
-        numberLineBounds.width * 0.9 / model.numberLine.displayedRangeProperty.value.getLength()
-      );
-
       // add the number line node
       this.addChild( new NumberLineNode( model.numberLine, numberLineBounds ) );
 

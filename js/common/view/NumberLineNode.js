@@ -38,7 +38,10 @@ define( require => {
         zeroTickMarkLineWidth: 2,
         zeroTickMarkLength: 16,
         tickMarkLabelFont: new PhetFont( 16 ),
-        color: 'black'
+        color: 'black',
+
+        // {number} - the distance between the edge of the display bounds and the ends of the displayed range
+        displayedRangeInset: 40
       }, options );
 
       // since the position is set based on the model, don't pass options through to parent class
@@ -49,6 +52,9 @@ define( require => {
 
       // @private {NumberLine} - make the number line model available to methods
       this.numberLine = numberLine;
+
+      // @private {number}
+      this.numberLineScale = 1;
 
       // assemble the options that control the appearance of the main number into one place
       const numberLineOptions = {
@@ -91,34 +97,20 @@ define( require => {
       // handle the tick marks at the ends of the display range
       const endTickMarksRootNode = new Node();
       this.addChild( endTickMarksRootNode );
-      Property.multilink(
-        [ numberLine.displayedRangeProperty, numberLine.orientationProperty, numberLine.scaleProperty ],
-        ( displayedRange, orientation ) => {
-          endTickMarksRootNode.removeAllChildren();
-          if ( orientation === 'horizontal' ) {
-            const leftValue = displayedRange.min;
-            this.addTickMark( endTickMarksRootNode, leftValue );
-            const rightValue = displayedRange.max;
-            this.addTickMark( endTickMarksRootNode, rightValue );
-          }
-          else {
-            assert && assert( false, 'vertical orientation not handled yet (please add it!)' );
-          }
-        }
-      );
 
       // add the root node for the tick marks that exist between the middle and the end
       const middleTickMarksRootNode = new Node();
       numberLine.tickMarksVisibleProperty.linkAttribute( middleTickMarksRootNode, 'visible' );
       this.addChild( middleTickMarksRootNode );
 
-      // update the middle tick marks based on the properties that affect it
+      // update the middle and end tick marks based on the properties that affect it
       Property.multilink(
-        [ numberLine.displayedRangeProperty, numberLine.orientationProperty, numberLine.scaleProperty ],
-        ( displayedRange, orientation, scale ) => {
+        [ numberLine.displayedRangeProperty, numberLine.orientationProperty ],
+        ( displayedRange, orientation ) => {
 
-          // remove previous representation
+          // remove previous representations
           middleTickMarksRootNode.removeAllChildren();
+          endTickMarksRootNode.removeAllChildren();
 
           // Draw the tick marks.  This could be optimized to be a single Path node for the ticks if a performance
           // improvement is ever needed.
@@ -126,6 +118,15 @@ define( require => {
           const minTickMarkValue = numberLine.displayedRangeProperty.value.min + tickMarkSpacing;
           const maxTickMarkValue = numberLine.displayedRangeProperty.value.max - tickMarkSpacing;
           if ( orientation === 'horizontal' ) {
+
+            // update the scale
+            this.numberLineScale = ( displayBounds.width - options.displayedRangeInset * 2 ) / displayedRange.getLength();
+
+            const leftValue = displayedRange.min;
+            this.addTickMark( endTickMarksRootNode, leftValue );
+            const rightValue = displayedRange.max;
+            this.addTickMark( endTickMarksRootNode, rightValue );
+
             for ( let tmValue = minTickMarkValue; tmValue <= maxTickMarkValue; tmValue += tickMarkSpacing ) {
               if ( tmValue !== 0 ) {
                 this.addTickMark( middleTickMarksRootNode, tmValue );
@@ -150,7 +151,7 @@ define( require => {
       if ( this.numberLine.orientationProperty.value === 'horizontal' ) {
 
         // determine the location of this tick mark
-        const centerX = this.numberLine.centerPosition.x + this.numberLine.scaleProperty.value * value;
+        const centerX = this.numberLine.centerPosition.x + this.numberLineScale * value;
         const centerY = this.numberLine.centerPosition.y;
 
         // the value for zero is a special case, and uses a longer and thinker tick mark
