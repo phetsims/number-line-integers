@@ -9,13 +9,16 @@ define( function( require ) {
   'use strict';
 
   // modules
+  const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   const Checkbox = require( 'SUN/Checkbox' );
   const Color = require( 'SCENERY/util/Color' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
+  const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   const ScreenView = require( 'JOIST/ScreenView' );
@@ -25,6 +28,7 @@ define( function( require ) {
   // constants
   const POINT_CONTROLLER_COLOR_LIST = [ new Color( 'blue' ), new Color( 'magenta' ), new Color( 'orange' ) ];
   const CHECK_BOX_FONT = new PhetFont( 20 );
+  const ARROW_ICON_LENGTH = 40;
 
   // strings
   const tickMarksString = require( 'string!NUMBER_LINE_INTEGERS/tickMarks' );
@@ -48,6 +52,41 @@ define( function( require ) {
           top: checkboxAreaUpperLeft.y
         }
       ) );
+
+      const arrowIconOptions = {
+        doubleHead: true,
+        tailWidth: 1
+      };
+
+      // create the orientation selection icons
+      const horizontalIcon = new ArrowNode( -ARROW_ICON_LENGTH / 2, 0, ARROW_ICON_LENGTH / 2, 0, arrowIconOptions );
+      const verticalIcon = new ArrowNode( 0, -ARROW_ICON_LENGTH / 2, 0, ARROW_ICON_LENGTH / 2, arrowIconOptions );
+
+      // map the orientation icons to their enum values
+      const orientationButtonsContent = [ {
+        value: NumberLineOrientation.HORIZONTAL,
+        node: horizontalIcon
+      }, {
+        value: NumberLineOrientation.VERTICAL,
+        node: verticalIcon
+      } ];
+
+      // create and add the orientation radio buttons
+      const orientationRadioButtonGroup = new RadioButtonGroup(
+        model.numberLine.orientationProperty,
+        orientationButtonsContent, {
+          buttonContentXMargin: 5,
+          buttonContentYMargin: 5,
+          right: this.layoutBounds.maxX - 10,
+          bottom: this.layoutBounds.maxY - 60,
+          baseColor: 'white',
+          selectedLineWidth: 2,
+          deselectedLineWidth: .5,
+          deselectedButtonOpacity: 0.25,
+          orientation: 'horizontal',
+          spacing: 10
+        } );
+      this.addChild( orientationRadioButtonGroup );
 
       // NOTE: There is no model-view transform for this sim.  Model and view space use the same coordinate system.
 
