@@ -263,7 +263,7 @@ define( require => {
       this.addChild( circle );
 
       // update the point representation as it moves
-      numberLinePoint.positionProperty.link( numberLineValue => {
+      numberLinePoint.valueProperty.link( numberLineValue => {
         circle.center = numberLineNode.numberLineValueToViewPosition( numberLineValue );
         if ( numberLinePoint.controller ) {
           connectorLine.visible = true;

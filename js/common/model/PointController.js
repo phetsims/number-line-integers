@@ -51,7 +51,7 @@ define( require => {
       // when moved, update the number line point position (if we have one)
       this.positionProperty.link( position => {
         if ( this.numberLinePoint ) {
-          this.numberLinePoint.positionProperty.set( numberLine.modelPositionToValue( position ) );
+          this.numberLinePoint.valueProperty.set( numberLine.modelPositionToValue( position ) );
         }
       } );
     }

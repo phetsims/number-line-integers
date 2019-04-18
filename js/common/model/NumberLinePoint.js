@@ -16,14 +16,14 @@ define( require => {
   class NumberLinePoint {
 
     /**
-     * {number} initialPosition - the initial 1D position on the number line
+     * {number} initialValue - the value on the number line
      * {Color} color - the color that should be used to portray this point in the view
      * {PointController} [controller] - the controller that will move this point
      */
-    constructor( initialPosition, color, controller = null ) {
+    constructor( initialValue, color, controller = null ) {
 
-      // @public {NumberProperty} - position on the number line (one dimensional)
-      this.positionProperty = new NumberProperty( initialPosition );
+      // @public {NumberProperty} - portrayed value on the number line
+      this.valueProperty = new NumberProperty( initialValue );
 
       // @public {PaintColorProperty}
       this.colorProperty = new PaintColorProperty( color );
