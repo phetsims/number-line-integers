@@ -259,7 +259,7 @@ define( require => {
       this.addChild( connectorLine );
 
       // add the dot
-      const circle = new Circle( POINT_NODE_RADIUS, { fill: numberLinePoint.color } );
+      const circle = new Circle( POINT_NODE_RADIUS, { fill: numberLinePoint.colorProperty } );
       this.addChild( circle );
 
       // update the point representation as it moves

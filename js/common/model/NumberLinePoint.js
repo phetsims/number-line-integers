@@ -11,6 +11,7 @@ define( require => {
   // modules
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberProperty = require( 'AXON/NumberProperty' );
+  const PaintColorProperty = require( 'SCENERY/util/PaintColorProperty' );
 
   class NumberLinePoint {
 
@@ -24,8 +25,8 @@ define( require => {
       // @public {NumberProperty} - position on the number line (one dimensional)
       this.positionProperty = new NumberProperty( initialPosition );
 
-      // @public (read-only) {Color}
-      this.color = color;
+      // @public {PaintColorProperty}
+      this.colorProperty = new PaintColorProperty( color );
 
       // @private
       this.controller = controller;
