@@ -45,7 +45,7 @@ define( require => {
 
         // {Bounds2|null} - the model bounds over which this number line's full range will be displayed, must be set if
         // the methods that transform between model space and number line positions are to be employed
-        modelDisplayBounds: null
+        modelProjectionBounds: null
       }, options );
 
       // @public (read-only) {Vector2} - center in model space where this number line exists
@@ -69,14 +69,18 @@ define( require => {
       // @public (read-only) {ObservableArray<NumberLinePoint>} - array of points on this number line
       this.residentPoints = new ObservableArray();
 
+      // @public (read-only) {Bounds2|null} - The bounds into which the number line display range is projected when
+      // being displayed in the view.  If not set, points can still be added, but values outside of model space can't
+      // be projected.
+      this.modelProjectionBounds = options.modelProjectionBounds;
+
       // @private - 2D scale for transforming between model coordinates and number line position
       this.modelToPositonScale = Vector2.ZERO.copy();
       this.displayedRangeProperty.link( displayedRange => {
-        if ( options.modelDisplayBounds !== null ) {
+        if ( options.modelProjectionBounds !== null ) {
           this.modelToPositonScale = new Vector2(
-            // TODO: This calculation is off. The value of options.modelDisplayBounds is not what is expected.
-            displayedRange.getLength() / options.modelDisplayBounds.width,
-            displayedRange.getLength() / options.modelDisplayBounds.height
+            displayedRange.getLength() / options.modelProjectionBounds.width,
+            displayedRange.getLength() / options.modelProjectionBounds.height
           );
         }
       } );

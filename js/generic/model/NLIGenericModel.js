@@ -26,16 +26,16 @@ define( require => {
   const SIDE_BOX_HEIGHT = BOTTOM_BOX_WIDTH;
   const INSET = 30;
   const BOTTOM_BOX_BOUNDS = new Bounds2(
-    NLIConstants.NLI_BOUNDS.centerX - BOTTOM_BOX_WIDTH / 2,
-    NLIConstants.NLI_BOUNDS.maxY - BOTTOM_BOX_HEIGHT - INSET,
-    NLIConstants.NLI_BOUNDS.centerX + BOTTOM_BOX_WIDTH / 2,
-    NLIConstants.NLI_BOUNDS.maxY - INSET
+    NLIConstants.NLI_LAYOUT_BOUNDS.centerX - BOTTOM_BOX_WIDTH / 2,
+    NLIConstants.NLI_LAYOUT_BOUNDS.maxY - BOTTOM_BOX_HEIGHT - INSET,
+    NLIConstants.NLI_LAYOUT_BOUNDS.centerX + BOTTOM_BOX_WIDTH / 2,
+    NLIConstants.NLI_LAYOUT_BOUNDS.maxY - INSET
   );
   const SIDE_BOX_BOUNDS = new Bounds2(
-    NLIConstants.NLI_BOUNDS.minX + INSET,
-    NLIConstants.NLI_BOUNDS.centerY - SIDE_BOX_HEIGHT / 2,
-    NLIConstants.NLI_BOUNDS.minX + INSET + SIDE_BOX_WIDTH,
-    NLIConstants.NLI_BOUNDS.centerY + SIDE_BOX_HEIGHT / 2
+    NLIConstants.NLI_LAYOUT_BOUNDS.minX + INSET,
+    NLIConstants.NLI_LAYOUT_BOUNDS.centerY - SIDE_BOX_HEIGHT / 2,
+    NLIConstants.NLI_LAYOUT_BOUNDS.minX + INSET + SIDE_BOX_WIDTH,
+    NLIConstants.NLI_LAYOUT_BOUNDS.centerY + SIDE_BOX_HEIGHT / 2
   );
 
   /**
@@ -46,14 +46,11 @@ define( require => {
     constructor() {
 
       // calculate the bounds in model space where the number line range will be displayed
-      const numberLineModelBounds = NLIConstants.NLI_BOUNDS.dilatedXY(
-        -NLIConstants.GENERIC_SCREEN_DISPLAYED_RANGE_INSET,
-        -NLIConstants.GENERIC_SCREEN_DISPLAYED_RANGE_INSET
-      );
+      const numberLineModelBounds = NLIConstants.NLI_LAYOUT_BOUNDS.dilatedXY( -100, -100 );
 
       // @public (read-only){NumberLine} - the number line with which the user will interact
       this.numberLine = new NumberLine( numberLineModelBounds.center, {
-        modelDisplayBounds: numberLineModelBounds
+        modelProjectionBounds: numberLineModelBounds
       } );
 
       // @public (read-only) {Property<Bounds2>} - the bounds of the box where the point controllers reside when not

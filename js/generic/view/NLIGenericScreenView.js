@@ -38,7 +38,7 @@ define( function( require ) {
      */
     constructor( model ) {
 
-      super( { layoutBounds: NLIConstants.NLI_BOUNDS } );
+      super( { layoutBounds: NLIConstants.NLI_LAYOUT_BOUNDS } );
 
       // add the check boxes that will control the number line's presentation
       const checkboxAreaUpperLeft = new Vector2( this.layoutBounds.maxX - 300, this.layoutBounds.minY + 10 );
@@ -88,11 +88,8 @@ define( function( require ) {
 
       // NOTE: There is no model-view transform for this sim.  Model and view space use the same coordinate system.
 
-      // define the bounds within which the number line will size itself in the horizontal and vertical directions
-      const numberLineBounds = this.layoutBounds.dilated( -70 );
-
       // add the number line node
-      this.addChild( new NumberLineNode( model.numberLine, numberLineBounds ) );
+      this.addChild( new NumberLineNode( model.numberLine ) );
 
       let pointControllerBoxNode = null;
       model.pointControllerBoxProperty.link( pointControllerBox => {

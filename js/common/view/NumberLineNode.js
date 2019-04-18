@@ -32,7 +32,7 @@ define( require => {
      * {Bounds2} displayBounds - the bounds in which the number line should be displayed
      * {Object} [options] - options that control the appearance of the number line
      */
-    constructor( numberLine, displayBounds, options ) {
+    constructor( numberLine, options ) {
 
       options = _.extend( {
 
@@ -52,6 +52,9 @@ define( require => {
 
       // since the position is set based on the model, don't pass options through to parent class
       super();
+
+      assert && assert( numberLine.modelProjectionBounds, 'this number line is net set up to be displayed' );
+      const displayBounds = numberLine.modelProjectionBounds.dilated( options.displayedRangeInset );
 
       // @private {Object} - make options available to methods
       this.options = options;
