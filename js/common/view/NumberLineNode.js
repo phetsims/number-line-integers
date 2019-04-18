@@ -249,12 +249,30 @@ define( require => {
     }
   }
 
-  class PointNode extends Circle {
+  class PointNode extends Node {
     constructor( numberLinePoint, numberLineNode ) {
-      super( POINT_NODE_RADIUS, { fill: numberLinePoint.color } );
 
+      super();
+
+      // define the line that will connect to the point controller if present
+      const connectorLine = new Line( 0, 0, 0, 0.1, { stroke: 'gray' } );
+      this.addChild( connectorLine );
+
+      // add the dot
+      const circle = new Circle( POINT_NODE_RADIUS, { fill: numberLinePoint.color } );
+      this.addChild( circle );
+
+      // update the point representation as it moves
       numberLinePoint.positionProperty.link( numberLineValue => {
-        this.center = numberLineNode.numberLineValueToViewPosition( numberLineValue );
+        circle.center = numberLineNode.numberLineValueToViewPosition( numberLineValue );
+        if ( numberLinePoint.controller ) {
+          connectorLine.visible = true;
+          const controllerPosition = numberLinePoint.controller.positionProperty.value;
+          connectorLine.setLine( circle.center.x, circle.center.y, controllerPosition.x, controllerPosition.y );
+        }
+        else {
+          connectorLine.visible = false;
+        }
       } );
     }
   }
