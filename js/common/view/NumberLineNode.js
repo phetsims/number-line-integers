@@ -10,16 +10,20 @@ define( require => {
 
   // modules
   const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  const Circle = require( 'SCENERY/nodes/Circle' );
   const Line = require( 'SCENERY/nodes/Line' );
+  const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Property = require( 'AXON/Property' );
   const Text = require( 'SCENERY/nodes/Text' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // constants
   const TICK_MARK_LABEL_DISTANCE = 5;
+  const POINT_NODE_RADIUS = 5;
 
   class NumberLineNode extends Node {
 
@@ -40,9 +44,10 @@ define( require => {
         zeroTickMarkLength: 16,
         tickMarkLabelFont: new PhetFont( 16 ),
         color: 'black',
+        pointRadius: 10,
 
         // {number} - the distance between the edge of the display bounds and the ends of the displayed range
-        displayedRangeInset: 40
+        displayedRangeInset: NLIConstants.GENERIC_SCREEN_DISPLAYED_RANGE_INSET
       }, options );
 
       // since the position is set based on the model, don't pass options through to parent class
@@ -120,6 +125,25 @@ define( require => {
       numberLine.tickMarksVisibleProperty.linkAttribute( middleTickMarksRootNode, 'visible' );
       this.addChild( middleTickMarksRootNode );
 
+      // add the layer where the points on the number line will be displayed
+      const pointDisplayLayer = new Node();
+      this.addChild( pointDisplayLayer );
+
+      // handle comings and goings of number line points
+      numberLine.residentPoints.addItemAddedListener( addedPoint => {
+        const pointNode = new PointNode( addedPoint, this );
+        pointDisplayLayer.addChild( pointNode );
+
+        const removeItemListener = removedPoint => {
+          if ( removedPoint === addedPoint ) {
+            pointDisplayLayer.removeChild( pointNode );
+            numberLine.residentPoints.removeItemRemovedListener( removeItemListener );// Clean up memory leak
+          }
+        };
+
+        numberLine.residentPoints.addItemRemovedListener( removeItemListener );
+      } );
+
       // update the middle and end tick marks based on the properties that affect it
       Property.multilink(
         [ numberLine.displayedRangeProperty, numberLine.orientationProperty ],
@@ -163,6 +187,23 @@ define( require => {
       );
     }
 
+    numberLineValueToViewPosition( numberLineValue ) {
+      const position = Vector2.ZERO.copy();
+      if ( this.numberLine.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
+        position.setXY(
+          this.numberLine.centerPosition.x + this.numberLineScale * numberLineValue,
+          this.numberLine.centerPosition.y
+        );
+      }
+      else {
+        position.setXY(
+          this.numberLine.centerPosition.x,
+          this.numberLine.centerPosition.y - this.numberLineScale * numberLineValue
+        );
+      }
+      return position;
+    }
+
     /**
      * method to add a tick mark to the provided parent node for the provided value
      * @param {Node} parentNode
@@ -179,13 +220,12 @@ define( require => {
         lineWidth: lineWidth
       };
 
+      // get the center postion of the tick mark
+      const tmCenter = this.numberLineValueToViewPosition( value );
+
       if ( this.numberLine.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
 
-        // determine the location of this tick mark
-        const centerX = this.numberLine.centerPosition.x + this.numberLineScale * value;
-        const centerY = this.numberLine.centerPosition.y;
-
-        const tickMark = new Line( centerX, centerY - length, centerX, centerY + length, tickMarkOptions );
+        const tickMark = new Line( tmCenter.x, tmCenter.y - length, tmCenter.x, tmCenter.y + length, tickMarkOptions );
         parentNode.addChild( tickMark );
         parentNode.addChild( new Text( value, {
           font: this.options.tickMarkLabelFont,
@@ -195,11 +235,7 @@ define( require => {
       }
       else {
 
-        // determine the location of this tick mark
-        const centerX = this.numberLine.centerPosition.x;
-        const centerY = this.numberLine.centerPosition.y - this.numberLineScale * value;
-
-        const tickMark = new Line( centerX - length, centerY, centerX + length, centerY, tickMarkOptions );
+        const tickMark = new Line( tmCenter.x - length, tmCenter.y, tmCenter.x + length, tmCenter.y, tickMarkOptions );
         parentNode.addChild( tickMark );
         parentNode.addChild( new Text( value, {
           font: this.options.tickMarkLabelFont,
@@ -207,6 +243,16 @@ define( require => {
           centerY: tickMark.centerY
         } ) );
       }
+    }
+  }
+
+  class PointNode extends Circle {
+    constructor( numberLinePoint, numberLineNode ) {
+      super( POINT_NODE_RADIUS, { fill: numberLinePoint.color } );
+
+      numberLinePoint.positionProperty.link( numberLineValue => {
+        this.center = numberLineNode.numberLineValueToViewPosition( numberLineValue );
+      } );
     }
   }
 

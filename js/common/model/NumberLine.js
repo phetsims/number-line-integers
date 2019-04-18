@@ -14,8 +14,10 @@ define( require => {
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const NumberProperty = require( 'AXON/NumberProperty' );
+  const ObservableArray = require( 'AXON/ObservableArray' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   class NumberLine {
 
@@ -25,9 +27,6 @@ define( require => {
     constructor( centerPosition, options ) {
 
       options = _.extend( {
-
-        // {number} - the multiplier from model space to number line distance
-        initialScale: 10,
 
         // {string} - whether the number line is initially oriented in the horizontal or vertical direction
         initialOrientation: NumberLineOrientation.HORIZONTAL,
@@ -42,8 +41,11 @@ define( require => {
         initialTickMarkSpacing: 1,
 
         // {boolean} - whether point labels should initially be shown
-        pointLabelsInitiallyShown: false
+        pointLabelsInitiallyShown: false,
 
+        // {Bounds2|null} - the model bounds over which this number line's full range will be displayed, must be set if
+        // the methods that transform between model space and number line positions are to be employed
+        modelDisplayBounds: null
       }, options );
 
       // @public (read-only) {Vector2} - center in model space where this number line exists
@@ -63,6 +65,60 @@ define( require => {
 
       // @public {BooleanProperty} - controls whether point labels are displayed to the user
       this.showPointLabels = new BooleanProperty( options.pointLabelsInitiallyShown );
+
+      // @public (read-only) {ObservableArray<NumberLinePoint>} - array of points on this number line
+      this.residentPoints = new ObservableArray();
+
+      // @private - 2D scale for transforming between model coordinates and number line position
+      this.modelToPositonScale = Vector2.ZERO.copy();
+      this.displayedRangeProperty.link( displayedRange => {
+        if ( options.modelDisplayBounds !== null ) {
+          this.modelToPositonScale = new Vector2(
+            // TODO: This calculation is off. The value of options.modelDisplayBounds is not what is expected.
+            displayedRange.getLength() / options.modelDisplayBounds.width,
+            displayedRange.getLength() / options.modelDisplayBounds.height
+          );
+        }
+      } );
+    }
+
+    /**
+     * project a position in model space into a value on the number line
+     * @param {Vector2} modelPosition
+     * @returns {number}
+     * @public
+     */
+    modelPositionToValue( modelPosition ) {
+      assert && assert(
+        !this.modelToPositonScale.equals( Vector2.ZERO ),
+        'must set model display bounds if using this method'
+      );
+      let result;
+      if ( this.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
+        result = ( modelPosition.x - this.centerPosition.x ) * this.modelToPositonScale.x;
+      }
+      else {
+        result = ( modelPosition.y - this.centerPosition.y ) * -this.modelToPositonScale.y;
+      }
+      return result;
+    }
+
+    /**
+     * add a point to the number line
+     * @param {NumberLinePoint} numberLinePoint
+     * @public
+     */
+    addPoint( numberLinePoint ) {
+      this.residentPoints.add( numberLinePoint );
+    }
+
+    /**
+     * remove a point from the number line
+     * @param {NumberLinePoint} numberLinePoint
+     * @public
+     */
+    removePoint( numberLinePoint ) {
+      this.residentPoints.remove( numberLinePoint );
     }
 
     /**
@@ -74,6 +130,7 @@ define( require => {
       this.tickMarksVisibleProperty.reset();
       this.tickMarkSpacingProperty.reset();
       this.showPointLabels.reset();
+      this.residentPoints.clear();
     }
   }
 

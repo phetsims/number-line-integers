@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   const Checkbox = require( 'SUN/Checkbox' );
-  const Color = require( 'SCENERY/util/Color' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
@@ -26,7 +25,6 @@ define( function( require ) {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  const POINT_CONTROLLER_COLOR_LIST = [ new Color( 'blue' ), new Color( 'magenta' ), new Color( 'orange' ) ];
   const CHECK_BOX_FONT = new PhetFont( 20 );
   const ARROW_ICON_LENGTH = 40;
 
@@ -112,9 +110,8 @@ define( function( require ) {
       } );
 
       // add the point controller nodes
-      assert && assert( model.pointControllers.length === POINT_CONTROLLER_COLOR_LIST.length );
-      model.pointControllers.forEach( ( pointController, index ) => {
-        this.addChild( new PointControllerNode( pointController, { baseColor: POINT_CONTROLLER_COLOR_LIST[ index ] } ) );
+      model.pointControllers.forEach( ( pointController ) => {
+        this.addChild( new PointControllerNode( pointController ) );
       } );
 
       // reset all button

@@ -9,7 +9,6 @@ define( require => {
   'use strict';
 
   // modules
-  const Color = require( 'SCENERY/util/Color' );
   const DragListener = require( 'SCENERY/listeners/DragListener' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -31,9 +30,6 @@ define( require => {
         // radius in screen coordinates
         radius: DEFAULT_SPHERE_RADIUS,
 
-        // base color from which the other colors with be derived
-        baseColor: new Color( 'pink' ),
-
         cursor: 'pointer'
 
       }, options );
@@ -41,7 +37,7 @@ define( require => {
       super( options );
 
       this.addChild( new ShadedSphereNode( options.radius * 2, {
-        mainColor: options.baseColor
+        mainColor: pointController.color
       } ) );
 
       // monitor the point controller and adjust position to match
