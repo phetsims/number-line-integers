@@ -78,6 +78,7 @@ define( require => {
      * @public
      */
     reset() {
+      this.clearNumberLinePoint();
       this.positionProperty.reset();
     }
 

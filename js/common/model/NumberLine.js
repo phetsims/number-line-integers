@@ -87,7 +87,7 @@ define( require => {
     }
 
     /**
-     * project a position in model space into a value on the number line
+     * project a position in model space into a 1D value on the number line
      * @param {Vector2} modelPosition
      * @returns {number}
      * @public
@@ -97,14 +97,44 @@ define( require => {
         !this.modelToPositonScale.equals( Vector2.ZERO ),
         'must set model display bounds if using this method'
       );
-      let result;
+      let numberLineValue;
       if ( this.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
-        result = ( modelPosition.x - this.centerPosition.x ) * this.modelToPositonScale.x;
+        numberLineValue = ( modelPosition.x - this.centerPosition.x ) * this.modelToPositonScale.x;
       }
       else {
-        result = ( modelPosition.y - this.centerPosition.y ) * -this.modelToPositonScale.y;
+        numberLineValue = ( modelPosition.y - this.centerPosition.y ) * -this.modelToPositonScale.y;
       }
-      return result;
+      return numberLineValue;
+    }
+
+    /**
+     * convert a value on the number line to a position in 2D model space
+     * @param {number} numberLineValue
+     * @returns {Vector2}
+     * @public
+     */
+    valueToModelPosition( numberLineValue ) {
+
+      // state and parameter checking
+      assert && assert(
+        !this.modelToPositonScale.equals( Vector2.ZERO ),
+        'must set model display bounds if using this method'
+      );
+
+      let modelPosition;
+      if ( this.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
+        modelPosition = new Vector2(
+          numberLineValue / this.modelToPositonScale.x + this.centerPosition.x,
+          this.centerPosition.y
+        );
+      }
+      else {
+        modelPosition = new Vector2(
+          this.centerPosition.x,
+          numberLineValue / -this.modelToPositonScale.y + this.centerPosition.y
+        );
+      }
+      return modelPosition;
     }
 
     /**
@@ -129,12 +159,12 @@ define( require => {
      * reset to initial state
      */
     reset() {
+      this.residentPoints.clear();
       this.orientationProperty.reset();
       this.displayedRangeProperty.reset();
       this.tickMarksVisibleProperty.reset();
       this.tickMarkSpacingProperty.reset();
       this.showPointLabels.reset();
-      this.residentPoints.clear();
     }
   }
 

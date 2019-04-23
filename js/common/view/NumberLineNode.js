@@ -134,12 +134,13 @@ define( require => {
 
       // handle comings and goings of number line points
       numberLine.residentPoints.addItemAddedListener( addedPoint => {
-        const pointNode = new PointNode( addedPoint, this );
+        const pointNode = new PointNode( addedPoint, numberLine );
         pointDisplayLayer.addChild( pointNode );
 
         const removeItemListener = removedPoint => {
           if ( removedPoint === addedPoint ) {
             pointDisplayLayer.removeChild( pointNode );
+            pointNode.dispose();
             numberLine.residentPoints.removeItemRemovedListener( removeItemListener );// Clean up memory leak
           }
         };
@@ -250,7 +251,12 @@ define( require => {
   }
 
   class PointNode extends Node {
-    constructor( numberLinePoint, numberLineNode ) {
+
+    /**
+     * @param {NumberLinePoint} numberLinePoint
+     * @param {numberLine} numberLine
+     */
+    constructor( numberLinePoint, numberLine ) {
 
       super();
 
@@ -263,17 +269,25 @@ define( require => {
       this.addChild( circle );
 
       // update the point representation as it moves
-      numberLinePoint.valueProperty.link( numberLineValue => {
-        circle.center = numberLineNode.numberLineValueToViewPosition( numberLineValue );
-        if ( numberLinePoint.controller ) {
-          connectorLine.visible = true;
-          const controllerPosition = numberLinePoint.controller.positionProperty.value;
-          connectorLine.setLine( circle.center.x, circle.center.y, controllerPosition.x, controllerPosition.y );
+      this.multilink = Property.multilink(
+        [ numberLinePoint.valueProperty, numberLine.orientationProperty ],
+        () => {
+          circle.center = numberLinePoint.getPositionInModelSpace();
+          if ( numberLinePoint.controller ) {
+            connectorLine.visible = true;
+            const controllerPosition = numberLinePoint.controller.positionProperty.value;
+            connectorLine.setLine( circle.center.x, circle.center.y, controllerPosition.x, controllerPosition.y );
+          }
+          else {
+            connectorLine.visible = false;
+          }
         }
-        else {
-          connectorLine.visible = false;
-        }
-      } );
+      );
+    }
+
+    dispose() {
+      this.multilink.dispose();
+      super.dispose();
     }
   }
 

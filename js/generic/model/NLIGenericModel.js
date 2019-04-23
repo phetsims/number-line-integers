@@ -20,6 +20,7 @@ define( require => {
 
   // constants
   const POINT_CREATION_DISTANCE = 60; // distance from number line in model/view coords where points get created
+  const POINT_CONTROLLER_DISTANCE = 40; // distance from number line at which the point controllers reside when controlling points
   const BOTTOM_BOX_WIDTH = 350;
   const BOTTOM_BOX_HEIGHT = 70;
   const SIDE_BOX_WIDTH = BOTTOM_BOX_HEIGHT;
@@ -112,7 +113,12 @@ define( require => {
               if ( Math.abs( position.y - this.numberLine.centerPosition.y ) <= POINT_CREATION_DISTANCE &&
                    this.numberLine.displayedRangeProperty.value.contains( numberLineValue )
               ) {
-                const numberLinePoint = new NumberLinePoint( numberLineValue, pointController.color, pointController );
+                const numberLinePoint = new NumberLinePoint(
+                  numberLineValue,
+                  pointController.color,
+                  this.numberLine,
+                  pointController
+                );
                 this.numberLine.addPoint( numberLinePoint );
                 pointController.associateWithNumberLinePoint( numberLinePoint );
               }
@@ -134,7 +140,12 @@ define( require => {
               if ( Math.abs( position.x - this.numberLine.centerPosition.x ) <= POINT_CREATION_DISTANCE &&
                    this.numberLine.displayedRangeProperty.value.contains( numberLineValue )
               ) {
-                const numberLinePoint = new NumberLinePoint( numberLineValue, pointController.color, pointController );
+                const numberLinePoint = new NumberLinePoint(
+                  numberLineValue,
+                  pointController.color,
+                  this.numberLine,
+                  pointController
+                );
                 this.numberLine.addPoint( numberLinePoint );
                 pointController.associateWithNumberLinePoint( numberLinePoint );
               }
@@ -162,6 +173,12 @@ define( require => {
 
               pointController.positionProperty.reset();
             }
+            else if ( this.numberLine.residentPoints.indexOf( pointController.numberLinePoint ) >= 0 ) {
+              const pointLocation = this.numberLine.valueToModelPosition(
+                pointController.numberLinePoint.valueProperty.value
+              );
+              pointController.positionProperty.value = pointLocation.plusXY( 0, POINT_CONTROLLER_DISTANCE );
+            }
           } );
         }
         else {
@@ -171,6 +188,12 @@ define( require => {
                  !pointController.draggingProperty.value ) {
 
               pointController.goToAlternativeHome();
+            }
+            else if ( this.numberLine.residentPoints.indexOf( pointController.numberLinePoint ) >= 0 ) {
+              const pointLocation = this.numberLine.valueToModelPosition(
+                pointController.numberLinePoint.valueProperty.value
+              );
+              pointController.positionProperty.value = pointLocation.plusXY( POINT_CONTROLLER_DISTANCE, 0 );
             }
           } );
         }
