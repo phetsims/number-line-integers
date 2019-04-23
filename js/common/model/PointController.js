@@ -13,6 +13,8 @@ define( require => {
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+  const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
+  const Vector2 = require( 'DOT/Vector2' );
   const Vector2Property = require( 'DOT/Vector2Property' );
 
   class PointController {
@@ -30,10 +32,16 @@ define( require => {
 
         // {Vector2} - a "second home" for the point controller, used when the number lines with which it interacts can
         // be in multiple orientations
-        alternativeHome: null
+        alternativeHome: null,
+
+        // {number} - offset in model coords from a horizontal number line
+        offsetFromHorizontalNumberLine: 40,
+
+        // {number} - offset in model coords from a vertical number line
+        offsetFromVerticalNumberLine: 40
       }, options );
 
-      // @public {Vector2Property} - position of this point in model space
+      // @public (read-only) {Vector2Property} - position of this point in model space
       this.positionProperty = new Vector2Property( initialPosition );
 
       // @public {BooleanProperty} - indicates whether this is being dragged by the user
@@ -54,6 +62,11 @@ define( require => {
           this.numberLinePoint.valueProperty.set( numberLine.modelPositionToValue( position ) );
         }
       } );
+
+      // @private
+      this.offsetFromHorizontalNumberLine = options.offsetFromHorizontalNumberLine;
+      this.offsetFromVerticalNumberLine = options.offsetFromVerticalNumberLine;
+      this.numberLine = numberLine;
     }
 
     /**
@@ -71,6 +84,32 @@ define( require => {
      */
     clearNumberLinePoint() {
       this.numberLinePoint = null;
+    }
+
+    /**
+     * propose a new position to this point controller, may or may not actually update the position depending on whether
+     * a point on the number line is being controlled and how that point moves
+     * @param proposedPosition
+     */
+    proposePosition( proposedPosition ) {
+      if ( this.numberLinePoint ) {
+
+        this.numberLinePoint.valueProperty.set( this.numberLine.modelPositionToValue( proposedPosition ) );
+        const currentPointPosition = this.numberLinePoint.getPositionInModelSpace();
+
+        // this point controller is currently controlling a point, so its motion is somewhat constrained
+        if ( this.numberLine.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
+          this.positionProperty.set( new Vector2( currentPointPosition.x, currentPointPosition.y + this.offsetFromHorizontalNumberLine ) );
+        }
+        else {
+          this.positionProperty.set( new Vector2( currentPointPosition.x + this.offsetFromVerticalNumberLine, currentPointPosition.y ) );
+        }
+      }
+      else {
+
+        // no point is being controlled, so the proposed position is always acccepted
+        this.positionProperty.set( proposedPosition );
+      }
     }
 
     /**

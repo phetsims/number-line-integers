@@ -50,10 +50,10 @@ define( require => {
         dragBoundsProperty: new Property( this.layoutBounds ),
         start: event => {
           pointController.draggingProperty.set( true );
-          pointController.positionProperty.set( this.globalToParentPoint( event.pointer.point ) );
+          pointController.proposePosition( this.globalToParentPoint( event.pointer.point ) );
         },
         drag: event => {
-          pointController.positionProperty.set( this.globalToParentPoint( event.pointer.point ) );
+          pointController.proposePosition( this.globalToParentPoint( event.pointer.point ) );
         },
         end: () => {
           pointController.draggingProperty.set( false );
