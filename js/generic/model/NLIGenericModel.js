@@ -19,7 +19,6 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  const POINT_CREATION_DISTANCE = 60; // distance from number line in model/view coords where points get created
   const POINT_CONTROLLER_DISTANCE = 40; // distance from number line at which the point controllers reside when controlling points
   const BOTTOM_BOX_WIDTH = 350;
   const BOTTOM_BOX_HEIGHT = 70;
@@ -110,7 +109,7 @@ define( require => {
             if ( pointController.numberLinePoint === null ) {
 
               // check if a point should be created and added
-              if ( Math.abs( position.y - this.numberLine.centerPosition.y ) <= POINT_CREATION_DISTANCE &&
+              if ( this.numberLine.withinVerticalPointCreationDistance( position ) &&
                    this.numberLine.displayedRangeProperty.value.contains( numberLineValue )
               ) {
                 const numberLinePoint = new NumberLinePoint(
@@ -126,7 +125,7 @@ define( require => {
             else {
 
               // check if the point should be removed
-              if ( Math.abs( position.y - this.numberLine.centerPosition.y ) > POINT_CREATION_DISTANCE ||
+              if ( !this.numberLine.withinVerticalPointCreationDistance( position ) ||
                    !this.numberLine.displayedRangeProperty.value.contains( numberLineValue ) ) {
                 this.numberLine.removePoint( pointController.numberLinePoint );
                 pointController.clearNumberLinePoint();
@@ -137,7 +136,7 @@ define( require => {
             if ( pointController.numberLinePoint === null ) {
 
               // check if a point should be created and added
-              if ( Math.abs( position.x - this.numberLine.centerPosition.x ) <= POINT_CREATION_DISTANCE &&
+              if ( this.numberLine.withinHorizontalPointCreationDistance( position ) &&
                    this.numberLine.displayedRangeProperty.value.contains( numberLineValue )
               ) {
                 const numberLinePoint = new NumberLinePoint(
@@ -153,7 +152,7 @@ define( require => {
             else {
 
               // check if the point should be removed
-              if ( Math.abs( position.x - this.numberLine.centerPosition.x ) > POINT_CREATION_DISTANCE ||
+              if ( !this.numberLine.withinHorizontalPointCreationDistance( position ) ||
                    !this.numberLine.displayedRangeProperty.value.contains( numberLineValue ) ) {
                 this.numberLine.removePoint( pointController.numberLinePoint );
                 pointController.clearNumberLinePoint();
