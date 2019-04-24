@@ -92,7 +92,7 @@ define( require => {
      * @param proposedPosition
      */
     proposePosition( proposedPosition ) {
-      if ( this.numberLinePoint ) {
+      if ( this.numberLinePoint && this.numberLine.withinPointCreationDistance( proposedPosition ) ) {
 
         this.numberLinePoint.valueProperty.set( this.numberLine.modelPositionToValue( proposedPosition ) );
         const currentPointPosition = this.numberLinePoint.getPositionInModelSpace();
