@@ -89,6 +89,7 @@ define( require => {
      * propose a new position to this point controller, may or may not actually update the position depending on whether
      * a point on the number line is being controlled and how that point moves
      * @param {Vector2} proposedPosition
+     * @public
      */
     proposePosition( proposedPosition ) {
       if ( this.numberLinePoint && this.numberLine.withinPointCreationDistance( proposedPosition ) ) {
@@ -110,6 +111,7 @@ define( require => {
      * given a number line point's position in model space, set this point controller to that value, but offset from the
      * number line
      * @param {Vector2} pointPosition
+     * @public
      */
     setPositionOnNumberLine( pointPosition ) {
       if ( this.numberLine.isHorizontal() ) {

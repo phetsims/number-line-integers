@@ -191,6 +191,11 @@ define( require => {
       );
     }
 
+    /**
+     * given a value on the number line, what is its position on this number line node
+     * @param {number} numberLineValue
+     * @returns {Vector2}
+     */
     numberLineValueToViewPosition( numberLineValue ) {
       const position = Vector2.ZERO.copy();
       if ( this.numberLine.isHorizontal() ) {
@@ -285,6 +290,7 @@ define( require => {
       );
     }
 
+    // @public
     dispose() {
       this.multilink.dispose();
       super.dispose();

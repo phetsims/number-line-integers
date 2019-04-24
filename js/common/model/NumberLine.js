@@ -171,6 +171,7 @@ define( require => {
      * whether the provided point controller position is within range for a number line point to be created
      * @param {Vector2} pointControllerPosition
      * @returns {boolean}
+     * @public
      */
     withinPointCreationDistance( pointControllerPosition ) {
       if ( this.isHorizontal() ) {
@@ -183,6 +184,7 @@ define( require => {
 
     /**
      * reset to initial state
+     * @public
      */
     reset() {
       this.residentPoints.clear();

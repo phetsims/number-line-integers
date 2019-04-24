@@ -46,6 +46,7 @@ define( require => {
     /**
      * given the proposed value, set the value of this number line point to the closest valid value on the number line
      * @param {number} numberLineValue
+     * @public
      */
     proposeValue( numberLineValue ) {
       const numberLineRange = this.numberLine.displayedRangeProperty.value;
