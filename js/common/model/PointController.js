@@ -35,10 +35,10 @@ define( require => {
         alternativeHome: null,
 
         // {number} - offset in model coords from a horizontal number line
-        offsetFromHorizontalNumberLine: 40,
+        offsetFromHorizontalNumberLine: 50,
 
         // {number} - offset in model coords from a vertical number line
-        offsetFromVerticalNumberLine: 40
+        offsetFromVerticalNumberLine: 52
       }, options );
 
       // @public (read-only) {Vector2Property} - position of this point in model space
@@ -98,17 +98,26 @@ define( require => {
         const currentPointPosition = this.numberLinePoint.getPositionInModelSpace();
 
         // this point controller is currently controlling a point, so its motion is somewhat constrained
-        if ( this.numberLine.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
-          this.positionProperty.set( new Vector2( currentPointPosition.x, currentPointPosition.y + this.offsetFromHorizontalNumberLine ) );
-        }
-        else {
-          this.positionProperty.set( new Vector2( currentPointPosition.x + this.offsetFromVerticalNumberLine, currentPointPosition.y ) );
-        }
+        this.setPositionOnNumberLine( currentPointPosition );
       }
       else {
 
         // no point is being controlled, so the proposed position is always acccepted
         this.positionProperty.set( proposedPosition );
+      }
+    }
+
+    /**
+     * given a number line point's position in model space, set this point controller to that value, but offset from the
+     * number line
+     * @param {Vector2} pointPosition
+     */
+    setPositionOnNumberLine( pointPosition ) {
+      if ( this.numberLine.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
+        this.positionProperty.set( new Vector2( pointPosition.x, pointPosition.y + this.offsetFromHorizontalNumberLine ) );
+      }
+      else {
+        this.positionProperty.set( new Vector2( pointPosition.x + this.offsetFromVerticalNumberLine, pointPosition.y ) );
       }
     }
 

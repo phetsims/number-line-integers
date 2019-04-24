@@ -19,7 +19,6 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  const POINT_CONTROLLER_DISTANCE = 40; // distance from number line at which the point controllers reside when controlling points
   const BOTTOM_BOX_WIDTH = 350;
   const BOTTOM_BOX_HEIGHT = 70;
   const SIDE_BOX_WIDTH = BOTTOM_BOX_HEIGHT;
@@ -144,10 +143,10 @@ define( require => {
               pointController.positionProperty.reset();
             }
             else if ( this.numberLine.residentPoints.indexOf( pointController.numberLinePoint ) >= 0 ) {
-              const pointLocation = this.numberLine.valueToModelPosition(
+              const pointPosition = this.numberLine.valueToModelPosition(
                 pointController.numberLinePoint.valueProperty.value
               );
-              pointController.positionProperty.value = pointLocation.plusXY( 0, POINT_CONTROLLER_DISTANCE );
+              pointController.setPositionOnNumberLine( pointPosition );
             }
           } );
         }
@@ -160,10 +159,10 @@ define( require => {
               pointController.goToAlternativeHome();
             }
             else if ( this.numberLine.residentPoints.indexOf( pointController.numberLinePoint ) >= 0 ) {
-              const pointLocation = this.numberLine.valueToModelPosition(
+              const pointPosition = this.numberLine.valueToModelPosition(
                 pointController.numberLinePoint.valueProperty.value
               );
-              pointController.positionProperty.value = pointLocation.plusXY( POINT_CONTROLLER_DISTANCE, 0 );
+              pointController.setPositionOnNumberLine( pointPosition );
             }
           } );
         }
