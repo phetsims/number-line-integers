@@ -146,7 +146,7 @@ define( require => {
               const pointPosition = this.numberLine.valueToModelPosition(
                 pointController.numberLinePoint.valueProperty.value
               );
-              pointController.setPositionOnNumberLine( pointPosition );
+              pointController.setPositionRelativeToPoint( pointPosition );
             }
           } );
         }
@@ -162,7 +162,7 @@ define( require => {
               const pointPosition = this.numberLine.valueToModelPosition(
                 pointController.numberLinePoint.valueProperty.value
               );
-              pointController.setPositionOnNumberLine( pointPosition );
+              pointController.setPositionRelativeToPoint( pointPosition );
             }
           } );
         }

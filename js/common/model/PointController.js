@@ -98,7 +98,7 @@ define( require => {
         const currentPointPosition = this.numberLinePoint.getPositionInModelSpace();
 
         // this point controller is currently controlling a point, so its motion is somewhat constrained
-        this.setPositionOnNumberLine( currentPointPosition );
+        this.setPositionRelativeToPoint( currentPointPosition );
       }
       else {
 
@@ -113,7 +113,7 @@ define( require => {
      * @param {Vector2} pointPosition
      * @public
      */
-    setPositionOnNumberLine( pointPosition ) {
+    setPositionRelativeToPoint( pointPosition ) {
       if ( this.numberLine.isHorizontal() ) {
         this.positionProperty.set( new Vector2( pointPosition.x, pointPosition.y + this.offsetFromHorizontalNumberLine ) );
       }
