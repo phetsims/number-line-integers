@@ -90,6 +90,15 @@ define( require => {
     }
 
     /**
+     * whether this number line is in the horizontal orientation
+     * @returns {boolean}
+     * @public
+     */
+    isHorizontal() {
+      return this.orientationProperty.value === NumberLineOrientation.HORIZONTAL;
+    }
+
+    /**
      * project a position in model space into a 1D value on the number line
      * @param {Vector2} modelPosition
      * @returns {number}
@@ -101,7 +110,7 @@ define( require => {
         'must set model display bounds if using this method'
       );
       let numberLineValue;
-      if ( this.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
+      if ( this.isHorizontal() ) {
         numberLineValue = ( modelPosition.x - this.centerPosition.x ) * this.modelToPositonScale.x;
       }
       else {
@@ -125,7 +134,7 @@ define( require => {
       );
 
       let modelPosition;
-      if ( this.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
+      if ( this.isHorizontal() ) {
         modelPosition = new Vector2(
           numberLineValue / this.modelToPositonScale.x + this.centerPosition.x,
           this.centerPosition.y
@@ -164,7 +173,7 @@ define( require => {
      * @returns {boolean}
      */
     withinPointCreationDistance( pointControllerPosition ) {
-      if ( this.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
+      if ( this.isHorizontal() ) {
         return Math.abs( pointControllerPosition.y - this.centerPosition.y ) <= POINT_CREATION_DISTANCE;
       }
       else {

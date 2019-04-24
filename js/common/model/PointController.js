@@ -13,7 +13,6 @@ define( require => {
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const Vector2 = require( 'DOT/Vector2' );
   const Vector2Property = require( 'DOT/Vector2Property' );
 
@@ -113,7 +112,7 @@ define( require => {
      * @param {Vector2} pointPosition
      */
     setPositionOnNumberLine( pointPosition ) {
-      if ( this.numberLine.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
+      if ( this.numberLine.isHorizontal() ) {
         this.positionProperty.set( new Vector2( pointPosition.x, pointPosition.y + this.offsetFromHorizontalNumberLine ) );
       }
       else {

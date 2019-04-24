@@ -193,7 +193,7 @@ define( require => {
 
     numberLineValueToViewPosition( numberLineValue ) {
       const position = Vector2.ZERO.copy();
-      if ( this.numberLine.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
+      if ( this.numberLine.isHorizontal() ) {
         position.setXY(
           this.numberLine.centerPosition.x + this.numberLineScale * numberLineValue,
           this.numberLine.centerPosition.y
@@ -227,7 +227,7 @@ define( require => {
       // get the center postion of the tick mark
       const tmCenter = this.numberLineValueToViewPosition( value );
 
-      if ( this.numberLine.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
+      if ( this.numberLine.isHorizontal() ) {
 
         const tickMark = new Line( tmCenter.x, tmCenter.y - length, tmCenter.x, tmCenter.y + length, tickMarkOptions );
         parentNode.addChild( tickMark );

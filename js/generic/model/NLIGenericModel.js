@@ -87,12 +87,12 @@ define( require => {
         // watch for the point controller be released over the point controller box and return it to the holding cell
         pointController.draggingProperty.lazyLink( dragging => {
           if ( !dragging ) {
-            if ( this.numberLine.orientationProperty.value === NumberLineOrientation.HORIZONTAL &&
+            if ( this.numberLine.isHorizontal() &&
                  BOTTOM_BOX_BOUNDS.containsPoint( pointController.positionProperty.value ) ) {
 
               pointController.positionProperty.reset();
             }
-            else if ( this.numberLine.orientationProperty.value === NumberLineOrientation.VERTICAL &&
+            else if ( !this.numberLine.isHorizontal() &&
                       SIDE_BOX_BOUNDS.containsPoint( pointController.positionProperty.value ) ) {
 
               pointController.goToAlternativeHome();
