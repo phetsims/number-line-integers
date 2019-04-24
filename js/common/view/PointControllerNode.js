@@ -10,6 +10,7 @@ define( require => {
 
   // modules
   const DragListener = require( 'SCENERY/listeners/DragListener' );
+  const Line = require( 'SCENERY/nodes/Line' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Property = require( 'AXON/Property' );
@@ -36,13 +37,29 @@ define( require => {
 
       super( options );
 
-      this.addChild( new ShadedSphereNode( options.radius * 2, {
-        mainColor: pointController.color
-      } ) );
+      // create and add the line that will connect to the number line point, if present
+      const connectorLine = new Line( 0, 0, 0, 0, { stroke: 'gray' } );
+      connectorLine.visible = false;
+      this.addChild( connectorLine );
 
-      // monitor the point controller and adjust position to match
+      // create and add the shaded sphere
+      const sphereNode = new ShadedSphereNode( options.radius * 2, {
+        mainColor: pointController.color
+      } );
+      this.addChild( sphereNode );
+
+      // monitor the point controller and adjust positions to match
       pointController.positionProperty.link( position => {
-        this.center = position;
+        sphereNode.center = position;
+
+        if ( pointController.numberLinePoint ) {
+          const pointPosition = pointController.numberLinePoint.getPositionInModelSpace();
+          connectorLine.setLine( position.x, position.y, pointPosition.x, pointPosition.y );
+          connectorLine.visible = true;
+        }
+        else {
+          connectorLine.visible = false;
+        }
       } );
 
       // drag handler

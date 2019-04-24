@@ -229,7 +229,7 @@ define( require => {
         lineWidth: lineWidth
       };
 
-      // get the center postion of the tick mark
+      // get the center position of the tick mark
       const tmCenter = this.numberLineValueToViewPosition( value );
 
       if ( this.numberLine.isHorizontal() ) {
@@ -265,27 +265,14 @@ define( require => {
 
       super();
 
-      // define the line that will connect to the point controller if present
-      const connectorLine = new Line( 0, 0, 0, 0.1, { stroke: 'gray' } );
-      this.addChild( connectorLine );
-
       // add the dot
       const circle = new Circle( POINT_NODE_RADIUS, { fill: numberLinePoint.colorProperty } );
       this.addChild( circle );
 
       // update the point representation as it moves
       this.multilink = Property.multilink(
-        [ numberLinePoint.valueProperty, numberLine.orientationProperty ],
-        () => {
+        [ numberLinePoint.valueProperty, numberLine.orientationProperty ], () => {
           circle.center = numberLinePoint.getPositionInModelSpace();
-          if ( numberLinePoint.controller ) {
-            connectorLine.visible = true;
-            const controllerPosition = numberLinePoint.controller.positionProperty.value;
-            connectorLine.setLine( circle.center.x, circle.center.y, controllerPosition.x, controllerPosition.y );
-          }
-          else {
-            connectorLine.visible = false;
-          }
         }
       );
     }
