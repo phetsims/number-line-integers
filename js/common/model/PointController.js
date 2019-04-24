@@ -89,12 +89,12 @@ define( require => {
     /**
      * propose a new position to this point controller, may or may not actually update the position depending on whether
      * a point on the number line is being controlled and how that point moves
-     * @param proposedPosition
+     * @param {Vector2} proposedPosition
      */
     proposePosition( proposedPosition ) {
       if ( this.numberLinePoint && this.numberLine.withinPointCreationDistance( proposedPosition ) ) {
 
-        this.numberLinePoint.valueProperty.set( this.numberLine.modelPositionToValue( proposedPosition ) );
+        this.numberLinePoint.proposeValue( this.numberLine.modelPositionToValue( proposedPosition ) );
         const currentPointPosition = this.numberLinePoint.getPositionInModelSpace();
 
         // this point controller is currently controlling a point, so its motion is somewhat constrained

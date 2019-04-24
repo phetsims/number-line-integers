@@ -42,6 +42,24 @@ define( require => {
     getPositionInModelSpace() {
       return this.numberLine.valueToModelPosition( this.valueProperty.value );
     }
+
+    /**
+     * given the proposed value, set the value of this number line point to the closest valid value on the number line
+     * @param {number} numberLineValue
+     */
+    proposeValue( numberLineValue ) {
+      const numberLineRange = this.numberLine.displayedRangeProperty.value;
+      const valueDelta = this.numberLine.tickMarkSpacingProperty.value;
+      let closestValue = numberLineRange.min;
+
+      for ( let value = numberLineRange.min; value <= numberLineRange.max; value += valueDelta ) {
+        if ( Math.abs( value - numberLineValue ) < Math.abs( closestValue - numberLineValue ) ) {
+          closestValue = value;
+        }
+      }
+
+      this.valueProperty.set( closestValue );
+    }
   }
 
   return numberLineIntegers.register( 'NumberLinePoint', NumberLinePoint );
