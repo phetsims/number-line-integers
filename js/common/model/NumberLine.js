@@ -19,6 +19,9 @@ define( require => {
   const Range = require( 'DOT/Range' );
   const Vector2 = require( 'DOT/Vector2' );
 
+  // constants
+  const POINT_CREATION_DISTANCE = 60; // distance from number line in model/view coords where points get created
+
   class NumberLine {
 
     /**
@@ -153,6 +156,20 @@ define( require => {
      */
     removePoint( numberLinePoint ) {
       this.residentPoints.remove( numberLinePoint );
+    }
+
+    /**
+     * whether the provided point controller position is within range for a number line point to be created
+     * @param {Vector2} pointControllerPosition
+     * @returns {boolean}
+     */
+    withinPointCreationDistance( pointControllerPosition ) {
+      if ( this.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
+        return Math.abs( pointControllerPosition.y - this.centerPosition.y ) <= POINT_CREATION_DISTANCE;
+      }
+      else {
+        return Math.abs( pointControllerPosition.x - this.centerPosition.x ) <= POINT_CREATION_DISTANCE;
+      }
     }
 
     /**

@@ -19,7 +19,6 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  const POINT_CREATION_DISTANCE = 60; // distance from number line in model/view coords where points get created
   const POINT_CONTROLLER_DISTANCE = 40; // distance from number line at which the point controllers reside when controlling points
   const BOTTOM_BOX_WIDTH = 350;
   const BOTTOM_BOX_HEIGHT = 70;
@@ -105,59 +104,30 @@ define( require => {
         // monitor each point controller for proximity to the number line and add/remove number line points accordingly
         pointController.positionProperty.link( position => {
           const numberLineValue = this.numberLine.modelPositionToValue( position );
-          if ( this.numberLine.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
 
-            if ( pointController.numberLinePoint === null ) {
+          if ( pointController.numberLinePoint === null ) {
 
-              // check if a point should be created and added
-              if ( Math.abs( position.y - this.numberLine.centerPosition.y ) <= POINT_CREATION_DISTANCE &&
-                   this.numberLine.displayedRangeProperty.value.contains( numberLineValue )
-              ) {
-                const numberLinePoint = new NumberLinePoint(
-                  numberLineValue,
-                  pointController.color,
-                  this.numberLine,
-                  pointController
-                );
-                this.numberLine.addPoint( numberLinePoint );
-                pointController.associateWithNumberLinePoint( numberLinePoint );
-              }
-            }
-            else {
-
-              // check if the point should be removed
-              if ( Math.abs( position.y - this.numberLine.centerPosition.y ) > POINT_CREATION_DISTANCE ||
-                   !this.numberLine.displayedRangeProperty.value.contains( numberLineValue ) ) {
-                this.numberLine.removePoint( pointController.numberLinePoint );
-                pointController.clearNumberLinePoint();
-              }
+            // check if a point should be created and added
+            if ( this.numberLine.withinPointCreationDistance( position ) &&
+                 this.numberLine.displayedRangeProperty.value.contains( numberLineValue )
+            ) {
+              const numberLinePoint = new NumberLinePoint(
+                numberLineValue,
+                pointController.color,
+                this.numberLine,
+                pointController
+              );
+              this.numberLine.addPoint( numberLinePoint );
+              pointController.associateWithNumberLinePoint( numberLinePoint );
             }
           }
           else {
-            if ( pointController.numberLinePoint === null ) {
 
-              // check if a point should be created and added
-              if ( Math.abs( position.x - this.numberLine.centerPosition.x ) <= POINT_CREATION_DISTANCE &&
-                   this.numberLine.displayedRangeProperty.value.contains( numberLineValue )
-              ) {
-                const numberLinePoint = new NumberLinePoint(
-                  numberLineValue,
-                  pointController.color,
-                  this.numberLine,
-                  pointController
-                );
-                this.numberLine.addPoint( numberLinePoint );
-                pointController.associateWithNumberLinePoint( numberLinePoint );
-              }
-            }
-            else {
-
-              // check if the point should be removed
-              if ( Math.abs( position.x - this.numberLine.centerPosition.x ) > POINT_CREATION_DISTANCE ||
-                   !this.numberLine.displayedRangeProperty.value.contains( numberLineValue ) ) {
-                this.numberLine.removePoint( pointController.numberLinePoint );
-                pointController.clearNumberLinePoint();
-              }
+            // check if the point should be removed
+            if ( !this.numberLine.withinPointCreationDistance( position ) ||
+                 !this.numberLine.displayedRangeProperty.value.contains( numberLineValue ) ) {
+              this.numberLine.removePoint( pointController.numberLinePoint );
+              pointController.clearNumberLinePoint();
             }
           }
         } );
