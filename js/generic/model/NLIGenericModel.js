@@ -131,7 +131,7 @@ define( require => {
       } );
 
       // Add a listener to handle any cases where a change to the number line's display range causes a point that was
-      // already on the number line to be outside of the range.
+      // already on the number line to be outside of the displayed range.
       this.numberLine.displayedRangeProperty.link( displayedRange => {
         this.pointControllers.forEach( pointController => {
           if ( pointController.numberLinePoint &&
