@@ -21,6 +21,7 @@ define( require => {
 
   // constants
   const POINT_CREATION_DISTANCE = 60; // distance from number line in model/view coords where points get created
+  const POINT_REMOVAL_DISTANCE = 90; // distance from number line in model/view coords where points get removed
 
   class NumberLine {
 
@@ -174,11 +175,31 @@ define( require => {
      * @public
      */
     withinPointCreationDistance( pointControllerPosition ) {
+      return this.withinDistance( pointControllerPosition, POINT_CREATION_DISTANCE );
+    }
+
+    /**
+     * whether the provided point controller position is within range for a number line point to be removed
+     * @param {Vector2} pointControllerPosition
+     * @returns {boolean}
+     * @public
+     */
+    withinPointRemovalDistance( pointControllerPosition ) {
+      return this.withinDistance( pointControllerPosition, POINT_REMOVAL_DISTANCE );
+    }
+
+    /**
+     * whether the provided position is within range of the provided distance
+     * @param {Vector2} pointControllerPosition
+     * @param {number} distance
+     * @returns {boolean}
+     */
+    withinDistance( pointControllerPosition, distance ) {
       if ( this.isHorizontal() ) {
-        return Math.abs( pointControllerPosition.y - this.centerPosition.y ) <= POINT_CREATION_DISTANCE;
+        return Math.abs( pointControllerPosition.y - this.centerPosition.y ) <= distance;
       }
       else {
-        return Math.abs( pointControllerPosition.x - this.centerPosition.x ) <= POINT_CREATION_DISTANCE;
+        return Math.abs( pointControllerPosition.x - this.centerPosition.x ) <= distance;
       }
     }
 

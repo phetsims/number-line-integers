@@ -13,6 +13,7 @@ define( require => {
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+  const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
   const Vector2 = require( 'DOT/Vector2' );
   const Vector2Property = require( 'DOT/Vector2Property' );
 
@@ -55,17 +56,11 @@ define( require => {
       // &public (read-only) {Color}
       this.color = options.color;
 
-      // when moved, update the number line point position (if we have one)
-      this.positionProperty.link( position => {
-        if ( this.numberLinePoint ) {
-          this.numberLinePoint.valueProperty.set( numberLine.modelPositionToValue( position ) );
-        }
-      } );
-
       // @private
       this.offsetFromHorizontalNumberLine = options.offsetFromHorizontalNumberLine;
       this.offsetFromVerticalNumberLine = options.offsetFromVerticalNumberLine;
       this.numberLine = numberLine;
+      this.pointValueChangeHandler = null;
     }
 
     /**
@@ -75,6 +70,11 @@ define( require => {
      */
     associateWithNumberLinePoint( numberLinePoint ) {
       this.numberLinePoint = numberLinePoint;
+      this.pointValueChangeHandler = () => {
+        const currentPointPosition = this.numberLinePoint.getPositionInModelSpace();
+        this.setPositionRelativeToPoint( currentPointPosition );
+      };
+      numberLinePoint.valueProperty.link( this.pointValueChangeHandler );
     }
 
     /**
@@ -82,6 +82,10 @@ define( require => {
      * @public
      */
     clearNumberLinePoint() {
+      if ( this.pointValueChangeHandler ) {
+        this.numberLinePoint.valueProperty.unlink( this.pointValueChangeHandler );
+        this.pointValueChangeHandler = null;
+      }
       this.numberLinePoint = null;
     }
 
@@ -92,18 +96,36 @@ define( require => {
      * @public
      */
     proposePosition( proposedPosition ) {
-      if ( this.numberLinePoint && this.numberLine.withinPointCreationDistance( proposedPosition ) ) {
 
-        this.numberLinePoint.proposeValue( this.numberLine.modelPositionToValue( proposedPosition ) );
-        const currentPointPosition = this.numberLinePoint.getPositionInModelSpace();
+      // mapped the proposed position to a value on the number line
+      const proposedNumberLineValue = this.numberLine.modelPositionToValue( proposedPosition );
 
-        // this point controller is currently controlling a point, so its motion is somewhat constrained
-        this.setPositionRelativeToPoint( currentPointPosition );
+      if ( this.numberLinePoint ) {
+
+        // determine whether to propose a new value for the point or to detach and remove the point
+        if ( this.numberLine.withinPointRemovalDistance( proposedPosition ) &&
+             this.numberLine.displayedRangeProperty.value.contains( proposedNumberLineValue ) ) {
+          this.numberLinePoint.proposeValue( proposedNumberLineValue );
+        }
+        else {
+          this.numberLine.removePoint( this.numberLinePoint );
+          this.clearNumberLinePoint();
+        }
       }
       else {
 
-        // no point is being controlled, so the proposed position is always acccepted
-        this.positionProperty.set( proposedPosition );
+        // check if a point should be created and added based on the proposed position
+        if ( this.numberLine.withinPointCreationDistance( proposedPosition ) &&
+             this.numberLine.displayedRangeProperty.value.contains( proposedNumberLineValue ) ) {
+          const numberLinePoint = new NumberLinePoint( proposedNumberLineValue, this.color, this.numberLine, this );
+          this.numberLine.addPoint( numberLinePoint );
+          this.associateWithNumberLinePoint( numberLinePoint );
+        }
+        else {
+
+          // just accept the proposed position, no other action is necessary
+          this.positionProperty.set( proposedPosition );
+        }
       }
     }
 
