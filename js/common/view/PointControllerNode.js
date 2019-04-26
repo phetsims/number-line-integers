@@ -62,6 +62,13 @@ define( require => {
         }
       } );
 
+      // pop to the front of the z-order when dragged
+      pointController.draggingProperty.link( dragging => {
+        if ( dragging ) {
+          this.moveToFront();
+        }
+      } );
+
       // drag handler
       this.addInputListener( new DragListener( {
         dragBoundsProperty: new Property( this.layoutBounds ),

@@ -14,6 +14,7 @@ define( function( require ) {
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
+  const Node = require( 'SCENERY/nodes/Node' );
   const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -88,6 +89,15 @@ define( function( require ) {
 
       // NOTE: There is no model-view transform for this sim.  Model and view space use the same coordinate system.
 
+      // root node on which the point controllers will live
+      const pointControllerLayer = new Node();
+      this.addChild( pointControllerLayer );
+
+      // add the point controller nodes
+      model.pointControllers.forEach( ( pointController ) => {
+        pointControllerLayer.addChild( new PointControllerNode( pointController ) );
+      } );
+
       // add the number line node
       this.addChild( new NumberLineNode( model.numberLine ) );
 
@@ -104,11 +114,6 @@ define( function( require ) {
 
         this.addChild( pointControllerBoxNode );
         pointControllerBoxNode.moveToBack();
-      } );
-
-      // add the point controller nodes
-      model.pointControllers.forEach( ( pointController ) => {
-        this.addChild( new PointControllerNode( pointController ) );
       } );
 
       // reset all button
