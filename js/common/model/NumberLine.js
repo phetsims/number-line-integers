@@ -14,7 +14,6 @@ define( require => {
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
-  const NumberProperty = require( 'AXON/NumberProperty' );
   const ObservableArray = require( 'AXON/ObservableArray' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
@@ -43,9 +42,6 @@ define( require => {
         // {boolean} - whether tick marks should be initially displayed
         tickMarksInitiallyDisplayed: false,
 
-        // {number} - initial spacing between tick marks
-        initialTickMarkSpacing: 1,
-
         // {boolean} - whether point labels should initially be shown
         pointLabelsInitiallyShown: false,
 
@@ -69,9 +65,6 @@ define( require => {
 
       // @public {BooleanProperty} - controls whether tick marks should be displayed to the user
       this.tickMarksVisibleProperty = new BooleanProperty( options.tickMarksInitiallyDisplayed );
-
-      // @public {NumberProperty} - the spacing, in number line units, between the tick marks
-      this.tickMarkSpacingProperty = new NumberProperty( options.initialTickMarkSpacing );
 
       // @public {BooleanProperty} - controls whether point labels are displayed to the user
       this.showPointLabels = new BooleanProperty( options.pointLabelsInitiallyShown );
@@ -141,7 +134,7 @@ define( require => {
       }
 
       // round the value based on the current tick mark spacing
-      return Util.roundToInterval( numberLineValue, this.tickMarkSpacingProperty.value );
+      return Util.roundSymmetric( numberLineValue );
     }
 
     /**
@@ -246,7 +239,6 @@ define( require => {
       this.orientationProperty.reset();
       this.displayedRangeProperty.reset();
       this.tickMarksVisibleProperty.reset();
-      this.tickMarkSpacingProperty.reset();
       this.showPointLabels.reset();
       this.addInitialPoints();
     }

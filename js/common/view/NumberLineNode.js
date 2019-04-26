@@ -167,9 +167,29 @@ define( require => {
           middleTickMarksRootNode.removeAllChildren();
           endTickMarksRootNode.removeAllChildren();
 
+          // Derive the tick mark spacing from the range.  This mapping was taken from the Number Line Integers design
+          // spec, and could be made into a optional mapping function if more flexibility is needed.
+          let tickMarkSpacing;
+          switch( numberLine.displayedRangeProperty.value.getLength() ) {
+            case 20:
+              tickMarkSpacing = 1;
+              break;
+            case 40:
+              tickMarkSpacing = 5;
+              break;
+            case 60:
+              tickMarkSpacing = 5;
+              break;
+            case 200:
+              tickMarkSpacing = 25;
+              break;
+            default:
+              tickMarkSpacing = 1;
+              break;
+          }
+
           // Draw the tick marks.  This could be optimized to be a single Path node for the ticks if a performance
           // improvement is ever needed.
-          const tickMarkSpacing = numberLine.tickMarkSpacingProperty.value;
           const minTickMarkValue = numberLine.displayedRangeProperty.value.min + tickMarkSpacing;
           const maxTickMarkValue = numberLine.displayedRangeProperty.value.max - tickMarkSpacing;
 
