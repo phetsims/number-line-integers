@@ -52,6 +52,13 @@ define( require => {
       // &public (read-only) {Color}
       this.color = options.color;
 
+      // if the displayed range of the number line changes while controlling a point, the position must be updated
+      numberLine.displayedRangeProperty.lazyLink( () => {
+        if ( this.numberLinePoint ) {
+          this.setPositionRelativeToPoint( this.numberLinePoint.getPositionInModelSpace() );
+        }
+      } );
+
       // @private
       this.offsetFromHorizontalNumberLine = options.offsetFromHorizontalNumberLine;
       this.offsetFromVerticalNumberLine = options.offsetFromVerticalNumberLine;

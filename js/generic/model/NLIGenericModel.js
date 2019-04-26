@@ -129,6 +129,23 @@ define( require => {
           } );
         }
       } );
+
+      // Add a listener to handle any cases where a change to the number line's display range causes a point that was
+      // already on the number line to be outside of the range.
+      this.numberLine.displayedRangeProperty.link( displayedRange => {
+        this.pointControllers.forEach( pointController => {
+          if ( pointController.numberLinePoint &&
+               !displayedRange.contains( pointController.numberLinePoint.valueProperty.value ) ) {
+
+            // the point controlled by this controller is not out of the displayed range, so get rid of it
+            this.numberLine.removePoint( pointController.numberLinePoint );
+            pointController.clearNumberLinePoint();
+
+            // put the controller away
+            this.putPointControllerInBox( pointController );
+          }
+        } );
+      } );
     }
 
     /**

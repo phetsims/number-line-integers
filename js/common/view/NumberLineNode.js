@@ -273,7 +273,7 @@ define( require => {
 
       // update the point representation as it moves
       this.multilink = Property.multilink(
-        [ numberLinePoint.valueProperty, numberLine.orientationProperty ], () => {
+        [ numberLinePoint.valueProperty, numberLine.orientationProperty, numberLine.displayedRangeProperty ], () => {
           circle.center = numberLinePoint.getPositionInModelSpace();
         }
       );
