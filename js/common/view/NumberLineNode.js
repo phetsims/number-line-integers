@@ -19,7 +19,6 @@ define( require => {
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Property = require( 'AXON/Property' );
   const Text = require( 'SCENERY/nodes/Text' );
-  const Vector2 = require( 'DOT/Vector2' );
 
   // constants
   const TICK_MARK_LABEL_DISTANCE = 5;
@@ -217,28 +216,6 @@ define( require => {
     }
 
     /**
-     * given a value on the number line, what is its position on this number line node
-     * @param {number} numberLineValue
-     * @returns {Vector2}
-     */
-    numberLineValueToViewPosition( numberLineValue ) {
-      const position = Vector2.ZERO.copy();
-      if ( this.numberLine.isHorizontal() ) {
-        position.setXY(
-          this.numberLine.centerPosition.x + this.numberLineScale * numberLineValue,
-          this.numberLine.centerPosition.y
-        );
-      }
-      else {
-        position.setXY(
-          this.numberLine.centerPosition.x,
-          this.numberLine.centerPosition.y - this.numberLineScale * numberLineValue
-        );
-      }
-      return position;
-    }
-
-    /**
      * method to add a tick mark to the provided parent node for the provided value
      * @param {Node} parentNode
      * @param {number} value
@@ -255,7 +232,7 @@ define( require => {
       };
 
       // get the center position of the tick mark
-      const tmCenter = this.numberLineValueToViewPosition( value );
+      const tmCenter = this.numberLine.valueToModelPosition( value );
 
       if ( this.numberLine.isHorizontal() ) {
 
