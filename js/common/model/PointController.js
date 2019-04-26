@@ -23,26 +23,22 @@ define( require => {
      * {Vector2} initialPosition
      * {NumberLine} numberLine - the number line on which this controller will be moving points
      */
-    constructor( initialPosition, numberLine, options ) {
+    constructor( numberLine, options ) {
 
       options = _.extend( {
 
         // color used when represented in the view
         color: 'black',
 
-        // {Vector2} - a "second home" for the point controller, used when the number lines with which it interacts can
-        // be in multiple orientations
-        alternativeHome: null,
-
-        // {number} - offset in model coords from a horizontal number line
+        // {number} - offset in model coords from a horizontal number line when controlling a point
         offsetFromHorizontalNumberLine: 50,
 
-        // {number} - offset in model coords from a vertical number line
+        // {number} - offset in model coords from a vertical number line when controlling a point
         offsetFromVerticalNumberLine: 52
       }, options );
 
       // @public (read-only) {Vector2Property} - position of this point in model space
-      this.positionProperty = new Vector2Property( initialPosition );
+      this.positionProperty = new Vector2Property( Vector2.ZERO );
 
       // @public {BooleanProperty} - indicates whether this is being dragged by the user
       this.draggingProperty = new BooleanProperty( false );
@@ -50,7 +46,7 @@ define( require => {
       // @public (read-only) {Vector2}
       this.alternativeHome = options.alternativeHome;
 
-      // @public (read-only) {NumberLinePoint|null} - point on the number line being controlled, null if no point
+      // @public (read-only) {NumberLinePoint|null} - point on the number line being controlled, null if none
       this.numberLinePoint = null;
 
       // &public (read-only) {Color}
@@ -142,15 +138,6 @@ define( require => {
       else {
         this.positionProperty.set( new Vector2( pointPosition.x + this.offsetFromVerticalNumberLine, pointPosition.y ) );
       }
-    }
-
-    /**
-     * reset to initial state
-     * @public
-     */
-    reset() {
-      this.clearNumberLinePoint();
-      this.positionProperty.reset();
     }
 
     /**

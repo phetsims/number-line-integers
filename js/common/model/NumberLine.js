@@ -13,6 +13,7 @@ define( require => {
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
+  const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const ObservableArray = require( 'AXON/ObservableArray' );
   const Property = require( 'AXON/Property' );
@@ -50,7 +51,11 @@ define( require => {
 
         // {Bounds2|null} - the model bounds over which this number line's full range will be displayed, must be set if
         // the methods that transform between model space and number line positions are to be employed
-        modelProjectionBounds: null
+        modelProjectionBounds: null,
+
+        // {Object{ initialValue, color}[]} - array of point specifications that describe what points should exist on
+        // the number line when constructed and after a reset
+        initialPointSpecs: []
       }, options );
 
       // @public (read-only) {Vector2} - center in model space where this number line exists
@@ -74,6 +79,10 @@ define( require => {
       // @public (read-only) {ObservableArray<NumberLinePoint>} - array of points on this number line
       this.residentPoints = new ObservableArray();
 
+      // @private {Object{ initialValue, color}[]} - array of point specifications that describe what points should
+      // exist on the number line when constructed and after a reset
+      this.initialPointSpecs = options.initialPointSpecs;
+
       // @public (read-only) {Bounds2|null} - The bounds into which the number line display range is projected when
       // being displayed in the view.  If not set, points can still be added, but values outside of model space can't
       // be projected.
@@ -89,6 +98,9 @@ define( require => {
           );
         }
       } );
+
+      // add the initial points
+      this.addInitialPoints();
     }
 
     /**
@@ -98,6 +110,15 @@ define( require => {
      */
     isHorizontal() {
       return this.orientationProperty.value === NumberLineOrientation.HORIZONTAL;
+    }
+
+    /**
+     * whether this number line is in the horizontal orientation
+     * @returns {boolean}
+     * @public
+     */
+    isVertical() {
+      return this.orientationProperty.value === NumberLineOrientation.VERTICAL;
     }
 
     /**
@@ -172,6 +193,16 @@ define( require => {
     }
 
     /**
+     * add the initial set of points to the number line, used during construction and reset
+     * @private
+     */
+    addInitialPoints() {
+      this.initialPointSpecs.forEach( pointSpec => {
+        this.addPoint( new NumberLinePoint( pointSpec.initialValue, pointSpec.color, this ) );
+      } );
+    }
+
+    /**
      * whether the provided point controller position is within range for a number line point to be created
      * @param {Vector2} pointControllerPosition
      * @returns {boolean}
@@ -217,6 +248,7 @@ define( require => {
       this.tickMarksVisibleProperty.reset();
       this.tickMarkSpacingProperty.reset();
       this.showPointLabels.reset();
+      this.addInitialPoints();
     }
   }
 

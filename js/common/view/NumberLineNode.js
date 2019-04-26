@@ -132,21 +132,26 @@ define( require => {
       const pointDisplayLayer = new Node();
       this.addChild( pointDisplayLayer );
 
-      // handle comings and goings of number line points
-      numberLine.residentPoints.addItemAddedListener( addedPoint => {
-        const pointNode = new PointNode( addedPoint, numberLine );
+      // handler for adding point nodes that correspond to points
+      function addNodeForPoint( point ) {
+        const pointNode = new PointNode( point, numberLine );
         pointDisplayLayer.addChild( pointNode );
 
         const removeItemListener = removedPoint => {
-          if ( removedPoint === addedPoint ) {
+          if ( removedPoint === point ) {
             pointDisplayLayer.removeChild( pointNode );
             pointNode.dispose();
-            numberLine.residentPoints.removeItemRemovedListener( removeItemListener );// Clean up memory leak
+            numberLine.residentPoints.removeItemRemovedListener( removeItemListener );
           }
         };
-
         numberLine.residentPoints.addItemRemovedListener( removeItemListener );
-      } );
+      }
+
+      // add nodes for any points that are initially on the number line
+      numberLine.residentPoints.forEach( addNodeForPoint );
+
+      // handle comings and goings of number line points
+      numberLine.residentPoints.addItemAddedListener( addNodeForPoint );
 
       // update the middle and end tick marks based on the properties that affect it
       Property.multilink(

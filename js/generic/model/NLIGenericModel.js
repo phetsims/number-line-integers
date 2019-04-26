@@ -35,6 +35,7 @@ define( require => {
     NLIConstants.NLI_LAYOUT_BOUNDS.minX + INSET + SIDE_BOX_WIDTH,
     NLIConstants.NLI_LAYOUT_BOUNDS.centerY + SIDE_BOX_HEIGHT / 2
   );
+  const INITIAL_POINT_COLOR = new Color( 'orange' );
 
   /**
    * @constructor
@@ -48,7 +49,8 @@ define( require => {
 
       // @public (read-only){NumberLine} - the number line with which the user will interact
       this.numberLine = new NumberLine( numberLineModelBounds.center, {
-        modelProjectionBounds: numberLineModelBounds
+        modelProjectionBounds: numberLineModelBounds,
+        initialPointSpecs: [ { initialValue: 1, color: INITIAL_POINT_COLOR } ]
       } );
 
       // @public (read-only) {Property<Bounds2>} - the bounds of the box where the point controllers reside when not
@@ -57,50 +59,34 @@ define( require => {
 
       // @public (read-only) - an array of the point controllers available for manipulation by the user
       this.pointControllers = [
-        new PointController(
-          new Vector2( BOTTOM_BOX_BOUNDS.centerX - BOTTOM_BOX_BOUNDS.width / 3, BOTTOM_BOX_BOUNDS.centerY ),
-          this.numberLine, {
-            alternativeHome: new Vector2( SIDE_BOX_BOUNDS.centerX, SIDE_BOX_BOUNDS.centerY - SIDE_BOX_BOUNDS.height / 3 ),
-            color: new Color( 'blue' )
-          }
-        ),
-        new PointController(
-          new Vector2( BOTTOM_BOX_BOUNDS.centerX, BOTTOM_BOX_BOUNDS.centerY ),
-          this.numberLine, {
-            alternativeHome: new Vector2( SIDE_BOX_BOUNDS.centerX, SIDE_BOX_BOUNDS.centerY ),
-            color: new Color( 'magenta' )
-          }
-        ),
-        new PointController(
-          new Vector2( BOTTOM_BOX_BOUNDS.centerX + BOTTOM_BOX_BOUNDS.width / 3, BOTTOM_BOX_BOUNDS.centerY ),
-          this.numberLine, {
-            alternativeHome: new Vector2( SIDE_BOX_BOUNDS.centerX, SIDE_BOX_BOUNDS.centerY + SIDE_BOX_BOUNDS.height / 3 ),
-            color: new Color( 'orange' )
-          }
-        )
+        new PointController( this.numberLine, { color: new Color( 'blue' ) } ),
+        new PointController( this.numberLine, { color: new Color( 'magenta' ) } ),
+        new PointController( this.numberLine, { color: INITIAL_POINT_COLOR } )
       ];
 
-      // set up the listeners for each point controller
+      // put the first two point controllers into the box at the bottom of the screen
+      this.putPointControllerInBox( this.pointControllers[ 0 ] );
+      this.putPointControllerInBox( this.pointControllers[ 1 ] );
+
+      // the third point controller should be associated with the point already on the number line
+      assert && assert( this.numberLine.residentPoints.length === 1, 'expected one and only one point on the number line' );
+      this.pointControllers[ 2 ].associateWithNumberLinePoint( this.numberLine.residentPoints.get( 0 ) );
+
+      // Set up the listeners that will place the point controllers back in their default positions when released over
+      // the active point controller box.
       this.pointControllers.forEach( pointController => {
-
-        // watch for the point controller be released over the point controller box and return it to the holding cell
         pointController.draggingProperty.lazyLink( dragging => {
-          if ( !dragging ) {
-            if ( this.numberLine.isHorizontal() &&
-                 BOTTOM_BOX_BOUNDS.containsPoint( pointController.positionProperty.value ) ) {
-
-              pointController.positionProperty.reset();
-            }
-            else if ( !this.numberLine.isHorizontal() &&
-                      SIDE_BOX_BOUNDS.containsPoint( pointController.positionProperty.value ) ) {
-
-              pointController.goToAlternativeHome();
-            }
+          if ( !dragging &&
+               ( this.numberLine.isHorizontal() &&
+                 BOTTOM_BOX_BOUNDS.containsPoint( pointController.positionProperty.value ) ) ||
+               ( this.numberLine.isVertical() &&
+                 SIDE_BOX_BOUNDS.containsPoint( pointController.positionProperty.value ) ) ) {
+            this.putPointControllerInBox( pointController );
           }
         } );
       } );
 
-      // reposition the box and any points therein when the number line orientation changes
+      // add a listener to reposition the box and any points therein when the number line orientation changes
       this.numberLine.orientationProperty.link( orientation => {
         if ( orientation === NumberLineOrientation.HORIZONTAL ) {
           this.pointControllerBoxProperty.set( BOTTOM_BOX_BOUNDS );
@@ -108,7 +94,7 @@ define( require => {
             if ( SIDE_BOX_BOUNDS.containsPoint( pointController.positionProperty.value ) &&
                  !pointController.draggingProperty.value ) {
 
-              pointController.positionProperty.reset();
+              this.putPointControllerInBox( pointController );
             }
             else if ( this.numberLine.residentPoints.indexOf( pointController.numberLinePoint ) >= 0 ) {
               const pointPosition = this.numberLine.valueToModelPosition(
@@ -124,7 +110,7 @@ define( require => {
             if ( BOTTOM_BOX_BOUNDS.containsPoint( pointController.positionProperty.value ) &&
                  !pointController.draggingProperty.value ) {
 
-              pointController.goToAlternativeHome();
+              this.putPointControllerInBox( pointController );
             }
             else if ( this.numberLine.residentPoints.indexOf( pointController.numberLinePoint ) >= 0 ) {
               const pointPosition = this.numberLine.valueToModelPosition(
@@ -137,10 +123,57 @@ define( require => {
       } );
     }
 
+    /**
+     * place the provided point controller into the currently active box, generally done on init, reset, and when the
+     * user "puts it away"
+     * @param {PointController} pointController
+     */
+    putPointControllerInBox( pointController ) {
+
+      const index = this.pointControllers.indexOf( pointController );
+
+      // error checking
+      assert && assert( index >= 0, 'point controller not found on list' );
+      assert && assert(
+        pointController.numberLinePoint === null,
+        'point controller should not be put away while controlling a point'
+      );
+
+      // decide which box and at which position the point controller should be placed
+      if ( this.numberLine.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
+
+        // put point in box at bottom of screen
+        pointController.positionProperty.set( new Vector2(
+          BOTTOM_BOX_BOUNDS.minX + ( BOTTOM_BOX_BOUNDS.width / ( this.pointControllers.length + 1 ) ) * ( index + 1 ),
+          BOTTOM_BOX_BOUNDS.centerY
+        ) );
+      }
+      else {
+
+        // put point in box at side of screen
+        pointController.positionProperty.set( new Vector2(
+          SIDE_BOX_BOUNDS.centerX,
+          SIDE_BOX_BOUNDS.minY + ( SIDE_BOX_BOUNDS.height / ( this.pointControllers.length + 1 ) ) * ( index + 1 )
+        ) );
+      }
+    }
+
     // @public resets the model
     reset() {
-      this.pointControllers.forEach( pointController => { pointController.reset(); } );
       this.numberLine.reset();
+
+      // clear any associations that the point controllers have with points on the number line
+      this.pointControllers.forEach( function( pointController ) {
+        pointController.clearNumberLinePoint();
+      } );
+
+      // put the first two point controllers in the box at the bottom of the screen
+      this.putPointControllerInBox( this.pointControllers[ 0 ] );
+      this.putPointControllerInBox( this.pointControllers[ 1 ] );
+
+      // associate the third point controller with the point on the number line
+      assert && assert( this.numberLine.residentPoints.length === 1, 'expected one and only one point on the number line' );
+      this.pointControllers[ 2 ].associateWithNumberLinePoint( this.numberLine.residentPoints.get( 0 ) );
     }
   }
 
