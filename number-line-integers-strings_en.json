@@ -1,4 +1,7 @@
 {
+  "range": {
+    "value": "{{lowValue}} to {{highValue}}"
+  },
   "number-line-integers.title": {
     "value": "Number Line: Integers"
   },

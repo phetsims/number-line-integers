@@ -11,10 +11,13 @@ define( function( require ) {
   // modules
   const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   const Checkbox = require( 'SUN/Checkbox' );
+  const ComboBox = require( 'SUN/ComboBox' );
+  const ComboBoxItem = require( 'SUN/ComboBoxItem' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
+  const NLIGenericModel = require( 'NUMBER_LINE_INTEGERS/generic/model/NLIGenericModel' );
   const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -22,15 +25,18 @@ define( function( require ) {
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   const ScreenView = require( 'JOIST/ScreenView' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
   const CHECK_BOX_FONT = new PhetFont( 20 );
   const ARROW_ICON_LENGTH = 40;
+  const COMBO_BOX_FONT = new PhetFont( 14 );
 
   // strings
   const tickMarksString = require( 'string!NUMBER_LINE_INTEGERS/tickMarks' );
+  const rangeString = require( 'string!NUMBER_LINE_INTEGERS/range' );
 
   class NLIGenericScreenView extends ScreenView {
 
@@ -70,23 +76,6 @@ define( function( require ) {
         node: verticalIcon
       } ];
 
-      // create and add the orientation radio buttons
-      const orientationRadioButtonGroup = new RadioButtonGroup(
-        model.numberLine.orientationProperty,
-        orientationButtonsContent, {
-          buttonContentXMargin: 5,
-          buttonContentYMargin: 5,
-          right: this.layoutBounds.maxX - 10,
-          bottom: this.layoutBounds.maxY - 60,
-          baseColor: 'white',
-          selectedLineWidth: 2,
-          deselectedLineWidth: .5,
-          deselectedButtonOpacity: 0.25,
-          orientation: 'horizontal',
-          spacing: 10
-        } );
-      this.addChild( orientationRadioButtonGroup );
-
       // NOTE: There is no model-view transform for this sim.  Model and view space use the same coordinate system.
 
       // root node on which the point controllers will live
@@ -125,11 +114,55 @@ define( function( require ) {
         bottom: this.layoutBounds.maxY - 10
       } );
       this.addChild( resetAllButton );
-    }
 
-    // @public
-    step( dt ) {
-      //TODO Handle view animation here.
+      // orientation radio buttons
+      const orientationRadioButtonGroup = new RadioButtonGroup(
+        model.numberLine.orientationProperty,
+        orientationButtonsContent, {
+          buttonContentXMargin: 5,
+          buttonContentYMargin: 5,
+          right: resetAllButton.right,
+          bottom: resetAllButton.top - 10,
+          baseColor: 'white',
+          selectedLineWidth: 2,
+          deselectedLineWidth: .5,
+          deselectedButtonOpacity: 0.25,
+          orientation: 'horizontal',
+          spacing: 10
+        } );
+      this.addChild( orientationRadioButtonGroup );
+
+      // create the selection items for the range selection combo box
+      const rangeSelectionComboBoxItems = [];
+      NLIGenericModel.NUMBER_LINE_RANGES.forEach( range => {
+        rangeSelectionComboBoxItems.push(
+          new ComboBoxItem(
+            new Text(
+              StringUtils.fillIn( rangeString, {
+                lowValue: range.min,
+                highValue: range.max
+              } ),
+              { font: COMBO_BOX_FONT }
+            ),
+            range
+          )
+        );
+      } );
+
+      // combo box for selecting the range
+      const rangeSelectionComboBox = new ComboBox(
+        rangeSelectionComboBoxItems,
+        model.numberLine.displayedRangeProperty,
+        this,
+        {
+          xMargin: 13,
+          yMargin: 6,
+          cornerRadius: 4,
+          right: resetAllButton.right,
+          bottom: orientationRadioButtonGroup.top - 10
+        }
+      );
+      this.addChild( rangeSelectionComboBox );
     }
   }
 

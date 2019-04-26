@@ -15,6 +15,7 @@ define( require => {
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
   const Property = require( 'AXON/Property' );
+  const Range = require( 'DOT/Range' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
@@ -36,6 +37,12 @@ define( require => {
     NLIConstants.NLI_LAYOUT_BOUNDS.centerY + SIDE_BOX_HEIGHT / 2
   );
   const INITIAL_POINT_COLOR = new Color( 'orange' );
+  const NUMBER_LINE_RANGES = [
+    new Range( -10, 10 ),
+    new Range( -20, 20 ),
+    new Range( -30, 30 ),
+    new Range( -100, 100 )
+  ];
 
   /**
    * @constructor
@@ -50,6 +57,7 @@ define( require => {
       // @public (read-only){NumberLine} - the number line with which the user will interact
       this.numberLine = new NumberLine( numberLineModelBounds.center, {
         modelProjectionBounds: numberLineModelBounds,
+        initialDisplayedRange: NUMBER_LINE_RANGES[ 0 ],
         initialPointSpecs: [ { initialValue: 1, color: INITIAL_POINT_COLOR } ]
       } );
 
@@ -179,6 +187,9 @@ define( require => {
       this.pointControllers[ 2 ].associateWithNumberLinePoint( this.numberLine.residentPoints.get( 0 ) );
     }
   }
+
+  // static properties
+  NLIGenericModel.NUMBER_LINE_RANGES = NUMBER_LINE_RANGES;
 
   return numberLineIntegers.register( 'NLIGenericModel', NLIGenericModel );
 } );
