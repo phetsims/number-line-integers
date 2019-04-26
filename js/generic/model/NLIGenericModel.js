@@ -18,7 +18,7 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  const BOTTOM_BOX_WIDTH = 350;
+  const BOTTOM_BOX_WIDTH = 320;
   const BOTTOM_BOX_HEIGHT = 70;
   const SIDE_BOX_WIDTH = BOTTOM_BOX_HEIGHT;
   const SIDE_BOX_HEIGHT = BOTTOM_BOX_WIDTH;
@@ -131,6 +131,7 @@ define( require => {
     putPointControllerInBox( pointController ) {
 
       const index = this.pointControllers.indexOf( pointController );
+      const numPositions = this.pointControllers.length;
 
       // error checking
       assert && assert( index >= 0, 'point controller not found on list' );
@@ -143,17 +144,19 @@ define( require => {
       if ( this.numberLine.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
 
         // put point in box at bottom of screen
+        const spacing = BOTTOM_BOX_BOUNDS.width / numPositions;
         pointController.positionProperty.set( new Vector2(
-          BOTTOM_BOX_BOUNDS.minX + ( BOTTOM_BOX_BOUNDS.width / ( this.pointControllers.length + 1 ) ) * ( index + 1 ),
+          BOTTOM_BOX_BOUNDS.minX + spacing / 2 + spacing * index,
           BOTTOM_BOX_BOUNDS.centerY
         ) );
       }
       else {
 
         // put point in box at side of screen
+        const spacing = SIDE_BOX_BOUNDS.height / numPositions;
         pointController.positionProperty.set( new Vector2(
           SIDE_BOX_BOUNDS.centerX,
-          SIDE_BOX_BOUNDS.minY + ( SIDE_BOX_BOUNDS.height / ( this.pointControllers.length + 1 ) ) * ( index + 1 )
+          SIDE_BOX_BOUNDS.minY + spacing / 2 + spacing * index
         ) );
       }
     }
