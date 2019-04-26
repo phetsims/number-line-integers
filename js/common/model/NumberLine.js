@@ -17,6 +17,7 @@ define( require => {
   const ObservableArray = require( 'AXON/ObservableArray' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
+  const Util = require( 'DOT/Util' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
@@ -117,7 +118,9 @@ define( require => {
       else {
         numberLineValue = ( modelPosition.y - this.centerPosition.y ) * -this.modelToPositonScale.y;
       }
-      return numberLineValue;
+
+      // round the value based on the current tick mark spacing
+      return Util.roundToInterval( numberLineValue, this.tickMarkSpacingProperty.value );
     }
 
     /**
