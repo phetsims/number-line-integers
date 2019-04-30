@@ -119,7 +119,8 @@ define( require => {
 
         // check if a point should be created and added based on the proposed position
         if ( this.numberLine.withinPointCreationDistance( proposedPosition ) &&
-             this.numberLine.displayedRangeProperty.value.contains( proposedNumberLineValue ) ) {
+             this.numberLine.displayedRangeProperty.value.contains( proposedNumberLineValue ) &&
+             !this.numberLine.hasPointAt( proposedNumberLineValue ) ) {
           const numberLinePoint = new NumberLinePoint( proposedNumberLineValue, this.color, this.numberLine, this );
           this.numberLine.addPoint( numberLinePoint );
           this.associateWithNumberLinePoint( numberLinePoint );

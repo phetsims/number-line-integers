@@ -45,14 +45,16 @@ define( require => {
     }
 
     /**
-     * given the proposed value, set the value of this number line point to the closest valid value on the number line
-     * @param {number} numberLineValue
+     * given the proposed value, set the value of this number line point to the closest valid value on the number line.
+     * @param {number} numberLineValue - value on number line, doesn't have to be constrained to integer values
      * @public
      */
     proposeValue( numberLineValue ) {
       const numberLineRange = this.numberLine.displayedRangeProperty.value;
       const constrainedValue = Util.clamp( Util.roundSymmetric( numberLineValue ), numberLineRange.min, numberLineRange.max );
-      this.valueProperty.set( constrainedValue );
+      if ( constrainedValue !== this.valueProperty.value && !this.numberLine.hasPointAt( constrainedValue ) ) {
+        this.valueProperty.set( constrainedValue );
+      }
     }
   }
 

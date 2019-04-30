@@ -191,6 +191,7 @@ define( require => {
      */
     addInitialPoints() {
       this.initialPointSpecs.forEach( pointSpec => {
+        assert && assert( !this.hasPointAt( pointSpec.initialValue ), 'a point already exists at the specified location' );
         this.addPoint( new NumberLinePoint( pointSpec.initialValue, pointSpec.color, this ) );
       } );
     }
@@ -228,6 +229,15 @@ define( require => {
       else {
         return Math.abs( pointControllerPosition.x - this.centerPosition.x ) <= distance;
       }
+    }
+
+    /**
+     * whether any point on the number line already exists at the provided value
+     * @param {number} value
+     * @returns {boolean}
+     */
+    hasPointAt( value ) {
+      return _.some( this.residentPoints.getArray(), point => point.valueProperty.value === value );
     }
 
     /**
