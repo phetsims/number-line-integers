@@ -280,6 +280,12 @@ define( require => {
       this.addChild( label );
       const labelVisibilityListener = numberLine.labelsVisibleProperty.linkAttribute( label, 'visible' );
 
+      // move in front of other points when being dragged
+      const dragStateHandler = isDragging => {
+        isDragging && this.moveToFront();
+      };
+      numberLinePoint.isDraggingProperty.link( dragStateHandler );
+
       // update the point representation as it moves
       const multilink = Property.multilink(
         [ numberLinePoint.valueProperty,
@@ -305,8 +311,9 @@ define( require => {
        * @private
        */
       this.disposePointNode = () => {
-        multilink.dispose();
         numberLine.labelsVisibleProperty.unlinkAttribute( labelVisibilityListener );
+        numberLinePoint.isDraggingProperty.unlink( dragStateHandler );
+        multilink.dispose();
       };
     }
 

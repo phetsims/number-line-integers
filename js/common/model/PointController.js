@@ -64,6 +64,13 @@ define( require => {
       this.offsetFromVerticalNumberLine = options.offsetFromVerticalNumberLine;
       this.numberLine = numberLine;
       this.pointValueChangeHandler = null;
+
+      // set our point to match point controller's dragging state
+      this.isDraggingProperty.link( isDragging => {
+        if ( this.numberLinePoint ) {
+          this.numberLinePoint.isDraggingProperty.value = isDragging;
+        }
+      } );
     }
 
     /**
@@ -78,6 +85,7 @@ define( require => {
         this.setPositionRelativeToPoint( currentPointPosition );
       };
       numberLinePoint.valueProperty.link( this.pointValueChangeHandler );
+      numberLinePoint.isDraggingProperty.value = this.isDraggingProperty.value;
     }
 
     /**
@@ -85,11 +93,14 @@ define( require => {
      * @public
      */
     clearNumberLinePoint() {
-      if ( this.pointValueChangeHandler ) {
-        this.numberLinePoint.valueProperty.unlink( this.pointValueChangeHandler );
-        this.pointValueChangeHandler = null;
+      if ( this.numberLinePoint ) {
+        this.numberLinePoint.isDraggingProperty.value = false;
+        if ( this.pointValueChangeHandler ) {
+          this.numberLinePoint.valueProperty.unlink( this.pointValueChangeHandler );
+          this.pointValueChangeHandler = null;
+        }
+        this.numberLinePoint = null;
       }
-      this.numberLinePoint = null;
     }
 
     /**

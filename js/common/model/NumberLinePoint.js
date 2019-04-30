@@ -9,6 +9,7 @@ define( require => {
   'use strict';
 
   // modules
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const PaintColorProperty = require( 'SCENERY/util/PaintColorProperty' );
@@ -29,6 +30,9 @@ define( require => {
 
       // @public {PaintColorProperty}
       this.colorProperty = new PaintColorProperty( color );
+
+      // @public {BooleanProperty} - indicates whether this is being dragged by the user
+      this.isDraggingProperty = new BooleanProperty( false );
 
       // @private
       this.numberLine = numberLine;
