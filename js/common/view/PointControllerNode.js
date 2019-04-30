@@ -63,7 +63,7 @@ define( require => {
       } );
 
       // pop to the front of the z-order when dragged
-      pointController.draggingProperty.link( dragging => {
+      pointController.isDraggingProperty.link( dragging => {
         if ( dragging ) {
           this.moveToFront();
         }
@@ -73,14 +73,14 @@ define( require => {
       this.addInputListener( new DragListener( {
         dragBoundsProperty: new Property( this.layoutBounds ),
         start: event => {
-          pointController.draggingProperty.set( true );
+          pointController.isDraggingProperty.set( true );
           pointController.proposePosition( this.globalToParentPoint( event.pointer.point ) );
         },
         drag: event => {
           pointController.proposePosition( this.globalToParentPoint( event.pointer.point ) );
         },
         end: () => {
-          pointController.draggingProperty.set( false );
+          pointController.isDraggingProperty.set( false );
         }
       } ) );
     }

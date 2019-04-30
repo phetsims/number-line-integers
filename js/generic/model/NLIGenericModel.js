@@ -83,7 +83,7 @@ define( require => {
       // Set up the listeners that will place the point controllers back in their default positions when released over
       // the active point controller box.
       this.pointControllers.forEach( pointController => {
-        pointController.draggingProperty.lazyLink( dragging => {
+        pointController.isDraggingProperty.lazyLink( dragging => {
           if ( !dragging &&
                ( this.numberLine.isHorizontal() &&
                  BOTTOM_BOX_BOUNDS.containsPoint( pointController.positionProperty.value ) ) ||
@@ -100,7 +100,7 @@ define( require => {
           this.pointControllerBoxProperty.set( BOTTOM_BOX_BOUNDS );
           this.pointControllers.forEach( pointController => {
             if ( SIDE_BOX_BOUNDS.containsPoint( pointController.positionProperty.value ) &&
-                 !pointController.draggingProperty.value ) {
+                 !pointController.isDraggingProperty.value ) {
 
               this.putPointControllerInBox( pointController );
             }
@@ -116,7 +116,7 @@ define( require => {
           this.pointControllerBoxProperty.set( SIDE_BOX_BOUNDS );
           this.pointControllers.forEach( pointController => {
             if ( BOTTOM_BOX_BOUNDS.containsPoint( pointController.positionProperty.value ) &&
-                 !pointController.draggingProperty.value ) {
+                 !pointController.isDraggingProperty.value ) {
 
               this.putPointControllerInBox( pointController );
             }

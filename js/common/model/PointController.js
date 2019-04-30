@@ -41,7 +41,7 @@ define( require => {
       this.positionProperty = new Vector2Property( Vector2.ZERO );
 
       // @public {BooleanProperty} - indicates whether this is being dragged by the user
-      this.draggingProperty = new BooleanProperty( false );
+      this.isDraggingProperty = new BooleanProperty( false );
 
       // @public (read-only) {Vector2}
       this.alternativeHome = options.alternativeHome;
