@@ -271,17 +271,48 @@ define( require => {
       const circle = new Circle( POINT_NODE_RADIUS, { fill: numberLinePoint.colorProperty } );
       this.addChild( circle );
 
+      // add the label
+      const label = new Text( numberLinePoint.valueProperty.value, {
+        font: new PhetFont( 16 ),
+        fill: numberLinePoint.colorProperty
+      } );
+      label.visible = false;
+      this.addChild( label );
+      const labelVisibilityListener = numberLine.labelsVisibleProperty.linkAttribute( label, 'visible' );
+
       // update the point representation as it moves
-      this.multilink = Property.multilink(
-        [ numberLinePoint.valueProperty, numberLine.orientationProperty, numberLine.displayedRangeProperty ], () => {
+      const multilink = Property.multilink(
+        [ numberLinePoint.valueProperty,
+          numberLine.orientationProperty,
+          numberLine.displayedRangeProperty
+        ], value => {
           circle.center = numberLinePoint.getPositionInModelSpace();
+
+          // update the label text and position
+          label.text = value;
+          if ( numberLine.isHorizontal() ) {
+            label.centerX = circle.centerX;
+            label.bottom = circle.y - 20;
+          }
+          else {
+            label.right = circle.x - 20;
+            label.centerY = circle.centerY;
+          }
         }
       );
+
+      /**
+       * @private
+       */
+      this.disposePointNode = () => {
+        multilink.dispose();
+        numberLine.labelsVisibleProperty.unlinkAttribute( labelVisibilityListener );
+      };
     }
 
     // @public
     dispose() {
-      this.multilink.dispose();
+      this.disposePointNode();
       super.dispose();
     }
   }

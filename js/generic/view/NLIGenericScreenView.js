@@ -27,7 +27,7 @@ define( function( require ) {
   const ScreenView = require( 'JOIST/ScreenView' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
-  const Vector2 = require( 'DOT/Vector2' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
   const CHECK_BOX_FONT = new PhetFont( 20 );
@@ -36,6 +36,7 @@ define( function( require ) {
 
   // strings
   const tickMarksString = require( 'string!NUMBER_LINE_INTEGERS/tickMarks' );
+  const labelsString = require( 'string!NUMBER_LINE_INTEGERS/labels' );
   const rangeString = require( 'string!NUMBER_LINE_INTEGERS/range' );
 
   class NLIGenericScreenView extends ScreenView {
@@ -48,15 +49,21 @@ define( function( require ) {
       super( { layoutBounds: NLIConstants.NLI_LAYOUT_BOUNDS } );
 
       // add the check boxes that will control the number line's presentation
-      const checkboxAreaUpperLeft = new Vector2( this.layoutBounds.maxX - 300, this.layoutBounds.minY + 10 );
-      this.addChild( new Checkbox(
-        new Text( tickMarksString, { font: CHECK_BOX_FONT } ),
-        model.numberLine.tickMarksVisibleProperty,
-        {
-          left: checkboxAreaUpperLeft.x,
-          top: checkboxAreaUpperLeft.y
-        }
-      ) );
+      this.addChild( new VBox( {
+        children: [
+          new Checkbox(
+          new Text( labelsString, { font: CHECK_BOX_FONT } ),
+          model.numberLine.labelsVisibleProperty
+        ),
+          new Checkbox(
+          new Text( tickMarksString, { font: CHECK_BOX_FONT } ),
+          model.numberLine.tickMarksVisibleProperty
+        ) ],
+        spacing: 15,
+        align: 'left',
+        left: this.layoutBounds.maxX - 300 ,
+        top: this.layoutBounds.minY + 10
+      } ) );
 
       const arrowIconOptions = {
         doubleHead: true,

@@ -40,7 +40,10 @@ define( require => {
         initialDisplayedRange: new Range( -10, 10 ),
 
         // {boolean} - whether tick marks should be initially displayed
-        tickMarksInitiallyDisplayed: false,
+        labelsInitiallyVisible: false,
+
+        // {boolean} - whether tick marks should be initially displayed
+        tickMarksInitiallyVisible: false,
 
         // {boolean} - whether point labels should initially be shown
         pointLabelsInitiallyShown: false,
@@ -64,7 +67,10 @@ define( require => {
       this.displayedRangeProperty = new Property( options.initialDisplayedRange );
 
       // @public {BooleanProperty} - controls whether tick marks should be displayed to the user
-      this.tickMarksVisibleProperty = new BooleanProperty( options.tickMarksInitiallyDisplayed );
+      this.labelsVisibleProperty = new BooleanProperty( options.labelsInitiallyVisible );
+
+      // @public {BooleanProperty} - controls whether tick marks should be displayed to the user
+      this.tickMarksVisibleProperty = new BooleanProperty( options.tickMarksInitiallyVisible );
 
       // @public {BooleanProperty} - controls whether point labels are displayed to the user
       this.showPointLabels = new BooleanProperty( options.pointLabelsInitiallyShown );
@@ -248,6 +254,7 @@ define( require => {
       this.residentPoints.clear();
       this.orientationProperty.reset();
       this.displayedRangeProperty.reset();
+      this.labelsVisibleProperty.reset();
       this.tickMarksVisibleProperty.reset();
       this.showPointLabels.reset();
       this.addInitialPoints();
