@@ -61,9 +61,6 @@ define( require => {
       // @private {NumberLine} - make the number line model available to methods
       this.numberLine = numberLine;
 
-      // @private {number}
-      this.numberLineScale = 1;
-
       // assemble the options that control the appearance of the main number into one place
       const numberLineOptions = {
         doubleHead: true,
@@ -199,17 +196,6 @@ define( require => {
           // improvement is ever needed.
           const minTickMarkValue = numberLine.displayedRangeProperty.value.min + tickMarkSpacing;
           const maxTickMarkValue = numberLine.displayedRangeProperty.value.max - tickMarkSpacing;
-
-          if ( orientation === NumberLineOrientation.HORIZONTAL ) {
-
-            // update the scale
-            this.numberLineScale = ( displayBounds.width - options.displayedRangeInset * 2 ) / displayedRange.getLength();
-          }
-          else {
-
-            // update the scale
-            this.numberLineScale = ( displayBounds.height - options.displayedRangeInset * 2 ) / displayedRange.getLength();
-          }
 
           this.addTickMark( endTickMarksRootNode, displayedRange.min );
           this.addTickMark( endTickMarksRootNode, displayedRange.max );
