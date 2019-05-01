@@ -9,6 +9,7 @@ define( require => {
   'use strict';
 
   // modules
+  const AbsoluteValueSpanNode = require( 'NUMBER_LINE_INTEGERS/common/view/AbsoluteValueSpanNode' );
   const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   const Circle = require( 'SCENERY/nodes/Circle' );
   const Line = require( 'SCENERY/nodes/Line' );
@@ -191,6 +192,9 @@ define( require => {
         } );
       };
 
+      // array where absolute value span nodes are tracked if displayed for this number line node
+      let absoluteValueSpanNodes = [];
+
       // handler for number line points that are added to the number line
       const handlePointAdded = point => {
 
@@ -205,6 +209,11 @@ define( require => {
         // add a listener that will update the absolute value lines
         point.valueProperty.link( updateAbsoluteValueLines );
 
+        // add an absolute value "span indicator", which depicts the absolute value at some distance from the number line
+        const absValSpanNode = new AbsoluteValueSpanNode( numberLine, point, 40 );
+        absoluteValueSpanNodes.push( absValSpanNode );
+        this.addChild( absValSpanNode );
+
         // add a listener that will unhook everything if and when this point is removed
         const removeItemListener = removedPoint => {
           if ( removedPoint === point ) {
@@ -212,6 +221,9 @@ define( require => {
             pointNode.dispose();
             oppositePointDisplayLayer.removeChild( oppositePointNode );
             oppositePointNode.dispose();
+            this.removeChild( absValSpanNode );
+            absoluteValueSpanNodes = _.without( absoluteValueSpanNodes, absValSpanNode );
+            absValSpanNode.dispose();
             point.valueProperty.unlink( updateAbsoluteValueLines );
             updateAbsoluteValueLines();
             numberLine.residentPoints.removeItemRemovedListener( removeItemListener );
