@@ -35,6 +35,7 @@ define( function( require ) {
   const COMBO_BOX_FONT = new PhetFont( 14 );
 
   // strings
+  const absoluteValueString = require( 'string!NUMBER_LINE_INTEGERS/absoluteValue' );
   const labelsString = require( 'string!NUMBER_LINE_INTEGERS/labels' );
   const tickMarksString = require( 'string!NUMBER_LINE_INTEGERS/tickMarks' );
   const oppositeString = require( 'string!NUMBER_LINE_INTEGERS/opposite' );
@@ -63,7 +64,12 @@ define( function( require ) {
           new Checkbox(
             new Text( oppositeString, { font: CHECK_BOX_FONT } ),
             model.numberLine.oppositesVisibleProperty
-          ) ],
+          ),
+          new Checkbox(
+            new Text( absoluteValueString, { font: CHECK_BOX_FONT } ),
+            model.numberLine.showAbsoluteValuesProperty
+          )
+        ],
         spacing: 15,
         align: 'left',
         left: this.layoutBounds.maxX - 300,

@@ -1,17 +1,20 @@
 {
-  "range": {
-    "value": "{{lowValue}} to {{highValue}}"
-  },
-  "number-line-integers.title": {
-    "value": "Number Line: Integers"
-  },
-  "tickMarks": {
-    "value": "Tick Marks"
+  "absoluteValue": {
+    "value": "Absolute Value"
   },
   "labels": {
     "value": "Labels"
   },
+  "number-line-integers.title": {
+    "value": "Number Line: Integers"
+  },
   "opposite": {
     "value": "Opposite"
+  },
+  "range": {
+    "value": "{{lowValue}} to {{highValue}}"
+  },
+  "tickMarks": {
+    "value": "Tick Marks"
   }
 }

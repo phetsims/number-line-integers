@@ -45,6 +45,9 @@ define( require => {
         // {boolean} - whether tick marks should be initially displayed
         tickMarksInitiallyVisible: false,
 
+        // {boolean} - whether absolute value indicators should be initially displayed
+        absoluteValuesInitiallyVisible: false,
+
         // {boolean} - whether point labels should initially be shown
         pointLabelsInitiallyShown: false,
 
@@ -71,6 +74,9 @@ define( require => {
 
       // @public {BooleanProperty} - controls whether tick marks should be displayed to the user
       this.tickMarksVisibleProperty = new BooleanProperty( options.tickMarksInitiallyVisible );
+
+      // @public {BooleanProperty} - controls whether tick marks should be displayed to the user
+      this.showAbsoluteValuesProperty = new BooleanProperty( options.absoluteValuesInitiallyVisible );
 
       // @public {BooleanProperty} - controls whether tick marks should be displayed to the user
       this.oppositesVisibleProperty = new BooleanProperty( false );
