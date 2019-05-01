@@ -23,6 +23,8 @@ define( require => {
   // constants
   const TICK_MARK_LABEL_DISTANCE = 5;
   const POINT_NODE_RADIUS = 4.5;
+  const ABS_VAL_MIN_LINE_WIDTH = 4;
+  const ABS_VAL_LINE_EXPANSION_FACTOR = 3;
 
   class NumberLineNode extends Node {
 
@@ -178,11 +180,11 @@ define( require => {
             const pointPosition = point.getPositionInModelSpace();
             line.setLine( zeroPosition.x, zeroPosition.y, pointPosition.x, pointPosition.y );
             if ( pointValue > 0 ) {
-              line.lineWidth = 4 + pointsAboveZeroCount * 3;
+              line.lineWidth = ABS_VAL_MIN_LINE_WIDTH + pointsAboveZeroCount * ABS_VAL_LINE_EXPANSION_FACTOR;
               pointsAboveZeroCount++;
             }
             else {
-              line.lineWidth = 4 + pointsBelowZeroCount * 3;
+              line.lineWidth = ABS_VAL_MIN_LINE_WIDTH + pointsBelowZeroCount * ABS_VAL_LINE_EXPANSION_FACTOR;
               pointsBelowZeroCount++;
             }
           }
