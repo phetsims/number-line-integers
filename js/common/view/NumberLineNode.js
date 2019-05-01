@@ -22,7 +22,7 @@ define( require => {
 
   // constants
   const TICK_MARK_LABEL_DISTANCE = 5;
-  const POINT_NODE_RADIUS = 4;
+  const POINT_NODE_RADIUS = 4.5;
 
   class NumberLineNode extends Node {
 
@@ -124,6 +124,11 @@ define( require => {
       numberLine.tickMarksVisibleProperty.linkAttribute( middleTickMarksRootNode, 'visible' );
       this.addChild( middleTickMarksRootNode );
 
+      // add the layer where the lines the are used to indicate the absolute value of a point will be displayed
+      const absoluteValueLineLayer = new Node();
+      this.addChild( absoluteValueLineLayer );
+      numberLine.showAbsoluteValuesProperty.linkAttribute( absoluteValueLineLayer, 'visible' );
+
       // add the layer where opposite points on the number line will be displayed
       const oppositePointDisplayLayer = new Node();
       this.addChild( oppositePointDisplayLayer );
@@ -132,32 +137,95 @@ define( require => {
       const pointDisplayLayer = new Node();
       this.addChild( pointDisplayLayer );
 
-      // handler for adding point nodes that correspond to points
-      function addNodeForPoint( point ) {
+      // closure that updates the lines that indicate absolute value
+      const absoluteValueLines = [];
+      const updateAbsoluteValueLines = () => {
+
+        // if there aren't enough lines available, add new ones until there are enough
+        while ( absoluteValueLines.length < numberLine.residentPoints.length ) {
+          const absoluteValueLine = new Line( 0, 0, 1, 1 ); // position is arbitrary, will be updated below
+          absoluteValueLines.push( absoluteValueLine );
+          absoluteValueLineLayer.addChild( absoluteValueLine );
+        }
+
+        // if there are too many lines, remove them until we have the right abount
+        while ( absoluteValueLines.length > numberLine.residentPoints.length ) {
+          const absoluteValueLine = absoluteValueLines.pop();
+          absoluteValueLineLayer.removeChild( absoluteValueLine );
+        }
+
+        // create a list of the resident points on the number line sorted by absolute value
+        const sortedPoints = _.sortBy( numberLine.residentPoints.getArray(), point => {
+          return Math.abs( point.valueProperty.value );
+        } );
+
+        // update the position, color, thickness, and layering of each of the lines
+        let pointsAboveZeroCount = 0;
+        let pointsBelowZeroCount = 0;
+        const zeroPosition = numberLine.centerPosition;
+        sortedPoints.forEach( ( point, index ) => {
+          const line = absoluteValueLines[ index ];
+          const pointValue = point.valueProperty.value;
+          if ( pointValue === 0 ) {
+
+            // just hide the line entirely in this case
+            line.visible = false;
+          }
+          else {
+            line.visible = true;
+            line.moveToBack(); // the last line processed will end up at the back of the layering
+            line.stroke = point.colorProperty.value;
+            const pointPosition = point.getPositionInModelSpace();
+            line.setLine( zeroPosition.x, zeroPosition.y, pointPosition.x, pointPosition.y );
+            if ( pointValue > 0 ) {
+              line.lineWidth = 4 + pointsAboveZeroCount * 3;
+              pointsAboveZeroCount++;
+            }
+            else {
+              line.lineWidth = 4 + pointsBelowZeroCount * 3;
+              pointsBelowZeroCount++;
+            }
+          }
+        } );
+      };
+
+      // handler for number line points that are added to the number line
+      const handlePointAdded = point => {
+
+        // add the node that will represent the point on the number line
         const pointNode = new PointNode( point, numberLine );
         pointDisplayLayer.addChild( pointNode );
+
+        // add the point that will represent the opposite point
         const oppositePointNode = new PointNode( point, numberLine, { isDoppelganger: true } );
         oppositePointDisplayLayer.addChild( oppositePointNode );
 
+        // add a listener that will update the absolute value lines
+        point.valueProperty.link( updateAbsoluteValueLines );
+
+        // add a listener that will unhook everything if and when this point is removed
         const removeItemListener = removedPoint => {
           if ( removedPoint === point ) {
             pointDisplayLayer.removeChild( pointNode );
             pointNode.dispose();
             oppositePointDisplayLayer.removeChild( oppositePointNode );
             oppositePointNode.dispose();
+            point.valueProperty.unlink( updateAbsoluteValueLines );
+            updateAbsoluteValueLines();
             numberLine.residentPoints.removeItemRemovedListener( removeItemListener );
+            updateAbsoluteValueLines();
           }
         };
         numberLine.residentPoints.addItemRemovedListener( removeItemListener );
-      }
+      };
 
       // add nodes for any points that are initially on the number line
-      numberLine.residentPoints.forEach( addNodeForPoint );
+      numberLine.residentPoints.forEach( handlePointAdded );
 
       // handle comings and goings of number line points
-      numberLine.residentPoints.addItemAddedListener( addNodeForPoint );
+      numberLine.residentPoints.addItemAddedListener( handlePointAdded );
 
-      // update the middle and end tick marks based on the properties that affect it
+      // update portions of the representation that change if the displayed range or orientation changes
       Property.multilink(
         [ numberLine.displayedRangeProperty, numberLine.orientationProperty ],
         ( displayedRange, orientation ) => {
@@ -167,7 +235,7 @@ define( require => {
             `Invalid orientation: ${orientation}`
           );
 
-          // remove previous representations
+          // remove previous middle and end tickmarks
           middleTickMarksRootNode.removeAllChildren();
           endTickMarksRootNode.removeAllChildren();
 
@@ -192,7 +260,7 @@ define( require => {
               break;
           }
 
-          // Draw the tick marks.  This could be optimized to be a single Path node for the ticks if a performance
+          // Draw the tick marks.  These could be optimized to be a single Path node for the ticks if a performance
           // improvement is ever needed.
           const minTickMarkValue = numberLine.displayedRangeProperty.value.min + tickMarkSpacing;
           const maxTickMarkValue = numberLine.displayedRangeProperty.value.max - tickMarkSpacing;
@@ -205,6 +273,9 @@ define( require => {
               this.addTickMark( middleTickMarksRootNode, tmValue );
             }
           }
+
+          // update absolute value representations
+          updateAbsoluteValueLines();
         }
       );
     }

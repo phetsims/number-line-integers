@@ -261,6 +261,7 @@ define( require => {
      */
     reset() {
       this.residentPoints.clear();
+      this.showAbsoluteValuesProperty.reset();
       this.orientationProperty.reset();
       this.displayedRangeProperty.reset();
       this.labelsVisibleProperty.reset();
