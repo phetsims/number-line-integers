@@ -72,6 +72,9 @@ define( require => {
       // @public {BooleanProperty} - controls whether tick marks should be displayed to the user
       this.tickMarksVisibleProperty = new BooleanProperty( options.tickMarksInitiallyVisible );
 
+      // @public {BooleanProperty} - controls whether tick marks should be displayed to the user
+      this.oppositesVisibleProperty = new BooleanProperty( false );
+
       // @public {BooleanProperty} - controls whether point labels are displayed to the user
       this.showPointLabels = new BooleanProperty( options.pointLabelsInitiallyShown );
 
@@ -256,6 +259,7 @@ define( require => {
       this.displayedRangeProperty.reset();
       this.labelsVisibleProperty.reset();
       this.tickMarksVisibleProperty.reset();
+      this.oppositesVisibleProperty.reset();
       this.showPointLabels.reset();
       this.addInitialPoints();
     }

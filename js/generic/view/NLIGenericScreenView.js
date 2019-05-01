@@ -35,8 +35,9 @@ define( function( require ) {
   const COMBO_BOX_FONT = new PhetFont( 14 );
 
   // strings
-  const tickMarksString = require( 'string!NUMBER_LINE_INTEGERS/tickMarks' );
   const labelsString = require( 'string!NUMBER_LINE_INTEGERS/labels' );
+  const tickMarksString = require( 'string!NUMBER_LINE_INTEGERS/tickMarks' );
+  const oppositeString = require( 'string!NUMBER_LINE_INTEGERS/opposite' );
   const rangeString = require( 'string!NUMBER_LINE_INTEGERS/range' );
 
   class NLIGenericScreenView extends ScreenView {
@@ -52,16 +53,20 @@ define( function( require ) {
       this.addChild( new VBox( {
         children: [
           new Checkbox(
-          new Text( labelsString, { font: CHECK_BOX_FONT } ),
-          model.numberLine.labelsVisibleProperty
-        ),
+            new Text( labelsString, { font: CHECK_BOX_FONT } ),
+            model.numberLine.labelsVisibleProperty
+          ),
           new Checkbox(
-          new Text( tickMarksString, { font: CHECK_BOX_FONT } ),
-          model.numberLine.tickMarksVisibleProperty
-        ) ],
+            new Text( tickMarksString, { font: CHECK_BOX_FONT } ),
+            model.numberLine.tickMarksVisibleProperty
+          ),
+          new Checkbox(
+            new Text( oppositeString, { font: CHECK_BOX_FONT } ),
+            model.numberLine.oppositesVisibleProperty
+          ) ],
         spacing: 15,
         align: 'left',
-        left: this.layoutBounds.maxX - 300 ,
+        left: this.layoutBounds.maxX - 300,
         top: this.layoutBounds.minY + 10
       } ) );
 

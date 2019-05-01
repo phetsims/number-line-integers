@@ -22,7 +22,7 @@ define( require => {
 
   // constants
   const TICK_MARK_LABEL_DISTANCE = 5;
-  const POINT_NODE_RADIUS = 5;
+  const POINT_NODE_RADIUS = 4;
 
   class NumberLineNode extends Node {
 
@@ -127,6 +127,10 @@ define( require => {
       numberLine.tickMarksVisibleProperty.linkAttribute( middleTickMarksRootNode, 'visible' );
       this.addChild( middleTickMarksRootNode );
 
+      // add the layer where opposite points on the number line will be displayed
+      const oppositePointDisplayLayer = new Node();
+      this.addChild( oppositePointDisplayLayer );
+
       // add the layer where the points on the number line will be displayed
       const pointDisplayLayer = new Node();
       this.addChild( pointDisplayLayer );
@@ -135,11 +139,15 @@ define( require => {
       function addNodeForPoint( point ) {
         const pointNode = new PointNode( point, numberLine );
         pointDisplayLayer.addChild( pointNode );
+        const oppositePointNode = new PointNode( point, numberLine, { isDoppelganger: true } );
+        oppositePointDisplayLayer.addChild( oppositePointNode );
 
         const removeItemListener = removedPoint => {
           if ( removedPoint === point ) {
             pointDisplayLayer.removeChild( pointNode );
             pointNode.dispose();
+            oppositePointDisplayLayer.removeChild( oppositePointNode );
+            oppositePointNode.dispose();
             numberLine.residentPoints.removeItemRemovedListener( removeItemListener );
           }
         };
@@ -262,13 +270,21 @@ define( require => {
     /**
      * @param {NumberLinePoint} numberLinePoint
      * @param {numberLine} numberLine
+     * @param {Object} [options]
      */
-    constructor( numberLinePoint, numberLine ) {
+    constructor( numberLinePoint, numberLine, options ) {
+
+      options = _.extend( {
+        isDoppelganger: false
+      }, options );
 
       super();
 
       // add the dot
-      const circle = new Circle( POINT_NODE_RADIUS, { fill: numberLinePoint.colorProperty } );
+      const circle = new Circle( POINT_NODE_RADIUS, {
+        fill: numberLinePoint.colorProperty,
+        stroke: options.isDoppelganger ? 'gray' : numberLinePoint.colorProperty
+      } );
       this.addChild( circle );
 
       // add the label
@@ -289,10 +305,15 @@ define( require => {
       // update the point representation as it moves
       const multilink = Property.multilink(
         [ numberLinePoint.valueProperty,
+          numberLine.oppositesVisibleProperty,
           numberLine.orientationProperty,
           numberLine.displayedRangeProperty
-        ], value => {
-          circle.center = numberLinePoint.getPositionInModelSpace();
+        ], ( value, oppositesVisible ) => {
+          if ( options.isDoppelganger ) {
+            value = -value;
+            this.visible = oppositesVisible;
+          }
+          circle.center = numberLine.valueToModelPosition( value );
 
           // update the label text and position
           label.text = value;
