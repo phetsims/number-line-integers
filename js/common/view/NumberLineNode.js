@@ -260,9 +260,6 @@ define( require => {
             case 20:
               tickMarkSpacing = 1;
               break;
-            case 40:
-              tickMarkSpacing = 5;
-              break;
             case 60:
               tickMarkSpacing = 5;
               break;

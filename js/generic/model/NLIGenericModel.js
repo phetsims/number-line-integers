@@ -39,7 +39,6 @@ define( require => {
   const INITIAL_POINT_COLOR = new Color( 'orange' );
   const NUMBER_LINE_RANGES = [
     new Range( -10, 10 ),
-    new Range( -20, 20 ),
     new Range( -30, 30 ),
     new Range( -100, 100 )
   ];
