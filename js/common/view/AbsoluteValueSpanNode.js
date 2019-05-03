@@ -38,6 +38,9 @@ define( require => {
       // @public {number} - the distance in model/view coordinates of the line portion of the span from the number line
       this.distanceFromNumberLineProperty = new Property( initialDistanceFromNumberLine );
 
+      // @public (read-only) {NumberLinePoint} - point whose absolute value is being displayed by this span
+      this.numberLinePoint = numberLinePoint;
+
       // add the equation text
       const equationTextNode = new Text( '', { font: new PhetFont( 14 ) } );
       this.addChild( equationTextNode );
@@ -128,8 +131,8 @@ define( require => {
       } );
 
       // update position when the orientation or displayed range of the number line changes
-      const orientationAndRangeMultilink = Property.multilink(
-        [ numberLine.orientationProperty, numberLine.displayedRangeProperty ],
+      const positionAndShapeMultilink = Property.multilink(
+        [ numberLine.orientationProperty, numberLine.displayedRangeProperty, this.distanceFromNumberLineProperty ],
         () => {
           updateSpanShape();
           updateTextLabel();
@@ -138,13 +141,13 @@ define( require => {
 
       // @private
       this.disposeAbsoluteValueSpanNode = () => {
-        orientationAndRangeMultilink.dispose();
+        positionAndShapeMultilink.dispose();
         visibilityMultilink.dispose();
       };
     }
 
     dispose() {
-      this.disposeAbsoluteValueSpanNode;
+      this.disposeAbsoluteValueSpanNode();
       super.dispose();
     }
   }
