@@ -17,6 +17,9 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
   const Shape = require( 'KITE/Shape' );
 
+  // const
+  const CAP_LENGTH = 10;
+
   class AbsoluteValueSpanNode extends Node {
 
     // TODO: document when finalized
@@ -24,8 +27,13 @@ define( require => {
 
       super();
 
-      // link the visibility to the property in the number line that tracks whether this should be seen
-      const vizListener = numberLine.showAbsoluteValuesProperty.linkAttribute( this, 'visible' );
+      // control the visibility of this node
+      const visibilityMultilink = Property.multilink(
+        [ numberLine.showAbsoluteValuesProperty, numberLinePoint.valueProperty ],
+        ( showAbsoluteValues, pointValue ) => {
+          this.visible = showAbsoluteValues && pointValue !== 0;
+        }
+      );
 
       // @public {number} - the distance in model/view coordinates of the line portion of the span from the number line
       this.distanceFromNumberLineProperty = new Property( initialDistanceFromNumberLine );
@@ -35,7 +43,10 @@ define( require => {
       this.addChild( equationTextNode );
 
       // add the span indicator shape
-      const spanIndicatorNode = new Path( null, { stroke: numberLinePoint.colorProperty } );
+      const spanIndicatorNode = new Path( null, {
+        stroke: numberLinePoint.colorProperty,
+        lineWidth: 2
+      } );
       this.addChild( spanIndicatorNode );
 
       // define a function to update the span shape
@@ -44,12 +55,47 @@ define( require => {
         const distanceFromNumberLine = this.distanceFromNumberLineProperty.value;
         const pointPosition = numberLinePoint.getPositionInModelSpace();
         if ( numberLine.isHorizontal() ) {
-          spanIndicatorShape.moveTo( numberLine.centerPosition.x, numberLine.centerPosition.y - distanceFromNumberLine );
+          spanIndicatorShape.moveTo(
+            numberLine.centerPosition.x,
+            numberLine.centerPosition.y - distanceFromNumberLine - CAP_LENGTH / 2
+          );
+          spanIndicatorShape.lineTo(
+            numberLine.centerPosition.x,
+            numberLine.centerPosition.y - distanceFromNumberLine + CAP_LENGTH / 2
+          );
+          spanIndicatorShape.moveTo(
+            numberLine.centerPosition.x,
+            numberLine.centerPosition.y - distanceFromNumberLine
+          );
           spanIndicatorShape.lineTo( pointPosition.x, pointPosition.y - distanceFromNumberLine );
+          spanIndicatorShape.moveTo(
+            pointPosition.x,
+            numberLine.centerPosition.y - distanceFromNumberLine - CAP_LENGTH / 2
+          );
+          spanIndicatorShape.lineTo(
+            pointPosition.x,
+            numberLine.centerPosition.y - distanceFromNumberLine + CAP_LENGTH / 2
+          );
         }
         else {
+          spanIndicatorShape.moveTo(
+            numberLine.centerPosition.x - distanceFromNumberLine - CAP_LENGTH / 2,
+            numberLine.centerPosition.y
+          );
+          spanIndicatorShape.lineTo(
+            numberLine.centerPosition.x - distanceFromNumberLine + CAP_LENGTH / 2,
+            numberLine.centerPosition.y
+          );
           spanIndicatorShape.moveTo( numberLine.centerPosition.x - distanceFromNumberLine, numberLine.centerPosition.y );
           spanIndicatorShape.lineTo( pointPosition.x - distanceFromNumberLine, pointPosition.y );
+          spanIndicatorShape.moveTo(
+            pointPosition.x - distanceFromNumberLine - CAP_LENGTH / 2,
+            pointPosition.y
+          );
+          spanIndicatorShape.lineTo(
+            pointPosition.x - distanceFromNumberLine + CAP_LENGTH / 2,
+            pointPosition.y
+          );
         }
         spanIndicatorNode.setShape( spanIndicatorShape );
       };
@@ -62,7 +108,7 @@ define( require => {
         const pointPosition = numberLinePoint.getPositionInModelSpace();
         if ( numberLine.isHorizontal() ) {
           equationTextNode.centerX = ( numberLine.centerPosition.x + pointPosition.x ) / 2;
-          equationTextNode.bottom = numberLine.centerPosition.y - distanceFromNumberLine - 4;
+          equationTextNode.bottom = numberLine.centerPosition.y - distanceFromNumberLine - CAP_LENGTH / 2 - 4;
         }
         else {
           equationTextNode.centerX = pointPosition.x - distanceFromNumberLine;
@@ -82,7 +128,7 @@ define( require => {
       } );
 
       // update position when the orientation or displayed range of the number line changes
-      const multilink = Property.multilink(
+      const orientationAndRangeMultilink = Property.multilink(
         [ numberLine.orientationProperty, numberLine.displayedRangeProperty ],
         () => {
           updateSpanShape();
@@ -92,8 +138,8 @@ define( require => {
 
       // @private
       this.disposeAbsoluteValueSpanNode = () => {
-        multilink.dispose();
-        numberLine.showAbsoluteValuesProperty.unlinkAttribute( vizListener );
+        orientationAndRangeMultilink.dispose();
+        visibilityMultilink.dispose();
       };
     }
 
