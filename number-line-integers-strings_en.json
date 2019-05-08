@@ -2,6 +2,9 @@
   "absoluteValue": {
     "value": "Absolute Value"
   },
+  "comparisonStatement": {
+    "value": "Comparison statement"
+  },
   "labels": {
     "value": "Labels"
   },

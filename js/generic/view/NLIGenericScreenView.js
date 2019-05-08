@@ -9,10 +9,12 @@ define( function( require ) {
   'use strict';
 
   // modules
+  const AccordionBox = require( 'SUN/AccordionBox' );
   const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   const Checkbox = require( 'SUN/Checkbox' );
   const ComboBox = require( 'SUN/ComboBox' );
   const ComboBoxItem = require( 'SUN/ComboBoxItem' );
+  const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/generic/view/ComparisonStatementNode' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
@@ -36,6 +38,7 @@ define( function( require ) {
 
   // strings
   const absoluteValueString = require( 'string!NUMBER_LINE_INTEGERS/absoluteValue' );
+  const comparisonStatementString = require( 'string!NUMBER_LINE_INTEGERS/comparisonStatement' );
   const labelsString = require( 'string!NUMBER_LINE_INTEGERS/labels' );
   const tickMarksString = require( 'string!NUMBER_LINE_INTEGERS/tickMarks' );
   const oppositeString = require( 'string!NUMBER_LINE_INTEGERS/opposite' );
@@ -49,6 +52,16 @@ define( function( require ) {
     constructor( model ) {
 
       super( { layoutBounds: NLIConstants.NLI_LAYOUT_BOUNDS } );
+
+      // add the display of the inequality
+      this.addChild( new AccordionBox( new ComparisonStatementNode( model.numberLine ), {
+        fill: 'white',
+        titleNode: new Text( comparisonStatementString, { font: new PhetFont( 22 ) } ),
+        showTitleWhenExpanded: false,
+        cornerRadius: 5,
+        centerX: this.layoutBounds.centerX,
+        top: 10
+      } ) );
 
       // add the check boxes that will control the number line's presentation
       this.addChild( new VBox( {
