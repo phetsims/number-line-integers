@@ -54,11 +54,13 @@ define( function( require ) {
       super( { layoutBounds: NLIConstants.NLI_LAYOUT_BOUNDS } );
 
       // add the display of the inequality
-      this.addChild( new AccordionBox( new ComparisonStatementNode( model.numberLine ), {
+      const comparisonStatementNode = new ComparisonStatementNode( model.numberLine );
+      this.addChild( new AccordionBox( comparisonStatementNode, {
         fill: 'white',
         titleNode: new Text( comparisonStatementString, { font: new PhetFont( 22 ) } ),
         showTitleWhenExpanded: false,
         cornerRadius: 5,
+        contentAlign: 'right',
         centerX: this.layoutBounds.centerX,
         top: 10
       } ) );
@@ -140,6 +142,7 @@ define( function( require ) {
       const resetAllButton = new ResetAllButton( {
         listener: () => {
           model.reset();
+          comparisonStatementNode.reset();
         },
         right: this.layoutBounds.maxX - 10,
         bottom: this.layoutBounds.maxY - 10
