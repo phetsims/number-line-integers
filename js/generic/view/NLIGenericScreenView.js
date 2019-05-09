@@ -55,7 +55,8 @@ define( function( require ) {
 
       // add the display of the inequality
       const comparisonStatementNode = new ComparisonStatementNode( model.numberLine );
-      this.addChild( new AccordionBox( comparisonStatementNode, {
+
+      const comparisonStatementAccordionBox = new AccordionBox( comparisonStatementNode, {
         fill: 'white',
         titleNode: new Text( comparisonStatementString, { font: new PhetFont( 22 ) } ),
         showTitleWhenExpanded: false,
@@ -63,7 +64,8 @@ define( function( require ) {
         contentAlign: 'right',
         centerX: this.layoutBounds.centerX,
         top: 10
-      } ) );
+      } );
+      this.addChild( comparisonStatementAccordionBox );
 
       // add the check boxes that will control the number line's presentation
       this.addChild( new VBox( {
@@ -143,6 +145,7 @@ define( function( require ) {
         listener: () => {
           model.reset();
           comparisonStatementNode.reset();
+          comparisonStatementAccordionBox.expandedProperty.reset();
         },
         right: this.layoutBounds.maxX - 10,
         bottom: this.layoutBounds.maxY - 10
