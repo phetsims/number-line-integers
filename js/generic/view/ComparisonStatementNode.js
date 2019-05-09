@@ -1,8 +1,9 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * a Scenery node that depicts a "comparison statement" between zero to three values, for example, "1 < 5 < 7".  It
- * also include a selector that allows users to choose between the greater than or less than comparison operator.
+ * a Scenery node that depicts a "comparison statement" between zero to three numerical values, for example,
+ * "1 < 5 < 7".  It also include a selector that allows a user to choose between the greater than or less than
+ * comparison operator.
  *
  * @author John Blanco
  */
@@ -26,7 +27,7 @@ define( require => {
      */
     constructor( numberLine ) {
 
-      super( { spacing: 40 } );
+      super();
 
       // @private {StringProperty} - controls what comparison operator is used
       this.selectedOperatorProperty = new StringProperty( '<' );
@@ -112,6 +113,10 @@ define( require => {
   // inner class that defines the operator selector control
   class OperatorSelectorNode extends Node {
 
+    /**
+     * @param {StringProperty} selectedOperatorProperty - property controlled by this selector node
+     * @param {Object} [options]
+     */
     constructor( selectedOperatorProperty, options ) {
 
       options = _.extend( {
