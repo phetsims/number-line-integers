@@ -35,6 +35,7 @@ define( function( require ) {
   const CHECK_BOX_FONT = new PhetFont( 20 );
   const ARROW_ICON_LENGTH = 40;
   const COMBO_BOX_FONT = new PhetFont( 14 );
+  const COMPARISON_STATEMENT_BOX_WIDTH = 300; // empirically determined to look decent
 
   // strings
   const absoluteValueString = require( 'string!NUMBER_LINE_INTEGERS/absoluteValue' );
@@ -58,12 +59,17 @@ define( function( require ) {
 
       const comparisonStatementAccordionBox = new AccordionBox( comparisonStatementNode, {
         fill: 'white',
-        titleNode: new Text( comparisonStatementString, { font: new PhetFont( 22 ) } ),
+        titleNode: new Text( comparisonStatementString, {
+          font: new PhetFont( 16 ),
+          maxWidth: COMPARISON_STATEMENT_BOX_WIDTH * 0.8
+        } ),
         showTitleWhenExpanded: false,
         cornerRadius: 5,
         contentAlign: 'right',
         centerX: this.layoutBounds.centerX,
-        top: 10
+        top: 10,
+        minWidth: COMPARISON_STATEMENT_BOX_WIDTH,
+        maxWidth: COMPARISON_STATEMENT_BOX_WIDTH
       } );
       this.addChild( comparisonStatementAccordionBox );
 
@@ -89,7 +95,7 @@ define( function( require ) {
         ],
         spacing: 15,
         align: 'left',
-        left: this.layoutBounds.maxX - 300,
+        left: this.layoutBounds.maxX - 250,
         top: this.layoutBounds.minY + 10
       } ) );
 

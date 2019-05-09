@@ -24,9 +24,12 @@ define( require => {
   // constants
   const TICK_MARK_LABEL_DISTANCE = 5;
   const POINT_NODE_RADIUS = 4.5;
-  const ABS_VAL_MIN_LINE_WIDTH = 4;
+  const ABS_VAL_MIN_LINE_WIDTH = 2;
   const ABS_VAL_LINE_EXPANSION_FACTOR = 3;
-  const ABS_VAL_SPAN_SPACING = 40;
+  const ABS_VAL_SPAN_NL_DISTANCE_Y = 45;
+  const ABS_VAL_SPAN_SPACING_Y = 40;
+  const ABS_VAL_SPAN_NL_DISTANCE_X = 75;
+  const ABS_VAL_SPAN_SPACING_X = 65;
 
   class NumberLineNode extends Node {
 
@@ -188,15 +191,21 @@ define( require => {
             lineOnNumberLine.stroke = point.colorProperty.value;
             const pointPosition = point.getPositionInModelSpace();
             lineOnNumberLine.setLine( zeroPosition.x, zeroPosition.y, pointPosition.x, pointPosition.y );
+            let offset = numberLine.isHorizontal() ? ABS_VAL_SPAN_NL_DISTANCE_Y : ABS_VAL_SPAN_NL_DISTANCE_X;
+            let spacing = numberLine.isHorizontal() ? ABS_VAL_SPAN_SPACING_Y : ABS_VAL_SPAN_SPACING_X;
             if ( pointValue > 0 ) {
-              lineOnNumberLine.lineWidth = ABS_VAL_MIN_LINE_WIDTH + pointsAboveZeroCount * ABS_VAL_LINE_EXPANSION_FACTOR;
-              spanIndicator && spanIndicator.distanceFromNumberLineProperty.set( ABS_VAL_SPAN_SPACING * ( 1 + pointsAboveZeroCount ) );
               pointsAboveZeroCount++;
+              lineOnNumberLine.lineWidth = ABS_VAL_MIN_LINE_WIDTH + pointsAboveZeroCount * ABS_VAL_LINE_EXPANSION_FACTOR;
+              spanIndicator && spanIndicator.distanceFromNumberLineProperty.set(
+                offset + ( pointsAboveZeroCount - 1 ) * spacing
+              );
             }
             else {
-              lineOnNumberLine.lineWidth = ABS_VAL_MIN_LINE_WIDTH + pointsBelowZeroCount * ABS_VAL_LINE_EXPANSION_FACTOR;
-              spanIndicator && spanIndicator.distanceFromNumberLineProperty.set( ABS_VAL_SPAN_SPACING * ( 1 + pointsBelowZeroCount ) );
               pointsBelowZeroCount++;
+              lineOnNumberLine.lineWidth = ABS_VAL_MIN_LINE_WIDTH + pointsBelowZeroCount * ABS_VAL_LINE_EXPANSION_FACTOR;
+              spanIndicator && spanIndicator.distanceFromNumberLineProperty.set(
+                offset + ( pointsBelowZeroCount - 1 ) * spacing
+              );
             }
           }
         } );
