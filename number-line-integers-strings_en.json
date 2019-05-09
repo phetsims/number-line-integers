@@ -5,6 +5,9 @@
   "comparisonStatement": {
     "value": "Comparison statement"
   },
+  "generic": {
+    "value": "Generic"
+  },
   "labels": {
     "value": "Labels"
   },
@@ -16,6 +19,9 @@
   },
   "range": {
     "value": "{{lowValue}} to {{highValue}}"
+  },
+  "scenes": {
+    "value": "Scenes"
   },
   "tickMarks": {
     "value": "Tick Marks"

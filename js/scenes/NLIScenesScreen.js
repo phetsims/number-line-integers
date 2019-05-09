@@ -17,8 +17,7 @@ define( require => {
   const Screen = require( 'JOIST/Screen' );
 
   // strings
-  // TODO: Put this in with the strings!!!!!!!!!!!!!
-  const scenesString = 'Scenes';
+  const scenesString = require( 'string!NUMBER_LINE_INTEGERS/scenes' );
 
   // TODO: Just for fun
   const iconFactory = new RandomIconFactory( 158 );
