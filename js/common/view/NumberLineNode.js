@@ -191,8 +191,8 @@ define( require => {
             lineOnNumberLine.stroke = point.colorProperty.value;
             const pointPosition = point.getPositionInModelSpace();
             lineOnNumberLine.setLine( zeroPosition.x, zeroPosition.y, pointPosition.x, pointPosition.y );
-            let offset = numberLine.isHorizontal() ? ABS_VAL_SPAN_NL_DISTANCE_Y : ABS_VAL_SPAN_NL_DISTANCE_X;
-            let spacing = numberLine.isHorizontal() ? ABS_VAL_SPAN_SPACING_Y : ABS_VAL_SPAN_SPACING_X;
+            const offset = numberLine.isHorizontal() ? ABS_VAL_SPAN_NL_DISTANCE_Y : ABS_VAL_SPAN_NL_DISTANCE_X;
+            const spacing = numberLine.isHorizontal() ? ABS_VAL_SPAN_SPACING_Y : ABS_VAL_SPAN_SPACING_X;
             if ( pointValue > 0 ) {
               pointsAboveZeroCount++;
               lineOnNumberLine.lineWidth = ABS_VAL_MIN_LINE_WIDTH + pointsAboveZeroCount * ABS_VAL_LINE_EXPANSION_FACTOR;
