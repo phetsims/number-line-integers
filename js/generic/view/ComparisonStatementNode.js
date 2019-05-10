@@ -16,9 +16,14 @@ define( require => {
   const Node = require( 'SCENERY/nodes/Node' );
   const Path = require( 'SCENERY/nodes/Path' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const Shape = require( 'KITE/Shape' );
   const StringProperty = require( 'AXON/StringProperty' );
   const Text = require( 'SCENERY/nodes/Text' );
+
+  // constants
+  const COMPARISON_STATEMENT_FONT = new PhetFont( 22 );
+  const COMPARISON_STATEMENT_SPACING = 6; // in screen coords
 
   class ComparisonStatementNode extends Node {
 
@@ -32,13 +37,19 @@ define( require => {
       // @private {StringProperty} - controls what comparison operator is used
       this.selectedOperatorProperty = new StringProperty( '<' );
 
-      // comparison statement
-      const comparisonStatement = new Text( '0', { font: new PhetFont( 22 ) } );
-      this.addChild( comparisonStatement );
+      // comparison statement root node
+      const comparisonStatementRoot = new Node();
+      this.addChild( comparisonStatementRoot );
+
+      // the comparison statement has numbers and operators that reside on different nodes for easier manipulation
+      const numberNodesLayer = new Node();
+      comparisonStatementRoot.addChild( numberNodesLayer );
+      const operatorAndZeroNodesLayer = new Node();
+      comparisonStatementRoot.addChild( operatorAndZeroNodesLayer );
 
       // operator selector node
       const operatorSelectionNode = new OperatorSelectorNode( this.selectedOperatorProperty, {
-        centerY: comparisonStatement.centerY
+        bottom: 7 // empirically determined to align vertically with the comparison statement
       } );
       this.addChild( operatorSelectionNode );
 
@@ -47,62 +58,94 @@ define( require => {
 
         const numPoints = numberLine.residentPoints.length;
 
-        // this indicator handles a max of three points
+        // this indicator node handles a max of three points, make sure that's all that are present
         assert && assert( numPoints <= 3, 'too many points on number line' );
 
         const comparisonOperator = this.selectedOperatorProperty.value;
-        const numberList = [];
 
-        numberLine.residentPoints.forEach( point => {
-          numberList.push( point.valueProperty.value );
-        } );
+        // clear out the operators layer
+        operatorAndZeroNodesLayer.removeAllChildren();
 
-        let comparisonText = '';
-        if ( numberList.length === 0 ) {
+        // list of all value nodes that will be shown, kept in ascending order
+        const valueNodes = [];
 
-          // if there are no points, just show a zero
-          comparisonText = '0';
+        if ( numberNodesLayer.getChildrenCount() === 0 ) {
+
+          // if there are no points on the number line, just show a zero
+          const zeroNode = new Text( '0', { font: COMPARISON_STATEMENT_FONT } );
+          operatorAndZeroNodesLayer.addChild( zeroNode );
+          valueNodes.push( zeroNode );
+        }
+        else if ( numberNodesLayer.getChildrenCount() === 1 ) {
+
+          // compare the only point value to zero
+          const pointValueNode = numberNodesLayer.getChildAt( 0 );
+          const zeroNode = new Text( '0', { font: COMPARISON_STATEMENT_FONT } );
+          operatorAndZeroNodesLayer.addChild( zeroNode );
+          if ( pointValueNode.point.valueProperty.value < 0 ) {
+            valueNodes.push( pointValueNode );
+            valueNodes.push( zeroNode );
+          }
+          else {
+            valueNodes.push( zeroNode );
+            valueNodes.push( pointValueNode );
+          }
         }
         else {
 
-          // if there is only one point on the line, add a zero to compare to
-          if ( numberList.length === 1 ) {
-            numberList.push( 0 );
-          }
-
-          // sort the list based on the comparison that will be depicted
-          numberList.sort( ( a, b ) => {
-            return comparisonOperator === '<' ? a - b : b - a;
+          // get a list of number nodes and sort them based on their value
+          const orderedNumberNodes = numberNodesLayer.getChildren().sort( ( p1node, p2node ) => {
+            const p1Value = p1node.point.valueProperty.value;
+            const p2Value = p2node.point.valueProperty.value;
+            return comparisonOperator === '<' ? p1Value - p2Value : p2Value - p1Value;
           } );
 
-          // update the text
-          for ( let i = 0; i < numberList.length - 1; i++ ) {
-            comparisonText += numberList[ i ] + ' ' + comparisonOperator + ' ';
-          }
-          comparisonText += numberList[ numberList.length - 1 ];
+          // add the nodes in order to the list of value nodes
+          orderedNumberNodes.forEach( node => valueNodes.push( node ) );
         }
-        comparisonStatement.text = comparisonText;
-        comparisonStatement.centerX = 0;
+
+        // position the value nodes and put the operators in between
+        let currentXPos = 0;
+        for ( let i = 0; i < valueNodes.length; i++ ) {
+          const index = comparisonOperator === '<' ? i : valueNodes.length - i - 1;
+          valueNodes[ index ].x = currentXPos;
+          currentXPos = valueNodes[ index ].right + COMPARISON_STATEMENT_SPACING;
+          if ( i < valueNodes.length - 1 ) {
+            const comparisonOperatorNode = new Text( comparisonOperator, {
+              font: COMPARISON_STATEMENT_FONT,
+              x: currentXPos
+            } );
+            operatorAndZeroNodesLayer.addChild( comparisonOperatorNode );
+            currentXPos = comparisonOperatorNode.right + COMPARISON_STATEMENT_SPACING;
+          }
+        }
+
+        comparisonStatementRoot.centerX = 0;
         operatorSelectionNode.left = 80; // empirically determined
       };
 
-      // do an initial update of the comparison statement
-      update();
-
       // update the comparison statement as points appear, move, and disappear
       numberLine.residentPoints.forEach( point => {
+        numberNodesLayer.addChild( new NumberWithColorNode( point ) );
         point.valueProperty.lazyLink( update );
       } );
       numberLine.residentPoints.addItemAddedListener( addedPoint => {
+        numberNodesLayer.addChild( new NumberWithColorNode( addedPoint ) );
         addedPoint.valueProperty.link( update );
       } );
       numberLine.residentPoints.addItemRemovedListener( removedPoint => {
         removedPoint.valueProperty.unlink( update );
+        numberNodesLayer.getChildren().forEach( childNode => {
+          if ( childNode.point === removedPoint ) {
+            numberNodesLayer.removeChild( childNode );
+            childNode.dispose();
+          }
+        } );
         update();
       } );
 
-      // update the comparison statement of the chosen operator changes
-      this.selectedOperatorProperty.lazyLink( update );
+      // update the comparison statement of the chosen operator changes, this also does the initial update
+      this.selectedOperatorProperty.link( update );
     }
 
     reset() {
@@ -199,6 +242,60 @@ define( require => {
       } );
 
       this.mutate( options );
+    }
+  }
+
+  // inner class that is used to portray numbers and use color to associate them with points
+  class NumberWithColorNode extends Node {
+    constructor( point ) {
+
+      super();
+
+      // @public (read-only) {NumberLinePoint}
+      this.point = point;
+
+      // background - initial size is arbitrary, it will be updated in function linked below
+      const background = new Rectangle( 0, 0, 1, 1, 2, 2, {
+        lineWidth: 2,
+        visible: false
+      } );
+      this.addChild( background );
+
+
+      // the node that represents the value
+      const numberText = new Text( '', { font: COMPARISON_STATEMENT_FONT } );
+      this.addChild( numberText );
+
+      // update appearance as the value changes
+      const handleValueChange = value => {
+        numberText.text = value;
+        background.setRectBounds( numberText.bounds.dilated( 3 ) );
+      };
+      point.valueProperty.link( handleValueChange );
+
+      // update the highlight state as the point is dragged
+      const handleDragStateChange = dragging => {
+        if ( dragging ) {
+          background.visible = true;
+          background.fill = point.colorProperty.value.colorUtilsBrighter( 0.75 );
+          background.stroke = point.colorProperty.value;
+        }
+        else {
+          background.visible = false;
+        }
+      };
+      point.isDraggingProperty.link( handleDragStateChange );
+
+      // @private {function}
+      this.disposeNumberWithColorNode = () => {
+        point.valueProperty.unlink( handleValueChange );
+        point.isDraggingProperty.unlink( handleDragStateChange );
+      };
+    }
+
+    dispose() {
+      this.disposeNumberWithColorNode();
+      super.dispose();
     }
   }
 
