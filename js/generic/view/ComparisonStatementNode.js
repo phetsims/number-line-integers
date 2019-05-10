@@ -97,9 +97,7 @@ define( require => {
 
           // get a list of number nodes and sort them based on their value
           const orderedNumberNodes = numberNodesLayer.getChildren().sort( ( p1node, p2node ) => {
-            const p1Value = p1node.point.valueProperty.value;
-            const p2Value = p2node.point.valueProperty.value;
-            return comparisonOperator === '<' ? p1Value - p2Value : p2Value - p1Value;
+            return p1node.point.valueProperty.value - p2node.point.valueProperty.value;
           } );
 
           // add the nodes in order to the list of value nodes
