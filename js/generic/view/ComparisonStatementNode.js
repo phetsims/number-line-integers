@@ -2,7 +2,7 @@
 
 /**
  * a Scenery node that depicts a "comparison statement" between zero to three numerical values, for example,
- * "1 < 5 < 7".  It also include a selector that allows a user to choose between the greater than or less than
+ * "1 < 5 < 7".  It also includes a selector that allows a user to choose between the greater than or less than
  * comparison operator.
  *
  * @author John Blanco
@@ -123,16 +123,16 @@ define( require => {
         }
 
         comparisonStatementRoot.centerX = 0;
-        operatorSelectionNode.left = 80; // empirically determined
+        operatorSelectionNode.left = 90; // empirically determined
       };
 
       // update the comparison statement as points appear, move, and disappear
       numberLine.residentPoints.forEach( point => {
-        numberNodesLayer.addChild( new NumberWithColorNode( point ) );
+        numberNodesLayer.addChild( new PointValueNode( point ) );
         point.valueProperty.lazyLink( update );
       } );
       numberLine.residentPoints.addItemAddedListener( addedPoint => {
-        numberNodesLayer.addChild( new NumberWithColorNode( addedPoint ) );
+        numberNodesLayer.addChild( new PointValueNode( addedPoint ) );
         addedPoint.valueProperty.link( update );
       } );
       numberLine.residentPoints.addItemRemovedListener( removedPoint => {
@@ -247,8 +247,12 @@ define( require => {
     }
   }
 
-  // inner class that is used to portray numbers and use color to associate them with points
-  class NumberWithColorNode extends Node {
+  // inner class that is used to portray the numerical value of a number line point
+  class PointValueNode extends Node {
+
+    /**
+     * @param {NumberLinePoint} point
+     */
     constructor( point ) {
 
       super();
@@ -318,6 +322,9 @@ define( require => {
       };
     }
 
+    /**
+     * @public
+     */
     dispose() {
       this.disposeNumberWithColorNode();
       super.dispose();
