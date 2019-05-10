@@ -11,7 +11,9 @@ define( require => {
   'use strict';
 
   // modules
+  const Animation = require( 'TWIXT/Animation' );
   const ButtonListener = require( 'SCENERY/input/ButtonListener' );
+  const Easing = require( 'TWIXT/Easing' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Path = require( 'SCENERY/nodes/Path' );
@@ -101,7 +103,7 @@ define( require => {
           } );
 
           // add the nodes in order to the list of value nodes
-          orderedNumberNodes.forEach( node => valueNodes.push( node ) );
+          orderedNumberNodes.forEach( node => { valueNodes.push( node ); } );
         }
 
         // position the value nodes and put the operators in between
@@ -256,11 +258,12 @@ define( require => {
 
       // background - initial size is arbitrary, it will be updated in function linked below
       const background = new Rectangle( 0, 0, 1, 1, 2, 2, {
+        fill: point.colorProperty.value.colorUtilsBrighter( 0.75 ),
+        stroke: point.colorProperty.value,
         lineWidth: 2,
-        visible: false
+        visible: false // initially invisible, activated (made visible) when user interacts with the point
       } );
       this.addChild( background );
-
 
       // the node that represents the value
       const numberText = new Text( '', { font: COMPARISON_STATEMENT_FONT } );
@@ -273,15 +276,37 @@ define( require => {
       };
       point.valueProperty.link( handleValueChange );
 
+      // an animation is used to made the background when the user stops dragging the point
+      let backgroundFadeAnimation = null;
+
       // update the highlight state as the point is dragged
       const handleDragStateChange = dragging => {
+
         if ( dragging ) {
+          if ( backgroundFadeAnimation ) {
+            backgroundFadeAnimation.stop();
+          }
           background.visible = true;
-          background.fill = point.colorProperty.value.colorUtilsBrighter( 0.75 );
-          background.stroke = point.colorProperty.value;
+          background.opacity = 1;
         }
         else {
-          background.visible = false;
+
+          if ( !backgroundFadeAnimation ) {
+
+            // start or restart the fade animation
+            backgroundFadeAnimation = new Animation( {
+              duration: 0.75,
+              easing: Easing.CUBIC_OUT,
+              setValue: value => { background.opacity = value; },
+              from: 1,
+              to: 0
+            } );
+            backgroundFadeAnimation.start();
+            backgroundFadeAnimation.endedEmitter.addListener( () => {
+              backgroundFadeAnimation = null;
+              background.visible = false;
+            } );
+          }
         }
       };
       point.isDraggingProperty.link( handleDragStateChange );
