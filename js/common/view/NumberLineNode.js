@@ -146,7 +146,7 @@ define( require => {
 
       // closure that updates the lines that indicate absolute value
       const absoluteValueLines = [];
-      const updateAbsoluteValueIndicators = () => {
+      const updateAbsoluteValueIndicators = doAnimation => {
 
         // if there aren't enough lines available, add new ones until there are enough
         while ( absoluteValueLines.length < numberLine.residentPoints.length ) {
@@ -196,15 +196,17 @@ define( require => {
             if ( pointValue > 0 ) {
               pointsAboveZeroCount++;
               lineOnNumberLine.lineWidth = ABS_VAL_MIN_LINE_WIDTH + pointsAboveZeroCount * ABS_VAL_LINE_EXPANSION_FACTOR;
-              spanIndicator && spanIndicator.distanceFromNumberLineProperty.set(
-                offset + ( pointsAboveZeroCount - 1 ) * spacing
+              spanIndicator && spanIndicator.setDistanceFromNumberLine(
+                offset + ( pointsAboveZeroCount - 1 ) * spacing,
+                doAnimation
               );
             }
             else {
               pointsBelowZeroCount++;
               lineOnNumberLine.lineWidth = ABS_VAL_MIN_LINE_WIDTH + pointsBelowZeroCount * ABS_VAL_LINE_EXPANSION_FACTOR;
-              spanIndicator && spanIndicator.distanceFromNumberLineProperty.set(
-                offset + ( pointsBelowZeroCount - 1 ) * spacing
+              spanIndicator && spanIndicator.setDistanceFromNumberLine(
+                offset + ( pointsBelowZeroCount - 1 ) * spacing,
+                doAnimation
               );
             }
           }
@@ -231,7 +233,10 @@ define( require => {
         this.addChild( absValSpanNode );
 
         // add a listener that will update the absolute value indicators
-        point.valueProperty.link( updateAbsoluteValueIndicators );
+        const updateAbsoluteValueIndicatorsHandler = () => {
+          updateAbsoluteValueIndicators( true );
+        };
+        point.valueProperty.link( updateAbsoluteValueIndicatorsHandler );
 
         // add a listener that will unhook everything if and when this point is removed
         const removeItemListener = removedPoint => {
@@ -243,10 +248,10 @@ define( require => {
             this.removeChild( absValSpanNode );
             absoluteValueSpanNodes = _.without( absoluteValueSpanNodes, absValSpanNode );
             absValSpanNode.dispose();
-            point.valueProperty.unlink( updateAbsoluteValueIndicators );
-            updateAbsoluteValueIndicators();
+            point.valueProperty.unlink( updateAbsoluteValueIndicatorsHandler );
+            updateAbsoluteValueIndicators( true );
             numberLine.residentPoints.removeItemRemovedListener( removeItemListener );
-            updateAbsoluteValueIndicators();
+            updateAbsoluteValueIndicators( true );
           }
         };
         numberLine.residentPoints.addItemRemovedListener( removeItemListener );
@@ -305,7 +310,7 @@ define( require => {
           }
 
           // update absolute value representations
-          updateAbsoluteValueIndicators();
+          updateAbsoluteValueIndicators( false );
         }
       );
     }

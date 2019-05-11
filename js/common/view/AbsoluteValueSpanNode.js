@@ -9,6 +9,8 @@ define( require => {
   'use strict';
 
   // modules
+  const Animation = require( 'TWIXT/Animation' );
+  const Easing = require( 'TWIXT/Easing' );
   const Path = require( 'SCENERY/nodes/Path' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -19,6 +21,8 @@ define( require => {
 
   // const
   const CAP_LENGTH = 10;
+  const ANIMATION_SPEED = 160; // in screen coords per second
+  const MAX_ANIMATION_DURATION = 0.5; // in seconds
 
   class AbsoluteValueSpanNode extends Node {
 
@@ -40,6 +44,9 @@ define( require => {
 
       // @public (read-only) {NumberLinePoint} - point whose absolute value is being displayed by this span
       this.numberLinePoint = numberLinePoint;
+
+      // @private {null|Animation} - null when this span node is not animating
+      this.translateAnimation = null;
 
       // add the equation text
       const equationTextNode = new Text( '', { font: new PhetFont( 14 ) } );
@@ -144,6 +151,48 @@ define( require => {
         positionAndShapeMultilink.dispose();
         visibilityMultilink.dispose();
       };
+    }
+
+    /**
+     * @param {number} distance
+     * @param {boolean} doAnimation
+     * @public
+     */
+    setDistanceFromNumberLine( distance, doAnimation ) {
+      const currentDistanceFromNumberLine = this.distanceFromNumberLineProperty.get();
+      if ( distance === currentDistanceFromNumberLine ) {
+        return;
+      }
+
+      if ( doAnimation ) {
+        const animationDuration = Math.min(
+          Math.abs( currentDistanceFromNumberLine - distance ) / ANIMATION_SPEED,
+          MAX_ANIMATION_DURATION
+        );
+        const animationOptions = {
+          property: this.distanceFromNumberLineProperty,
+          to: distance,
+          duration: animationDuration,
+          easing: Easing.CUBIC_IN_OUT
+        };
+
+        // if an animation is in progress, stop it
+        if ( this.translateAnimation ) {
+          this.translateAnimation.stop();
+        }
+
+        // create and start a new animation
+        this.translateAnimation = new Animation( animationOptions );
+        this.translateAnimation.start();
+
+        // set the current animation to null once it finishes (or is stopped)
+        this.translateAnimation.endedEmitter.addListener( () => {
+          this.translateAnimation = null;
+        } );
+      }
+      else {
+        this.distanceFromNumberLineProperty.set( distance );
+      }
     }
 
     dispose() {
