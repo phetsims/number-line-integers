@@ -64,7 +64,7 @@ define( require => {
         const spanIndicatorShape = new Shape();
         const distanceFromNumberLine = this.distanceFromNumberLineProperty.value;
         const pointPosition = numberLinePoint.getPositionInModelSpace();
-        if ( numberLine.isHorizontal() ) {
+        if ( numberLine.isHorizontal ) {
           spanIndicatorShape.moveTo(
             numberLine.centerPosition.x,
             numberLine.centerPosition.y - distanceFromNumberLine - CAP_LENGTH / 2
@@ -116,7 +116,7 @@ define( require => {
         equationTextNode.setText( '|' + value + '|' + ' = ' + Math.abs( value ) );
         const distanceFromNumberLine = this.distanceFromNumberLineProperty.value;
         const pointPosition = numberLinePoint.getPositionInModelSpace();
-        if ( numberLine.isHorizontal() ) {
+        if ( numberLine.isHorizontal ) {
           equationTextNode.centerX = ( numberLine.centerPosition.x + pointPosition.x ) / 2;
           equationTextNode.bottom = numberLine.centerPosition.y - distanceFromNumberLine - CAP_LENGTH / 2 - 4;
         }

@@ -116,7 +116,7 @@ define( require => {
      * @returns {boolean}
      * @public
      */
-    isHorizontal() {
+    get isHorizontal() {
       return this.orientationProperty.value === NumberLineOrientation.HORIZONTAL;
     }
 
@@ -125,7 +125,7 @@ define( require => {
      * @returns {boolean}
      * @public
      */
-    isVertical() {
+    get isVertical() {
       return this.orientationProperty.value === NumberLineOrientation.VERTICAL;
     }
 
@@ -141,7 +141,7 @@ define( require => {
         'must set model display bounds if using this method'
       );
       let numberLineValue;
-      if ( this.isHorizontal() ) {
+      if ( this.isHorizontal ) {
         numberLineValue = ( modelPosition.x - this.centerPosition.x ) * this.modelToPositonScale.x;
       }
       else {
@@ -167,7 +167,7 @@ define( require => {
       );
 
       let modelPosition;
-      if ( this.isHorizontal() ) {
+      if ( this.isHorizontal ) {
         modelPosition = new Vector2(
           numberLineValue / this.modelToPositonScale.x + this.centerPosition.x,
           this.centerPosition.y
@@ -238,7 +238,7 @@ define( require => {
      * @returns {boolean}
      */
     withinDistance( pointControllerPosition, distance ) {
-      if ( this.isHorizontal() ) {
+      if ( this.isHorizontal ) {
         return Math.abs( pointControllerPosition.y - this.centerPosition.y ) <= distance;
       }
       else {

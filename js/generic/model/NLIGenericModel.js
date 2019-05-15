@@ -84,9 +84,9 @@ define( require => {
       this.pointControllers.forEach( pointController => {
         pointController.isDraggingProperty.lazyLink( dragging => {
           if ( !dragging &&
-               ( this.numberLine.isHorizontal() &&
+               ( this.numberLine.isHorizontal &&
                  BOTTOM_BOX_BOUNDS.containsPoint( pointController.positionProperty.value ) ) ||
-               ( this.numberLine.isVertical() &&
+               ( this.numberLine.isVertical &&
                  SIDE_BOX_BOUNDS.containsPoint( pointController.positionProperty.value ) ) ) {
             this.putPointControllerInBox( pointController );
           }

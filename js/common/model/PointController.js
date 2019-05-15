@@ -151,7 +151,7 @@ define( require => {
      * @public
      */
     setPositionRelativeToPoint( pointPosition ) {
-      if ( this.numberLine.isHorizontal() ) {
+      if ( this.numberLine.isHorizontal ) {
         this.positionProperty.set( new Vector2( pointPosition.x, pointPosition.y + this.offsetFromHorizontalNumberLine ) );
       }
       else {

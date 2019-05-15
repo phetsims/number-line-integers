@@ -191,8 +191,8 @@ define( require => {
             lineOnNumberLine.stroke = point.colorProperty.value;
             const pointPosition = point.getPositionInModelSpace();
             lineOnNumberLine.setLine( zeroPosition.x, zeroPosition.y, pointPosition.x, pointPosition.y );
-            const offset = numberLine.isHorizontal() ? ABS_VAL_SPAN_NL_DISTANCE_Y : ABS_VAL_SPAN_NL_DISTANCE_X;
-            const spacing = numberLine.isHorizontal() ? ABS_VAL_SPAN_SPACING_Y : ABS_VAL_SPAN_SPACING_X;
+            const offset = numberLine.isHorizontal ? ABS_VAL_SPAN_NL_DISTANCE_Y : ABS_VAL_SPAN_NL_DISTANCE_X;
+            const spacing = numberLine.isHorizontal ? ABS_VAL_SPAN_SPACING_Y : ABS_VAL_SPAN_SPACING_X;
             if ( pointValue > 0 ) {
               pointsAboveZeroCount++;
               lineOnNumberLine.lineWidth = ABS_VAL_MIN_LINE_WIDTH + pointsAboveZeroCount * ABS_VAL_LINE_EXPANSION_FACTOR;
@@ -334,7 +334,7 @@ define( require => {
       // get the center position of the tick mark
       const tmCenter = this.numberLine.valueToModelPosition( value );
 
-      if ( this.numberLine.isHorizontal() ) {
+      if ( this.numberLine.isHorizontal ) {
 
         const tickMark = new Line( tmCenter.x, tmCenter.y - length, tmCenter.x, tmCenter.y + length, tickMarkOptions );
         parentNode.addChild( tickMark );
@@ -409,7 +409,7 @@ define( require => {
 
           // update the label text and position
           label.text = value;
-          if ( numberLine.isHorizontal() ) {
+          if ( numberLine.isHorizontal ) {
             label.centerX = circle.centerX;
             label.bottom = circle.y - 20;
           }
