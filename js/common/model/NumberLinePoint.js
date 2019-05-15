@@ -34,8 +34,10 @@ define( require => {
       // @public {BooleanProperty} - indicates whether this is being dragged by the user
       this.isDraggingProperty = new BooleanProperty( false );
 
-      // @private
+      // @private {NumberLine} - the number line on which this point resides
       this.numberLine = numberLine;
+
+      // @private {PointController|null} - a "point controller" that controls where this point is, can be null
       this.controller = controller;
     }
 
@@ -49,7 +51,7 @@ define( require => {
     }
 
     /**
-     * given the proposed value, set the value of this number line point to the closest valid value on the number line.
+     * given the proposed value, set the value of this number line point to the closest valid value on the number line
      * @param {number} numberLineValue - value on number line, doesn't have to be constrained to integer values
      * @public
      */

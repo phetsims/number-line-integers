@@ -117,7 +117,7 @@ define( require => {
       if ( this.numberLinePoint ) {
 
         // determine whether to propose a new value for the point or to detach and remove the point
-        if ( this.numberLine.withinPointRemovalDistance( proposedPosition ) &&
+        if ( this.numberLine.isWithinPointRemovalDistance( proposedPosition ) &&
              this.numberLine.displayedRangeProperty.value.contains( proposedNumberLineValue ) ) {
           this.numberLinePoint.proposeValue( proposedNumberLineValue );
         }
@@ -129,7 +129,7 @@ define( require => {
       else {
 
         // check if a point should be created and added based on the proposed position
-        if ( this.numberLine.withinPointCreationDistance( proposedPosition ) &&
+        if ( this.numberLine.isWithinPointCreationDistance( proposedPosition ) &&
              this.numberLine.displayedRangeProperty.value.contains( proposedNumberLineValue ) &&
              !this.numberLine.hasPointAt( proposedNumberLineValue ) ) {
           const numberLinePoint = new NumberLinePoint( proposedNumberLineValue, this.color, this.numberLine, this );

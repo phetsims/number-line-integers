@@ -15,6 +15,8 @@ define( require => {
   const ScreenView = require( 'JOIST/ScreenView' );
 
   const NLIConstants = {
+
+    // layout bounds used for all screens
     NLI_LAYOUT_BOUNDS: ScreenView.DEFAULT_LAYOUT_BOUNDS,
 
     // The amount, in model and view coordinates, of space between the end of the number lines display range and the end

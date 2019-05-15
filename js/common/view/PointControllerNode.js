@@ -3,7 +3,7 @@
 /**
  * a Scenery node that is used to add, remove, and control points on a number line
  *
- * @author John Blanco
+ * @author John Blanco (PhET Interactive Simulations)
  */
 define( require => {
   'use strict';
@@ -22,7 +22,8 @@ define( require => {
   class PointControllerNode extends Node {
 
     /**
-     * TODO: document when finalized
+     * @param {PointController) pointController
+     * @param {Object} [options]
      */
     constructor( pointController, options ) {
 

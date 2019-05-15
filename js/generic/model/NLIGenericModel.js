@@ -1,6 +1,8 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
+ * main model for the "generic" screen
+ *
  * @author John Blanco (PhET Interactive Simulations)
  */
 define( require => {
@@ -185,7 +187,10 @@ define( require => {
       }
     }
 
-    // @public resets the model
+    /**
+     * restore model to initial state
+     * @public
+     */
     reset() {
       this.numberLine.reset();
 

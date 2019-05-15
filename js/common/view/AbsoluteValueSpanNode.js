@@ -3,7 +3,7 @@
 /**
  * a Scenery node that represents the span of an absolute value separated from the number line
  *
- * @author John Blanco
+ * @author John Blanco (PhET Interactive Simulations)
  */
 define( require => {
   'use strict';
@@ -26,7 +26,11 @@ define( require => {
 
   class AbsoluteValueSpanNode extends Node {
 
-    // TODO: document when finalized
+    /**
+     * @param {NumberLine} numberLine - the number line for which this will be displayed
+     * @param {NumberLinePoint} numberLinePoint
+     * @param {number} initialDistanceFromNumberLine
+     */
     constructor( numberLine, numberLinePoint, initialDistanceFromNumberLine ) {
 
       super();

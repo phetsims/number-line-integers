@@ -4,7 +4,8 @@
  * Model of a number line.  This is (perhaps rather obviously) a very central class for the Number Line suite of
  * simulations.
  *
- * @author John Blanco
+ * @author John Blanco (PhET Interactive Simulations)
+ * @author Chris Klusendorf (PhET Interactive Simulations)
  */
 define( require => {
   'use strict';
@@ -148,7 +149,7 @@ define( require => {
         numberLineValue = ( modelPosition.y - this.centerPosition.y ) * -this.modelToPositonScale.y;
       }
 
-      // round the value based on the current tick mark spacing
+      // round the value to an integer
       return Util.roundSymmetric( numberLineValue );
     }
 
@@ -217,8 +218,8 @@ define( require => {
      * @returns {boolean}
      * @public
      */
-    withinPointCreationDistance( pointControllerPosition ) {
-      return this.withinDistance( pointControllerPosition, POINT_CREATION_DISTANCE );
+    isWithinPointCreationDistance( pointControllerPosition ) {
+      return this.isWithinDistance( pointControllerPosition, POINT_CREATION_DISTANCE );
     }
 
     /**
@@ -227,8 +228,8 @@ define( require => {
      * @returns {boolean}
      * @public
      */
-    withinPointRemovalDistance( pointControllerPosition ) {
-      return this.withinDistance( pointControllerPosition, POINT_REMOVAL_DISTANCE );
+    isWithinPointRemovalDistance( pointControllerPosition ) {
+      return this.isWithinDistance( pointControllerPosition, POINT_REMOVAL_DISTANCE );
     }
 
     /**
@@ -237,7 +238,7 @@ define( require => {
      * @param {number} distance
      * @returns {boolean}
      */
-    withinDistance( pointControllerPosition, distance ) {
+    isWithinDistance( pointControllerPosition, distance ) {
       if ( this.isHorizontal ) {
         return Math.abs( pointControllerPosition.y - this.centerPosition.y ) <= distance;
       }

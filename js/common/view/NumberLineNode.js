@@ -3,7 +3,7 @@
 /**
  * a Scenery node that presents a number line to the user
  *
- * @author John Blanco
+ * @author John Blanco (PhET Interactive Simulations)
  */
 define( require => {
   'use strict';
@@ -42,7 +42,6 @@ define( require => {
 
       options = _.extend( {
 
-        // TODO: organize and document when finalized (or close)
         numberLineWidth: 1,
         tickMarkLineWidth: 1,
         tickMarkLength: 10,
@@ -357,6 +356,9 @@ define( require => {
     }
   }
 
+  /**
+   * inner class for the point nodes that appear on the number line
+   */
   class PointNode extends Node {
 
     /**
