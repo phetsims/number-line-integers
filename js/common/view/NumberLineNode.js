@@ -11,6 +11,7 @@ define( require => {
   // modules
   const AbsoluteValueSpanNode = require( 'NUMBER_LINE_INTEGERS/common/view/AbsoluteValueSpanNode' );
   const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  const Bounds2 = require( 'DOT/Bounds2' );
   const Circle = require( 'SCENERY/nodes/Circle' );
   const Line = require( 'SCENERY/nodes/Line' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
@@ -19,6 +20,7 @@ define( require => {
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Property = require( 'AXON/Property' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const Text = require( 'SCENERY/nodes/Text' );
 
   // constants
@@ -381,14 +383,30 @@ define( require => {
       } );
       this.addChild( circle );
 
-      // add the label
-      const label = new Text( numberLinePoint.valueProperty.value, {
+      // create the label text
+      const labelTextNode = new Text( numberLinePoint.valueProperty.value, {
         font: new PhetFont( 16 ),
         fill: numberLinePoint.colorProperty
       } );
-      label.visible = false;
-      this.addChild( label );
-      const labelVisibilityListener = numberLine.labelsVisibleProperty.linkAttribute( label, 'visible' );
+
+      // update the background to be the correct size and shape for the given text node
+      const updateBackgroundSize = ( backgroundNode, textNode ) => {
+        const textBounds = new Bounds2( textNode.left, textNode.top, textNode.right, textNode.bottom );
+        textBounds.dilate( 3 );
+        backgroundNode.setRectBounds( textBounds );
+        backgroundNode.setCornerRadius( 4 );
+        return backgroundNode;
+      };
+
+      // create a background and add the label text to it
+      let labelNode = new Rectangle( 0, 0, 1, 1, { fill: 'white', opacity: 0.85 } );
+      labelNode.addChild( labelTextNode );
+      labelNode = updateBackgroundSize( labelNode, labelTextNode );
+
+      // add the label and link a listener for visibility
+      labelNode.visible = false;
+      this.addChild( labelNode );
+      const labelVisibilityListener = numberLine.labelsVisibleProperty.linkAttribute( labelNode, 'visible' );
 
       // move in front of other points when being dragged
       const dragStateHandler = isDragging => {
@@ -410,14 +428,15 @@ define( require => {
           circle.center = numberLine.valueToModelPosition( value );
 
           // update the label text and position
-          label.text = value;
+          labelTextNode.text = value;
+          labelNode = updateBackgroundSize( labelNode, labelTextNode );
           if ( numberLine.isHorizontal ) {
-            label.centerX = circle.centerX;
-            label.bottom = circle.y - 20;
+            labelNode.centerX = circle.centerX;
+            labelNode.bottom = circle.y - 20;
           }
           else {
-            label.right = circle.x - 20;
-            label.centerY = circle.centerY;
+            labelNode.right = circle.x - 20;
+            labelNode.centerY = circle.centerY;
           }
         }
       );
