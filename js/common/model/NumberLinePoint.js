@@ -39,6 +39,9 @@ define( require => {
 
       // @private {PointController|null} - a "point controller" that controls where this point is, can be null
       this.controller = controller;
+
+      // @public (read-only) {number|null} - the most recently proposed value, used when deciding where to land on number line
+      this.mostRecentlyProposedValue = null;
     }
 
     /**
@@ -58,9 +61,10 @@ define( require => {
     proposeValue( numberLineValue ) {
       const numberLineRange = this.numberLine.displayedRangeProperty.value;
       const constrainedValue = Util.clamp( Util.roundSymmetric( numberLineValue ), numberLineRange.min, numberLineRange.max );
-      if ( constrainedValue !== this.valueProperty.value && !this.numberLine.hasPointAt( constrainedValue ) ) {
+      if ( constrainedValue !== this.valueProperty.value ) {
         this.valueProperty.set( constrainedValue );
       }
+      this.mostRecentlyProposedValue = numberLineValue;
     }
   }
 

@@ -99,6 +99,29 @@ define( require => {
       // @public (read-only) {ObservableArray<NumberLinePoint>} - array of points on this number line
       this.residentPoints = new ObservableArray();
 
+      // hook up a listener to make sure that the points don't land on top of one another
+      this.residentPoints.addItemAddedListener( addedPoint => {
+
+        // listener to make sure point lands in a good point when released
+        const pointDragListener = dragging => {
+          if ( !dragging ) {
+            if ( this.getPointsAt( addedPoint.valueProperty.value ).length > 1 ) {
+
+              // there is already a point at this location, so we have to choose another
+              addedPoint.valueProperty.set( this.getNearestUnoccupiedValue( addedPoint.mostRecentlyProposedValue ) );
+            }
+          }
+        };
+        addedPoint.isDraggingProperty.link( pointDragListener );
+
+        // remove the listener when the point is removed from the number line
+        this.residentPoints.addItemRemovedListener( removedPoint => {
+          if ( removedPoint === addedPoint ) {
+            removedPoint.isDraggingProperty.unlink( pointDragListener );
+          }
+        } );
+      } );
+
       // @private {Object{ initialValue, color}[]} - array of point specifications that describe what points should
       // exist on the number line when constructed and after a reset
       this.initialPointSpecs = options.initialPointSpecs;
@@ -161,7 +184,7 @@ define( require => {
       }
 
       // round the value to an integer
-      return Util.roundSymmetric( numberLineValue );
+      return numberLineValue;
     }
 
     /**
@@ -275,9 +298,52 @@ define( require => {
      * whether any point on the number line already exists at the provided value
      * @param {number} value
      * @returns {boolean}
+     * @public
      */
     hasPointAt( value ) {
       return _.some( this.residentPoints.getArray(), point => point.valueProperty.value === value );
+    }
+
+    /**
+     * get a list of all points at the provided value
+     * @param {number} value
+     * @returns {NumberLinePoint[]}
+     * @private
+     */
+    getPointsAt( value ) {
+      return _.filter( this.residentPoints.getArray(), point => point.valueProperty.value === value );
+    }
+
+    /**
+     * get the closest valid value that isn't already occupied by a point
+     * @param {number} value
+     */
+    getNearestUnoccupiedValue( value ) {
+      const roundedValue = Util.roundSymmetric( value );
+      let nearestUnoccupiedValue = roundedValue;
+      if ( this.hasPointAt( roundedValue ) ) {
+        let nearestLargerValue = null;
+        for ( let i = roundedValue + 1; i <= this.displayedRangeProperty.value.max; i++ ) {
+          if ( !this.hasPointAt( i ) ) {
+            nearestLargerValue = i;
+            break;
+          }
+        }
+        let nearestSmallerValue = null;
+        for ( let i = roundedValue - 1; i >= this.displayedRangeProperty.value.min; i-- ) {
+          if ( !this.hasPointAt( i ) ) {
+            nearestSmallerValue = i;
+            break;
+          }
+        }
+        if ( Math.abs( value - nearestLargerValue ) < Math.abs( value - nearestSmallerValue ) ) {
+          nearestUnoccupiedValue = nearestLargerValue;
+        }
+        else {
+          nearestUnoccupiedValue = nearestSmallerValue;
+        }
+      }
+      return nearestUnoccupiedValue;
     }
 
     /**
