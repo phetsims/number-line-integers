@@ -13,7 +13,6 @@ define( require => {
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const PaintColorProperty = require( 'SCENERY/util/PaintColorProperty' );
-  const Util = require( 'DOT/Util' );
 
   class NumberLinePoint {
 
@@ -59,8 +58,7 @@ define( require => {
      * @public
      */
     proposeValue( numberLineValue ) {
-      const numberLineRange = this.numberLine.displayedRangeProperty.value;
-      const constrainedValue = Util.clamp( Util.roundSymmetric( numberLineValue ), numberLineRange.min, numberLineRange.max );
+      const constrainedValue = this.numberLine.getConstrainedValue( numberLineValue );
       if ( constrainedValue !== this.valueProperty.value ) {
         this.valueProperty.set( constrainedValue );
       }

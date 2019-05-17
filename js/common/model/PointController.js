@@ -126,12 +126,11 @@ define( require => {
         }
       }
       else {
+        const constrainedValue = this.numberLine.getConstrainedValue( proposedNumberLineValue );
 
         // check if a point should be created and added based on the proposed position
-        if ( this.numberLine.isWithinPointCreationDistance( proposedPosition ) &&
-             this.numberLine.displayedRangeProperty.value.contains( proposedNumberLineValue ) &&
-             !this.numberLine.hasPointAt( proposedNumberLineValue ) ) {
-          const numberLinePoint = new NumberLinePoint( proposedNumberLineValue, this.color, this.numberLine, this );
+        if ( this.numberLine.isWithinPointCreationDistance( proposedPosition ) ) {
+          const numberLinePoint = new NumberLinePoint( constrainedValue, this.color, this.numberLine, this );
           this.numberLine.addPoint( numberLinePoint );
           this.associateWithNumberLinePoint( numberLinePoint );
         }

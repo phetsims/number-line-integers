@@ -247,6 +247,17 @@ define( require => {
     }
 
     /**
+     * given a floating point number, return the closest integer value that is on the number line
+     * @param {number} proposedValue
+     * @returns {number}
+     * @public
+     */
+    getConstrainedValue( proposedValue ) {
+      const displayedRange = this.displayedRangeProperty.value;
+      return Util.clamp( Util.roundSymmetric( proposedValue ), displayedRange.min, displayedRange.max );
+    }
+
+    /**
      * whether the provided point controller position is within range for a number line point to be created
      * @param {Vector2} pointControllerPosition
      * @returns {boolean}
