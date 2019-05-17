@@ -370,7 +370,7 @@ define( require => {
 
     /**
      * @param {NumberLinePoint} numberLinePoint
-     * @param {numberLine} numberLine
+     * @param {NumberLine} numberLine
      * @param {Object} [options]
      */
     constructor( numberLinePoint, numberLine, options ) {
