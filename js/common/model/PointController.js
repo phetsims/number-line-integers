@@ -117,8 +117,7 @@ define( require => {
       if ( this.numberLinePoint ) {
 
         // determine whether to propose a new value for the point or to detach and remove the point
-        if ( this.numberLine.isWithinPointRemovalDistance( proposedPosition ) &&
-             this.numberLine.displayedRangeProperty.value.contains( proposedNumberLineValue ) ) {
+        if ( this.numberLine.isWithinPointRemovalDistance( proposedPosition ) ) {
           this.numberLinePoint.proposeValue( proposedNumberLineValue );
         }
         else {

@@ -12,6 +12,7 @@ define( require => {
 
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const Bounds2 = require( 'DOT/Bounds2' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
@@ -22,8 +23,18 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  const POINT_CREATION_DISTANCE = 60; // distance from number line in model/view coords where points get created
-  const POINT_REMOVAL_DISTANCE = 90; // distance from number line in model/view coords where points get removed
+
+  // perpendicular distance from number line in model/view coords where points get created
+  const POINT_CREATION_PERPENDICULAR_DISTANCE = 60;
+
+  // distance from the end of the number line in model/view coords where points get created
+  const POINT_CREATION_END_DISTANCE = 20;
+
+  // perpendicular distance from number line in model/view coords where points get removed
+  const POINT_REMOVAL_PERPENDICULAR_DISTANCE = 90;
+
+  // distance from the end of the number line in model/view coords where points get removed
+  const POINT_REMOVAL_END_DISTANCE = 25;
 
   class NumberLine {
 
@@ -219,7 +230,7 @@ define( require => {
      * @public
      */
     isWithinPointCreationDistance( pointControllerPosition ) {
-      return this.isWithinDistance( pointControllerPosition, POINT_CREATION_DISTANCE );
+      return this.isWithinDistance( pointControllerPosition, POINT_CREATION_PERPENDICULAR_DISTANCE, POINT_CREATION_END_DISTANCE );
     }
 
     /**
@@ -229,22 +240,35 @@ define( require => {
      * @public
      */
     isWithinPointRemovalDistance( pointControllerPosition ) {
-      return this.isWithinDistance( pointControllerPosition, POINT_REMOVAL_DISTANCE );
+      return this.isWithinDistance( pointControllerPosition, POINT_REMOVAL_PERPENDICULAR_DISTANCE, POINT_REMOVAL_END_DISTANCE );
     }
 
     /**
      * whether the provided position is within range of the provided distance
      * @param {Vector2} pointControllerPosition
-     * @param {number} distance
+     * @param {number} perpendicularDistance
+     * @param {number} endDistance
      * @returns {boolean}
      */
-    isWithinDistance( pointControllerPosition, distance ) {
+    isWithinDistance( pointControllerPosition, perpendicularDistance, endDistance ) {
+      let testBounds;
       if ( this.isHorizontal ) {
-        return Math.abs( pointControllerPosition.y - this.centerPosition.y ) <= distance;
+        testBounds = new Bounds2(
+          this.modelProjectionBounds.minX - endDistance,
+          this.centerPosition.y - perpendicularDistance,
+          this.modelProjectionBounds.maxX + endDistance,
+          this.centerPosition.y + perpendicularDistance
+        );
       }
       else {
-        return Math.abs( pointControllerPosition.x - this.centerPosition.x ) <= distance;
+        testBounds = new Bounds2(
+          this.centerPosition.x - perpendicularDistance,
+          this.modelProjectionBounds.minY - endDistance,
+          this.centerPosition.x + perpendicularDistance,
+          this.modelProjectionBounds.maxY + endDistance,
+        );
       }
+      return testBounds.containsPoint( pointControllerPosition );
     }
 
     /**
