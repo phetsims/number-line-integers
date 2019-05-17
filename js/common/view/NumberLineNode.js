@@ -28,10 +28,17 @@ define( require => {
   const POINT_NODE_RADIUS = 4.5;
   const ABS_VAL_MIN_LINE_WIDTH = 2;
   const ABS_VAL_LINE_EXPANSION_FACTOR = 3;
-  const ABS_VAL_SPAN_NL_DISTANCE_Y = 45;
+  const ABS_VAL_SPAN_NL_DISTANCE_Y = 55;
   const ABS_VAL_SPAN_SPACING_Y = 40;
   const ABS_VAL_SPAN_NL_DISTANCE_X = 75;
   const ABS_VAL_SPAN_SPACING_X = 65;
+
+  // convenience function to calculate distance of an absolute value span node from the number line
+  const getIndicatorDistanceFromNL = ( numberLine, count ) => {
+    return numberLine.isHorizontal ?
+           ABS_VAL_SPAN_NL_DISTANCE_Y + count * ABS_VAL_SPAN_SPACING_Y :
+           ABS_VAL_SPAN_NL_DISTANCE_X + count * ABS_VAL_SPAN_SPACING_X;
+  };
 
   class NumberLineNode extends Node {
 
@@ -147,23 +154,23 @@ define( require => {
 
       // closure that updates the lines that indicate absolute value
       const absoluteValueLines = [];
-      const updateAbsoluteValueIndicators = doAnimation => {
+      const updateAbsoluteValueIndicators = ( doAnimation = false ) => {
 
-        // if there aren't enough lines available, add new ones until there are enough
+        // if there aren't enough absolute value indicator lines available, add new ones until there are enough
         while ( absoluteValueLines.length < numberLine.residentPoints.length ) {
           const absoluteValueLine = new Line( 0, 0, 1, 1 ); // position is arbitrary, will be updated below
           absoluteValueLines.push( absoluteValueLine );
           absoluteValueLineLayer.addChild( absoluteValueLine );
         }
 
-        // if there are too many lines, remove them until we have the right abount
+        // if there are too many absolute value indicator lines, remove them until we have the right amount
         while ( absoluteValueLines.length > numberLine.residentPoints.length ) {
           const absoluteValueLine = absoluteValueLines.pop();
           absoluteValueLineLayer.removeChild( absoluteValueLine );
         }
 
         // create a list of the resident points on the number line sorted by absolute value
-        const sortedPoints = _.sortBy( numberLine.residentPoints.getArray(), point => {
+        const pointsSortedByValue = _.sortBy( numberLine.residentPoints.getArray(), point => {
           return Math.abs( point.valueProperty.value );
         } );
 
@@ -171,15 +178,12 @@ define( require => {
         let pointsAboveZeroCount = 0;
         let pointsBelowZeroCount = 0;
         const zeroPosition = numberLine.centerPosition;
-        sortedPoints.forEach( ( point, index ) => {
+        pointsSortedByValue.forEach( ( point, index ) => {
 
           // get a line that will display the absolute value on the number line itself
           const lineOnNumberLine = absoluteValueLines[ index ];
 
           // get the span indicator that is associated with this point
-          const spanIndicator = _.find( absoluteValueSpanNodes, spanNode => {
-            return spanNode.numberLinePoint === point;
-          } );
           const pointValue = point.valueProperty.value;
           if ( pointValue === 0 ) {
 
@@ -192,25 +196,29 @@ define( require => {
             lineOnNumberLine.stroke = point.colorProperty.value;
             const pointPosition = point.getPositionInModelSpace();
             lineOnNumberLine.setLine( zeroPosition.x, zeroPosition.y, pointPosition.x, pointPosition.y );
-            const offset = numberLine.isHorizontal ? ABS_VAL_SPAN_NL_DISTANCE_Y : ABS_VAL_SPAN_NL_DISTANCE_X;
-            const spacing = numberLine.isHorizontal ? ABS_VAL_SPAN_SPACING_Y : ABS_VAL_SPAN_SPACING_X;
             if ( pointValue > 0 ) {
               pointsAboveZeroCount++;
               lineOnNumberLine.lineWidth = ABS_VAL_MIN_LINE_WIDTH + pointsAboveZeroCount * ABS_VAL_LINE_EXPANSION_FACTOR;
-              spanIndicator && spanIndicator.setDistanceFromNumberLine(
-                offset + ( pointsAboveZeroCount - 1 ) * spacing,
-                doAnimation
-              );
             }
             else {
               pointsBelowZeroCount++;
               lineOnNumberLine.lineWidth = ABS_VAL_MIN_LINE_WIDTH + pointsBelowZeroCount * ABS_VAL_LINE_EXPANSION_FACTOR;
-              spanIndicator && spanIndicator.setDistanceFromNumberLine(
-                offset + ( pointsBelowZeroCount - 1 ) * spacing,
-                doAnimation
-              );
             }
           }
+        } );
+
+        // create a list of the absolute value span indicators sorted by their distance from the number line
+        const sortedAbsValSpanNodes = _.sortBy( absoluteValueSpanNodes, absValSpanNode => {
+          return absValSpanNode.distanceFromNumberLineProperty.value;
+        } );
+
+        // Make sure the absolute value span indicators are at the correct distances - this is mostly done to handle
+        // changes in the number line orientation.
+        sortedAbsValSpanNodes.forEach( ( absValSpanNode, index ) => {
+          absValSpanNode.setDistanceFromNumberLine(
+            getIndicatorDistanceFromNL( numberLine, index ),
+            doAnimation
+          );
         } );
       };
 
@@ -229,15 +237,13 @@ define( require => {
         oppositePointDisplayLayer.addChild( oppositePointNode );
 
         // add an absolute value "span indicator", which depicts the absolute value at some distance from the number line
-        const absValSpanNode = new AbsoluteValueSpanNode( numberLine, point, 40 );
+        const absValSpanNodeDistance = getIndicatorDistanceFromNL( numberLine, absoluteValueSpanNodes.length );
+        const absValSpanNode = new AbsoluteValueSpanNode( numberLine, point, absValSpanNodeDistance );
         absoluteValueSpanNodes.push( absValSpanNode );
         this.addChild( absValSpanNode );
 
         // add a listener that will update the absolute value indicators
-        const updateAbsoluteValueIndicatorsHandler = () => {
-          updateAbsoluteValueIndicators( true );
-        };
-        point.valueProperty.link( updateAbsoluteValueIndicatorsHandler );
+        point.valueProperty.link( updateAbsoluteValueIndicators );
 
         // add a listener that will unhook everything if and when this point is removed
         const removeItemListener = removedPoint => {
@@ -247,12 +253,11 @@ define( require => {
             oppositePointDisplayLayer.removeChild( oppositePointNode );
             oppositePointNode.dispose();
             this.removeChild( absValSpanNode );
-            absoluteValueSpanNodes = _.without( absoluteValueSpanNodes, absValSpanNode );
             absValSpanNode.dispose();
-            point.valueProperty.unlink( updateAbsoluteValueIndicatorsHandler );
+            absoluteValueSpanNodes = _.without( absoluteValueSpanNodes, absValSpanNode );
             updateAbsoluteValueIndicators( true );
+            point.valueProperty.unlink( updateAbsoluteValueIndicators );
             numberLine.residentPoints.removeItemRemovedListener( removeItemListener );
-            updateAbsoluteValueIndicators( true );
           }
         };
         numberLine.residentPoints.addItemRemovedListener( removeItemListener );
@@ -311,7 +316,7 @@ define( require => {
           }
 
           // update absolute value representations
-          updateAbsoluteValueIndicators( false );
+          updateAbsoluteValueIndicators();
         }
       );
     }
