@@ -57,7 +57,7 @@ define( require => {
       const numberLineModelBounds = NLIConstants.NLI_LAYOUT_BOUNDS.shiftedY( NL_Y_OFFSET ).dilatedXY( -100, -100 );
 
       // @public (read-only){NumberLine} - the number line with which the user will interact
-      this.numberLine = new NumberLine( numberLineModelBounds, {
+      this.numberLine = new NumberLine( numberLineModelBounds.center, {
           modelProjectionBounds: numberLineModelBounds,
           initialDisplayedRange: NUMBER_LINE_RANGES[ 0 ],
           initialPointSpecs: [ { initialValue: 1, color: INITIAL_POINT_COLOR } ]
