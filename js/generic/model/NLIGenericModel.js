@@ -21,6 +21,7 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
+  const NL_Y_OFFSET = 30; // offset of the number line from the center of the bounds, empirically determined
   const BOTTOM_BOX_WIDTH = 320;
   const BOTTOM_BOX_HEIGHT = 70;
   const SIDE_BOX_WIDTH = BOTTOM_BOX_HEIGHT;
@@ -52,15 +53,16 @@ define( require => {
 
     constructor() {
 
-      // calculate the bounds in model space where the number line range will be displayed
-      const numberLineModelBounds = NLIConstants.NLI_LAYOUT_BOUNDS.dilatedXY( -100, -100 );
+      // calculate the bounds in model space where the number line range will be displayed (hoizontal and vertical)
+      const numberLineModelBounds = NLIConstants.NLI_LAYOUT_BOUNDS.shiftedY( NL_Y_OFFSET ).dilatedXY( -100, -100 );
 
       // @public (read-only){NumberLine} - the number line with which the user will interact
-      this.numberLine = new NumberLine( numberLineModelBounds.center, {
-        modelProjectionBounds: numberLineModelBounds,
-        initialDisplayedRange: NUMBER_LINE_RANGES[ 0 ],
-        initialPointSpecs: [ { initialValue: 1, color: INITIAL_POINT_COLOR } ]
-      } );
+      this.numberLine = new NumberLine( numberLineModelBounds, {
+          modelProjectionBounds: numberLineModelBounds,
+          initialDisplayedRange: NUMBER_LINE_RANGES[ 0 ],
+          initialPointSpecs: [ { initialValue: 1, color: INITIAL_POINT_COLOR } ]
+        }
+      );
 
       // @public (read-only) {Property<Bounds2>} - the bounds of the box where the point controllers reside when not
       // being used, changes its location when the orientation of the number line changes
