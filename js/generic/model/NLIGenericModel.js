@@ -9,8 +9,10 @@ define( require => {
   'use strict';
 
   // modules
+  const Animation = require( 'TWIXT/Animation' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const Color = require( 'SCENERY/util/Color' );
+  const Easing = require( 'TWIXT/Easing' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -27,6 +29,8 @@ define( require => {
   const SIDE_BOX_WIDTH = BOTTOM_BOX_HEIGHT;
   const SIDE_BOX_HEIGHT = BOTTOM_BOX_WIDTH;
   const INSET = 30;
+  const AVERAGE_ANIMATION_SPEED = 1000; // screen coordinates per second
+  const MIN_ANIMATION_TIME = 0.3; // in seconds
   const BOTTOM_BOX_BOUNDS = new Bounds2(
     NLIConstants.NLI_LAYOUT_BOUNDS.centerX - BOTTOM_BOX_WIDTH / 2,
     NLIConstants.NLI_LAYOUT_BOUNDS.maxY - BOTTOM_BOX_HEIGHT - INSET,
@@ -64,6 +68,9 @@ define( require => {
         }
       );
 
+      // @private {Animation[]} - list of animations that are moving point controllers
+      this.activeAnimations = [];
+
       // @public (read-only) {Property<Bounds2>} - the bounds of the box where the point controllers reside when not
       // being used, changes its location when the orientation of the number line changes
       this.pointControllerBoxProperty = new Property( BOTTOM_BOX_BOUNDS );
@@ -90,7 +97,7 @@ define( require => {
 
           // if the point controller is released and it's not controlling a point on the number line, put it away
           if ( !dragging && pointController.numberLinePoint === null ) {
-            this.putPointControllerInBox( pointController );
+            this.putPointControllerInBox( pointController, true );
           }
         } );
       } );
@@ -153,8 +160,9 @@ define( require => {
      * place the provided point controller into the currently active box, generally done on init, reset, and when the
      * user "puts it away"
      * @param {PointController} pointController
+     * @param {boolean} [animate] - controls whether to animate the return to the box or do it instantly
      */
-    putPointControllerInBox( pointController ) {
+    putPointControllerInBox( pointController, animate = false ) {
 
       const index = this.pointControllers.indexOf( pointController );
       const numPositions = this.pointControllers.length;
@@ -166,24 +174,51 @@ define( require => {
         'point controller should not be put away while controlling a point'
       );
 
+      let destination;
+
       // decide which box and at which position the point controller should be placed
       if ( this.numberLine.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
 
         // put point in box at bottom of screen
         const spacing = BOTTOM_BOX_BOUNDS.width / numPositions;
-        pointController.positionProperty.set( new Vector2(
-          BOTTOM_BOX_BOUNDS.minX + spacing / 2 + spacing * index,
-          BOTTOM_BOX_BOUNDS.centerY
-        ) );
+        destination = new Vector2( BOTTOM_BOX_BOUNDS.minX + spacing / 2 + spacing * index, BOTTOM_BOX_BOUNDS.centerY );
       }
       else {
 
         // put point in box at side of screen
         const spacing = SIDE_BOX_BOUNDS.height / numPositions;
-        pointController.positionProperty.set( new Vector2(
-          SIDE_BOX_BOUNDS.centerX,
-          SIDE_BOX_BOUNDS.minY + spacing / 2 + spacing * index
-        ) );
+        destination = new Vector2( SIDE_BOX_BOUNDS.centerX, SIDE_BOX_BOUNDS.minY + spacing / 2 + spacing * index );
+      }
+
+      if ( animate ) {
+
+        // animate the point controller's return to its home position
+        const animation = new Animation( {
+          duration: Math.max(
+            MIN_ANIMATION_TIME,
+            pointController.positionProperty.value.distance( destination ) / AVERAGE_ANIMATION_SPEED
+          ),
+          targets: [ {
+            property: pointController.positionProperty,
+            easing: Easing.CUBIC_IN_OUT,
+            to: destination
+          } ]
+        } );
+        this.activeAnimations.push( animation );
+        animation.start();
+
+        // remove the animation from the list when it finishes or is stopped
+        animation.finishEmitter.addListener( () => {
+          this.animations = _.without( this.animations, animation );
+        } );
+        animation.stopEmitter.addListener( () => {
+          this.activeAnimations = _.without( this.animations, animation );
+        } );
+      }
+      else {
+
+        // go straight to the destination
+        pointController.positionProperty.set( destination );
       }
     }
 
@@ -193,6 +228,9 @@ define( require => {
      */
     reset() {
       this.numberLine.reset();
+
+      // stop any currently active animations
+      this.activeAnimations.forEach( activeAnimation => activeAnimation.stop() );
 
       // clear any associations that the point controllers have with points on the number line
       this.pointControllers.forEach( function( pointController ) {
