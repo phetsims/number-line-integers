@@ -70,6 +70,11 @@ define( require => {
         }
       } );
 
+      // don't allow the point controller node to be grabbed if the point controller is animating somewhere
+      pointController.inProgressAnimationProperty.link( inProgressAnimation => {
+        this.pickable = inProgressAnimation === null;
+      } );
+
       // drag handler
       this.addInputListener( new DragListener( {
         dragBoundsProperty: new Property( this.layoutBounds ),

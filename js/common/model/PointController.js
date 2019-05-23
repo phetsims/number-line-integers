@@ -11,11 +11,18 @@ define( require => {
   'use strict';
 
   // modules
+  const Animation = require( 'TWIXT/Animation' );
   const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const Easing = require( 'TWIXT/Easing' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
+  const Property = require( 'AXON/Property' );
   const Vector2 = require( 'DOT/Vector2' );
   const Vector2Property = require( 'DOT/Vector2Property' );
+
+  // const
+  const AVERAGE_ANIMATION_SPEED = 1000; // screen coordinates per second
+  const MIN_ANIMATION_TIME = 0.3; // in seconds
 
   class PointController {
 
@@ -43,8 +50,8 @@ define( require => {
       // @public {BooleanProperty} - indicates whether this is being dragged by the user
       this.isDraggingProperty = new BooleanProperty( false );
 
-      // @public (read-only) {Vector2}
-      this.alternativeHome = options.alternativeHome;
+      // @public (read-only) {Animation|null} - tracks any animation that is currently in progress
+      this.inProgressAnimationProperty = new Property( null );
 
       // @public (read-only) {NumberLinePoint|null} - point on the number line being controlled, null if none
       this.numberLinePoint = null;
@@ -137,8 +144,56 @@ define( require => {
         else {
 
           // just accept the proposed position, no other action is necessary
-          this.positionProperty.set( proposedPosition );
+          this.goToPosition( proposedPosition );
         }
+      }
+    }
+
+    /**
+     * go to the specified position, either immediately or via an animation
+     * @param {Vector2} position
+     * @param {boolean} [animate]
+     */
+    goToPosition( position, animate = false ) {
+
+      // TODO: I (jbphet) want to know if the position is ever being set when an animation is in progress, because the
+      // design intent is that it shouldn't happen, so this logs a warning.  This should be removed before  publication.
+      if ( this.inProgressAnimationProperty.value ) {
+        console.warn( 'cancelling in-progress animation for point controller' );
+      }
+
+      // if there is an active animation, stop it
+      this.stopAnimation();
+
+      if ( animate ) {
+
+        // animate the point controller's return to its home position
+        const animation = new Animation( {
+          duration: Math.max(
+            MIN_ANIMATION_TIME,
+            this.positionProperty.value.distance( position ) / AVERAGE_ANIMATION_SPEED
+          ),
+          targets: [ {
+            property: this.positionProperty,
+            easing: Easing.CUBIC_IN_OUT,
+            to: position
+          } ]
+        } );
+        this.inProgressAnimationProperty.set( animation );
+        animation.start();
+
+        // remove the animation from the list when it finishes or is stopped
+        animation.finishEmitter.addListener( () => {
+          this.inProgressAnimationProperty.set( null );
+        } );
+        animation.stopEmitter.addListener( () => {
+          this.inProgressAnimationProperty.set( null );
+        } );
+      }
+      else {
+
+        // go straight to the specified position
+        this.positionProperty.set( position );
       }
     }
 
@@ -150,20 +205,32 @@ define( require => {
      */
     setPositionRelativeToPoint( pointPosition ) {
       if ( this.numberLine.isHorizontal ) {
-        this.positionProperty.set( new Vector2( pointPosition.x, pointPosition.y + this.offsetFromHorizontalNumberLine ) );
+        this.goToPosition( new Vector2( pointPosition.x, pointPosition.y + this.offsetFromHorizontalNumberLine ) );
       }
       else {
-        this.positionProperty.set( new Vector2( pointPosition.x + this.offsetFromVerticalNumberLine, pointPosition.y ) );
+        this.goToPosition( new Vector2( pointPosition.x + this.offsetFromVerticalNumberLine, pointPosition.y ) );
       }
     }
 
     /**
-     * set this point to its alternative home position
+     * stop the current animation if one is happening, do nothing if not
      * @public
      */
-    goToAlternativeHome() {
-      assert && assert( this.alternativeHome, 'no alternative home set' );
-      this.positionProperty.set( this.alternativeHome );
+    stopAnimation() {
+      if ( this.inProgressAnimationProperty.value ) {
+        this.inProgressAnimationProperty.value.stop();
+        this.inProgressAnimationProperty.set( null );
+      }
+    }
+
+    /**
+     * restore initial state
+     * @public
+     */
+    reset() {
+      this.clearNumberLinePoint();
+      this.stopAnimation();
+      this.positionProperty.reset();
     }
   }
 
