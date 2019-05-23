@@ -24,7 +24,7 @@ define( require => {
 
     // @public resets the model
     reset() {
-      //TODO Reset things here.
+      this.selectedSceneProperty.reset();
     }
 
     // @public

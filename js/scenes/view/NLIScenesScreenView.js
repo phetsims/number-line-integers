@@ -15,6 +15,8 @@ define( function( require ) {
   const RandomIconFactory = require( 'NUMBER_LINE_INTEGERS/common/view/RandomIconFactory' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   const ScreenView = require( 'JOIST/ScreenView' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
   // images
   const elevationBackground = require( 'image!NUMBER_LINE_INTEGERS/elevation-background.png' );
@@ -52,6 +54,16 @@ define( function( require ) {
         maxWidth: 500,
         centerX: this.layoutBounds.centerX,
         centerY: this.layoutBounds.centerY
+      } ) );
+
+      // add words for the other screen (this is a placeholder)
+      bankSceneNode.addChild( new Text( 'Bank Scene', {
+        font: new PhetFont( 40 ),
+        center: this.layoutBounds.center
+      } ) );
+      temperatureSceneNode.addChild( new Text( 'Temperature Scene', {
+        font: new PhetFont( 40 ),
+        center: this.layoutBounds.center
       } ) );
 
       // map the scene selection icons to their enum values (used in the radio buton group)
