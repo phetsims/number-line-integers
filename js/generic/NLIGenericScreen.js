@@ -13,7 +13,7 @@ define( require => {
   const NLIGenericScreenView = require( 'NUMBER_LINE_INTEGERS/generic/view/NLIGenericScreenView' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Property = require( 'AXON/Property' );
-  const RandomIconFactory = require( 'NUMBER_LINE_INTEGERS/RandomIconFactory' );
+  const RandomIconFactory = require( 'NUMBER_LINE_INTEGERS/common/view/RandomIconFactory' );
   const Screen = require( 'JOIST/Screen' );
 
   // strings

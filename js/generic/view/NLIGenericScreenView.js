@@ -109,13 +109,16 @@ define( function( require ) {
       const verticalIcon = new ArrowNode( 0, -ARROW_ICON_LENGTH / 2, 0, ARROW_ICON_LENGTH / 2, arrowIconOptions );
 
       // map the orientation icons to their enum values
-      const orientationButtonsContent = [ {
-        value: NumberLineOrientation.HORIZONTAL,
-        node: horizontalIcon
-      }, {
-        value: NumberLineOrientation.VERTICAL,
-        node: verticalIcon
-      } ];
+      const orientationButtonsContent = [
+        {
+          value: NumberLineOrientation.HORIZONTAL,
+          node: horizontalIcon
+        },
+        {
+          value: NumberLineOrientation.VERTICAL,
+          node: verticalIcon
+        }
+      ];
 
       // NOTE: There is no model-view transform for this sim.  Model and view space use the same coordinate system.
 
@@ -161,7 +164,8 @@ define( function( require ) {
       // orientation radio buttons
       const orientationRadioButtonGroup = new RadioButtonGroup(
         model.numberLine.orientationProperty,
-        orientationButtonsContent, {
+        orientationButtonsContent,
+        {
           buttonContentXMargin: 5,
           buttonContentYMargin: 5,
           right: resetAllButton.right,

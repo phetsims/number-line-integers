@@ -7,7 +7,9 @@ define( require => {
   'use strict';
 
   // modules
+  const NLIScene = require( 'NUMBER_LINE_INTEGERS/scenes/model/NLIScene' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+  const Property = require( 'AXON/Property' );
 
   /**
    * @constructor
@@ -15,7 +17,9 @@ define( require => {
   class NLIScenesModel {
 
     constructor() {
-      //TODO
+
+      // @public {Property<NLIScene>} - currently selected scene
+      this.selectedSceneProperty = new Property( NLIScene.ELEVATION );
     }
 
     // @public resets the model
