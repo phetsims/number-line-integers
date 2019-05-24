@@ -40,10 +40,9 @@ require.config( {
     SCENERY_PHET: '../../scenery-phet/js',
     SUN: '../../sun/js',
     TAMBO: '../../tambo/js',
-    TANDEM: '../../tandem/js',
-    TWIXT: '../../twixt/js'
+    TANDEM: '../../tandem/js'
   },
 
-  // optional cache buster to make browser refresh load all included scripts, can be disabled with ?cacheBuster=false
-  urlArgs: phet.chipper.getCacheBusterArgs()
+  // optional cache bust to make browser refresh load all included scripts, can be disabled with ?cacheBust=false
+  urlArgs: phet.chipper.getCacheBustArgs()
 } );
