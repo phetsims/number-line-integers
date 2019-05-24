@@ -14,6 +14,7 @@ define( require => {
   const Animation = require( 'TWIXT/Animation' );
   const ButtonListener = require( 'SCENERY/input/ButtonListener' );
   const Easing = require( 'TWIXT/Easing' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Path = require( 'SCENERY/nodes/Path' );
@@ -43,24 +44,24 @@ define( require => {
       const comparisonStatementRoot = new Node();
       this.addChild( comparisonStatementRoot );
 
-      // the comparison statement has numbers and operators that reside on different nodes for easier manipulation
+      // the comparison statement has numbers and operators that reside on different root nodes for easier manipulation
       const numberNodesLayer = new Node();
       comparisonStatementRoot.addChild( numberNodesLayer );
       const operatorAndZeroNodesLayer = new Node();
       comparisonStatementRoot.addChild( operatorAndZeroNodesLayer );
 
-      // operator selector node
+      // operator selector node - allows the user to choose between greater than or less than
       const operatorSelectionNode = new OperatorSelectorNode( this.selectedOperatorProperty, {
         bottom: 7 // empirically determined to align vertically with the comparison statement
       } );
       this.addChild( operatorSelectionNode );
 
-      // define a function to update the comparision statement and the layout
-      const update = () => {
+      // define a function to update the comparision statement, including its layout
+      const updateComparisonStatement = () => {
 
         const numPoints = numberLine.residentPoints.length;
 
-        // this indicator node handles a max of three points, make sure that's all that are present
+        // verify that this function isn't being asked to handle more points than it is designed for
         assert && assert( numPoints <= 3, 'too many points on number line' );
 
         const comparisonOperator = this.selectedOperatorProperty.value;
@@ -68,15 +69,15 @@ define( require => {
         // clear out the operators layer
         operatorAndZeroNodesLayer.removeAllChildren();
 
-        // list of all value nodes that will be shown, kept in ascending order
-        const valueNodes = [];
+        // list of all nodes that will depict numbers except for zero values that don't correspond to a point
+        const numberNodes = [];
 
         if ( numberNodesLayer.getChildrenCount() === 0 ) {
 
           // if there are no points on the number line, just show a zero
           const zeroNode = new Text( '0', { font: COMPARISON_STATEMENT_FONT } );
           operatorAndZeroNodesLayer.addChild( zeroNode );
-          valueNodes.push( zeroNode );
+          numberNodes.push( zeroNode );
         }
         else if ( numberNodesLayer.getChildrenCount() === 1 ) {
 
@@ -85,33 +86,75 @@ define( require => {
           const zeroNode = new Text( '0', { font: COMPARISON_STATEMENT_FONT } );
           operatorAndZeroNodesLayer.addChild( zeroNode );
           if ( pointValueNode.point.valueProperty.value < 0 ) {
-            valueNodes.push( pointValueNode );
-            valueNodes.push( zeroNode );
+            numberNodes.push( pointValueNode );
+            numberNodes.push( zeroNode );
+          }
+          else if ( pointValueNode.point.valueProperty.value > 0 ) {
+            numberNodes.push( zeroNode );
+            numberNodes.push( pointValueNode );
           }
           else {
-            valueNodes.push( zeroNode );
-            valueNodes.push( pointValueNode );
+
+            // the node value is equal, so sort it based on the previous value
+            if ( pointValueNode.previousPointValue !== null && pointValueNode.previousPointValue > 0 ) {
+              numberNodes.push( zeroNode );
+              numberNodes.push( pointValueNode );
+            }
+            else {
+              numberNodes.push( pointValueNode );
+              numberNodes.push( zeroNode );
+            }
           }
         }
         else {
 
-          // get a list of number nodes and sort them based on their value
+          // Get a list of number nodes and sort them based on their value and the current comparison operator.  If the
+          // values are equal, use the previous value.
           const orderedNumberNodes = numberNodesLayer.getChildren().sort( ( p1node, p2node ) => {
-            return p1node.point.valueProperty.value - p2node.point.valueProperty.value;
+            let result;
+            if ( p1node.point.valueProperty.value !== p2node.point.valueProperty.value ) {
+              result = p1node.point.valueProperty.value - p2node.point.valueProperty.value;
+            }
+            else {
+
+              // the current values are equal, so use the previous value if the point the user is moving if possible
+              if ( p1node.point.isDraggingProperty.value && p1node.previousPointValue !== null ) {
+                result = p1node.previousPointValue - p2node.point.valueProperty.value;
+              }
+              else if ( p2node.point.isDraggingProperty.value && p2node.previousPointValue !== null ) {
+                result = p2node.previousPointValue - p1node.point.valueProperty.value;
+              }
+              else {
+
+                // can't figure it out, so just return zero, meaning they are equal
+                result = 0;
+              }
+            }
+            return comparisonOperator === '<' ? result : -result;
           } );
 
           // add the nodes in order to the list of value nodes
-          orderedNumberNodes.forEach( node => { valueNodes.push( node ); } );
+          orderedNumberNodes.forEach( node => { numberNodes.push( node ); } );
         }
 
-        // position the value nodes and put the operators in between
+        // at this point, we should have an ordered list of number nodes, so their position just needs to be set
         let currentXPos = 0;
-        for ( let i = 0; i < valueNodes.length; i++ ) {
-          const index = comparisonOperator === '<' ? i : valueNodes.length - i - 1;
-          valueNodes[ index ].x = currentXPos;
-          currentXPos = valueNodes[ index ].right + COMPARISON_STATEMENT_SPACING;
-          if ( i < valueNodes.length - 1 ) {
-            const comparisonOperatorNode = new Text( comparisonOperator, {
+        for ( let i = 0; i < numberNodes.length; i++ ) {
+          const currentNode = numberNodes[ i ];
+          currentNode.left = currentXPos;
+          currentXPos = currentNode.right + COMPARISON_STATEMENT_SPACING;
+          if ( i < numberNodes.length - 1 ) {
+            let comparisonCharacter = comparisonOperator;
+            const currentNodeValue = currentNode.point ? currentNode.point.valueProperty.value : 0;
+            const nextNodeValue = numberNodes[ i + 1 ].point ? numberNodes[ i + 1 ].point.valueProperty.value : 0;
+            if ( currentNodeValue === nextNodeValue ) {
+
+              // the values are equal, so we need to use less-than-or-equal or greater-than-or-equal comparison operator
+              comparisonCharacter = comparisonOperator === '<' ?
+                                    MathSymbols.LESS_THAN_OR_EQUAL :
+                                    MathSymbols.GREATER_THAN_OR_EQUAL;
+            }
+            const comparisonOperatorNode = new Text( comparisonCharacter, {
               font: COMPARISON_STATEMENT_FONT,
               x: currentXPos
             } );
@@ -127,25 +170,25 @@ define( require => {
       // update the comparison statement as points appear, move, and disappear
       numberLine.residentPoints.forEach( point => {
         numberNodesLayer.addChild( new PointValueNode( point ) );
-        point.valueProperty.lazyLink( update );
+        point.valueProperty.lazyLink( updateComparisonStatement );
       } );
       numberLine.residentPoints.addItemAddedListener( addedPoint => {
         numberNodesLayer.addChild( new PointValueNode( addedPoint ) );
-        addedPoint.valueProperty.link( update );
+        addedPoint.valueProperty.link( updateComparisonStatement );
       } );
       numberLine.residentPoints.addItemRemovedListener( removedPoint => {
-        removedPoint.valueProperty.unlink( update );
+        removedPoint.valueProperty.unlink( updateComparisonStatement );
         numberNodesLayer.getChildren().forEach( childNode => {
           if ( childNode.point === removedPoint ) {
             numberNodesLayer.removeChild( childNode );
             childNode.dispose();
           }
         } );
-        update();
+        updateComparisonStatement();
       } );
 
       // update the comparison statement of the chosen operator changes, this also does the initial update
-      this.selectedOperatorProperty.link( update );
+      this.selectedOperatorProperty.link( updateComparisonStatement );
     }
 
     reset() {
@@ -258,6 +301,9 @@ define( require => {
       // @public (read-only) {NumberLinePoint}
       this.point = point;
 
+      // @public (read-only) {number} - the previous value of the point, used in sorting for the comparison expression
+      this.previousPointValue = null;
+
       // background - initial size is arbitrary, it will be updated in function linked below
       const background = new Rectangle( 0, 0, 1, 1, 2, 2, {
         fill: point.colorProperty.value.colorUtilsBrighter( 0.75 ),
@@ -272,9 +318,10 @@ define( require => {
       this.addChild( numberText );
 
       // update appearance as the value changes
-      const handleValueChange = value => {
+      const handleValueChange = ( value, previousValue ) => {
         numberText.text = value;
         background.setRectBounds( numberText.bounds.dilated( 3 ) );
+        this.previousPointValue = previousValue;
       };
       point.valueProperty.link( handleValueChange );
 
