@@ -10,6 +10,9 @@
     "grunt": "~1.0.0"
   },
   "phet": {
+    "phetLibs": [
+      "twixt"
+    ],
     "requirejsNamespace": "NUMBER_LINE_INTEGERS",
     "runnable": true,
     "supportedBrands": [
