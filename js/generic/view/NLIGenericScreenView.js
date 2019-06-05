@@ -57,6 +57,8 @@ define( function( require ) {
       // add the display of the inequality
       const comparisonStatementNode = new ComparisonStatementNode( model.numberLine );
 
+      // TODO: If the options for the accordion box are the same through all usages of the sim, create a class that
+      // inherits from accordion box and implements all of this (to avoid code duplication).
       const comparisonStatementAccordionBox = new AccordionBox( comparisonStatementNode, {
         fill: 'white',
         titleNode: new Text( comparisonStatementString, {
