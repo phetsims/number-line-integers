@@ -56,6 +56,9 @@ define( require => {
       } );
       this.addChild( operatorSelectionNode );
 
+      // keep track of the previous number node array, used to help with sorting
+      let previousNumberNodes = [];
+
       // define a function to update the comparision statement, including its layout
       const updateComparisonStatement = () => {
 
@@ -95,21 +98,22 @@ define( require => {
           }
           else {
 
-            // the node value is equal, so sort it based on the previous value
-            if ( pointValueNode.previousPointValue !== null && pointValueNode.previousPointValue > 0 ) {
-              numberNodes.push( zeroNode );
+            // the node value is equal to zero, so sort it based on the previous position
+            const previousPositionInArray = previousNumberNodes.indexOf( pointValueNode );
+            if ( previousPositionInArray === 0 ) {
               numberNodes.push( pointValueNode );
+              numberNodes.push( zeroNode );
             }
             else {
-              numberNodes.push( pointValueNode );
               numberNodes.push( zeroNode );
+              numberNodes.push( pointValueNode );
             }
           }
         }
         else {
 
-          // Get a list of number nodes and sort them based on their value and the current comparison operator.  If the
-          // values are equal, use the previous value.
+          // Get a list of number nodes and sort them based on their value.  If the values are equal, use the previous
+          // position in the order array.
           const orderedNumberNodes = numberNodesLayer.getChildren().sort( ( p1node, p2node ) => {
             let result;
             if ( p1node.point.valueProperty.value !== p2node.point.valueProperty.value ) {
@@ -117,24 +121,31 @@ define( require => {
             }
             else {
 
-              // the current values are equal, so use the previous value if the point the user is moving if possible
-              if ( p1node.point.isDraggingProperty.value && p1node.previousPointValue !== null ) {
-                result = p1node.previousPointValue - p2node.point.valueProperty.value;
-              }
-              else if ( p2node.point.isDraggingProperty.value && p2node.previousPointValue !== null ) {
-                result = p2node.previousPointValue - p1node.point.valueProperty.value;
+              // the current values are equal, so use the previous position in the ordered array
+              const prevP1NodePosition = previousNumberNodes.indexOf( p1node );
+              const prevP2NodePosition = previousNumberNodes.indexOf( p2node );
+              if ( prevP1NodePosition > -1 && prevP2NodePosition > -1 ) {
+                result = prevP1NodePosition - prevP2NodePosition;
               }
               else {
 
-                // can't figure it out, so just return zero, meaning they are equal
+                // one of the points must have just been added right on top of the other, so call them equal
                 result = 0;
               }
             }
-            return comparisonOperator === '<' ? result : -result;
+            return result;
           } );
 
           // add the nodes in order to the list of value nodes
           orderedNumberNodes.forEach( node => { numberNodes.push( node ); } );
+        }
+
+        // save the ordered list in case we need it for comparison purposes the next time we order them
+        previousNumberNodes = numberNodes.slice();
+
+        // above, the nodes are sorted in ascending order, so they need to be reversed if using the > operator
+        if ( comparisonOperator === '>' ) {
+          numberNodes.reverse();
         }
 
         // at this point, we should have an ordered list of number nodes, so their position just needs to be set
@@ -301,9 +312,6 @@ define( require => {
       // @public (read-only) {NumberLinePoint}
       this.point = point;
 
-      // @public (read-only) {number} - the previous value of the point, used in sorting for the comparison expression
-      this.previousPointValue = null;
-
       // background - initial size is arbitrary, it will be updated in function linked below
       const background = new Rectangle( 0, 0, 1, 1, 2, 2, {
         fill: point.colorProperty.value.colorUtilsBrighter( 0.75 ),
@@ -318,10 +326,9 @@ define( require => {
       this.addChild( numberText );
 
       // update appearance as the value changes
-      const handleValueChange = ( value, previousValue ) => {
+      const handleValueChange = ( value ) => {
         numberText.text = value;
         background.setRectBounds( numberText.bounds.dilated( 3 ) );
-        this.previousPointValue = previousValue;
       };
       point.valueProperty.link( handleValueChange );
 
