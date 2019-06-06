@@ -26,10 +26,12 @@ define( function( require ) {
   // constants
   const CHECK_BOX_FONT = new PhetFont( 16 );
   const COMPARISON_STATEMENT_BOX_WIDTH = 300; // empirically determined to look decent
+  const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
 
   // strings
   const absoluteValueString = require( 'string!NUMBER_LINE_INTEGERS/absoluteValue' );
   const comparisonStatementString = require( 'string!NUMBER_LINE_INTEGERS/comparisonStatement' );
+  const elevationString = require( 'string!NUMBER_LINE_INTEGERS/elevation' );
   const numberLineString = require( 'string!NUMBER_LINE_INTEGERS/numberLine' );
 
   // images
@@ -165,10 +167,10 @@ define( function( require ) {
       } );
       this.addChild( comparisonStatementAccordionBox );
 
-      // add the number line
-      const numberLineNode = new NumberLineNode( sceneModel.numberLine );
-      sceneModel.showNumberLineProperty.linkAttribute( numberLineNode, 'visible' );
-      this.addChild( numberLineNode );
+      // @protected (read-only) {NumberLine} - view of the number line
+      this.numberLineNode = new NumberLineNode( sceneModel.numberLine );
+      sceneModel.showNumberLineProperty.linkAttribute( this.numberLineNode, 'visible' );
+      this.addChild( this.numberLineNode );
     }
   }
 
@@ -190,6 +192,15 @@ define( function( require ) {
       );
       elevationAreaImage.center = sceneModel.elevationAreaBounds.center;
       this.addChild( elevationAreaImage );
+
+      // label for the number line
+      const numberLineLabel = new Text( elevationString, {
+        font: NUMBER_LINE_LABEL_FONT,
+        centerX: sceneModel.numberLine.centerPosition.x,
+        bottom: this.numberLineNode.top - 5
+      } );
+      sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
+      this.addChild( numberLineLabel );
     }
   }
 
