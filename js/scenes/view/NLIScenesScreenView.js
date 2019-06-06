@@ -24,7 +24,7 @@ define( function( require ) {
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
-  const CHECK_BOX_FONT = new PhetFont( 20 );
+  const CHECK_BOX_FONT = new PhetFont( 16 );
   const COMPARISON_STATEMENT_BOX_WIDTH = 300; // empirically determined to look decent
 
   // strings
@@ -93,7 +93,7 @@ define( function( require ) {
           deselectedLineWidth: .5,
           deselectedButtonOpacity: 0.25,
           orientation: 'horizontal',
-          spacing: 10
+          spacing: 6
         }
       );
       this.addChild( sceneSelectorRadioButtonGroup );
@@ -141,7 +141,7 @@ define( function( require ) {
         ],
         spacing: 15,
         align: 'left',
-        left: layoutBounds.maxX - 250,
+        left: layoutBounds.maxX - 175,
         top: layoutBounds.minY + 10
       } ) );
 
@@ -180,12 +180,16 @@ define( function( require ) {
 
       super( sceneModel, layoutBounds );
 
-      // add the background image that depicts elevation
-      this.addChild( new Image( elevationBackground, {
-        maxWidth: 500,
-        centerX: this.layoutBounds.centerX,
-        centerY: this.layoutBounds.centerY
-      } ) );
+      // Create and add the background image for the area where the user will be able to place things and change their
+      // elevation.  This is scaled to match the bounds defined in the model, so the resolution and aspect ratio of the
+      // image needs to be close to what is shown or this won't look good.
+      const elevationAreaImage = new Image( elevationBackground );
+      elevationAreaImage.scale(
+        sceneModel.elevationAreaBounds.width / elevationAreaImage.width,
+        sceneModel.elevationAreaBounds.height / elevationAreaImage.height
+      );
+      elevationAreaImage.center = sceneModel.elevationAreaBounds.center;
+      this.addChild( elevationAreaImage );
     }
   }
 

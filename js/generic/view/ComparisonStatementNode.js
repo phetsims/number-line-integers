@@ -25,7 +25,7 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
 
   // constants
-  const COMPARISON_STATEMENT_FONT = new PhetFont( 22 );
+  const COMPARISON_STATEMENT_FONT = new PhetFont( 26 );
   const COMPARISON_STATEMENT_SPACING = 6; // in screen coords
 
   class ComparisonStatementNode extends Node {
