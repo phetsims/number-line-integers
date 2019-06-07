@@ -17,6 +17,7 @@ define( function( require ) {
   const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
   const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   const RandomIconFactory = require( 'NUMBER_LINE_INTEGERS/common/view/RandomIconFactory' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   const ScreenView = require( 'JOIST/ScreenView' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -194,6 +195,20 @@ define( function( require ) {
       );
       elevationAreaImage.center = sceneModel.elevationAreaBounds.center;
       this.addChild( elevationAreaImage );
+
+      // add the water
+      this.addChild( new Rectangle(
+        0,
+        0,
+        sceneModel.elevationAreaBounds.width,
+        sceneModel.elevationAreaBounds.maxY - sceneModel.seaLevel,
+        {
+          left: sceneModel.elevationAreaBounds.minX,
+          top: sceneModel.seaLevel,
+          fill: 'rgba( 0, 204, 204, 0.3 )'
+        }
+      ) );
+
 
       // label for the number line
       const numberLineLabel = new Text( elevationString, {

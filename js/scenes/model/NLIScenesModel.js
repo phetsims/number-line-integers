@@ -116,6 +116,9 @@ define( require => {
 
       // @public (read-only) {Bounds2} - bounds of the interactive elevation area
       this.elevationAreaBounds = elevationAreaBounds;
+
+      // @public (read-only) {number} - sea level in model coordinates
+      this.seaLevel = seaLevel;
     }
   }
 
