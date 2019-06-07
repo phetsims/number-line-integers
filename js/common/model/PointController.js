@@ -41,7 +41,11 @@ define( require => {
         offsetFromHorizontalNumberLine: 50,
 
         // {number} - offset in model coords from a vertical number line when controlling a point
-        offsetFromVerticalNumberLine: 52
+        offsetFromVerticalNumberLine: 52,
+
+        // {string} - Controls whether this point controller is, or can, lock to the number line.  Valid values
+        // are 'always', 'never', and 'whenClose'.
+        lockToNumberLine: 'whenClose'
       }, options );
 
       // @public (read-only) {Vector2Property} - position of this point in model space
@@ -71,6 +75,7 @@ define( require => {
       this.offsetFromVerticalNumberLine = options.offsetFromVerticalNumberLine;
       this.numberLine = numberLine;
       this.pointValueChangeHandler = null;
+      this.lockToNumberLine = options.lockToNumberLine;
 
       // set our point to match point controller's dragging state
       this.isDraggingProperty.link( isDragging => {

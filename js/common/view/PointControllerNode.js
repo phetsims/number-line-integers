@@ -17,7 +17,7 @@ define( require => {
   const ShadedSphereNode = require( 'SCENERY_PHET/ShadedSphereNode' );
 
   // constants
-  const DEFAULT_SPHERE_RADIUS = 10; // in screen coords, radius of sphere that is used if no controller node is provided
+  const SPHERE_RADIUS = 10; // in screen coords, radius of sphere that is used if no controller node is provided
 
   class PointControllerNode extends Node {
 
@@ -29,8 +29,8 @@ define( require => {
 
       options = _.extend( {
 
-        // radius in screen coordinates
-        radius: DEFAULT_SPHERE_RADIUS,
+        // node used for the point controller, a sphere is used if no node is provided
+        node: null,
 
         cursor: 'pointer'
 
@@ -44,14 +44,14 @@ define( require => {
       this.addChild( connectorLine );
 
       // create and add the shaded sphere
-      const sphereNode = new ShadedSphereNode( options.radius * 2, {
+      const node = options.node || new ShadedSphereNode( SPHERE_RADIUS * 2, {
         mainColor: pointController.color
       } );
-      this.addChild( sphereNode );
+      this.addChild( node );
 
       // monitor the point controller and adjust positions to match
       pointController.positionProperty.link( position => {
-        sphereNode.center = position;
+        node.center = position;
 
         if ( pointController.numberLinePoint ) {
           const pointPosition = pointController.numberLinePoint.getPositionInModelSpace();
