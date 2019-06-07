@@ -119,6 +119,19 @@ define( require => {
 
       // @public (read-only) {number} - sea level in model coordinates
       this.seaLevel = seaLevel;
+
+      // specify the position of the box that will hold the elevatable items
+      const boxWidth = elevationAreaWidth * 0.6;
+      const boxHeight = ( SCENE_BOUNDS.maxY - elevationAreaBounds.maxY ) * 0.7;
+      const boxCenter = new Vector2( elevationAreaCenter.x, ( SCENE_BOUNDS.maxY + elevationAreaBounds.maxY ) / 2 );
+
+      // @public (read-only) {Bounds2} - holding area for the items that the user can elevate
+      this.elevatableItemsBoxBounds = new Bounds2(
+        boxCenter.x - boxWidth / 2,
+        boxCenter.y - boxHeight / 2,
+        boxCenter.x + boxWidth / 2,
+        boxCenter.y + boxHeight / 2
+      );
     }
   }
 

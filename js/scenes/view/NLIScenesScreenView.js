@@ -205,10 +205,16 @@ define( function( require ) {
         {
           left: sceneModel.elevationAreaBounds.minX,
           top: sceneModel.seaLevel,
-          fill: 'rgba( 0, 204, 204, 0.3 )'
+          fill: 'rgba( 0, 204, 204, 0.25 )'
         }
       ) );
 
+      // add the node that represents the box that will hold the items that the user can elevate
+      this.addChild( new Rectangle.bounds( sceneModel.elevatableItemsBoxBounds, {
+        fill: 'white',
+        stroke: 'black',
+        cornerRadius: 6
+      } ) );
 
       // label for the number line
       const numberLineLabel = new Text( elevationString, {
