@@ -60,6 +60,10 @@ define( require => {
         color: 'black',
         pointRadius: 10,
 
+        // {boolean} - controls whether the absolute value span indicators, which are a little ways away from the number
+        // line itself, are portrayed
+        showAbsoluteValueSpans: false,
+
         // {number} - the distance between the edge of the display bounds and the ends of the displayed range
         displayedRangeInset: NLIConstants.GENERIC_SCREEN_DISPLAYED_RANGE_INSET
       }, options );
@@ -235,11 +239,15 @@ define( require => {
         const oppositePointNode = new PointNode( point, numberLine, { isDoppelganger: true } );
         oppositePointDisplayLayer.addChild( oppositePointNode );
 
-        // add an absolute value "span indicator", which depicts the absolute value at some distance from the number line
-        const absValSpanNodeDistance = getIndicatorDistanceFromNL( numberLine, absoluteValueSpanNodes.length );
-        const absValSpanNode = new AbsoluteValueSpanNode( numberLine, point, absValSpanNodeDistance );
-        absoluteValueSpanNodes.push( absValSpanNode );
-        this.addChild( absValSpanNode );
+        // if enabled, add an absolute value "span indicator", which depicts the absolute value at some distance from
+        // the number line
+        let absValSpanNode = null;
+        if ( options.showAbsoluteValueSpans ) {
+          const absValSpanNodeDistance = getIndicatorDistanceFromNL( numberLine, absoluteValueSpanNodes.length );
+          absValSpanNode = new AbsoluteValueSpanNode( numberLine, point, absValSpanNodeDistance );
+          absoluteValueSpanNodes.push( absValSpanNode );
+          this.addChild( absValSpanNode );
+        }
 
         // add a listener that will update the absolute value indicators
         point.valueProperty.link( updateAbsoluteValueIndicators );
@@ -251,9 +259,11 @@ define( require => {
             pointNode.dispose();
             oppositePointDisplayLayer.removeChild( oppositePointNode );
             oppositePointNode.dispose();
-            this.removeChild( absValSpanNode );
-            absValSpanNode.dispose();
-            absoluteValueSpanNodes = _.without( absoluteValueSpanNodes, absValSpanNode );
+            if ( absValSpanNode ) {
+              this.removeChild( absValSpanNode );
+              absValSpanNode.dispose();
+              absoluteValueSpanNodes = _.without( absoluteValueSpanNodes, absValSpanNode );
+            }
             updateAbsoluteValueIndicators( true );
             point.valueProperty.unlink( updateAbsoluteValueIndicators );
             numberLine.residentPoints.removeItemRemovedListener( removeItemListener );

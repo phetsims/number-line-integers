@@ -134,7 +134,7 @@ define( function( require ) {
       } );
 
       // add the number line node
-      this.addChild( new NumberLineNode( model.numberLine ) );
+      this.addChild( new NumberLineNode( model.numberLine, { showAbsoluteValueSpans: true } ) );
 
       let pointControllerBoxNode = null;
       model.pointControllerBoxProperty.link( pointControllerBox => {
