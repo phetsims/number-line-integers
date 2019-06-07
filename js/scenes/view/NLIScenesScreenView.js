@@ -40,6 +40,8 @@ define( function( require ) {
   // images
   const elevationBackground = require( 'image!NUMBER_LINE_INTEGERS/elevation-background.png' );
   const temperatureMap = require( 'image!NUMBER_LINE_INTEGERS/temporary-temperature-map.gif' );
+  const fishInAir = require( 'image!NUMBER_LINE_INTEGERS/fish-air.png' );
+  const fishInWater = require( 'image!NUMBER_LINE_INTEGERS/fish-water.png' );
 
   // constants
   const INSET = 10;
@@ -226,9 +228,29 @@ define( function( require ) {
       sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
       this.addChild( numberLineLabel );
 
+      // define a function that will be used to switch images based on its position in the model space
+      const selectImageIndex = position => {
+        let imageIndex;
+        if ( position.y > sceneModel.seaLevel ) {
+          imageIndex = 0;
+        }
+        else {
+          imageIndex = 1;
+        }
+        return imageIndex;
+      };
+
       // add the point controllers that allow the user to place items on the elevation background
+      const fishImageWidth = 60; // empirically determined to look good
       sceneModel.pointControllers.forEach( pointController => {
-        this.addChild( new ElevationPointControllerNode( pointController ) );
+        this.addChild( new ElevationPointControllerNode(
+          pointController,
+          [
+            new Image( fishInWater, { maxWidth: fishImageWidth } ),
+            new Image( fishInAir, { maxWidth: fishImageWidth } )
+          ],
+          { imageSelectionFunction: selectImageIndex }
+        ) );
       } );
     }
   }
