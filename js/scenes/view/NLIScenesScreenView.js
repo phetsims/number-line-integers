@@ -215,7 +215,8 @@ define( function( require ) {
       // TODO: temp
       this.addChild( new Text( 'Bank Scene', {
         font: new PhetFont( 40 ),
-        center: this.layoutBounds.center
+        centerX: this.layoutBounds.centerX,
+        centerY: this.layoutBounds.height * 0.3
       } ) );
     }
   }
@@ -231,7 +232,8 @@ define( function( require ) {
       // TODO: temp
       this.addChild( new Text( 'Temperature Scene', {
         font: new PhetFont( 40 ),
-        center: this.layoutBounds.center
+        centerX: this.layoutBounds.centerX,
+        centerY: this.layoutBounds.height * 0.3
       } ) );
     }
   }
