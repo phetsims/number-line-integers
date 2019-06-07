@@ -67,7 +67,6 @@ define( require => {
       // since the position is set based on the model, don't pass options through to parent class
       super();
 
-      assert && assert( numberLine.modelProjectionBounds, 'this number line is net set up to be displayed' );
       const displayBounds = numberLine.modelProjectionBounds.dilated( options.displayedRangeInset );
 
       // @private {Object} - make options available to methods

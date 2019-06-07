@@ -39,9 +39,9 @@ define( require => {
   class NumberLine {
 
     /**
-     * {Vector2} centerPosition - the location in model space of the zero point on the number line
+     * {Vector2} zeroPosition - the location in model space of the zero point on the number line
      */
-    constructor( centerPosition, options ) {
+    constructor( zeroPosition, options ) {
 
       options = _.extend( {
 
@@ -63,9 +63,12 @@ define( require => {
         // {boolean} - whether point labels should initially be shown
         pointLabelsInitiallyShown: false,
 
-        // {Bounds2|null} - the model bounds over which this number line's full range will be displayed, must be set if
-        // the methods that transform between model space and number line positions are to be employed
-        modelProjectionBounds: null,
+        // {number} - The width and height values used when projecting the number line into model space.  The default
+        // values are pretty arbitrary and at least one of these will generally need to be set.  However, if the number
+        // line is only ever shown in one orientation, the value corresponding to the other orientation can be left at
+        // the default value.
+        widthInModelSpace: 100,
+        heightInModelSpace: 100,
 
         // {Object{ initialValue, color}[]} - array of point specifications that describe what points should exist on
         // the number line when constructed and after a reset
@@ -73,7 +76,7 @@ define( require => {
       }, options );
 
       // @public (read-only) {Vector2} - center in model space where this number line exists
-      this.centerPosition = centerPosition;
+      this.centerPosition = zeroPosition;
 
       // @public {Property} - the value used to scale from model coordinates to number line distance
       this.orientationProperty = new Property( options.initialOrientation );
@@ -126,21 +129,23 @@ define( require => {
       // exist on the number line when constructed and after a reset
       this.initialPointSpecs = options.initialPointSpecs;
 
-      // @public (read-only) {Bounds2|null} - The bounds into which the number line display range is projected when
-      // being displayed in the view.  If not set, points can still be added, but values outside of model space can't
-      // be projected.
-      this.modelProjectionBounds = options.modelProjectionBounds;
-
       // @private - 2D scale for transforming between model coordinates and number line position
       this.modelToPositonScale = Vector2.ZERO.copy();
       this.displayedRangeProperty.link( displayedRange => {
-        if ( options.modelProjectionBounds !== null ) {
-          this.modelToPositonScale = new Vector2(
-            displayedRange.getLength() / options.modelProjectionBounds.width,
-            displayedRange.getLength() / options.modelProjectionBounds.height
-          );
-        }
+        this.modelToPositonScale = new Vector2(
+          displayedRange.getLength() / options.widthInModelSpace,
+          displayedRange.getLength() / options.heightInModelSpace
+        );
       } );
+
+      // @public (read-only) {Bounds2} - The bounds into which the number line display range is projected when being
+      // displayed in the view.
+      this.modelProjectionBounds = new Bounds2(
+        this.displayedRangeProperty.value.min / this.modelToPositonScale.x + zeroPosition.x,
+        this.displayedRangeProperty.value.max / -this.modelToPositonScale.y + zeroPosition.y,
+        this.displayedRangeProperty.value.max / this.modelToPositonScale.x + zeroPosition.x,
+        this.displayedRangeProperty.value.min / -this.modelToPositonScale.y + zeroPosition.y
+      );
 
       // add the initial points
       this.addInitialPoints();
@@ -194,12 +199,6 @@ define( require => {
      * @public
      */
     valueToModelPosition( numberLineValue ) {
-
-      // state and parameter checking
-      assert && assert(
-        !this.modelToPositonScale.equals( Vector2.ZERO ),
-        'must set model display bounds if using this method'
-      );
 
       let modelPosition;
       if ( this.isHorizontal ) {

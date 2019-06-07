@@ -53,16 +53,13 @@ define( require => {
 
     constructor() {
 
-      // calculate the bounds in model space where the number line range will be displayed (hoizontal and vertical)
-      const numberLineModelBounds = NLIConstants.NLI_LAYOUT_BOUNDS.shiftedY( NL_Y_OFFSET ).dilatedXY( -100, -100 );
-
       // @public (read-only){NumberLine} - the number line with which the user will interact
-      this.numberLine = new NumberLine( numberLineModelBounds.center, {
-          modelProjectionBounds: numberLineModelBounds,
-          initialDisplayedRange: NUMBER_LINE_RANGES[ 0 ],
-          initialPointSpecs: [ { initialValue: 1, color: INITIAL_POINT_COLOR } ]
-        }
-      );
+      this.numberLine = new NumberLine( NLIConstants.NLI_LAYOUT_BOUNDS.center.plusXY( 0, NL_Y_OFFSET ), {
+        initialDisplayedRange: NUMBER_LINE_RANGES[ 0 ],
+        widthInModelSpace: NLIConstants.NLI_LAYOUT_BOUNDS.width - 200,
+        heightInModelSpace: NLIConstants.NLI_LAYOUT_BOUNDS.height - 200,
+        initialPointSpecs: [ { initialValue: 1, color: INITIAL_POINT_COLOR } ]
+      } );
 
       // @public (read-only) {Property<Bounds2>} - the bounds of the box where the point controllers reside when not
       // being used, changes its location when the orientation of the number line changes
