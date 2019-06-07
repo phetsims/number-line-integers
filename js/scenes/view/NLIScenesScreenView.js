@@ -30,12 +30,14 @@ define( function( require ) {
 
   // strings
   const absoluteValueString = require( 'string!NUMBER_LINE_INTEGERS/absoluteValue' );
+  const balanceString = require( 'string!NUMBER_LINE_INTEGERS/balance' );
   const comparisonStatementString = require( 'string!NUMBER_LINE_INTEGERS/comparisonStatement' );
   const elevationString = require( 'string!NUMBER_LINE_INTEGERS/elevation' );
   const numberLineString = require( 'string!NUMBER_LINE_INTEGERS/numberLine' );
 
   // images
   const elevationBackground = require( 'image!NUMBER_LINE_INTEGERS/elevation-background.png' );
+  const temperatureMap = require( 'image!NUMBER_LINE_INTEGERS/temporary-temperature-map.gif' );
 
   // constants
   const INSET = 10;
@@ -212,11 +214,11 @@ define( function( require ) {
 
       super( sceneModel, layoutBounds );
 
-      // TODO: temp
-      this.addChild( new Text( 'Bank Scene', {
-        font: new PhetFont( 40 ),
-        centerX: this.layoutBounds.centerX,
-        centerY: this.layoutBounds.height * 0.3
+      // number line label
+      this.addChild( new Text( balanceString, {
+        font: NUMBER_LINE_LABEL_FONT,
+        right: this.numberLineNode.left - 4,
+        centerY: sceneModel.numberLine.centerPosition.y
       } ) );
     }
   }
@@ -229,12 +231,10 @@ define( function( require ) {
 
       super( sceneModel, layoutBounds );
 
-      // TODO: temp
-      this.addChild( new Text( 'Temperature Scene', {
-        font: new PhetFont( 40 ),
-        centerX: this.layoutBounds.centerX,
-        centerY: this.layoutBounds.height * 0.3
-      } ) );
+      // TODO: temporary version of the map image
+      const temperatureMapImage = new Image( temperatureMap );
+      temperatureMapImage.center = layoutBounds.center;
+      this.addChild( temperatureMapImage );
     }
   }
 

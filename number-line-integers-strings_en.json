@@ -2,6 +2,9 @@
   "absoluteValue": {
     "value": "Absolute Value"
   },
+  "balance": {
+    "value": "Balance"
+  },
   "comparisonStatement": {
     "value": "Comparison statement"
   },
@@ -28,6 +31,9 @@
   },
   "scenes": {
     "value": "Scenes"
+  },
+  "temperature": {
+    "value": "Temperature"
   },
   "tickMarks": {
     "value": "Tick Marks"
