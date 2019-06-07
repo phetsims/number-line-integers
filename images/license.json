@@ -1,4 +1,20 @@
 {
+  "bird-air.png": {
+    "text": [
+      "Copyright 2019 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Megan TODO for use by PhET"
+  },
+  "bird-water.png": {
+    "text": [
+      "Copyright 2019 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Megan TODO for use by PhET"
+  },
   "elevation-background.png": {
     "text": [
       "Copyright 2019 University of Colorado Boulder"
@@ -16,6 +32,22 @@
     "notes": "created by Megan TODO for use by PhET"
   },
   "fish-water.png": {
+    "text": [
+      "Copyright 2019 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Megan TODO for use by PhET"
+  },
+  "girl-air.png": {
+    "text": [
+      "Copyright 2019 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Megan TODO for use by PhET"
+  },
+  "girl-water.png": {
     "text": [
       "Copyright 2019 University of Colorado Boulder"
     ],

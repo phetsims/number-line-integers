@@ -161,6 +161,15 @@ define( require => {
       this.pointControllers.forEach( pointController => {
         this.putPointControllerInBox( pointController );
       } );
+
+      // if the point controllers are released outside of the elevation areas, send them home.
+      this.pointControllers.forEach( pointController => {
+        pointController.isDraggingProperty.lazyLink( isDragging => {
+          if ( !isDragging && !elevationAreaBounds.containsPoint( pointController.positionProperty.value ) ) {
+            this.putPointControllerInBox( pointController, true );
+          }
+        } );
+      } );
     }
 
     /**

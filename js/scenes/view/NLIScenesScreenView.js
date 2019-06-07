@@ -38,10 +38,14 @@ define( function( require ) {
   const numberLineString = require( 'string!NUMBER_LINE_INTEGERS/numberLine' );
 
   // images
+  const birdInAir = require( 'image!NUMBER_LINE_INTEGERS/bird-air.png' );
+  const birdInWater = require( 'image!NUMBER_LINE_INTEGERS/bird-water.png' );
+  const girlInAir = require( 'image!NUMBER_LINE_INTEGERS/girl-air.png' );
+  const girlInWater = require( 'image!NUMBER_LINE_INTEGERS/girl-water.png' );
   const elevationBackground = require( 'image!NUMBER_LINE_INTEGERS/elevation-background.png' );
-  const temperatureMap = require( 'image!NUMBER_LINE_INTEGERS/temporary-temperature-map.gif' );
   const fishInAir = require( 'image!NUMBER_LINE_INTEGERS/fish-air.png' );
   const fishInWater = require( 'image!NUMBER_LINE_INTEGERS/fish-water.png' );
+  const temperatureMap = require( 'image!NUMBER_LINE_INTEGERS/temporary-temperature-map.gif' );
 
   // constants
   const INSET = 10;
@@ -240,18 +244,36 @@ define( function( require ) {
         return imageIndex;
       };
 
-      // add the point controllers that allow the user to place items on the elevation background
+      // add the fish that the user can place in the elevation scene
       const fishImageWidth = 60; // empirically determined to look good
-      sceneModel.pointControllers.forEach( pointController => {
-        this.addChild( new ElevationPointControllerNode(
-          pointController,
-          [
-            new Image( fishInWater, { maxWidth: fishImageWidth } ),
-            new Image( fishInAir, { maxWidth: fishImageWidth } )
-          ],
-          { imageSelectionFunction: selectImageIndex }
-        ) );
-      } );
+      this.addChild( new ElevationPointControllerNode(
+        sceneModel.pointControllers[ 0 ],
+        [
+          new Image( fishInWater, { maxWidth: fishImageWidth } ),
+          new Image( fishInAir, { maxWidth: fishImageWidth } )
+        ],
+        { imageSelectionFunction: selectImageIndex }
+      ) );
+
+      // add the bird that the user can place in the elevation scene
+      this.addChild( new ElevationPointControllerNode(
+        sceneModel.pointControllers[ 1 ],
+        [
+          new Image( birdInWater, { maxWidth: 45 } ),
+          new Image( birdInAir, { maxWidth: 60 } )
+        ],
+        { imageSelectionFunction: selectImageIndex }
+      ) );
+
+      // add the girl that the user can place in the elevation scene
+      this.addChild( new ElevationPointControllerNode(
+        sceneModel.pointControllers[ 2 ],
+        [
+          new Image( girlInWater, { maxWidth: 35 } ),
+          new Image( girlInAir, { maxWidth: 70 } )
+        ],
+        { imageSelectionFunction: selectImageIndex }
+      ) );
     }
   }
 
