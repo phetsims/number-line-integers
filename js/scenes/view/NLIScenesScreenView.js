@@ -10,6 +10,7 @@ define( function( require ) {
   const AccordionBox = require( 'SUN/AccordionBox' );
   const Checkbox = require( 'SUN/Checkbox' );
   const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/generic/view/ComparisonStatementNode' );
+  const ElevationPointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/ElevationPointControllerNode' );
   const Image = require( 'SCENERY/nodes/Image' );
   const NLIScene = require( 'NUMBER_LINE_INTEGERS/scenes/model/NLIScene' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -216,7 +217,7 @@ define( function( require ) {
         cornerRadius: 6
       } ) );
 
-      // label for the number line
+      // add label for the number line
       const numberLineLabel = new Text( elevationString, {
         font: NUMBER_LINE_LABEL_FONT,
         centerX: sceneModel.numberLine.centerPosition.x,
@@ -224,6 +225,11 @@ define( function( require ) {
       } );
       sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
       this.addChild( numberLineLabel );
+
+      // add the point controllers that allow the user to place items on the elevation background
+      sceneModel.pointControllers.forEach( pointController => {
+        this.addChild( new ElevationPointControllerNode( pointController ) );
+      } );
     }
   }
 

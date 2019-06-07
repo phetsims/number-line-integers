@@ -9,11 +9,13 @@ define( require => {
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Bounds2 = require( 'DOT/Bounds2' );
+  const Color = require( 'SCENERY/util/Color' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const NLIScene = require( 'NUMBER_LINE_INTEGERS/scenes/model/NLIScene' );
   const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
+  const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
   const Vector2 = require( 'DOT/Vector2' );
@@ -39,11 +41,21 @@ define( require => {
 
       // @public (read-only) {TemperatureSceneModel} - model instance for the "Temperature" scene
       this.temperatureSceneModel = new TemperatureSceneModel();
+
+      // @private {SceneModel[]} - all of the scene models in an array for convenience
+      this.sceneModels = [
+        this.elevationSceneModel,
+        this.bankSceneModel,
+        this.temperatureSceneModel
+      ];
     }
 
     // @public resets the model
     reset() {
       this.selectedSceneProperty.reset();
+      this.sceneModels.forEach( sceneModel => {
+        sceneModel.reset();
+      } );
     }
 
     // @public
@@ -77,6 +89,11 @@ define( require => {
 
       // @public (read-only){NumberLine} - the number line for this scene
       this.numberLine = new NumberLine( options.numberLineZeroPosition, options.numberLineOptions );
+    }
+
+    reset() {
+      this.showNumberLineProperty.reset();
+      this.showAbsoluteValuesProperty.reset();
     }
   }
 
@@ -132,6 +149,54 @@ define( require => {
         boxCenter.x + boxWidth / 2,
         boxCenter.y + boxHeight / 2
       );
+
+      // @public (read-only) - an array of the point controllers available for manipulation by the user
+      this.pointControllers = [
+        new PointController( this.numberLine, { color: new Color( 'blue' ) } ),
+        new PointController( this.numberLine, { color: new Color( 'magenta' ) } ),
+        new PointController( this.numberLine, { color: new Color( 'red' ) } )
+      ];
+
+      // put the point controllers in their starting positions
+      this.pointControllers.forEach( pointController => {
+        this.putPointControllerInBox( pointController );
+      } );
+    }
+
+    /**
+     * place the provided point controller into the holding box, generally done on init, reset, and when the user "puts
+     * it away"
+     * @param {PointController} pointController
+     * @param {boolean} [animate] - controls whether to animate the return to the box or do it instantly
+     */
+    putPointControllerInBox( pointController, animate = false ) {
+
+      const index = this.pointControllers.indexOf( pointController );
+      const numPositions = this.pointControllers.length;
+
+      // error checking
+      assert && assert( index >= 0, 'point controller not found on list' );
+      assert && assert(
+        pointController.numberLinePoint === null,
+        'point controller should not be put away while controlling a point'
+      );
+
+      const spacing = this.elevatableItemsBoxBounds.width / numPositions;
+      const destination = new Vector2(
+        this.elevatableItemsBoxBounds.minX + spacing / 2 + spacing * index,
+        this.elevatableItemsBoxBounds.centerY
+      );
+      pointController.goToPosition( destination, animate );
+    }
+
+    reset() {
+
+      super.reset();
+
+      // put the point controllers back into their starting positions
+      this.pointControllers.forEach( pointController => {
+        this.putPointControllerInBox( pointController );
+      } );
     }
   }
 
