@@ -42,6 +42,7 @@ define( function( require ) {
   const birdInWater = require( 'image!NUMBER_LINE_INTEGERS/bird-water.png' );
   const girlInAir = require( 'image!NUMBER_LINE_INTEGERS/girl-air.png' );
   const girlInWater = require( 'image!NUMBER_LINE_INTEGERS/girl-water.png' );
+  const girlOnRock = require( 'image!NUMBER_LINE_INTEGERS/girl-rock.png' );
   const elevationBackground = require( 'image!NUMBER_LINE_INTEGERS/elevation-background.png' );
   const fishInAir = require( 'image!NUMBER_LINE_INTEGERS/fish-air.png' );
   const fishInWater = require( 'image!NUMBER_LINE_INTEGERS/fish-water.png' );
@@ -233,16 +234,7 @@ define( function( require ) {
       this.addChild( numberLineLabel );
 
       // define a function that will be used to switch images based on its position in the model space
-      const selectImageIndex = position => {
-        let imageIndex;
-        if ( position.y > sceneModel.seaLevel ) {
-          imageIndex = 0;
-        }
-        else {
-          imageIndex = 1;
-        }
-        return imageIndex;
-      };
+      const selectImageIndex = position => position.y > sceneModel.seaLevel ? 0 : 1;
 
       // add the fish that the user can place in the elevation scene
       const fishImageWidth = 60; // empirically determined to look good
@@ -270,9 +262,28 @@ define( function( require ) {
         sceneModel.pointControllers[ 2 ],
         [
           new Image( girlInWater, { maxWidth: 35 } ),
-          new Image( girlInAir, { maxWidth: 70 } )
+          new Image( girlInAir, { maxWidth: 70 } ),
+          new Image( girlOnRock, { maxWidth: 35 } )
         ],
-        { imageSelectionFunction: selectImageIndex }
+        {
+          // special highly tweaked function for having the hiker image show up over the cliff
+          imageSelectionFunction: position => {
+            let imageIndex;
+            if ( position.y > sceneModel.seaLevel ) {
+              imageIndex = 0;
+            }
+            else {
+              if ( position.x >
+                   ( sceneModel.elevationAreaBounds.centerX + 40 + 0.6 * ( sceneModel.seaLevel - position.y ) ) ) {
+                imageIndex = 2;
+              }
+              else {
+                imageIndex = 1;
+              }
+            }
+            return imageIndex;
+          }
+        }
       ) );
     }
   }
