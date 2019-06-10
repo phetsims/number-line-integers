@@ -92,6 +92,7 @@ define( require => {
     }
 
     reset() {
+      this.numberLine.reset();
       this.showNumberLineProperty.reset();
       this.showAbsoluteValuesProperty.reset();
     }
@@ -208,6 +209,7 @@ define( require => {
 
       // put the point controllers back into their starting positions
       this.pointControllers.forEach( pointController => {
+        pointController.reset();
         this.putPointControllerInBox( pointController );
       } );
     }
