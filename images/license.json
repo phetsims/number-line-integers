@@ -5,7 +5,7 @@
     ],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Megan TODO for use by PhET"
+    "notes": "created by Megan Lai for use by PhET"
   },
   "bird-water.png": {
     "text": [
@@ -13,7 +13,7 @@
     ],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Megan TODO for use by PhET"
+    "notes": "created by Megan Lai for use by PhET"
   },
   "elevation-background.png": {
     "text": [
@@ -21,7 +21,7 @@
     ],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Megan TODO for use by PhET"
+    "notes": "created by Megan Lai for use by PhET"
   },
   "fish-air.png": {
     "text": [
@@ -29,7 +29,7 @@
     ],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Megan TODO for use by PhET"
+    "notes": "created by Megan Lai for use by PhET"
   },
   "fish-water.png": {
     "text": [
@@ -37,7 +37,7 @@
     ],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Megan TODO for use by PhET"
+    "notes": "created by Megan Lai for use by PhET"
   },
   "girl-air.png": {
     "text": [
@@ -45,7 +45,15 @@
     ],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Megan TODO for use by PhET"
+    "notes": "created by Megan Lai for use by PhET"
+  },
+  "girl-rock.png": {
+    "text": [
+      "Copyright 2019 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Megan Lai for use by PhET"
   },
   "girl-water.png": {
     "text": [
@@ -53,7 +61,7 @@
     ],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Megan TODO for use by PhET"
+    "notes": "created by Megan Lai for use by PhET"
   },
   "temporary-temperature-map.gif": {
     "text": [

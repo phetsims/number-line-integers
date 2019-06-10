@@ -25,7 +25,7 @@ define( require => {
       softwareDevelopment: 'John Blanco, Chris Klusendorf',
       team: '',
       qualityAssurance: '',
-      graphicArts: '',
+      graphicArts: 'Megan Lai',
       soundDesign: '',
       thanks: ''
     }
