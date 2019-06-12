@@ -15,7 +15,7 @@ define( require => {
   const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
-  const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
+  const ElevationPointController = require( 'NUMBER_LINE_INTEGERS/scenes/model/ElevationPointController' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
   const Vector2 = require( 'DOT/Vector2' );
@@ -153,9 +153,9 @@ define( require => {
 
       // @public (read-only) - an array of the point controllers available for manipulation by the user
       this.pointControllers = [
-        new PointController( this.numberLine, { color: new Color( 'blue' ) } ),
-        new PointController( this.numberLine, { color: new Color( 'magenta' ) } ),
-        new PointController( this.numberLine, { color: new Color( 'red' ) } )
+        new ElevationPointController( this.numberLine, elevationAreaBounds, { color: new Color( 'blue' ) } ),
+        new ElevationPointController( this.numberLine, elevationAreaBounds, { color: new Color( 'magenta' ) } ),
+        new ElevationPointController( this.numberLine, elevationAreaBounds, { color: new Color( 'red' ) } )
       ];
 
       // put the point controllers in their starting positions
@@ -180,7 +180,7 @@ define( require => {
     /**
      * place the provided point controller into the holding box, generally done on init, reset, and when the user "puts
      * it away"
-     * @param {PointController} pointController
+     * @param {ElevationPointController} pointController
      * @param {boolean} [animate] - controls whether to animate the return to the box or do it instantly
      */
     putPointControllerInBox( pointController, animate = false ) {

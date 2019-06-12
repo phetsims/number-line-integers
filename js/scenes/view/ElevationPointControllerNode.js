@@ -16,7 +16,7 @@ define( require => {
   class ElevationPointControllerNode extends PointControllerNode {
 
     /**
-     * @param {PointController) pointController
+     * @param {PointController} pointController
      * @param {Image[]} imageList - an array of images used to depict this node
      * @param {Object} [options]
      */

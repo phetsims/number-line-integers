@@ -128,27 +128,46 @@ define( require => {
 
       if ( this.numberLinePoint ) {
 
-        // determine whether to propose a new value for the point or to detach and remove the point
-        if ( this.numberLine.isWithinPointRemovalDistance( proposedPosition ) ) {
+        if ( this.lockToNumberLine === 'always' || this.lockToNumberLine === 'never' ) {
           this.numberLinePoint.proposeValue( proposedNumberLineValue );
         }
-        else {
-          this.numberLine.removePoint( this.numberLinePoint );
-          this.clearNumberLinePoint();
+        else if ( this.lockToNumberLine === 'whenClose' ) {
+
+          // determine whether to propose a new value for the point or to detach and remove the point
+          if ( this.numberLine.isWithinPointRemovalDistance( proposedPosition ) ) {
+            this.numberLinePoint.proposeValue( proposedNumberLineValue );
+          }
+          else {
+            this.numberLine.removePoint( this.numberLinePoint );
+            this.clearNumberLinePoint();
+          }
         }
       }
       else {
-        const constrainedValue = this.numberLine.getConstrainedValue( proposedNumberLineValue );
 
-        // check if a point should be created and added based on the proposed position
-        if ( this.numberLine.isWithinPointCreationDistance( proposedPosition ) ) {
-          const numberLinePoint = new NumberLinePoint( constrainedValue, this.color, this.numberLine, this );
-          this.numberLine.addPoint( numberLinePoint );
-          this.associateWithNumberLinePoint( numberLinePoint );
+        assert && assert(
+          this.lockToNumberLine !== 'always',
+          'should not be in this situation if controller is always locked to a point'
+        );
+
+        if ( this.lockToNumberLine === 'whenClose' ) {
+          const constrainedValue = this.numberLine.getConstrainedValue( proposedNumberLineValue );
+
+          // check if a point should be created and added based on the proposed position
+          if ( this.numberLine.isWithinPointCreationDistance( proposedPosition ) ) {
+            const numberLinePoint = new NumberLinePoint( constrainedValue, this.color, this.numberLine, this );
+            this.numberLine.addPoint( numberLinePoint );
+            this.associateWithNumberLinePoint( numberLinePoint );
+          }
+          else {
+
+            // just accept the proposed position, no other action is necessary
+            this.goToPosition( proposedPosition );
+          }
         }
         else {
 
-          // just accept the proposed position, no other action is necessary
+          // no restraint is needed, be free and go wherever you want
           this.goToPosition( proposedPosition );
         }
       }
@@ -209,12 +228,27 @@ define( require => {
      * @public
      */
     setPositionRelativeToPoint( pointPosition ) {
+      let x;
+      let y;
       if ( this.numberLine.isHorizontal ) {
-        this.goToPosition( new Vector2( pointPosition.x, pointPosition.y + this.offsetFromHorizontalNumberLine ) );
+        x = pointPosition.x;
+        if ( this.lockToNumberLine === 'always' || this.lockToNumberLine === 'whenClose' ) {
+          y = pointPosition.y + this.offsetFromHorizontalNumberLine;
+        }
+        else {
+          y = this.positionProperty.value.y;
+        }
       }
       else {
-        this.goToPosition( new Vector2( pointPosition.x + this.offsetFromVerticalNumberLine, pointPosition.y ) );
+        y = pointPosition.y;
+        if ( this.lockToNumberLine === 'always' || this.lockToNumberLine === 'whenClose' ) {
+          x = pointPosition.x + this.offsetFromVerticalNumberLine;
+        }
+        else {
+          x = this.positionProperty.value.x;
+        }
       }
+      this.goToPosition( new Vector2( x, y ) );
     }
 
     /**
