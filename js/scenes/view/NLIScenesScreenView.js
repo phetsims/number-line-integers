@@ -25,6 +25,7 @@ define( function( require ) {
   const Text = require( 'SCENERY/nodes/Text' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const VBox = require( 'SCENERY/nodes/VBox' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // constants
   const CHECK_BOX_FONT = new PhetFont( 16 );
@@ -238,12 +239,11 @@ define( function( require ) {
       const selectImageIndex = position => position.y > sceneModel.seaLevel ? 0 : 1;
 
       // add the fish that the user can place in the elevation scene
-      const fishImageWidth = 60; // empirically determined to look good
       this.addChild( new ElevationPointControllerNode(
         sceneModel.permanentPointControllers[ 0 ],
         [
-          new Image( fishInWater, { maxWidth: fishImageWidth } ),
-          new Image( fishInAir, { maxWidth: fishImageWidth } )
+          new Image( fishInWater, { maxWidth: 60, center: Vector2.ZERO } ),
+          new Image( fishInAir, { maxWidth: 60, center: Vector2.ZERO } )
         ],
         {
           imageSelectionFunction: selectImageIndex,
@@ -255,8 +255,8 @@ define( function( require ) {
       this.addChild( new ElevationPointControllerNode(
         sceneModel.permanentPointControllers[ 1 ],
         [
-          new Image( birdInWater, { maxWidth: 45 } ),
-          new Image( birdInAir, { maxWidth: 60 } )
+          new Image( birdInWater, { maxWidth: 65, center: Vector2.ZERO } ),
+          new Image( birdInAir, { maxWidth: 60, center: Vector2.ZERO } )
         ],
         {
           imageSelectionFunction: selectImageIndex,
@@ -268,9 +268,9 @@ define( function( require ) {
       this.addChild( new ElevationPointControllerNode(
         sceneModel.permanentPointControllers[ 2 ],
         [
-          new Image( girlInWater, { maxWidth: 35 } ),
-          new Image( girlInAir, { maxWidth: 70 } ),
-          new Image( girlOnRock, { maxWidth: 35 } )
+          new Image( girlInWater, { maxWidth: 85, center: Vector2.ZERO } ),
+          new Image( girlInAir, { maxWidth: 90, center: Vector2.ZERO } ),
+          new Image( girlOnRock, { maxWidth: 30, center: Vector2.ZERO } )
         ],
         {
           // special highly tweaked function for having the hiker image show up over the cliff
