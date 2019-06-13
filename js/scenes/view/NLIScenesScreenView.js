@@ -229,35 +229,9 @@ define( function( require ) {
       const elevationPointControllersLayer = new Node();
       this.addChild( elevationPointControllersLayer );
 
-      // add the fish that the user can place in the elevation scene
-      elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
-        sceneModel.permanentPointControllers[ 0 ],
-        [
-          new Image( fishInWater, { maxWidth: 60, center: Vector2.ZERO } ),
-          new Image( fishInAir, { maxWidth: 60, center: Vector2.ZERO } )
-        ],
-        {
-          imageSelectionFunction: selectImageIndex,
-          connectorLine: false
-        }
-      ) );
-
-      // add the bird that the user can place in the elevation scene
-      elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
-        sceneModel.permanentPointControllers[ 1 ],
-        [
-          new Image( birdInWater, { maxWidth: 65, center: Vector2.ZERO } ),
-          new Image( birdInAir, { maxWidth: 60, center: Vector2.ZERO } )
-        ],
-        {
-          imageSelectionFunction: selectImageIndex,
-          connectorLine: false
-        }
-      ) );
-
       // add the girl that the user can place in the elevation scene
       elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
-        sceneModel.permanentPointControllers[ 2 ],
+        sceneModel.permanentPointControllers[ 0 ],
         [
           new Image( girlInWater, { maxWidth: 85, center: Vector2.ZERO } ),
           new Image( girlInAir, { maxWidth: 90, center: Vector2.ZERO } ),
@@ -281,6 +255,32 @@ define( function( require ) {
             }
             return imageIndex;
           },
+          connectorLine: false
+        }
+      ) );
+
+      // add the bird that the user can place in the elevation scene
+      elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
+        sceneModel.permanentPointControllers[ 1 ],
+        [
+          new Image( birdInWater, { maxWidth: 65, center: Vector2.ZERO } ),
+          new Image( birdInAir, { maxWidth: 60, center: Vector2.ZERO } )
+        ],
+        {
+          imageSelectionFunction: selectImageIndex,
+          connectorLine: false
+        }
+      ) );
+
+      // add the fish that the user can place in the elevation scene
+      elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
+        sceneModel.permanentPointControllers[ 2 ],
+        [
+          new Image( fishInWater, { maxWidth: 60, center: Vector2.ZERO } ),
+          new Image( fishInAir, { maxWidth: 60, center: Vector2.ZERO } )
+        ],
+        {
+          imageSelectionFunction: selectImageIndex,
           connectorLine: false
         }
       ) );

@@ -155,9 +155,9 @@ define( require => {
 
       // @public (read-only) - the point controllers that can be moved into the elevation scene
       this.permanentPointControllers = [
-        new ElevationPointController( this.numberLine, elevationAreaBounds, { color: new Color( 'blue' ) } ),
-        new ElevationPointController( this.numberLine, elevationAreaBounds, { color: new Color( 'magenta' ) } ),
-        new ElevationPointController( this.numberLine, elevationAreaBounds, { color: new Color( 'red' ) } )
+        new ElevationPointController( this.numberLine, elevationAreaBounds, { color: new Color( 'orange' ) } ),
+        new ElevationPointController( this.numberLine, elevationAreaBounds, { color: new Color( 'red' ) } ),
+        new ElevationPointController( this.numberLine, elevationAreaBounds, { color: new Color( 'blue' ) } )
       ];
 
       // put the permanent point controllers in their starting positions
