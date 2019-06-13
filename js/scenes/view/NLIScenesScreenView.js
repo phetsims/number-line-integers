@@ -244,7 +244,10 @@ define( function( require ) {
           new Image( fishInWater, { maxWidth: fishImageWidth } ),
           new Image( fishInAir, { maxWidth: fishImageWidth } )
         ],
-        { imageSelectionFunction: selectImageIndex }
+        {
+          imageSelectionFunction: selectImageIndex,
+          connectorLine: false
+        }
       ) );
 
       // add the bird that the user can place in the elevation scene
@@ -254,7 +257,10 @@ define( function( require ) {
           new Image( birdInWater, { maxWidth: 45 } ),
           new Image( birdInAir, { maxWidth: 60 } )
         ],
-        { imageSelectionFunction: selectImageIndex }
+        {
+          imageSelectionFunction: selectImageIndex,
+          connectorLine: false
+        }
       ) );
 
       // add the girl that the user can place in the elevation scene
@@ -282,7 +288,8 @@ define( function( require ) {
               }
             }
             return imageIndex;
-          }
+          },
+          connectorLine: false
         }
       ) );
     }

@@ -22,15 +22,18 @@ define( require => {
   class PointControllerNode extends Node {
 
     /**
-     * @param {PointController) pointController
+     * @param {PointController} pointController
      * @param {Object} [options]
      */
     constructor( pointController, options ) {
 
       options = _.extend( {
 
-        // node used for the point controller, a sphere is used if no node is provided
+        // node used for the view representation, a shaded sphere is created if no node is provided
         node: null,
+
+        // controls whether there is a line drawn from this controller to the number line
+        connectorLine: true,
 
         cursor: 'pointer'
 
@@ -53,7 +56,7 @@ define( require => {
       pointController.positionProperty.link( position => {
         node.center = position;
 
-        if ( pointController.numberLinePoint ) {
+        if ( options.connectorLine && pointController.numberLinePoint ) {
           const pointPosition = pointController.numberLinePoint.getPositionInModelSpace();
           connectorLine.setLine( position.x, position.y, pointPosition.x, pointPosition.y );
           connectorLine.visible = true;

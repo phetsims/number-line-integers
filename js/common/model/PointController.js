@@ -49,7 +49,11 @@ define( require => {
       }, options );
 
       // @public (read-only) {Vector2Property} - position of this point in model space
-      this.positionProperty = new Vector2Property( Vector2.ZERO );
+      this.positionProperty = new Vector2Property( Vector2.ZERO, {
+
+        // allowing reentry is necessary because of two-way position relationship with number line points
+        reentrant: true
+      } );
 
       // @public {BooleanProperty} - indicates whether this is being dragged by the user
       this.isDraggingProperty = new BooleanProperty( false );
@@ -128,8 +132,21 @@ define( require => {
 
       if ( this.numberLinePoint ) {
 
-        if ( this.lockToNumberLine === 'always' || this.lockToNumberLine === 'never' ) {
+        if ( this.lockToNumberLine === 'always' ) {
           this.numberLinePoint.proposeValue( proposedNumberLineValue );
+        }
+        else if ( this.lockToNumberLine === 'never' ) {
+
+          // this will update the number line point and move it in the orientation of the number line
+          this.numberLinePoint.proposeValue( proposedNumberLineValue );
+
+          // move the point controller in the direction perpendicular to the number line
+          if ( this.numberLine.isHorizontal ) {
+            this.positionProperty.set( new Vector2( this.positionProperty.value.x, proposedPosition.y ) );
+          }
+          else {
+            this.positionProperty.set( new Vector2( proposedPosition.x, this.positionProperty.value.y ) );
+          }
         }
         else if ( this.lockToNumberLine === 'whenClose' ) {
 
