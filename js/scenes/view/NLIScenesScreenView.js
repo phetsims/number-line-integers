@@ -294,13 +294,18 @@ define( function( require ) {
         }
       ) );
 
+      // add the layer where the attached point controllers go so that they will be behind the number line in the z-order
+      const attachedPointControllersLayer = new Node();
+      this.addChild( attachedPointControllersLayer );
+      attachedPointControllersLayer.moveToBack();
+
       // add/remove the nodes that represent the point controllers that are attached to the number line
       sceneModel.numberLineAttachedPointControllers.addItemAddedListener( addedPointController => {
         const pointControllerNode = new PointControllerNode( addedPointController );
-        this.addChild( pointControllerNode );
+        attachedPointControllersLayer.addChild( pointControllerNode );
         const handlePointControllerRemoved = removedPointController => {
           if ( addedPointController === removedPointController ) {
-            this.removeChild( pointControllerNode );
+            attachedPointControllersLayer.removeChild( pointControllerNode );
             pointControllerNode.dispose();
             sceneModel.numberLineAttachedPointControllers.removeItemRemovedListener( handlePointControllerRemoved );
           }
