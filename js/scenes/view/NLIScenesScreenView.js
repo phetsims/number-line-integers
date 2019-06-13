@@ -206,19 +206,6 @@ define( function( require ) {
       elevationAreaImage.center = sceneModel.elevationAreaBounds.center;
       this.addChild( elevationAreaImage );
 
-      // add the water
-      this.addChild( new Rectangle(
-        0,
-        0,
-        sceneModel.elevationAreaBounds.width,
-        sceneModel.elevationAreaBounds.maxY - sceneModel.seaLevel,
-        {
-          left: sceneModel.elevationAreaBounds.minX,
-          top: sceneModel.seaLevel,
-          fill: 'rgba( 0, 204, 204, 0.25 )'
-        }
-      ) );
-
       // add the node that represents the box that will hold the items that the user can elevate
       this.addChild( new Rectangle.bounds( sceneModel.elevatableItemsBoxBounds, {
         fill: 'white',
@@ -238,8 +225,12 @@ define( function( require ) {
       // define a function that will be used to switch images based on its position in the model space
       const selectImageIndex = position => position.y > sceneModel.seaLevel ? 0 : 1;
 
+      // add a layer where the elevation point controllers go
+      const elevationPointControllersLayer = new Node();
+      this.addChild( elevationPointControllersLayer );
+
       // add the fish that the user can place in the elevation scene
-      this.addChild( new ElevationPointControllerNode(
+      elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
         sceneModel.permanentPointControllers[ 0 ],
         [
           new Image( fishInWater, { maxWidth: 60, center: Vector2.ZERO } ),
@@ -252,7 +243,7 @@ define( function( require ) {
       ) );
 
       // add the bird that the user can place in the elevation scene
-      this.addChild( new ElevationPointControllerNode(
+      elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
         sceneModel.permanentPointControllers[ 1 ],
         [
           new Image( birdInWater, { maxWidth: 65, center: Vector2.ZERO } ),
@@ -265,7 +256,7 @@ define( function( require ) {
       ) );
 
       // add the girl that the user can place in the elevation scene
-      this.addChild( new ElevationPointControllerNode(
+      elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
         sceneModel.permanentPointControllers[ 2 ],
         [
           new Image( girlInWater, { maxWidth: 85, center: Vector2.ZERO } ),
@@ -294,10 +285,23 @@ define( function( require ) {
         }
       ) );
 
-      // add the layer where the attached point controllers go so that they will be behind the number line in the z-order
+      // add the water
+      this.addChild( new Rectangle(
+        0,
+        0,
+        sceneModel.elevationAreaBounds.width,
+        sceneModel.elevationAreaBounds.maxY - sceneModel.seaLevel,
+        {
+          left: sceneModel.elevationAreaBounds.minX,
+          top: sceneModel.seaLevel,
+          fill: 'rgba( 0, 204, 204, 0.25 )'
+        }
+      ) );
+
+      // add the layer where the attached point controllers go
       const attachedPointControllersLayer = new Node();
       this.addChild( attachedPointControllersLayer );
-      attachedPointControllersLayer.moveToBack();
+      attachedPointControllersLayer.moveToBack(); // so that they are behind the number line in z-order
 
       // add/remove the nodes that represent the point controllers that are attached to the number line
       sceneModel.numberLineAttachedPointControllers.addItemAddedListener( addedPointController => {
