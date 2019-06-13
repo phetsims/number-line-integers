@@ -86,9 +86,6 @@ define( require => {
       // @public {BooleanProperty}
       this.showNumberLineProperty = new BooleanProperty( true );
 
-      // @public {BooleanProperty}
-      this.showAbsoluteValuesProperty = new BooleanProperty( false );
-
       // @public (read-only){NumberLine} - the number line for this scene
       this.numberLine = new NumberLine( options.numberLineZeroPosition, options.numberLineOptions );
     }
@@ -96,7 +93,6 @@ define( require => {
     reset() {
       this.numberLine.reset();
       this.showNumberLineProperty.reset();
-      this.showAbsoluteValuesProperty.reset();
     }
   }
 

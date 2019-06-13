@@ -147,7 +147,7 @@ define( function( require ) {
         children: [
           new Checkbox(
             new Text( absoluteValueString, { font: CHECK_BOX_FONT } ),
-            sceneModel.showAbsoluteValuesProperty
+            sceneModel.numberLine.showAbsoluteValuesProperty
           ),
           new Checkbox(
             new Text( numberLineString, { font: CHECK_BOX_FONT } ),
