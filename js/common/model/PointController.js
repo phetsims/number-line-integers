@@ -45,8 +45,18 @@ define( require => {
 
         // {string} - Controls whether this point controller is, or can, lock to the number line.  Valid values
         // are 'always', 'never', and 'whenClose'.
-        lockToNumberLine: 'whenClose'
+        lockToNumberLine: 'whenClose',
+
+        // {NumberLinePoint|null} - the point on the number line that will be controlled, null if none yet
+        numberLinePoint: null
       }, options );
+
+      // @private
+      this.offsetFromHorizontalNumberLine = options.offsetFromHorizontalNumberLine;
+      this.offsetFromVerticalNumberLine = options.offsetFromVerticalNumberLine;
+      this.numberLine = numberLine;
+      this.pointValueChangeHandler = null;
+      this.lockToNumberLine = options.lockToNumberLine;
 
       // @public (read-only) {Vector2Property} - position of this point in model space
       this.positionProperty = new Vector2Property( Vector2.ZERO, {
@@ -63,23 +73,20 @@ define( require => {
 
       // @public (read-only) {NumberLinePoint|null} - point on the number line being controlled, null if none
       this.numberLinePoint = null;
+      if ( options.numberLinePoint ) {
+        this.associateWithNumberLinePoint( options.numberLinePoint );
+      }
 
       // &public (read-only) {Color}
       this.color = options.color;
 
       // if the displayed range of the number line changes while controlling a point, the position must be updated
-      numberLine.displayedRangeProperty.lazyLink( () => {
+      const handleDisplayedRangeChange = () => {
         if ( this.numberLinePoint ) {
           this.setPositionRelativeToPoint( this.numberLinePoint.getPositionInModelSpace() );
         }
-      } );
-
-      // @private
-      this.offsetFromHorizontalNumberLine = options.offsetFromHorizontalNumberLine;
-      this.offsetFromVerticalNumberLine = options.offsetFromVerticalNumberLine;
-      this.numberLine = numberLine;
-      this.pointValueChangeHandler = null;
-      this.lockToNumberLine = options.lockToNumberLine;
+      };
+      numberLine.displayedRangeProperty.lazyLink( handleDisplayedRangeChange );
 
       // set our point to match point controller's dragging state
       this.isDraggingProperty.link( isDragging => {
@@ -87,6 +94,19 @@ define( require => {
           this.numberLinePoint.isDraggingProperty.value = isDragging;
         }
       } );
+
+      // @private
+      this.disposePointController = () => {
+        numberLine.displayedRangeProperty.unlink( handleDisplayedRangeChange );
+      };
+    }
+
+    /**
+     * clean up any linkages or other associations that could cause memory leaks
+     * @public
+     */
+    dispose() {
+      this.disposePointController();
     }
 
     /**

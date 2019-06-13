@@ -16,6 +16,7 @@ define( function( require ) {
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
+  const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   const RandomIconFactory = require( 'NUMBER_LINE_INTEGERS/common/view/RandomIconFactory' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -239,7 +240,7 @@ define( function( require ) {
       // add the fish that the user can place in the elevation scene
       const fishImageWidth = 60; // empirically determined to look good
       this.addChild( new ElevationPointControllerNode(
-        sceneModel.pointControllers[ 0 ],
+        sceneModel.permanentPointControllers[ 0 ],
         [
           new Image( fishInWater, { maxWidth: fishImageWidth } ),
           new Image( fishInAir, { maxWidth: fishImageWidth } )
@@ -252,7 +253,7 @@ define( function( require ) {
 
       // add the bird that the user can place in the elevation scene
       this.addChild( new ElevationPointControllerNode(
-        sceneModel.pointControllers[ 1 ],
+        sceneModel.permanentPointControllers[ 1 ],
         [
           new Image( birdInWater, { maxWidth: 45 } ),
           new Image( birdInAir, { maxWidth: 60 } )
@@ -265,7 +266,7 @@ define( function( require ) {
 
       // add the girl that the user can place in the elevation scene
       this.addChild( new ElevationPointControllerNode(
-        sceneModel.pointControllers[ 2 ],
+        sceneModel.permanentPointControllers[ 2 ],
         [
           new Image( girlInWater, { maxWidth: 35 } ),
           new Image( girlInAir, { maxWidth: 70 } ),
@@ -292,6 +293,21 @@ define( function( require ) {
           connectorLine: false
         }
       ) );
+
+      // add/remove the nodes that represent the point controllers that are attached to the number line
+      sceneModel.numberLineAttachedPointControllers.addItemAddedListener( addedPointController => {
+        const pointControllerNode = new PointControllerNode( addedPointController );
+        this.addChild( pointControllerNode );
+        const handlePointControllerRemoved = removedPointController => {
+          if ( addedPointController === removedPointController ) {
+            this.removeChild( pointControllerNode );
+            pointControllerNode.dispose();
+            sceneModel.numberLineAttachedPointControllers.removeItemRemovedListener( handlePointControllerRemoved );
+          }
+        };
+        sceneModel.numberLineAttachedPointControllers.addItemRemovedListener( handlePointControllerRemoved );
+      } );
+
     }
   }
 

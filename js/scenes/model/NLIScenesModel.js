@@ -10,12 +10,14 @@ define( require => {
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const Color = require( 'SCENERY/util/Color' );
+  const ElevationPointController = require( 'NUMBER_LINE_INTEGERS/scenes/model/ElevationPointController' );
+  const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const NLIScene = require( 'NUMBER_LINE_INTEGERS/scenes/model/NLIScene' );
   const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
-  const ElevationPointController = require( 'NUMBER_LINE_INTEGERS/scenes/model/ElevationPointController' );
+  const ObservableArray = require( 'AXON/ObservableArray' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
   const Vector2 = require( 'DOT/Vector2' );
@@ -151,20 +153,20 @@ define( require => {
         boxCenter.y + boxHeight / 2
       );
 
-      // @public (read-only) - an array of the point controllers available for manipulation by the user
-      this.pointControllers = [
+      // @public (read-only) - the point controllers that can be moved into the elevation scene
+      this.permanentPointControllers = [
         new ElevationPointController( this.numberLine, elevationAreaBounds, { color: new Color( 'blue' ) } ),
         new ElevationPointController( this.numberLine, elevationAreaBounds, { color: new Color( 'magenta' ) } ),
         new ElevationPointController( this.numberLine, elevationAreaBounds, { color: new Color( 'red' ) } )
       ];
 
-      // put the point controllers in their starting positions
-      this.pointControllers.forEach( pointController => {
+      // put the permanent point controllers in their starting positions
+      this.permanentPointControllers.forEach( pointController => {
         this.putPointControllerInBox( pointController );
       } );
 
       // if the point controllers are released outside of the elevation areas, send them home.
-      this.pointControllers.forEach( pointController => {
+      this.permanentPointControllers.forEach( pointController => {
         pointController.isDraggingProperty.lazyLink( isDragging => {
 
           // TODO: Once these elevation controllers never control points the test for whether a point is being controlled can be removed.
@@ -174,6 +176,33 @@ define( require => {
             this.putPointControllerInBox( pointController, true );
           }
         } );
+      } );
+
+      // @publc (read-only) - the point controllers that are attached to the number line when a corresponding elevatable
+      // controller is over the scene
+      this.numberLineAttachedPointControllers = new ObservableArray();
+
+      // watch for points coming and going on the number line and add the additional point controllers for them
+      this.numberLine.residentPoints.addItemAddedListener( addedPoint => {
+
+        // add a point controller that will remain attached to the number line that will control this point
+        const pointController = new PointController( this.numberLine, {
+          color: addedPoint.colorProperty.value,
+          lockToNumberLine: 'always',
+          numberLinePoint: addedPoint
+        } );
+        this.numberLineAttachedPointControllers.push( pointController );
+
+        // handle removal of this point from the number line
+        const handlePointRemoved = ( removedPoint ) => {
+          if ( addedPoint === removedPoint ) {
+            pointController.clearNumberLinePoint();
+            pointController.dispose();
+            this.numberLine.residentPoints.removeItemRemovedListener( handlePointRemoved );
+            this.numberLineAttachedPointControllers.remove( pointController );
+          }
+        };
+        this.numberLine.residentPoints.addItemRemovedListener( handlePointRemoved );
       } );
     }
 
@@ -185,8 +214,8 @@ define( require => {
      */
     putPointControllerInBox( pointController, animate = false ) {
 
-      const index = this.pointControllers.indexOf( pointController );
-      const numPositions = this.pointControllers.length;
+      const index = this.permanentPointControllers.indexOf( pointController );
+      const numPositions = this.permanentPointControllers.length;
 
       // error checking
       assert && assert( index >= 0, 'point controller not found on list' );
@@ -208,7 +237,7 @@ define( require => {
       super.reset();
 
       // put the point controllers back into their starting positions
-      this.pointControllers.forEach( pointController => {
+      this.permanentPointControllers.forEach( pointController => {
         pointController.reset();
         this.putPointControllerInBox( pointController );
       } );

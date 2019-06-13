@@ -46,15 +46,15 @@ define( require => {
       connectorLine.visible = false;
       this.addChild( connectorLine );
 
-      // create and add the shaded sphere
-      const node = options.node || new ShadedSphereNode( SPHERE_RADIUS * 2, {
+      // set up the node that the user will drag to move this around
+      const draggableNode = options.node || new ShadedSphereNode( SPHERE_RADIUS * 2, {
         mainColor: pointController.color
       } );
-      this.addChild( node );
+      this.addChild( draggableNode );
 
       // monitor the point controller and adjust positions to match
-      pointController.positionProperty.link( position => {
-        node.center = position;
+      const handlePointControllerPositionChange = position => {
+        draggableNode.center = position;
 
         if ( options.connectorLine && pointController.numberLinePoint ) {
           const pointPosition = pointController.numberLinePoint.getPositionInModelSpace();
@@ -64,19 +64,22 @@ define( require => {
         else {
           connectorLine.visible = false;
         }
-      } );
+      };
+      pointController.positionProperty.link( handlePointControllerPositionChange );
 
       // pop to the front of the z-order when dragged
-      pointController.isDraggingProperty.link( dragging => {
+      const dragStateChangeHandler = dragging => {
         if ( dragging ) {
           this.moveToFront();
         }
-      } );
+      };
+      pointController.isDraggingProperty.link( dragStateChangeHandler );
 
       // don't allow the point controller node to be grabbed if the point controller is animating somewhere
-      pointController.inProgressAnimationProperty.link( inProgressAnimation => {
+      const inProgressAnimationChangedHandler = inProgressAnimation => {
         this.pickable = inProgressAnimation === null;
-      } );
+      };
+      pointController.inProgressAnimationProperty.link( inProgressAnimationChangedHandler );
 
       // drag handler
       this.addInputListener( new DragListener( {
@@ -92,6 +95,21 @@ define( require => {
           pointController.isDraggingProperty.set( false );
         }
       } ) );
+
+      this.disposePointControllerNode = () => {
+        pointController.positionProperty.unlink( handlePointControllerPositionChange );
+        pointController.isDraggingProperty.unlink( dragStateChangeHandler );
+        pointController.inProgressAnimationProperty.unlink( inProgressAnimationChangedHandler );
+      };
+    }
+
+    /**
+     * clean up any linkages or other references that could lead to memory leaks
+     * @public
+     */
+    dispose() {
+      this.disposePointControllerNode();
+      super.dispose();
     }
   }
 
