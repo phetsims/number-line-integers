@@ -48,7 +48,7 @@ define( require => {
         if ( over && this.isDraggingProperty.value ) {
 
           // state checking
-          assert( !this.numberLinePoint, 'should not already have a point' );
+          assert && assert( !this.numberLinePoint, 'should not already have a point' );
 
           // create a new point on the number line
           const numberLinePoint = new NumberLinePoint(
