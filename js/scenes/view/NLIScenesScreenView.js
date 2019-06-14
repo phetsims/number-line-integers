@@ -303,6 +303,9 @@ define( function( require ) {
       this.addChild( attachedPointControllersLayer );
       attachedPointControllersLayer.moveToBack(); // so that they are behind the number line in z-order
 
+      // the visibility of the attached point controllers should be the same as the number line
+      sceneModel.showNumberLineProperty.linkAttribute( attachedPointControllersLayer, 'visible' );
+
       // add/remove the nodes that represent the point controllers that are attached to the number line
       sceneModel.numberLineAttachedPointControllers.addItemAddedListener( addedPointController => {
         const pointControllerNode = new PointControllerNode( addedPointController );
