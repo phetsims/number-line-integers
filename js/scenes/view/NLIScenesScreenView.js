@@ -340,9 +340,14 @@ define( function( require ) {
       } ) );
 
       // add node to represent the point controller that is always visible
-      const permanentPointControllerNode = new BankPointControllerNode( sceneModel.permanentPointController );
+      const permanentPointControllerNode = new BankPointControllerNode( sceneModel.permanentPointController, 'flowers' );
       this.addChild( permanentPointControllerNode );
       permanentPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
+
+      // add node to represent the point controller that is NOT always visible (TODO: support hiding)
+      const nonPermanentPointControllerNode = new BankPointControllerNode( sceneModel.nonPermanentPointController, 'lightning' );
+      this.addChild( nonPermanentPointControllerNode );
+      nonPermanentPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
     }
   }
 

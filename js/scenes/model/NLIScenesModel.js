@@ -258,7 +258,10 @@ define( require => {
           initialDisplayedRange: new Range( -100, 100 ),
           labelsInitiallyVisible: true,
           widthInModelSpace: SCENE_BOUNDS.width * 0.4,
-          initialPointSpecs: [ { initialValue: 10, color: new Color( 39, 16, 225 ) } ]
+          initialPointSpecs: [ { initialValue: 10, color: new Color( 39, 16, 225 ) }, {
+            initialValue: 50,
+            color: Color.orange
+          } ]
         }
       } );
 
@@ -269,17 +272,28 @@ define( require => {
         numberLinePoint: this.numberLine.residentPoints.get( 0 ),
         offsetFromHorizontalNumberLine: 100
       } );
+
+      // add the point controller that comes and goes (TODO: Currently permanent, must be changed)
+      this.nonPermanentPointController = new PointController( this.numberLine, {
+        color: this.numberLine.residentPoints.get( 1 ).colorProperty.value,
+        lockToNumberLine: 'always',
+        numberLinePoint: this.numberLine.residentPoints.get( 1 ),
+        offsetFromHorizontalNumberLine: -100
+      } );
+
     }
 
     reset() {
 
       // release the point that was being controlled
       this.permanentPointController.clearNumberLinePoint();
+      this.nonPermanentPointController.clearNumberLinePoint();
 
       super.reset();
 
       // the reset will add back the initial point, so associate the permanent point controller with it
       this.permanentPointController.associateWithNumberLinePoint( this.numberLine.residentPoints.get( 0 ) );
+      this.nonPermanentPointController.associateWithNumberLinePoint( this.numberLine.residentPoints.get( 1 ) );
     }
   }
 
