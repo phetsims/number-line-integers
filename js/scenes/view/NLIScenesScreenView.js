@@ -8,6 +8,7 @@ define( function( require ) {
 
   // modules
   const AccordionBox = require( 'SUN/AccordionBox' );
+  const BankPointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/BankPointControllerNode' );
   const Checkbox = require( 'SUN/Checkbox' );
   const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/generic/view/ComparisonStatementNode' );
   const ElevationPointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/ElevationPointControllerNode' );
@@ -319,7 +320,6 @@ define( function( require ) {
         };
         sceneModel.numberLineAttachedPointControllers.addItemRemovedListener( handlePointControllerRemoved );
       } );
-
     }
   }
 
@@ -340,7 +340,7 @@ define( function( require ) {
       } ) );
 
       // add node to represent the point controller that is always visible
-      const permanentPointControllerNode = new PointControllerNode( sceneModel.permanentPointController );
+      const permanentPointControllerNode = new BankPointControllerNode( sceneModel.permanentPointController );
       this.addChild( permanentPointControllerNode );
       permanentPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
     }

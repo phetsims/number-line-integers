@@ -30,10 +30,7 @@ define( require => {
       options = _.extend( {
 
         // pass in the parent node that includes all images as the mode that will control the point
-        node: compositeImageNode,
-
-        // function to select the currently active image
-        imageSelectionFunction: () => 0
+        node: compositeImageNode
       }, options );
 
       // update the visibility of the images as the position changes
