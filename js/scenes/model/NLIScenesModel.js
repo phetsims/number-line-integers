@@ -258,7 +258,7 @@ define( require => {
           initialDisplayedRange: new Range( -100, 100 ),
           labelsInitiallyVisible: true,
           widthInModelSpace: SCENE_BOUNDS.width * 0.4,
-          initialPointSpecs: [ { initialValue: 10, color: 'green' } ]
+          initialPointSpecs: [ { initialValue: 10, color: new Color( 39, 16, 225 ) } ]
         }
       } );
 

@@ -17,6 +17,9 @@
   "labels": {
     "value": "Labels"
   },
+  "moneyAmount": {
+    "value": "${{value}}"
+  },
   "number-line-integers.title": {
     "value": "Number Line: Integers"
   },
