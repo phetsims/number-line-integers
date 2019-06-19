@@ -327,6 +327,7 @@ define( function( require ) {
    * view for the elevation scene
    */
   class BankSceneView extends SceneView {
+
     constructor( sceneModel, layoutBounds ) {
 
       super( sceneModel, layoutBounds );
@@ -337,6 +338,11 @@ define( function( require ) {
         right: this.numberLineNode.left - 4,
         centerY: sceneModel.numberLine.centerPosition.y
       } ) );
+
+      // add node to represent the point controller that is always visible
+      const permanentPointControllerNode = new PointControllerNode( sceneModel.permanentPointController );
+      this.addChild( permanentPointControllerNode );
+      permanentPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
     }
   }
 

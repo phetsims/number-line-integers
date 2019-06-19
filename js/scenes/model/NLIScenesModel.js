@@ -257,9 +257,28 @@ define( require => {
           initialOrientation: NumberLineOrientation.HORIZONTAL,
           initialDisplayedRange: new Range( -100, 100 ),
           labelsInitiallyVisible: true,
-          widthInModelSpace: SCENE_BOUNDS.width * 0.4
+          widthInModelSpace: SCENE_BOUNDS.width * 0.4,
+          initialPointSpecs: [ { initialValue: 10, color: 'green' } ]
         }
       } );
+
+      // add the point controller that is always visible
+      this.permanentPointController = new PointController( this.numberLine, {
+        color: this.numberLine.residentPoints.get( 0 ).colorProperty.value,
+        lockToNumberLine: 'always',
+        numberLinePoint: this.numberLine.residentPoints.get( 0 )
+      } );
+    }
+
+    reset() {
+
+      // release the point that was being controlled
+      this.permanentPointController.clearNumberLinePoint();
+
+      super.reset();
+
+      // the reset will add back the initial point, so associate the permanent point controller with it
+      this.permanentPointController.associateWithNumberLinePoint( this.numberLine.residentPoints.get( 0 ) );
     }
   }
 
