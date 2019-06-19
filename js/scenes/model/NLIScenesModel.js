@@ -266,7 +266,8 @@ define( require => {
       this.permanentPointController = new PointController( this.numberLine, {
         color: this.numberLine.residentPoints.get( 0 ).colorProperty.value,
         lockToNumberLine: 'always',
-        numberLinePoint: this.numberLine.residentPoints.get( 0 )
+        numberLinePoint: this.numberLine.residentPoints.get( 0 ),
+        offsetFromHorizontalNumberLine: 100
       } );
     }
 

@@ -15,17 +15,19 @@ define( require => {
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
 
   // constants
-  const MIN_WIDTH = 50; // screen coords, empirically determined
-  const MAX_WIDTH = 100; // screen coords, empirically determined
+  const MIN_WIDTH = 70; // screen coords, empirically determined
+  const MAX_WIDTH = 180; // screen coords, empirically determined
+  const PIGGY_BANK_GREEN_FILL = new Color( 77, 177, 148 );
+  const PIGGY_BANK_RED_FILL = new Color( 235, 66, 44 );
+  const PIGGY_BANK_STROKE = new Color( 39, 16, 225 );
 
   class BankPointControllerNode extends PointControllerNode {
 
     /**
      * @param {PointController} pointController
-     * @param {Image[]} imageList - an array of images used to depict this node
      * @param {Object} [options]
      */
-    constructor( pointController, imageList, options ) {
+    constructor( pointController, options ) {
 
       assert && assert( !options || !options.node, 'options should not include a node for this constructor' );
 
@@ -39,13 +41,11 @@ define( require => {
         '\tc5.673-1.913,75.15-24.218,156.115,2.132c13.926,4.532,25.339,10.428,34.698,17.174c2.614-2.025,8.027-1.944,13.425,0.698\n' +
         '\tc2.977-1.024,7.253-0.278,13.332,4.709c0,0,6.274,6.274,2.091,12.133c-0.2,0.281-0.421,0.534-0.654,0.764\n' +
         '\tc1.419,4.26,0.534,7.22-1.983,9.94C476.816,371.247,473.151,405.6,471.262,415.361z', {
-          stroke: 'black',
-          lineWidth: 2
+          stroke: PIGGY_BANK_STROKE,
+          lineWidth: 5
         } );
 
       options = _.extend( {
-
-        // pass in the parent node that includes all images as the mode that will control the point
         node: piggyBankNode
       }, options );
 
@@ -65,7 +65,7 @@ define( require => {
         piggyBankNode.setScaleMagnitude( desiredWidth / unscaledWidth );
 
         // update the color of the point and the node's fill
-        const pointColor = currentBalance >= 0 ? Color.green : Color.red;
+        const pointColor = currentBalance >= 0 ? PIGGY_BANK_GREEN_FILL : PIGGY_BANK_RED_FILL;
         numberLinePoint.colorProperty.set( pointColor );
         piggyBankNode.fill = pointColor;
       } );
