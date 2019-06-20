@@ -14,12 +14,16 @@ define( require => {
   const RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   const Text = require( 'SCENERY/nodes/Text' );
   const VBox = require( 'SCENERY/nodes/VBox' );
-  const Vector2 = require( 'DOT/Vector2' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
 
   // constants
   const LABEL_FONT = new PhetFont( 40 );
   const MARGIN = 1;
+  const BUTTON_OPTIONS = {
+    minXMargin: MARGIN,
+    minYMargin: MARGIN,
+    fireOnHold: true
+  };
 
   class AccountBalanceControllerNode extends VBox {
 
@@ -31,24 +35,30 @@ define( require => {
      */
     constructor( balanceProperty, range, changeAmount, options ) {
 
+      // create the buttons
+      const upButton = new RoundPushButton( _.extend( {
+        content: new Text( '+', { font: LABEL_FONT } ),
+        listener: () => {
+          balanceProperty.set( Math.min( balanceProperty.value + changeAmount, range.max ) );
+        }
+      }, BUTTON_OPTIONS ) );
+      const downButton = new RoundPushButton( _.extend( {
+        content: new Text( MathSymbols.MINUS, { font: LABEL_FONT } ),
+        listener: () => {
+          balanceProperty.set( Math.max( balanceProperty.value - changeAmount, range.min ) );
+        }
+      }, BUTTON_OPTIONS ) );
+
+      // control the enabled states of the buttons
+      balanceProperty.link( balance => {
+        upButton.enabled = balance < range.max;
+        downButton.enabled = balance > range.min;
+      } );
+
       options = _.extend( {
         children: [
-          new RoundPushButton( {
-            content: new Text( '+', { font: LABEL_FONT } ),
-            minXMargin: MARGIN,
-            minYMargin: MARGIN,
-            listener: () => {
-              balanceProperty.set( Math.min( balanceProperty.value + changeAmount, range.max ) );
-            }
-          } ),
-          new RoundPushButton( {
-            content: new Text( MathSymbols.MINUS, { font: LABEL_FONT, center: Vector2.ZERO } ),
-            minXMargin: MARGIN,
-            minYMargin: MARGIN,
-            listener: () => {
-              balanceProperty.set( Math.max( balanceProperty.value - changeAmount, range.min ) );
-            }
-          } )
+          upButton,
+          downButton
         ],
         spacing: 15
       }, options );
