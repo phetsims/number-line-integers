@@ -26,6 +26,7 @@ define( require => {
   const MAX_WIDTH = 200; // screen coords, empirically determined
   const PIGGY_BANK_GREEN_FILL = new Color( 77, 177, 148 );
   const PIGGY_BANK_RED_FILL = new Color( 235, 66, 44 );
+  const OUTLINE_LINE_WIDTH = 4;
 
   // images
   const piggyBankWithFlowers = require( 'image!NUMBER_LINE_INTEGERS/piggy-bank-with-flowers.png' );
@@ -58,7 +59,7 @@ define( require => {
       // choose the overlay image source, which is artwork that must exactly match the shape of the outline
       const overlayImageSource = overlayType === 'flowers' ? piggyBankWithFlowers : piggyBankWithLightning;
       const overlayImageNode = new Image( overlayImageSource, { opacity: 0.4 } );
-      overlayImageNode.setScaleMagnitude( piggyBankOutlineNode.width / overlayImageNode.width );
+      overlayImageNode.setScaleMagnitude( ( piggyBankOutlineNode.width - OUTLINE_LINE_WIDTH * 2 ) / overlayImageNode.width );
       overlayImageNode.center = Vector2.ZERO;
       controllerNode.addChild( overlayImageNode );
 
@@ -74,7 +75,7 @@ define( require => {
         node: controllerNode
       }, options );
 
-      // update the node as its position changes
+      // update the node's appearance as its position changes
       const maxBalance = pointController.numberLine.displayedRangeProperty.value.max;
       const unscaledWidth = controllerNode.width;
       pointController.positionProperty.link( () => {
