@@ -9,6 +9,7 @@ define( function( require ) {
   // modules
   const ABSwitch = require( 'SUN/ABSwitch' );
   const AccordionBox = require( 'SUN/AccordionBox' );
+  const AccountBalanceControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/AccountBalanceControllerNode' );
   const BankPointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/BankPointControllerNode' );
   const Checkbox = require( 'SUN/Checkbox' );
   const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/generic/view/ComparisonStatementNode' );
@@ -37,6 +38,7 @@ define( function( require ) {
   const CHECK_BOX_FONT = new PhetFont( 16 );
   const COMPARISON_STATEMENT_BOX_WIDTH = 300; // empirically determined to look decent
   const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
+  const BALANCE_CHANGE_AMOUNT = 10; // in dollars
 
   // strings
   const absoluteValueString = require( 'string!NUMBER_LINE_INTEGERS/absoluteValue' );
@@ -369,6 +371,30 @@ define( function( require ) {
           comparisonAccountPointControllerNode.dispose();
         }
       } );
+
+      // add the controller for the primary account
+      this.addChild( new AccountBalanceControllerNode(
+        sceneModel.primaryAccountBalanceProperty,
+        sceneModel.numberLine.displayedRangeProperty.value,
+        BALANCE_CHANGE_AMOUNT,
+        {
+          centerX: ( this.numberLineNode.bounds.maxX + this.checkboxGroup.bounds.minX ) / 2,
+          top: this.numberLineNode.centerY + 70
+        }
+      ) );
+
+      // add the controller for the comparison account, and show it only when that account is enabled
+      const comparisonAccountBalanceControllerNode = new AccountBalanceControllerNode(
+        sceneModel.comparisonAccountBalanceProperty,
+        sceneModel.numberLine.displayedRangeProperty.value,
+        BALANCE_CHANGE_AMOUNT,
+        {
+          centerX: ( this.numberLineNode.bounds.maxX + this.checkboxGroup.bounds.minX ) / 2,
+          bottom: this.numberLineNode.centerY - 70
+        }
+      );
+      sceneModel.showComparisonAccountProperty.linkAttribute( comparisonAccountBalanceControllerNode, 'visible' );
+      this.addChild( comparisonAccountBalanceControllerNode );
     }
   }
 

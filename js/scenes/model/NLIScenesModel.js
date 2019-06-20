@@ -272,10 +272,22 @@ define( require => {
       } );
 
       // @public {NumberProperty} - balance of the bank account that is always depicted in the view
-      this.primaryAccountBalance = new NumberProperty( INITIAL_PRIMARY_ACCOUNT_BALANCE );
+      this.primaryAccountBalanceProperty = new NumberProperty( INITIAL_PRIMARY_ACCOUNT_BALANCE );
+
+      // hook the primary account balance up to the first number line point
+      this.primaryAccountBalanceProperty.link( balance => {
+        this.numberLine.residentPoints.get( 0 ).valueProperty.set( balance );
+      } );
 
       // @public {NumberProperty} - balance of the bank account that is shown when the user wants to compare two accounts
-      this.comparisonAccountBalance = new NumberProperty( INITIAL_COMPARISON_ACCOUNT_BALANCE );
+      this.comparisonAccountBalanceProperty = new NumberProperty( INITIAL_COMPARISON_ACCOUNT_BALANCE );
+
+      // hook the comparison account balance up to the second number line point
+      this.comparisonAccountBalanceProperty.link( balance => {
+        if ( this.numberLine.residentPoints.length > 1 ) {
+          this.numberLine.residentPoints.get( 1 ).valueProperty.set( balance );
+        }
+      } );
 
       // @public {BooleanProperty} - controls whether the comparison account should be visible to the user
       this.showComparisonAccountProperty = new BooleanProperty( false );
@@ -311,7 +323,7 @@ define( require => {
 
           // create the point and add it to the number line
           comparisonAccountNumberLinePoint = new NumberLinePoint(
-            this.comparisonAccountBalance.value,
+            this.comparisonAccountBalanceProperty.value,
             COMPARISON_ACCOUNT_POINT_COLOR,
             this.numberLine
           );
@@ -357,8 +369,8 @@ define( require => {
       // release the point that was being controlled
       this.primaryAccountPointController.clearNumberLinePoint();
       this.showComparisonAccountProperty.reset();
-      this.primaryAccountBalance.reset();
-      this.comparisonAccountBalance.reset();
+      this.primaryAccountBalanceProperty.reset();
+      this.comparisonAccountBalanceProperty.reset();
       super.reset();
 
       // the reset will add back the initial point, so associate the permanent point controller with it
