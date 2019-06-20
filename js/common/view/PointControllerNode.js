@@ -81,20 +81,22 @@ define( require => {
       };
       pointController.inProgressAnimationProperty.link( inProgressAnimationChangedHandler );
 
-      // drag handler
-      this.addInputListener( new DragListener( {
-        dragBoundsProperty: new Property( this.layoutBounds ),
-        start: event => {
-          pointController.isDraggingProperty.set( true );
-          pointController.proposePosition( this.globalToParentPoint( event.pointer.point ) );
-        },
-        drag: event => {
-          pointController.proposePosition( this.globalToParentPoint( event.pointer.point ) );
-        },
-        end: () => {
-          pointController.isDraggingProperty.set( false );
-        }
-      } ) );
+      // drag handler if intended to be dragged
+      if ( options.pickable !== false ) {
+        this.addInputListener( new DragListener( {
+          dragBoundsProperty: new Property( this.layoutBounds ),
+          start: event => {
+            pointController.isDraggingProperty.set( true );
+            pointController.proposePosition( this.globalToParentPoint( event.pointer.point ) );
+          },
+          drag: event => {
+            pointController.proposePosition( this.globalToParentPoint( event.pointer.point ) );
+          },
+          end: () => {
+            pointController.isDraggingProperty.set( false );
+          }
+        } ) );
+      }
 
       this.disposePointControllerNode = () => {
         pointController.positionProperty.unlink( handlePointControllerPositionChange );

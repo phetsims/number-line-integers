@@ -38,7 +38,7 @@ define( function( require ) {
   const CHECK_BOX_FONT = new PhetFont( 16 );
   const COMPARISON_STATEMENT_BOX_WIDTH = 300; // empirically determined to look decent
   const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
-  const BALANCE_CHANGE_AMOUNT = 10; // in dollars
+  const BALANCE_CHANGE_AMOUNT = 1; // in dollars (or whatever currency units are being used)
 
   // strings
   const absoluteValueString = require( 'string!NUMBER_LINE_INTEGERS/absoluteValue' );
@@ -354,7 +354,11 @@ define( function( require ) {
       } ) );
 
       // add node to represent the point controller that is always visible
-      const permanentPointControllerNode = new BankPointControllerNode( sceneModel.primaryAccountPointController, 'flowers' );
+      const permanentPointControllerNode = new BankPointControllerNode(
+        sceneModel.primaryAccountPointController,
+        'flowers',
+        { pickable: false }
+      );
       this.addChild( permanentPointControllerNode );
       permanentPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
 
@@ -362,7 +366,9 @@ define( function( require ) {
       let comparisonAccountPointControllerNode = null;
       sceneModel.comparisonAccountPointControllerProperty.lazyLink( pointController => {
         if ( pointController ) {
-          comparisonAccountPointControllerNode = new BankPointControllerNode( pointController, 'lightning' );
+          comparisonAccountPointControllerNode = new BankPointControllerNode( pointController, 'lightning', {
+            pickable: false
+          } );
           this.addChild( comparisonAccountPointControllerNode );
           comparisonAccountPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
         }

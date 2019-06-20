@@ -22,7 +22,9 @@ define( require => {
   const BUTTON_OPTIONS = {
     minXMargin: MARGIN,
     minYMargin: MARGIN,
-    fireOnHold: true
+    fireOnHold: true,
+    fireOnHoldDelay: 400,
+    fireOnHoldInterval: 30
   };
 
   class AccountBalanceControllerNode extends VBox {
