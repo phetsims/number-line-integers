@@ -297,7 +297,7 @@ define( require => {
         color: this.numberLine.residentPoints.get( 0 ).colorProperty.value,
         lockToNumberLine: 'always',
         numberLinePoint: this.numberLine.residentPoints.get( 0 ),
-        offsetFromHorizontalNumberLine: 140
+        offsetFromHorizontalNumberLine: 120
       } );
 
       // the number line point that represents the comparison account value, only exists when enabled
@@ -322,6 +322,7 @@ define( require => {
           );
 
           // create the point and add it to the number line
+          console.log( 'this.comparisonAccountBalanceProperty.value = ' + this.comparisonAccountBalanceProperty.value );
           comparisonAccountNumberLinePoint = new NumberLinePoint(
             this.comparisonAccountBalanceProperty.value,
             COMPARISON_ACCOUNT_POINT_COLOR,
@@ -333,7 +334,7 @@ define( require => {
           this.comparisonAccountPointControllerProperty.set( new PointController( this.numberLine, {
             lockToNumberLine: 'always',
             numberLinePoint: comparisonAccountNumberLinePoint,
-            offsetFromHorizontalNumberLine: -140
+            offsetFromHorizontalNumberLine: -120
           } ) );
         }
         else {
