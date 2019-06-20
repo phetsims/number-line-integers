@@ -17,6 +17,8 @@ define( require => {
   const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
+  const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
   const ObservableArray = require( 'AXON/ObservableArray' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
@@ -24,6 +26,9 @@ define( require => {
 
   // constants
   const SCENE_BOUNDS = NLIConstants.NLI_LAYOUT_BOUNDS; // bounds for the scenes match the layout bounds
+  const COMPARISON_ACCOUNT_POINT_COLOR = Color.orange;
+  const INITIAL_PRIMARY_ACCOUNT_BALANCE = 10;
+  const INITIAL_COMPARISON_ACCOUNT_BALANCE = 40;
 
   /**
    * @constructor
@@ -228,6 +233,10 @@ define( require => {
       pointController.goToPosition( destination, animate );
     }
 
+    /**
+     * restore initial state
+     * @public
+     */
     reset() {
 
       super.reset();
@@ -258,42 +267,102 @@ define( require => {
           initialDisplayedRange: new Range( -100, 100 ),
           labelsInitiallyVisible: true,
           widthInModelSpace: SCENE_BOUNDS.width * 0.4,
-          initialPointSpecs: [ { initialValue: 10, color: new Color( 39, 16, 225 ) }, {
-            initialValue: 50,
-            color: Color.orange
-          } ]
+          initialPointSpecs: [ { initialValue: INITIAL_PRIMARY_ACCOUNT_BALANCE, color: new Color( 39, 16, 225 ) } ]
         }
       } );
 
-      // add the point controller that is always visible
-      this.permanentPointController = new PointController( this.numberLine, {
+      // @public {NumberProperty} - balance of the bank account that is always depicted in the view
+      this.primaryAccountBalance = new NumberProperty( INITIAL_PRIMARY_ACCOUNT_BALANCE );
+
+      // @public {NumberProperty} - balance of the bank account that is shown when the user wants to compare two accounts
+      this.comparisonAccountBalance = new NumberProperty( INITIAL_COMPARISON_ACCOUNT_BALANCE );
+
+      // @public {BooleanProperty} - controls whether the comparison account should be visible to the user
+      this.showComparisonAccountProperty = new BooleanProperty( false );
+
+      // @public {PointController} - the point controller for the primary account
+      this.primaryAccountPointController = new PointController( this.numberLine, {
         color: this.numberLine.residentPoints.get( 0 ).colorProperty.value,
         lockToNumberLine: 'always',
         numberLinePoint: this.numberLine.residentPoints.get( 0 ),
-        offsetFromHorizontalNumberLine: 100
+        offsetFromHorizontalNumberLine: 140
       } );
 
-      // add the point controller that comes and goes (TODO: Currently permanent, must be changed)
-      this.nonPermanentPointController = new PointController( this.numberLine, {
-        color: this.numberLine.residentPoints.get( 1 ).colorProperty.value,
-        lockToNumberLine: 'always',
-        numberLinePoint: this.numberLine.residentPoints.get( 1 ),
-        offsetFromHorizontalNumberLine: -100
-      } );
+      // the number line point that represents the comparison account value, only exists when enabled
+      let comparisonAccountNumberLinePoint = null;
 
+      // @public {Property.<PointController|null>} - the point controller for the comparison account, only exists when
+      // enabled, and is thus wrapped in a property so that the view can see it come and go
+      this.comparisonAccountPointControllerProperty = new Property( null );
+
+      // add/remove the point and point controller for the comparison account when enabled
+      this.showComparisonAccountProperty.lazyLink( showComparisonAccount => {
+        if ( showComparisonAccount ) {
+
+          // state checking
+          assert && assert(
+            comparisonAccountNumberLinePoint === null,
+            'shouldn\'t have number line point for comparison account yet'
+          );
+          assert && assert(
+            this.comparisonAccountPointControllerProperty.value === null,
+            'shouldn\'t have number point controller for comparison account yet'
+          );
+
+          // create the point and add it to the number line
+          comparisonAccountNumberLinePoint = new NumberLinePoint(
+            this.comparisonAccountBalance.value,
+            COMPARISON_ACCOUNT_POINT_COLOR,
+            this.numberLine
+          );
+          this.numberLine.addPoint( comparisonAccountNumberLinePoint );
+
+          // create the controller fo this point
+          this.comparisonAccountPointControllerProperty.set( new PointController( this.numberLine, {
+            lockToNumberLine: 'always',
+            numberLinePoint: comparisonAccountNumberLinePoint,
+            offsetFromHorizontalNumberLine: -140
+          } ) );
+        }
+        else {
+
+          // state checking
+          assert && assert(
+            comparisonAccountNumberLinePoint !== null,
+            'should have number line point for comparison account'
+          );
+          assert && assert(
+            this.comparisonAccountPointControllerProperty.value !== null,
+            'should have point controller for comparison account'
+          );
+
+          // remove the point controller from the model
+          this.comparisonAccountPointControllerProperty.value.clearNumberLinePoint();
+          this.comparisonAccountPointControllerProperty.value.dispose();
+          this.comparisonAccountPointControllerProperty.reset();
+
+          // remove the point from the number line
+          this.numberLine.removePoint( comparisonAccountNumberLinePoint );
+          comparisonAccountNumberLinePoint = null;
+        }
+      } );
     }
 
+    /**
+     * restore initial state
+     * @public
+     */
     reset() {
 
       // release the point that was being controlled
-      this.permanentPointController.clearNumberLinePoint();
-      this.nonPermanentPointController.clearNumberLinePoint();
-
+      this.primaryAccountPointController.clearNumberLinePoint();
+      this.showComparisonAccountProperty.reset();
+      this.primaryAccountBalance.reset();
+      this.comparisonAccountBalance.reset();
       super.reset();
 
       // the reset will add back the initial point, so associate the permanent point controller with it
-      this.permanentPointController.associateWithNumberLinePoint( this.numberLine.residentPoints.get( 0 ) );
-      this.nonPermanentPointController.associateWithNumberLinePoint( this.numberLine.residentPoints.get( 1 ) );
+      this.primaryAccountPointController.associateWithNumberLinePoint( this.numberLine.residentPoints.get( 0 ) );
     }
   }
 

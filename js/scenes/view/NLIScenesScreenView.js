@@ -7,16 +7,21 @@ define( function( require ) {
   'use strict';
 
   // modules
+  const ABSwitch = require( 'SUN/ABSwitch' );
   const AccordionBox = require( 'SUN/AccordionBox' );
   const BankPointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/BankPointControllerNode' );
   const Checkbox = require( 'SUN/Checkbox' );
   const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/generic/view/ComparisonStatementNode' );
+  const Dimension2 = require( 'DOT/Dimension2' );
   const ElevationPointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/ElevationPointControllerNode' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
   const Image = require( 'SCENERY/nodes/Image' );
   const NLIScene = require( 'NUMBER_LINE_INTEGERS/scenes/model/NLIScene' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
+  const Path = require( 'SCENERY/nodes/Path' );
+  const piggyBankShapes = require( 'NUMBER_LINE_INTEGERS/scenes/view/piggyBankShapes' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   const RandomIconFactory = require( 'NUMBER_LINE_INTEGERS/common/view/RandomIconFactory' );
@@ -143,8 +148,8 @@ define( function( require ) {
       // @protected (read-only) {Bounds2}
       this.layoutBounds = layoutBounds;
 
-      // add the checkboxes that control common model properties
-      this.addChild( new VBox( {
+      // @protected {VBox} - node containing the checkboxes that control common model properties
+      this.checkboxGroup = new VBox( {
         children: [
           new Checkbox(
             new Text( absoluteValueString, { font: CHECK_BOX_FONT } ),
@@ -159,7 +164,8 @@ define( function( require ) {
         align: 'left',
         left: layoutBounds.maxX - 175,
         top: layoutBounds.minY + 10
-      } ) );
+      } );
+      this.addChild( this.checkboxGroup );
 
       // add the comparison statement
       const comparisonStatementNode = new ComparisonStatementNode( sceneModel.numberLine );
@@ -339,15 +345,76 @@ define( function( require ) {
         centerY: sceneModel.numberLine.centerPosition.y
       } ) );
 
+      // add the switch that controls whether one or two accounts are shown
+      this.addChild( new AccountVisibilityControlSwitch( sceneModel.showComparisonAccountProperty, {
+        right: this.layoutBounds.maxX - INSET,
+        centerY: this.numberLineNode.centerY
+      } ) );
+
       // add node to represent the point controller that is always visible
-      const permanentPointControllerNode = new BankPointControllerNode( sceneModel.permanentPointController, 'flowers' );
+      const permanentPointControllerNode = new BankPointControllerNode( sceneModel.primaryAccountPointController, 'flowers' );
       this.addChild( permanentPointControllerNode );
       permanentPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
 
-      // add node to represent the point controller that is NOT always visible (TODO: support hiding)
-      const nonPermanentPointControllerNode = new BankPointControllerNode( sceneModel.nonPermanentPointController, 'lightning' );
-      this.addChild( nonPermanentPointControllerNode );
-      nonPermanentPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
+      // add and remove a node for the comparison account point controller as it comes and goes
+      let comparisonAccountPointControllerNode = null;
+      sceneModel.comparisonAccountPointControllerProperty.lazyLink( pointController => {
+        if ( pointController ) {
+          comparisonAccountPointControllerNode = new BankPointControllerNode( pointController, 'lightning' );
+          this.addChild( comparisonAccountPointControllerNode );
+          comparisonAccountPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
+        }
+        else {
+          this.removeChild( comparisonAccountPointControllerNode );
+          comparisonAccountPointControllerNode.dispose();
+        }
+      } );
+    }
+  }
+
+  /**
+   * switch for controlling whether one or two account balances are shown
+   * @private
+   */
+  class AccountVisibilityControlSwitch extends ABSwitch {
+
+    constructor( property, options ) {
+
+      options = _.extend( {
+        switchSize: new Dimension2( 50, 15 )
+      }, options );
+
+      const lineWidth = 2;
+
+      super(
+        property,
+        false,
+        new Path( piggyBankShapes.SMALL_PIGGY_BANK_SHAPE, {
+          maxWidth: 30,
+          fill: 'white',
+          stroke: 'blue',
+          lineWidth: lineWidth
+        } ),
+        true,
+        new HBox( {
+          children: [
+            new Path( piggyBankShapes.SMALL_PIGGY_BANK_SHAPE, {
+              maxWidth: 20,
+              fill: 'white',
+              stroke: 'blue',
+              lineWidth: lineWidth
+            } ),
+            new Path( piggyBankShapes.SMALL_PIGGY_BANK_SHAPE, {
+              maxWidth: 30,
+              fill: 'white',
+              stroke: 'orange',
+              lineWidth: lineWidth
+            } )
+          ],
+          spacing: 10
+        } ),
+        options
+      );
     }
   }
 
