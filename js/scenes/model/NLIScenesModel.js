@@ -322,7 +322,6 @@ define( require => {
           );
 
           // create the point and add it to the number line
-          console.log( 'this.comparisonAccountBalanceProperty.value = ' + this.comparisonAccountBalanceProperty.value );
           comparisonAccountNumberLinePoint = new NumberLinePoint(
             this.comparisonAccountBalanceProperty.value,
             COMPARISON_ACCOUNT_POINT_COLOR,
