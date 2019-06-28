@@ -14,7 +14,7 @@ define( function( require ) {
   const Checkbox = require( 'SUN/Checkbox' );
   const ComboBox = require( 'SUN/ComboBox' );
   const ComboBoxItem = require( 'SUN/ComboBoxItem' );
-  const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/generic/view/ComparisonStatementNode' );
+  const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementNode' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );

@@ -12,7 +12,7 @@ define( function( require ) {
   const AccountBalanceControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/AccountBalanceControllerNode' );
   const BankPointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/BankPointControllerNode' );
   const Checkbox = require( 'SUN/Checkbox' );
-  const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/generic/view/ComparisonStatementNode' );
+  const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementNode' );
   const Dimension2 = require( 'DOT/Dimension2' );
   const ElevationPointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/ElevationPointControllerNode' );
   const HBox = require( 'SCENERY/nodes/HBox' );
