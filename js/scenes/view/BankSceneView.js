@@ -53,8 +53,7 @@ define( function( require ) {
       // add node to represent the point controller that is always visible
       const permanentPointControllerNode = new BankPointControllerNode(
         sceneModel.primaryAccountPointController,
-        'flowers',
-        { pickable: false }
+        'flowers'
       );
       this.addChild( permanentPointControllerNode );
       permanentPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
@@ -63,9 +62,7 @@ define( function( require ) {
       let comparisonAccountPointControllerNode = null;
       sceneModel.comparisonAccountPointControllerProperty.lazyLink( pointController => {
         if ( pointController ) {
-          comparisonAccountPointControllerNode = new BankPointControllerNode( pointController, 'lightning', {
-            pickable: false
-          } );
+          comparisonAccountPointControllerNode = new BankPointControllerNode( pointController, 'lightning' );
           this.addChild( comparisonAccountPointControllerNode );
           comparisonAccountPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
         }
