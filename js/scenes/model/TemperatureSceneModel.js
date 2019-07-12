@@ -9,11 +9,13 @@ define( require => {
   'use strict';
 
   // modules
+  const Color = require( 'SCENERY/util/Color' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const Range = require( 'DOT/Range' );
   const SceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/SceneModel' );
+  const temperatureDataSet = require( 'NUMBER_LINE_INTEGERS/scenes/model/temperatureDataSet' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
@@ -36,6 +38,23 @@ define( require => {
           heightInModelSpace: SCENE_BOUNDS.height * 0.75
         }
       } );
+
+      phet.jb = {};
+      phet.jb.temperatureDataSet = temperatureDataSet;
+    }
+
+    /**
+     * get the temperature and color at the specified model location
+     * @param {Vector2} location
+     * @returns {{color, temperature: number}}
+     */
+    getTemperatureAndColorAtLocation( location ) {
+
+      // TODO: This is stubbed, needs to be filled out
+      return {
+        temperature: 250,
+        color: Color.GREEN
+      };
     }
   }
 

@@ -14,7 +14,7 @@ define( function( require ) {
   const SceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/SceneView' );
 
   // images
-  const temperatureMap = require( 'image!NUMBER_LINE_INTEGERS/temporary-temperature-map.gif' );
+  const temperatureMap = require( 'image!NUMBER_LINE_INTEGERS/temperature-map.png' );
 
   class TemperatureSceneView extends SceneView {
     constructor( sceneModel, layoutBounds ) {
@@ -22,7 +22,7 @@ define( function( require ) {
       super( sceneModel, layoutBounds );
 
       // TODO: temporary version of the map image
-      const temperatureMapImage = new Image( temperatureMap );
+      const temperatureMapImage = new Image( temperatureMap, { scale: 0.7 } );
       temperatureMapImage.center = layoutBounds.center;
       this.addChild( temperatureMapImage );
     }
