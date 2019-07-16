@@ -22,8 +22,12 @@ define( function( require ) {
       super( sceneModel, layoutBounds );
 
       // TODO: temporary version of the map image
-      const temperatureMapImage = new Image( temperatureMap, { scale: 0.7 } );
-      temperatureMapImage.center = layoutBounds.center;
+      const temperatureMapImage = new Image( temperatureMap );
+      temperatureMapImage.scale(
+        sceneModel.mapBounds.width / temperatureMapImage.width,
+        sceneModel.mapBounds.height / temperatureMapImage.height
+      );
+      temperatureMapImage.center = sceneModel.mapBounds.center;
       this.addChild( temperatureMapImage );
     }
   }

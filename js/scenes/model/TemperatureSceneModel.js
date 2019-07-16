@@ -9,6 +9,7 @@ define( require => {
   'use strict';
 
   // modules
+  const Bounds2 = require( 'DOT/Bounds2' );
   const Color = require( 'SCENERY/util/Color' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -25,22 +26,36 @@ define( require => {
 
     constructor() {
 
-      // Position the number line vertically on the left side of the screen.  The zero point is well below the vertical
-      // center and tne number line is not symmetric around zero.  The details of these values were empirically
-      // determined by comparing with the mockups in the design doc.
-      const numberLineZeroPosition = new Vector2( SCENE_BOUNDS.width * 0.1, SCENE_BOUNDS.height * 0.75 );
+      // The zero point is well below the vertical center and tne number line is not symmetric around zero.
+      // The details of these values were empirically determined by comparing with the design doc and the elevation scene.
+      const zeroPositionHeight = SCENE_BOUNDS.height * 0.75;
+      const numberLineRange = new Range( -20, 100 );
+
+      const mapWidth = 650;
+      const mapHeight = 300;
+      const mapCenter = new Vector2(
+        SCENE_BOUNDS.centerX,
+        zeroPositionHeight - numberLineRange.getCenter() * mapHeight / numberLineRange.getLength()
+      );
+      const mapBounds = new Bounds2(
+        mapCenter.x - mapWidth / 2,
+        mapCenter.y - mapHeight / 2,
+        mapCenter.x + mapWidth / 2,
+        mapCenter.y + mapHeight / 2
+      );
 
       super( {
-        numberLineZeroPosition: numberLineZeroPosition,
+        numberLineZeroPosition: new Vector2( mapBounds.minX / 2, zeroPositionHeight ),
         numberLineOptions: {
           initialOrientation: NumberLineOrientation.VERTICAL,
-          initialDisplayedRange: new Range( -20, 100 ),
-          heightInModelSpace: SCENE_BOUNDS.height * 0.75
+          initialDisplayedRange: numberLineRange,
+          heightInModelSpace: mapHeight
         }
       } );
 
-      phet.jb = {};
-      phet.jb.temperatureDataSet = temperatureDataSet;
+      // @public (read-only) {Bounds2} - bounds of the map area
+      this.mapBounds = mapBounds;
+
     }
 
     /**
@@ -52,7 +67,7 @@ define( require => {
 
       // TODO: This is stubbed, needs to be filled out
       return {
-        temperature: 250,
+        temperature: temperatureDataSet.getTemperatureAtLatLong( 0, 0 ),
         color: Color.GREEN
       };
     }
