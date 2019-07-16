@@ -61,9 +61,15 @@ define( require => {
     /**
      * get the temperature and color at the specified model location
      * @param {Vector2} location
-     * @returns {{color, temperature: number}}
+     * @returns {{color, temperature: number}|null} returns data unless location is invalid, in which case null is returned
      */
     getTemperatureAndColorAtLocation( location ) {
+
+      // returns null if location is not in map bounds
+      // TODO: this bounds check is naive because the actual bounds of the map aren't a rectangle
+      if ( !this.mapBounds.containsPoint( location ) ) {
+        return null;
+      }
 
       // TODO: This is stubbed, needs to be filled out
       return {
