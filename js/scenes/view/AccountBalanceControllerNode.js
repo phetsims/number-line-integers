@@ -9,12 +9,13 @@ define( require => {
   'use strict';
 
   // modules
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   const Text = require( 'SCENERY/nodes/Text' );
+  const Util = require( 'DOT/Util' );
   const VBox = require( 'SCENERY/nodes/VBox' );
-  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
 
   // constants
   const LABEL_FONT = new PhetFont( 40 );
@@ -37,18 +38,18 @@ define( require => {
      */
     constructor( balanceProperty, range, changeAmount, options ) {
 
+      const changeBalanceBy = balanceChangeAmount => {
+        balanceProperty.value = Util.clamp( balanceProperty.value + balanceChangeAmount, range.min, range.max );
+      };
+
       // create the buttons
       const upButton = new RoundPushButton( _.extend( {
-        content: new Text( '+', { font: LABEL_FONT } ),
-        listener: () => {
-          balanceProperty.set( Math.min( balanceProperty.value + changeAmount, range.max ) );
-        }
+        content: new Text( MathSymbols.PLUS, { font: LABEL_FONT } ),
+        listener: () => { changeBalanceBy( changeAmount ); }
       }, BUTTON_OPTIONS ) );
       const downButton = new RoundPushButton( _.extend( {
         content: new Text( MathSymbols.MINUS, { font: LABEL_FONT } ),
-        listener: () => {
-          balanceProperty.set( Math.max( balanceProperty.value - changeAmount, range.min ) );
-        }
+        listener: () => { changeBalanceBy( -changeAmount ); }
       }, BUTTON_OPTIONS ) );
 
       // control the enabled states of the buttons
