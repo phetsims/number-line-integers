@@ -107,13 +107,14 @@ define( require => {
 
         // listener to make sure point lands in a good point when released
         const pointDragListener = dragging => {
-          if ( !dragging ) {
-            if ( this.getPointsAt( addedPoint.valueProperty.value ).length > 1 ) {
 
-              // there is already a point at this location, so we have to choose another
-              addedPoint.valueProperty.set( this.getNearestUnoccupiedValue( addedPoint.mostRecentlyProposedValue ) );
-            }
+          // do nothing if dragging or we are the only point here/there are no points here
+          if ( dragging || this.getPointsAt( addedPoint.valueProperty.value ).length <= 1 ) {
+            return;
           }
+
+          // there is already a point at this location, so we have to choose another
+          addedPoint.valueProperty.value = this.getNearestUnoccupiedValue( addedPoint.mostRecentlyProposedValue );
         };
         addedPoint.isDraggingProperty.link( pointDragListener );
 
@@ -326,6 +327,7 @@ define( require => {
 
     /**
      * get the closest valid value that isn't already occupied by a point
+     * TODO: this doesn't work quite as expected; rework to loop through distances and check for in range for #8
      * @param {number} value
      */
     getNearestUnoccupiedValue( value ) {
