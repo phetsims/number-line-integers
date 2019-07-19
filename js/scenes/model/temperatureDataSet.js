@@ -2,8 +2,10 @@
 
 /**
  * data set that contains temperature data at 2m above the surface of the earth mapped to lat and lon values
+ * along with the data necessary to map lat and lon values to a robinson projection world map: https://vdocuments.site/a-computational-approach-to-the-robinson-projection.html
  *
  * @author John Blanco
+ * @author Arnab Purkayastha
  */
 define( require => {
   'use strict';
@@ -11,7 +13,50 @@ define( require => {
   // modules
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
 
-  const temperatureDataSet = {
+  class temperatureDataSet {
+
+    constructor( width, height ) {
+      this.x0 = width / 2;
+      this.y0 = height / 2;
+
+      const sphereCircumferance = width * 0.8487;
+      this.sphereRadius = sphereCircumferance / ( 2 * Math.PI );
+      const expectedHeight = width * 0.5072;
+      this.yScale = expectedHeight / height;
+    }
+
+    /**
+     * get latitude and longitude at a given x, y coordinate on robinson projection map
+     * @param {number} x
+     * @param {number} y
+     * @returns {number, number} latitude, longitude
+     */
+    getLatLongAtPoint( x, y ) {
+      const relativeX = Math.abs( x - this.x0 );
+      const relativeY = Math.abs( this.yScale * y - this.y0 );
+
+      const thisBStar = relativeY / this.sphereRadius;
+      let AStarSum = 0;
+      for ( let i = 0; i <= 18; i++ ) {
+        AStarSum += mValues[ i ] * Math.abs( BStarValues[ i ] - thisBStar );
+      }
+      const thisAStar = AStarSum * this.sphereRadius;
+
+      const long = relativeX / ( this.sphereRadius * thisAStar );
+
+      let lat = 0;
+      for ( let i = 0; i <= 18; i++ ) {
+        lat += nValues[ i ] * Math.sqrt(
+          Math.pow( AStarValues[ i ] - thisAStar, 2 ) +
+          Math.pow( BStarValues[ i ] - thisBStar, 2 )
+        );
+      }
+
+      return {
+        latitude: lat,
+        longitude: long
+      };
+    }
 
     /**
      * get the near-surface temperature at the given latitude and longitude for the contained data set
@@ -19,7 +64,7 @@ define( require => {
      * @param {number} longitude
      * @returns {number} - temperature at specified location in Kelvin
      */
-    getTemperatureAtLatLong: ( latitude, longitude ) => {
+    getTemperatureAtLatLong( latitude, longitude ) {
       let latitudeIndex = 0;
       while ( latitude > latitudeValues[ latitudeIndex ] ) {
         latitudeIndex++;
@@ -39,7 +84,7 @@ define( require => {
       // console.log( 'airTemperatureNearSurfaceValues[ latitudeIndex * gridWidth + longitudeIndex ] = ' + airTemperatureNearSurfaceValues[ latitudeIndex * gridWidth + longitudeIndex ] );
       return airTemperatureNearSurfaceValues[ latitudeIndex * gridWidth + longitudeIndex ];
     }
-  };
+  }
 
 
   const longitudeValues = [
@@ -114,6 +159,46 @@ define( require => {
     70, 71, 72, 73, 74, 75, 76, 77,
     78, 79, 80, 81, 82, 83, 84, 85,
     86, 87, 88, 89, 90
+  ];
+
+  const AStarValues = [
+    0.84870000, 0.84751182, 0.84479598,
+    0.84021300, 0.83359314, 0.82578510,
+    0.81475200, 0.80006949, 0.78216192,
+    0.76060494, 0.73658673, 0.70866450,
+    0.67777182, 0.64475739, 0.60987582,
+    0.57134484, 0.52729731, 0.48562614,
+    0.45167814
+  ];
+
+  const BStarValues = [
+    0.00000000, 0.08384260, 0.16768520,
+    0.25152780, 0.33537040, 0.41921300,
+    0.50305560, 0.58689820, 0.67047034,
+    0.75336633, 0.83518048, 0.91537187,
+    0.99339958, 1.06872269, 1.14066505,
+    1.20841528, 1.27035062, 1.31998003,
+    1.35230000
+  ];
+
+  const mValues = [
+    0.4737166113, -0.00911028522, -0.01113479305,
+    -0.01214704697, -0.00708577740, -0.01923282436,
+    -0.02176345915, -0.01957843209, -0.02288586729,
+    -0.01676092031, -0.02731224791, -0.02386224240,
+    -0.02119239013, -0.02327513775, -0.04193330922,
+    -0.07123235442, -0.06423048161, -0.10536278437,
+    1.00598851957
+  ];
+
+  const nValues = [
+    1.07729625255, -0.00012324928, -0.00032923415,
+    -0.00056627609, -0.00045168290, -0.00141388769,
+    -0.00211521349, -0.00083658786, 0.00073523299,
+    0.00349045186, 0.00502041018, 0.00860101415,
+    0.01281238969, 0.01794606372, 0.02090220870,
+    0.02831504310, 0.11177176318, 0.28108668066,
+    -0.45126573496
   ];
 
   const airTemperatureNearSurfaceValues = [ 248, 248, 248, 248, 248, 248, 248, 248,
