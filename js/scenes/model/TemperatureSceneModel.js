@@ -28,7 +28,7 @@ define( require => {
 
       // The zero point is well below the vertical center and tne number line is not symmetric around zero.
       // The details of these values were empirically determined by comparing with the design doc and the elevation scene.
-      const zeroPositionHeight = SCENE_BOUNDS.height * 0.75;
+      const zeroPositionHeight = SCENE_BOUNDS.height * 0.6;
       const numberLineRange = new Range( -20, 100 );
 
       const mapWidth = 650;

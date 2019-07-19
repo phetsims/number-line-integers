@@ -3,7 +3,7 @@
 /**
  * an object that, once instantiated (and thus seeded), can be used to generate random icons for use in PhET simulations
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
