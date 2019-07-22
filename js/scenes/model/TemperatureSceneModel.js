@@ -23,6 +23,7 @@ define( require => {
 
   // constants
   const SCENE_BOUNDS = NLIConstants.NLI_LAYOUT_BOUNDS; // bounds for the scenes match the layout bounds
+  const TEMPERATURE_DATA_SET = new temperatureDataSet();
 
   class TemperatureSceneModel extends SceneModel {
 
@@ -78,8 +79,20 @@ define( require => {
         lockToNumberLine: 'never'
       } ) );
 
+      // put the permanent point controllers in their starting positions
       this.permanentPointControllers.forEach( pointController => {
         this.putPointControllerInBox( pointController );
+      } );
+
+      // if the point controllers are released outside of the elevation areas, send them home.
+      this.permanentPointControllers.forEach( pointController => {
+        pointController.isDraggingProperty.lazyLink( isDragging => {
+          if ( !isDragging &&
+               this.getTemperatureAndColorAtLocation( pointController.positionProperty.value ) === null &&
+               !pointController.numberLinePoint ) {
+            this.putPointControllerInBox( pointController, true );
+          }
+        } );
       } );
 
     }
@@ -97,9 +110,9 @@ define( require => {
         return null;
       }
 
-      const mapLocation = temperatureDataSet.getLatLongAtPoint( location.x, location.y );
+      const mapLocation = TEMPERATURE_DATA_SET.getLatLongAtPoint( location.x, location.y );
       return {
-        temperature: temperatureDataSet.getTemperatureAtLatLong( mapLocation.latitude, mapLocation.longitude ),
+        temperature: TEMPERATURE_DATA_SET.getTemperatureAtLatLong( mapLocation.latitude, mapLocation.longitude ),
         color: Color.GREEN // TODO: base color off of temperature in a way that matches the map
       };
     }
