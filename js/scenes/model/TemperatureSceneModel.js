@@ -31,7 +31,7 @@ define( require => {
       const mapHeight = 300;
       const mapCenter = new Vector2(
         SCENE_BOUNDS.centerX,
-        SCENE_BOUNDS.centerY
+        SCENE_BOUNDS.centerY * 0.85
       );
       const mapBounds = new Bounds2(
         mapCenter.x - mapWidth / 2,
@@ -87,10 +87,10 @@ define( require => {
         return null;
       }
 
-      // TODO: This is stubbed, needs to be filled out
+      const mapLocation = temperatureDataSet.getLatLongAtPoint( location.x, location.y );
       return {
-        temperature: temperatureDataSet.getTemperatureAtLatLong( 0, 0 ),
-        color: Color.GREEN
+        temperature: temperatureDataSet.getTemperatureAtLatLong( mapLocation.latitude, mapLocation.longitude ),
+        color: Color.GREEN // TODO: base color off of temperature in a way that matches the map
       };
     }
   }
