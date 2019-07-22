@@ -1,7 +1,7 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * Model of a number line.  This is (perhaps rather obviously) a very central class for the Number Line suite of
+ * Model of a number line. This is (perhaps rather obviously) a very central class for the Number Line suite of
  * simulations.
  *
  * @author John Blanco (PhET Interactive Simulations)
@@ -327,35 +327,21 @@ define( require => {
 
     /**
      * get the closest valid value that isn't already occupied by a point
-     * TODO: this doesn't work quite as expected; rework to loop through distances and check for in range for #8
      * @param {number} value
      */
     getNearestUnoccupiedValue( value ) {
       const roundedValue = Util.roundSymmetric( value );
-      let nearestUnoccupiedValue = roundedValue;
-      if ( this.hasPointAt( roundedValue ) ) {
-        let nearestLargerValue = null;
-        for ( let i = roundedValue + 1; i <= this.displayedRangeProperty.value.max; i++ ) {
-          if ( !this.hasPointAt( i ) ) {
-            nearestLargerValue = i;
-            break;
-          }
-        }
-        let nearestSmallerValue = null;
-        for ( let i = roundedValue - 1; i >= this.displayedRangeProperty.value.min; i-- ) {
-          if ( !this.hasPointAt( i ) ) {
-            nearestSmallerValue = i;
-            break;
-          }
-        }
-        if ( Math.abs( value - nearestLargerValue ) < Math.abs( value - nearestSmallerValue ) ) {
-          nearestUnoccupiedValue = nearestLargerValue;
-        }
-        else {
-          nearestUnoccupiedValue = nearestSmallerValue;
-        }
+      let currentDistance = 0;
+      const getValidPointsAtDistance = distance => {
+        return [ roundedValue - distance, roundedValue + distance ]
+          .filter( newValue => !this.hasPointAt( newValue ) && this.displayedRangeProperty.value.contains( newValue ) );
+      };
+      let validPoints = getValidPointsAtDistance( currentDistance );
+      while ( validPoints.length === 0 ) {
+        currentDistance++;
+        validPoints = getValidPointsAtDistance( currentDistance );
       }
-      return nearestUnoccupiedValue;
+      return _.sortBy( validPoints, [ validPoint => Math.abs( validPoint - value ) ] )[ 0 ];
     }
 
     /**
