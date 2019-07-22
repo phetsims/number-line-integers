@@ -11,6 +11,7 @@ define( require => {
   // modules
   const Image = require( 'SCENERY/nodes/Image' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const SceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/SceneView' );
 
   // images
@@ -29,6 +30,13 @@ define( require => {
       );
       temperatureMapImage.center = sceneModel.mapBounds.center;
       this.addChild( temperatureMapImage );
+
+      // add the node that represents the box that will hold the thermometers
+      this.addChild( new Rectangle.bounds( sceneModel.thermometerBoxBounds, {
+        fill: 'white',
+        stroke: 'black',
+        cornerRadius: 6
+      } ) );
     }
   }
 

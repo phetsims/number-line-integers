@@ -4,6 +4,7 @@
  * base class for all scenes in the "Scenes" screen
  *
  * @author John Blanco
+ * @author Saurabh Totey
  */
 define( require => {
   'use strict';
@@ -26,16 +27,11 @@ define( require => {
 
     constructor() {
 
-      // The zero point is well below the vertical center and tne number line is not symmetric around zero.
-      // The details of these values were empirically determined by comparing with the design doc and the elevation scene.
-      const zeroPositionHeight = SCENE_BOUNDS.height * 0.6;
-      const numberLineRange = new Range( -20, 100 );
-
       const mapWidth = 650;
       const mapHeight = 300;
       const mapCenter = new Vector2(
         SCENE_BOUNDS.centerX,
-        zeroPositionHeight - numberLineRange.getCenter() * mapHeight / numberLineRange.getLength()
+        SCENE_BOUNDS.centerY
       );
       const mapBounds = new Bounds2(
         mapCenter.x - mapWidth / 2,
@@ -44,17 +40,37 @@ define( require => {
         mapCenter.y + mapHeight / 2
       );
 
+      const numberLineRange = new Range( -20, 100 );
+      const numberLineHeight = 405;
       super( {
-        numberLineZeroPosition: new Vector2( mapBounds.minX / 2, zeroPositionHeight ),
+        numberLineZeroPosition: new Vector2(
+          mapBounds.minX / 2,
+
+          // y position for number line 0 is calculation that centers number line vertically within scene
+          0.5 * SCENE_BOUNDS.height + numberLineHeight * ( 0.5 + numberLineRange.min / numberLineRange.getLength() )
+        ),
         numberLineOptions: {
           initialOrientation: NumberLineOrientation.VERTICAL,
           initialDisplayedRange: numberLineRange,
-          heightInModelSpace: mapHeight
+          heightInModelSpace: numberLineHeight
         }
       } );
 
       // @public (read-only) {Bounds2} - bounds of the map area
       this.mapBounds = mapBounds;
+
+      // specify the position of the box that will hold the thermometers
+      const boxWidth = mapWidth * 0.5;
+      const boxHeight = ( SCENE_BOUNDS.maxY - mapBounds.maxY ) * 0.4;
+      const boxCenter = new Vector2( mapCenter.x, ( SCENE_BOUNDS.maxY + mapBounds.maxY ) / 2 );
+
+      // @public (read-only) {Bounds2} - holding area for the thermometers
+      this.thermometerBoxBounds = new Bounds2(
+        boxCenter.x - boxWidth / 2,
+        boxCenter.y - boxHeight / 2,
+        boxCenter.x + boxWidth / 2,
+        boxCenter.y + boxHeight / 2
+      );
 
     }
 
