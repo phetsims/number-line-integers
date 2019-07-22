@@ -332,16 +332,16 @@ define( require => {
     getNearestUnoccupiedValue( value ) {
       const roundedValue = Util.roundSymmetric( value );
       let currentDistance = 0;
-      const getValidPointsAtDistance = distance => {
+      const getValidValuesAtDistance = distance => {
         return [ roundedValue - distance, roundedValue + distance ]
           .filter( newValue => !this.hasPointAt( newValue ) && this.displayedRangeProperty.value.contains( newValue ) );
       };
-      let validPoints = getValidPointsAtDistance( currentDistance );
-      while ( validPoints.length === 0 ) {
+      let validValues = getValidValuesAtDistance( currentDistance );
+      while ( validValues.length === 0 ) {
         currentDistance++;
-        validPoints = getValidPointsAtDistance( currentDistance );
+        validValues = getValidValuesAtDistance( currentDistance );
       }
-      return _.sortBy( validPoints, [ validPoint => Math.abs( validPoint - value ) ] )[ 0 ];
+      return _.sortBy( validValues, [ validValue => Math.abs( validValue - value ) ] )[ 0 ];
     }
 
     /**
