@@ -15,6 +15,7 @@ define( require => {
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
+  const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
   const Range = require( 'DOT/Range' );
   const SceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/SceneModel' );
   const temperatureDataSet = require( 'NUMBER_LINE_INTEGERS/scenes/model/temperatureDataSet' );
@@ -72,6 +73,15 @@ define( require => {
         boxCenter.y + boxHeight / 2
       );
 
+      // @public (read-only) - the point controllers that can be moved into the elevation scene
+      this.permanentPointControllers = _.times( 3, () => new PointController( this.numberLine, {
+        lockToNumberLine: 'never'
+      } ) );
+
+      this.permanentPointControllers.forEach( pointController => {
+        this.putPointControllerInBox( pointController );
+      } );
+
     }
 
     /**
@@ -93,6 +103,47 @@ define( require => {
         color: Color.GREEN // TODO: base color off of temperature in a way that matches the map
       };
     }
+
+    /**
+     * place the provided point controller into the holding box, generally done on init, reset, and when the user "puts
+     * it away"
+     * @param {PointController} pointController
+     * @param {boolean} [animate] - controls whether to animate the return to the box or do it instantly
+     */
+    putPointControllerInBox( pointController, animate = false ) {
+      const index = this.permanentPointControllers.indexOf( pointController );
+      const numPositions = this.permanentPointControllers.length;
+
+      // error checking
+      assert && assert( index >= 0, 'point controller not found on list' );
+      assert && assert(
+        pointController.numberLinePoint === null,
+        'point controller should not be put away while controlling a point'
+      );
+
+      const spacing = this.thermometerBoxBounds.width / numPositions;
+      const destination = new Vector2(
+        this.thermometerBoxBounds.minX + spacing / 2 + spacing * index,
+        this.thermometerBoxBounds.centerY
+      );
+      pointController.goToPosition( destination, animate );
+    }
+
+    /**
+     * restore initial state
+     * @public
+     */
+    reset() {
+
+      super.reset();
+
+      // put the point controllers back into their starting positions
+      this.permanentPointControllers.forEach( pointController => {
+        pointController.reset();
+        this.putPointControllerInBox( pointController );
+      } );
+    }
+
   }
 
   return numberLineIntegers.register( 'TemperatureSceneModel', TemperatureSceneModel );
