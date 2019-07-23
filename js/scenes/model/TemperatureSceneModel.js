@@ -93,7 +93,7 @@ define( require => {
       this.permanentPointControllers.forEach( pointController => {
         pointController.isDraggingProperty.lazyLink( isDragging => {
           if ( !isDragging &&
-               !pointController.overMapProperty.value &&
+               !pointController.isOverMapProperty.value &&
                !pointController.numberLinePoint ) {
             this.putPointControllerInBox( pointController, true );
           }

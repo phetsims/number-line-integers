@@ -37,19 +37,19 @@ define( require => {
       this.sceneModel = sceneModel;
 
       // @public (readonly) whether the point controller is over the map
-      this.overMapProperty = new BooleanProperty( false );
+      this.isOverMapProperty = new BooleanProperty( false );
 
       this.positionProperty.link( position => {
         const data = sceneModel.getTemperatureAndColorAtLocation( position );
-        this.overMapProperty.value = data !== null;
-        if ( this.overMapProperty.value && this.numberLinePoint ) {
+        this.isOverMapProperty.value = data !== null;
+        if ( this.isOverMapProperty.value && this.numberLinePoint ) {
           this.numberLinePoint.valueProperty.value = data.temperature;
           this.numberLinePoint.colorProperty.value = data.color;
         }
       } );
 
       // create/remove number line points based on whether we're over the elevation area
-      this.overMapProperty.lazyLink( over => {
+      this.isOverMapProperty.lazyLink( over => {
         if ( over && this.isDraggingProperty.value ) {
 
           // state checking

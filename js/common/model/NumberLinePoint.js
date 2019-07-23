@@ -60,7 +60,7 @@ define( require => {
     proposeValue( numberLineValue ) {
       const constrainedValue = this.numberLine.getConstrainedValue( numberLineValue );
       if ( constrainedValue !== this.valueProperty.value ) {
-        this.valueProperty.set( constrainedValue );
+        this.valueProperty.value = constrainedValue;
       }
       this.mostRecentlyProposedValue = numberLineValue;
     }

@@ -63,14 +63,14 @@ define( require => {
         // {boolean} - whether point labels should initially be shown
         pointLabelsInitiallyShown: false,
 
-        // {number} - The width and height values used when projecting the number line into model space.  The default
-        // values are pretty arbitrary and at least one of these will generally need to be set.  However, if the number
+        // {number} - The width and height values used when projecting the number line into model space. The default
+        // values are pretty arbitrary and at least one of these will generally need to be set. However, if the number
         // line is only ever shown in one orientation, the value corresponding to the other orientation can be left at
         // the default value.
         widthInModelSpace: 100,
         heightInModelSpace: 100,
 
-        // {Object{ initialValue, color}[]} - array of point specifications that describe what points should exist on
+        // {Object{initialValue, color}[]} - array of point specifications that describe what points should exist on
         // the number line when constructed and after a reset
         initialPointSpecs: []
       }, options );
