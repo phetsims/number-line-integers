@@ -2,6 +2,7 @@
 
 /**
  * a point controller with some extensions that are specific to the "Temperature" scene
+ * TODO: discuss how to reduce code duplication between this and ElevationPointController
  *
  * @author John Blanco
  * @author Saurabh Totey

@@ -2,8 +2,10 @@
 
 /**
  * view for the "Temperature" scene
+ * TODO: discus how to reduce code duplication between this and ElevationSceneView
  *
  * @author John Blanco (PhET Interactive Simulations)
+ * @author Saurabh Totey
  */
 define( require => {
   'use strict';

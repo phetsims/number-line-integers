@@ -2,6 +2,7 @@
 
 /**
  * base class for all scenes in the "Scenes" screen
+ * TODO: discuss how to reduce code duplication between this and ElevationSceneModel
  *
  * @author John Blanco
  * @author Saurabh Totey
