@@ -55,7 +55,7 @@ define( require => {
 
       // hook the primary account balance up to the first number line point
       this.primaryAccountBalanceProperty.link( balance => {
-        this.numberLine.residentPoints.get( 0 ).valueProperty.set( balance );
+        this.numberLine.residentPoints.get( 0 ).valueProperty.value = balance;
       } );
 
       // @public {NumberProperty} - balance of the bank account that is shown when the user wants to compare two accounts
@@ -64,7 +64,7 @@ define( require => {
       // hook the comparison account balance up to the second number line point
       this.comparisonAccountBalanceProperty.link( balance => {
         if ( this.numberLine.residentPoints.length > 1 ) {
-          this.numberLine.residentPoints.get( 1 ).valueProperty.set( balance );
+          this.numberLine.residentPoints.get( 1 ).valueProperty.value = balance;
         }
       } );
 
@@ -109,11 +109,11 @@ define( require => {
           this.numberLine.addPoint( comparisonAccountNumberLinePoint );
 
           // create the controller fo this point
-          this.comparisonAccountPointControllerProperty.set( new PointController( this.numberLine, {
+          this.comparisonAccountPointControllerProperty.value = new PointController( this.numberLine, {
             lockToNumberLine: 'always',
             numberLinePoint: comparisonAccountNumberLinePoint,
             offsetFromHorizontalNumberLine: -120
-          } ) );
+          } );
         }
         else {
 

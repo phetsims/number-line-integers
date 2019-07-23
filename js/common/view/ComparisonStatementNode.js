@@ -245,7 +245,7 @@ define( require => {
       lessThanOperatorSelectorNode.addChild( lessThanText );
       lessThanOperatorSelectorNode.addInputListener( new ButtonListener( {
         fire: () => {
-          selectedOperatorProperty.set( '<' );
+          selectedOperatorProperty.value = '<';
         }
       } ) );
       this.addChild( lessThanOperatorSelectorNode );
@@ -270,7 +270,7 @@ define( require => {
       greaterThanOperatorSelectorNode.addChild( greaterThanText );
       greaterThanOperatorSelectorNode.addInputListener( new ButtonListener( {
         fire: () => {
-          selectedOperatorProperty.set( '>' );
+          selectedOperatorProperty.value = '>';
         }
       } ) );
       this.addChild( greaterThanOperatorSelectorNode );

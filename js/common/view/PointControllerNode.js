@@ -86,14 +86,14 @@ define( require => {
         this.addInputListener( new DragListener( {
           dragBoundsProperty: new Property( this.layoutBounds ),
           start: event => {
-            pointController.isDraggingProperty.set( true );
+            pointController.isDraggingProperty.value = true;
             pointController.proposePosition( this.globalToParentPoint( event.pointer.point ) );
           },
           drag: event => {
             pointController.proposePosition( this.globalToParentPoint( event.pointer.point ) );
           },
           end: () => {
-            pointController.isDraggingProperty.set( false );
+            pointController.isDraggingProperty.value = false;
           }
         } ) );
       }

@@ -162,10 +162,10 @@ define( require => {
 
           // move the point controller in the direction perpendicular to the number line
           if ( this.numberLine.isHorizontal ) {
-            this.positionProperty.set( new Vector2( this.positionProperty.value.x, proposedPosition.y ) );
+            this.positionProperty.value = new Vector2( this.positionProperty.value.x, proposedPosition.y );
           }
           else {
-            this.positionProperty.set( new Vector2( proposedPosition.x, this.positionProperty.value.y ) );
+            this.positionProperty.value = new Vector2( proposedPosition.x, this.positionProperty.value.y );
           }
         }
         else if ( this.lockToNumberLine === 'whenClose' ) {
@@ -240,21 +240,21 @@ define( require => {
             to: position
           } ]
         } );
-        this.inProgressAnimationProperty.set( animation );
+        this.inProgressAnimationProperty.value = animation;
         animation.start();
 
         // remove the animation from the list when it finishes or is stopped
         animation.finishEmitter.addListener( () => {
-          this.inProgressAnimationProperty.set( null );
+          this.inProgressAnimationProperty.value = null;
         } );
         animation.stopEmitter.addListener( () => {
-          this.inProgressAnimationProperty.set( null );
+          this.inProgressAnimationProperty.value = null;
         } );
       }
       else {
 
         // go straight to the specified position
-        this.positionProperty.set( position );
+        this.positionProperty.value = position;
       }
     }
 
@@ -295,7 +295,7 @@ define( require => {
     stopAnimation() {
       if ( this.inProgressAnimationProperty.value ) {
         this.inProgressAnimationProperty.value.stop();
-        this.inProgressAnimationProperty.set( null );
+        this.inProgressAnimationProperty.value = null;
       }
     }
 

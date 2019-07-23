@@ -163,7 +163,7 @@ define( require => {
      * @public
      */
     setDistanceFromNumberLine( distance, doAnimation ) {
-      const currentDistanceFromNumberLine = this.distanceFromNumberLineProperty.get();
+      const currentDistanceFromNumberLine = this.distanceFromNumberLineProperty.value;
       if ( distance === currentDistanceFromNumberLine ) {
         return;
       }
@@ -195,7 +195,7 @@ define( require => {
         } );
       }
       else {
-        this.distanceFromNumberLineProperty.set( distance );
+        this.distanceFromNumberLineProperty.value = distance;
       }
     }
 

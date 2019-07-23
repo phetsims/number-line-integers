@@ -96,7 +96,7 @@ define( require => {
       this.numberLine.orientationProperty.link( orientation => {
         const previousBoxBounds = orientation === NumberLineOrientation.HORIZONTAL ? SIDE_BOX_BOUNDS : BOTTOM_BOX_BOUNDS;
         const newBoxBounds = orientation === NumberLineOrientation.HORIZONTAL ? BOTTOM_BOX_BOUNDS : SIDE_BOX_BOUNDS;
-        this.pointControllerBoxProperty.set( newBoxBounds );
+        this.pointControllerBoxProperty.value = newBoxBounds;
         this.pointControllers.forEach( pointController => {
 
           // if the point controller is animating, stop it and put it in the box
