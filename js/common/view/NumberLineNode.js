@@ -21,6 +21,7 @@ define( require => {
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Property = require( 'AXON/Property' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
 
   // constants
@@ -59,6 +60,8 @@ define( require => {
         tickMarkLabelFont: new PhetFont( 16 ),
         color: 'black',
         pointRadius: 10,
+        numberDisplayTemplate: '{{number}}',
+        numberDisplayUnits: '',
 
         // {boolean} - controls whether the absolute value span indicators, which are a little ways away from the number
         // line itself, are portrayed
@@ -349,11 +352,16 @@ define( require => {
       // get the center position of the tick mark
       const tmCenter = this.numberLine.valueToModelPosition( value );
 
+      const stringValue = StringUtils.fillIn( this.options.numberDisplayTemplate, {
+        number: value,
+        units: this.options.numberDisplayUnits
+      } );
+
       if ( this.numberLine.isHorizontal ) {
 
         const tickMark = new Line( tmCenter.x, tmCenter.y - length, tmCenter.x, tmCenter.y + length, tickMarkOptions );
         parentNode.addChild( tickMark );
-        parentNode.addChild( new Text( value, {
+        parentNode.addChild( new Text( stringValue, {
           font: this.options.tickMarkLabelFont,
           centerX: tickMark.centerX,
           top: tickMark.bottom + TICK_MARK_LABEL_DISTANCE
@@ -363,7 +371,7 @@ define( require => {
 
         const tickMark = new Line( tmCenter.x - length, tmCenter.y, tmCenter.x + length, tmCenter.y, tickMarkOptions );
         parentNode.addChild( tickMark );
-        parentNode.addChild( new Text( value, {
+        parentNode.addChild( new Text( stringValue, {
           font: this.options.tickMarkLabelFont,
           left: tickMark.right + 5,
           centerY: tickMark.centerY

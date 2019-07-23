@@ -122,14 +122,14 @@ define( require => {
         }
       ];
 
-      // NOTE: There is no model-view transform for this sim.  Model and view space use the same coordinate system.
+      // NOTE: There is no model-view transform for this sim. Model and view space use the same coordinate system.
 
       // root node on which the point controllers will live
       const pointControllerLayer = new Node();
       this.addChild( pointControllerLayer );
 
       // add the point controller nodes
-      model.pointControllers.forEach( ( pointController ) => {
+      model.pointControllers.forEach( pointController => {
         pointControllerLayer.addChild( new PointControllerNode( pointController ) );
       } );
 
