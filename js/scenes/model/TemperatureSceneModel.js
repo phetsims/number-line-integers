@@ -131,16 +131,15 @@ define( require => {
 
     /**
      * get the temperature and color at the specified model location
-     * TODO: I think this method doesn't work correctly: check behaviour of commented out code
-     * TODO: when commented code is uncommented, behaviour works mostly as expected with the given values
-     * TODO: however, with current code, behaviour seems a little weird
+     * TODO: figure out necessary translations
      * @public
      * @param {Vector2} location
      * @returns {{color, temperature: number}|null} returns data unless location is invalid, in which case null is returned
      */
     getTemperatureAndColorAtLocation( location ) {
 
-      const coordinate = this.dataSet.getLatLongAtPoint( location.x, location.y );
+      //TODO: figure out this translation so that the x and y are over the map: current translations are arbitrary and wrong
+      const coordinate = this.dataSet.getLatLongAtPoint( location.x - this.mapBounds.width / 2, location.y - this.mapBounds.height / 2 );
 
       const latDegrees = coordinate.latitude / Math.PI * 180;
       const lonDegrees = coordinate.longitude / Math.PI * 180;
@@ -156,7 +155,9 @@ define( require => {
 
 
       return {
-        temperature: this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees ),
+
+        //TODO: temporary conversion from Kelvin to Celsius; doesn't seem to use up whole range of -20 to 100 unless Fahrenheit
+        temperature: this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees ) - 273,
         color: Color.GREEN
       };
       // return {
