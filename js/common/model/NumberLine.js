@@ -1,7 +1,7 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * Model of a number line.  This is (perhaps rather obviously) a very central class for the Number Line suite of
+ * Model of a number line. This is (perhaps rather obviously) a very central class for the Number Line suite of
  * simulations.
  *
  * @author John Blanco (PhET Interactive Simulations)
@@ -107,13 +107,14 @@ define( require => {
 
         // listener to make sure point lands in a good point when released
         const pointDragListener = dragging => {
-          if ( !dragging ) {
-            if ( this.getPointsAt( addedPoint.valueProperty.value ).length > 1 ) {
 
-              // there is already a point at this location, so we have to choose another
-              addedPoint.valueProperty.set( this.getNearestUnoccupiedValue( addedPoint.mostRecentlyProposedValue ) );
-            }
+          // do nothing if dragging or we are the only point here/there are no points here
+          if ( dragging || this.getPointsAt( addedPoint.valueProperty.value ).length <= 1 ) {
+            return;
           }
+
+          // there is already a point at this location, so we have to choose another
+          addedPoint.valueProperty.value = this.getNearestUnoccupiedValue( addedPoint.mostRecentlyProposedValue );
         };
         addedPoint.isDraggingProperty.link( pointDragListener );
 
@@ -330,30 +331,17 @@ define( require => {
      */
     getNearestUnoccupiedValue( value ) {
       const roundedValue = Util.roundSymmetric( value );
-      let nearestUnoccupiedValue = roundedValue;
-      if ( this.hasPointAt( roundedValue ) ) {
-        let nearestLargerValue = null;
-        for ( let i = roundedValue + 1; i <= this.displayedRangeProperty.value.max; i++ ) {
-          if ( !this.hasPointAt( i ) ) {
-            nearestLargerValue = i;
-            break;
-          }
-        }
-        let nearestSmallerValue = null;
-        for ( let i = roundedValue - 1; i >= this.displayedRangeProperty.value.min; i-- ) {
-          if ( !this.hasPointAt( i ) ) {
-            nearestSmallerValue = i;
-            break;
-          }
-        }
-        if ( Math.abs( value - nearestLargerValue ) < Math.abs( value - nearestSmallerValue ) ) {
-          nearestUnoccupiedValue = nearestLargerValue;
-        }
-        else {
-          nearestUnoccupiedValue = nearestSmallerValue;
-        }
+      let currentDistance = 0;
+      const getValidValuesAtDistance = distance => {
+        return [ roundedValue - distance, roundedValue + distance ]
+          .filter( newValue => !this.hasPointAt( newValue ) && this.displayedRangeProperty.value.contains( newValue ) );
+      };
+      let validValues = getValidValuesAtDistance( currentDistance );
+      while ( validValues.length === 0 ) {
+        currentDistance++;
+        validValues = getValidValuesAtDistance( currentDistance );
       }
-      return nearestUnoccupiedValue;
+      return _.sortBy( validValues, [ validValue => Math.abs( validValue - value ) ] )[ 0 ];
     }
 
     /**
