@@ -40,7 +40,13 @@ define( require => {
 
     constructor( sceneModel, layoutBounds ) {
 
-      super( sceneModel, layoutBounds );
+      super( sceneModel, layoutBounds, {
+
+        //TODO: use strings file for this
+        numberLineOptions: {
+          numberDisplayTemplate: '{{value}}m'
+        }
+      } );
 
       // Create and add the background image for the area where the user will be able to place things and change their
       // elevation.  This is scaled to match the bounds defined in the model, so the resolution and aspect ratio of the

@@ -60,8 +60,7 @@ define( require => {
         tickMarkLabelFont: new PhetFont( 16 ),
         color: 'black',
         pointRadius: 10,
-        numberDisplayTemplate: '{{number}}',
-        numberDisplayUnits: '',
+        numberDisplayTemplate: '{{value}}',
 
         // {boolean} - controls whether the absolute value span indicators, which are a little ways away from the number
         // line itself, are portrayed
@@ -352,10 +351,7 @@ define( require => {
       // get the center position of the tick mark
       const tmCenter = this.numberLine.valueToModelPosition( value );
 
-      const stringValue = StringUtils.fillIn( this.options.numberDisplayTemplate, {
-        number: value,
-        units: this.options.numberDisplayUnits
-      } );
+      const stringValue = StringUtils.fillIn( this.options.numberDisplayTemplate, { value: value } );
 
       if ( this.numberLine.isHorizontal ) {
 

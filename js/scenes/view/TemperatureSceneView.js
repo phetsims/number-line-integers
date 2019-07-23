@@ -24,7 +24,13 @@ define( require => {
   class TemperatureSceneView extends SceneView {
     constructor( sceneModel, layoutBounds ) {
 
-      super( sceneModel, layoutBounds );
+      super( sceneModel, layoutBounds, {
+        numberLineOptions: {
+
+          //TODO: use strings file for this
+          numberDisplayTemplate: '{{value}}° C'
+        }
+      } );
 
       // TODO: temporary version of the map image
       const temperatureMapImage = new Image( temperatureMap );
