@@ -17,9 +17,9 @@ define( require => {
   class ElevationPointController extends PointController {
 
     /**
-     * {Vector2} initialPosition
-     * {Bounds2} elevationAreaBounds
-     * {NumberLine} numberLine - the number line on which this controller will be moving points
+     * @param {NumberLine} numberLine - the number line on which this controller will be moving points
+     * @param {Bounds2} elevationAreaBounds
+     * @param {Object} [options]
      */
     constructor( numberLine, elevationAreaBounds, options ) {
 

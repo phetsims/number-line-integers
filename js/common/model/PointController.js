@@ -27,8 +27,8 @@ define( require => {
   class PointController {
 
     /**
-     * {Vector2} initialPosition
-     * {NumberLine} numberLine - the number line on which this controller will be moving points
+     * @param {NumberLine} numberLine - the number line on which this controller will be moving points
+     * @param {Object} [options]
      */
     constructor( numberLine, options ) {
 
