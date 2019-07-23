@@ -357,6 +357,7 @@ define( require => {
       //TODO: think up of how to handle negative signs
       // option 1: always put negative sign in front of everything ( MathSymbols.UNARY_MINUS + StringUtils.fillIn(...) )
       // option 2: make the minus sign a part of the string template
+      // option 3: check if '{{negativeSign}}' is in the template, and insert - there, otherwise include as part of value
       //When this issue is worked on, be sure to update also in PointNode constructor
       const stringValue = StringUtils.fillIn( this.options.numberDisplayTemplate, { value: value } );
 
