@@ -351,6 +351,9 @@ define( require => {
       // get the center position of the tick mark
       const tmCenter = this.numberLine.valueToModelPosition( value );
 
+      //TODO: think up of how to handle negative signs
+      // option 1: always put negative sign in front of everything ( MathSymbols.UNARY_MINUS + StringUtils.fillIn(...) )
+      // option 2: make the minus sign a part of the string template
       const stringValue = StringUtils.fillIn( this.options.numberDisplayTemplate, { value: value } );
 
       if ( this.numberLine.isHorizontal ) {

@@ -17,8 +17,17 @@
   "labels": {
     "value": "Labels"
   },
+  "elevationAmount": {
+    "value": "{{value}} m"
+  },
   "moneyAmount": {
     "value": "${{value}}"
+  },
+  "temperatureAmountCelsius": {
+    "value": "{{value}}° C"
+  },
+  "temperatureAmountFahrenheit": {
+    "value": "{{value}}° F"
   },
   "number-line-integers.title": {
     "value": "Number Line: Integers"

@@ -18,6 +18,9 @@ define( require => {
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const SceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/SceneView' );
 
+  // strings
+  const temperatureAmountCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountCelsius' );
+
   // images
   const temperatureMap = require( 'image!NUMBER_LINE_INTEGERS/temperature-map.png' );
 
@@ -26,9 +29,7 @@ define( require => {
 
       super( sceneModel, layoutBounds, {
         numberLineOptions: {
-
-          //TODO: use strings file for this
-          numberDisplayTemplate: '{{value}}° C'
+          numberDisplayTemplate: temperatureAmountCelsiusString
         }
       } );
 

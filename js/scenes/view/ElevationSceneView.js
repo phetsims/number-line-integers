@@ -24,6 +24,7 @@ define( require => {
   const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
 
   // strings
+  const elevationAmountString = require( 'string!NUMBER_LINE_INTEGERS/elevationAmount' );
   const elevationString = require( 'string!NUMBER_LINE_INTEGERS/elevation' );
 
   // images
@@ -41,10 +42,8 @@ define( require => {
     constructor( sceneModel, layoutBounds ) {
 
       super( sceneModel, layoutBounds, {
-
-        //TODO: use strings file for this
         numberLineOptions: {
-          numberDisplayTemplate: '{{value}}m'
+          numberDisplayTemplate: elevationAmountString
         }
       } );
 
