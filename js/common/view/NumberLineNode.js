@@ -234,11 +234,14 @@ define( require => {
       const handlePointAdded = point => {
 
         // add the node that will represent the point on the number line
-        const pointNode = new PointNode( point, numberLine );
+        const pointNode = new PointNode( point, numberLine, { numberDisplayTemplate: options.numberDisplayTemplate } );
         pointDisplayLayer.addChild( pointNode );
 
         // add the point that will represent the opposite point
-        const oppositePointNode = new PointNode( point, numberLine, { isDoppelganger: true } );
+        const oppositePointNode = new PointNode( point, numberLine, {
+          isDoppelganger: true,
+          numberDisplayTemplate: options.numberDisplayTemplate
+        } );
         oppositePointDisplayLayer.addChild( oppositePointNode );
 
         // if enabled, add an absolute value "span indicator", which depicts the absolute value at some distance from
@@ -354,6 +357,7 @@ define( require => {
       //TODO: think up of how to handle negative signs
       // option 1: always put negative sign in front of everything ( MathSymbols.UNARY_MINUS + StringUtils.fillIn(...) )
       // option 2: make the minus sign a part of the string template
+      //When this issue is worked on, be sure to update also in PointNode constructor
       const stringValue = StringUtils.fillIn( this.options.numberDisplayTemplate, { value: value } );
 
       if ( this.numberLine.isHorizontal ) {
@@ -392,7 +396,8 @@ define( require => {
     constructor( numberLinePoint, numberLine, options ) {
 
       options = _.extend( {
-        isDoppelganger: false
+        isDoppelganger: false,
+        numberDisplayTemplate: '{{number}}'
       }, options );
 
       super();
@@ -404,8 +409,9 @@ define( require => {
       } );
       this.addChild( circle );
 
-      // create the label text
-      const labelTextNode = new Text( numberLinePoint.valueProperty.value, {
+      // create the label text TODO: see todo in NumberLineNode addTickMark about negative signs
+      const getLabelText = value => StringUtils.fillIn( options.numberDisplayTemplate, { value: value } );
+      const labelTextNode = new Text( getLabelText( numberLinePoint.valueProperty.value ), {
         font: new PhetFont( 16 ),
         fill: numberLinePoint.colorProperty
       } );
@@ -449,7 +455,7 @@ define( require => {
           circle.center = numberLine.valueToModelPosition( value );
 
           // update the label text and position
-          labelTextNode.text = value;
+          labelTextNode.text = getLabelText( value );
           labelNode = updateBackgroundSize( labelNode, labelTextNode );
           if ( numberLine.isHorizontal ) {
             labelNode.centerX = circle.centerX;
