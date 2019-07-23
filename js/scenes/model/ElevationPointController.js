@@ -40,7 +40,7 @@ define( require => {
 
       // as of this writing, these point controllers are never disposed, so no unlinking is needed
       this.positionProperty.link( position => {
-        overElevationAreaProperty.set( elevationAreaBounds.containsPoint( position ) );
+        overElevationAreaProperty.value = elevationAreaBounds.containsPoint( position );
       } );
 
       // create/remove number line points based on whether we're over the elevation area
@@ -81,7 +81,7 @@ define( require => {
 
         // The user has dragged the controller outside of the elevation bounds, so allow the motion.  Listeners in
         // other places will remove the point from the number line.
-        this.positionProperty.set( proposedPosition );
+        this.positionProperty.value = proposedPosition;
       }
       else {
         super.proposePosition( proposedPosition );

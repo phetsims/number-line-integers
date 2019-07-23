@@ -15,10 +15,12 @@ define( require => {
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
+  const ObservableArray = require( 'AXON/ObservableArray' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
   const Range = require( 'DOT/Range' );
   const SceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/SceneModel' );
   const temperatureDataSet = require( 'NUMBER_LINE_INTEGERS/scenes/model/temperatureDataSet' );
+  const TemperaturePointController = require( 'NUMBER_LINE_INTEGERS/scenes/model/TemperaturePointController' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
@@ -77,7 +79,7 @@ define( require => {
       );
 
       // @public (read-only) - the point controllers that can be moved into the elevation scene
-      this.permanentPointControllers = _.times( 3, () => new PointController( this.numberLine, {
+      this.permanentPointControllers = _.times( 3, () => new TemperaturePointController( this, {
         lockToNumberLine: 'never'
       } ) );
 
@@ -90,17 +92,48 @@ define( require => {
       this.permanentPointControllers.forEach( pointController => {
         pointController.isDraggingProperty.lazyLink( isDragging => {
           if ( !isDragging &&
-               this.getTemperatureAndColorAtLocation( pointController.positionProperty.value ) === null &&
+               !pointController.overMapProperty.value &&
                !pointController.numberLinePoint ) {
             this.putPointControllerInBox( pointController, true );
           }
         } );
       } );
 
+      // @publc (read-only) - the point controllers that are attached to the number line when a corresponding elevatable
+      // controller is over the scene
+      this.numberLineAttachedPointControllers = new ObservableArray();
+
+      // watch for points coming and going on the number line and add the additional point controllers for them
+      this.numberLine.residentPoints.addItemAddedListener( addedPoint => {
+
+        // add a point controller that will remain attached to the number line that will control this point
+        const pointController = new PointController( this.numberLine, {
+          color: addedPoint.colorProperty.value,
+          lockToNumberLine: 'always',
+          numberLinePoint: addedPoint
+        } );
+        this.numberLineAttachedPointControllers.push( pointController );
+
+        // handle removal of this point from the number line
+        const handlePointRemoved = removedPoint => {
+          if ( addedPoint === removedPoint ) {
+            pointController.clearNumberLinePoint();
+            pointController.dispose();
+            this.numberLine.residentPoints.removeItemRemovedListener( handlePointRemoved );
+            this.numberLineAttachedPointControllers.remove( pointController );
+          }
+        };
+        this.numberLine.residentPoints.addItemRemovedListener( handlePointRemoved );
+      } );
+
     }
 
     /**
      * get the temperature and color at the specified model location
+     * TODO: I think this method doesn't work correctly: check behaviour of commented out code
+     * TODO: when commented code is uncommented, behaviour works mostly as expected with the given values
+     * TODO: however, with current code, behaviour seems a little weird
+     * @public
      * @param {Vector2} location
      * @returns {{color, temperature: number}|null} returns data unless location is invalid, in which case null is returned
      */
@@ -116,17 +149,25 @@ define( require => {
            lonDegrees > 180 || lonDegrees < -180 ) {
         return null;
       }
+      // if ( !this.mapBounds.containsPoint( location ) ) {
+      //   return null;
+      // }
+
 
       return {
         temperature: this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees ),
         color: Color.GREEN
       };
+      // return {
+      //   temperature: 60,
+      //   color: Color.RED
+      // };
     }
 
     /**
      * place the provided point controller into the holding box, generally done on init, reset, and when the user "puts
      * it away"
-     * @param {PointController} pointController
+     * @param {TemperaturePointController} pointController
      * @param {boolean} [animate] - controls whether to animate the return to the box or do it instantly
      */
     putPointControllerInBox( pointController, animate = false ) {

@@ -116,7 +116,7 @@ define( require => {
         this.numberLineAttachedPointControllers.push( pointController );
 
         // handle removal of this point from the number line
-        const handlePointRemoved = ( removedPoint ) => {
+        const handlePointRemoved = removedPoint => {
           if ( addedPoint === removedPoint ) {
             pointController.clearNumberLinePoint();
             pointController.dispose();

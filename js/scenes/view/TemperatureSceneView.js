@@ -45,6 +45,28 @@ define( require => {
         children: sceneModel.permanentPointControllers.map( pointController => new PointControllerNode( pointController ) )
       } ) );
 
+      // add the layer where the attached point controllers go
+      const attachedPointControllersLayer = new Node();
+      this.addChild( attachedPointControllersLayer );
+      attachedPointControllersLayer.moveToBack(); // so that they are behind the number line in z-order
+
+      // the visibility of the attached point controllers should be the same as the number line
+      sceneModel.showNumberLineProperty.linkAttribute( attachedPointControllersLayer, 'visible' );
+
+      // add/remove the nodes that represent the point controllers that are attached to the number line
+      sceneModel.numberLineAttachedPointControllers.addItemAddedListener( addedPointController => {
+        const pointControllerNode = new PointControllerNode( addedPointController );
+        attachedPointControllersLayer.addChild( pointControllerNode );
+        const handlePointControllerRemoved = removedPointController => {
+          if ( addedPointController === removedPointController ) {
+            attachedPointControllersLayer.removeChild( pointControllerNode );
+            pointControllerNode.dispose();
+            sceneModel.numberLineAttachedPointControllers.removeItemRemovedListener( handlePointControllerRemoved );
+          }
+        };
+        sceneModel.numberLineAttachedPointControllers.addItemRemovedListener( handlePointControllerRemoved );
+      } );
+
     }
   }
 
