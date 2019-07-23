@@ -19,7 +19,7 @@ define( require => {
       this.x0 = width / 2;
       this.y0 = height / 2;
 
-      const sphereCircumferance = width * 0.8487;
+      const sphereCircumferance = width * 1.178;
       this.sphereRadius = sphereCircumferance / ( 2 * Math.PI );
       const expectedHeight = width * 0.5072;
       this.yScale = expectedHeight / height;
@@ -36,11 +36,10 @@ define( require => {
       const relativeY = Math.abs( this.yScale * y - this.y0 );
 
       const thisBStar = relativeY / this.sphereRadius;
-      let AStarSum = 0;
+      let thisAStar = 0;
       for ( let i = 0; i <= 18; i++ ) {
-        AStarSum += mValues[ i ] * Math.abs( BStarValues[ i ] - thisBStar );
+        thisAStar += mValues[ i ] * Math.abs( BStarValues[ i ] - thisBStar );
       }
-      const thisAStar = AStarSum * this.sphereRadius;
 
       const long = relativeX / ( this.sphereRadius * thisAStar );
 
@@ -53,8 +52,8 @@ define( require => {
       }
 
       return {
-        latitude: lat,
-        longitude: long
+        latitude: y < this.y0 ? lat : -lat,
+        longitude: x > this.x0 ? long : -long
       };
     }
 

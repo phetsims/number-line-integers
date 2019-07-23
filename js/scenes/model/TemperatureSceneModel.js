@@ -32,7 +32,7 @@ define( require => {
       const numberLineRange = new Range( -20, 100 );
 
       const mapWidth = 650;
-      const mapHeight = 300;
+      const mapHeight = 330;
       const mapCenter = new Vector2(
         SCENE_BOUNDS.centerX,
         zeroPositionHeight - numberLineRange.getCenter() * mapHeight / numberLineRange.getLength()
@@ -56,6 +56,8 @@ define( require => {
       // @public (read-only) {Bounds2} - bounds of the map area
       this.mapBounds = mapBounds;
 
+      // @private temperature data set
+      this.dataSet = new temperatureDataSet( mapWidth, mapHeight );
     }
 
     /**
@@ -65,15 +67,19 @@ define( require => {
      */
     getTemperatureAndColorAtLocation( location ) {
 
+      const coordinate = this.dataSet.getLatLongAtPoint( location.x, location.y );
+
+      const latDegrees = coordinate.latitude / Math.PI * 180;
+      const lonDegrees = coordinate.longitude / Math.PI * 180;
+
       // returns null if location is not in map bounds
-      // TODO: this bounds check is naive because the actual bounds of the map aren't a rectangle
-      if ( !this.mapBounds.containsPoint( location ) ) {
+      if ( latDegrees > 90 || latDegrees < -90 ||
+           lonDegrees > 180 || lonDegrees < -180 ) {
         return null;
       }
 
-      // TODO: This is stubbed, needs to be filled out
       return {
-        temperature: temperatureDataSet.getTemperatureAtLatLong( 0, 0 ),
+        temperature: this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees ),
         color: Color.GREEN
       };
     }
