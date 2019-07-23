@@ -64,7 +64,6 @@ define( require => {
           );
           this.numberLine.addPoint( numberLinePoint );
           this.numberLinePoint = numberLinePoint;
-          //TODO: link numberLinePoint's dragging with this value somehow?
         }
         else if ( !over && this.numberLinePoint ) {
 

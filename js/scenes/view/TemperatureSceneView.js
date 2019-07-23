@@ -42,7 +42,14 @@ define( require => {
 
       //TODO: make point controller nodes not shaded circles
       this.addChild( new Node( {
-        children: sceneModel.permanentPointControllers.map( pointController => new PointControllerNode( pointController ) )
+        children: sceneModel.permanentPointControllers.map(
+          pointController => new PointControllerNode(
+            pointController,
+            {
+              connectorLine: false
+            }
+          )
+        )
       } ) );
 
       // add the layer where the attached point controllers go
@@ -54,6 +61,7 @@ define( require => {
       sceneModel.showNumberLineProperty.linkAttribute( attachedPointControllersLayer, 'visible' );
 
       // add/remove the nodes that represent the point controllers that are attached to the number line
+      //TODO: disable dragging on these new PointControllerNodes
       sceneModel.numberLineAttachedPointControllers.addItemAddedListener( addedPointController => {
         const pointControllerNode = new PointControllerNode( addedPointController );
         attachedPointControllersLayer.addChild( pointControllerNode );
