@@ -131,15 +131,12 @@ define( require => {
 
     /**
      * get the temperature and color at the specified model location
-     * TODO: figure out necessary translations
      * @public
-     * @param {Vector2} location
+     * @param {Vector2} location - model coordinates for where to get the temperature
      * @returns {{color, temperature: number}|null} returns data unless location is invalid, in which case null is returned
      */
     getTemperatureAndColorAtLocation( location ) {
-
-      //TODO: figure out this translation so that the x and y are over the map: current translations are arbitrary and wrong
-      const coordinate = this.dataSet.getLatLongAtPoint( location.x - this.mapBounds.width / 2, location.y - this.mapBounds.height / 2 );
+      const coordinate = this.dataSet.getLatLongAtPoint( location.x - this.mapBounds.minX, location.y - this.mapBounds.minY );
 
       const latDegrees = coordinate.latitude / Math.PI * 180;
       const lonDegrees = coordinate.longitude / Math.PI * 180;
@@ -149,10 +146,6 @@ define( require => {
            lonDegrees > 180 || lonDegrees < -180 ) {
         return null;
       }
-      // if ( !this.mapBounds.containsPoint( location ) ) {
-      //   return null;
-      // }
-
 
       return {
 
@@ -160,10 +153,6 @@ define( require => {
         temperature: this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees ) - 273,
         color: Color.GREEN
       };
-      // return {
-      //   temperature: 60,
-      //   color: Color.RED
-      // };
     }
 
     /**

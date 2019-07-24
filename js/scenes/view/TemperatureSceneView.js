@@ -17,6 +17,7 @@ define( require => {
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const SceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/SceneView' );
+  const TemperaturePointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/TemperaturePointControllerNode' );
 
   // strings
   const temperatureAmountCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountCelsius' );
@@ -49,15 +50,9 @@ define( require => {
         cornerRadius: 6
       } ) );
 
-      //TODO: make point controller nodes not shaded circles
       this.addChild( new Node( {
         children: sceneModel.permanentPointControllers.map(
-          pointController => new PointControllerNode(
-            pointController,
-            {
-              connectorLine: false
-            }
-          )
+          pointController => new TemperaturePointControllerNode( pointController )
         )
       } ) );
 
