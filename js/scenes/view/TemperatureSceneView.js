@@ -11,6 +11,7 @@ define( require => {
   'use strict';
 
   // modules
+  const DownUpListener = require( 'SCENERY/input/DownUpListener' );
   const Image = require( 'SCENERY/nodes/Image' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -40,8 +41,22 @@ define( require => {
         sceneModel.mapBounds.width / temperatureMapImage.width,
         sceneModel.mapBounds.height / temperatureMapImage.height
       );
-      temperatureMapImage.center = sceneModel.mapBounds.center;
-      this.addChild( temperatureMapImage );
+
+      this.temperatureMap = new Node( {
+        children: [ temperatureMapImage ]
+      } );
+
+      this.temperatureMap.addInputListener( new DownUpListener( {
+        down: event => {
+          const clickPoint = this.temperatureMap.globalToLocalPoint( event.pointer.point );
+          console.log( sceneModel.getTemperatureAndColorAtLocation( clickPoint ).temperature );
+          console.log( sceneModel.getTemperatureAndColorAtLocation( clickPoint ).color );
+        }
+      } ) );
+
+      this.temperatureMap.center = sceneModel.mapBounds.center;
+
+      this.addChild( this.temperatureMap );
 
       // add the node that represents the box that will hold the thermometers
       this.addChild( new Rectangle.bounds( sceneModel.thermometerBoxBounds, {

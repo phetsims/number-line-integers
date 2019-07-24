@@ -101,11 +101,11 @@ define( require => {
     }
   }
 
-  const blueCoefficients = [ -6369, -0.092, 49.3 ];
+  const blueCoefficients = [ -6369, 49.3, -0.092 ];
 
-  const redCoefficients = [ -6559, -0.0806, 46.8 ];
+  const redCoefficients = [ -6559, 46.8, -0.0806 ];
 
-  const greenCoefficients = [ -8174, -0.112, 61.3 ];
+  const greenCoefficients = [ -8174, 61.3, -0.112 ];
 
   const longitudeValues = [
     -180, -179, -178, -177, -176, -175, -174, -173,
