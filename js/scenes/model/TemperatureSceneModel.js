@@ -142,8 +142,7 @@ define( require => {
       const lonDegrees = coordinate.longitude / Math.PI * 180;
 
       // returns null if location is not in map bounds
-      if ( latDegrees > 90 || latDegrees < -90 ||
-           lonDegrees > 180 || lonDegrees < -180 ) {
+      if ( latDegrees > 89 || latDegrees < -90 || lonDegrees > 180 || lonDegrees < -180 ) {
         return null;
       }
 
