@@ -11,6 +11,7 @@ define( require => {
   'use strict';
 
   // modules
+  const Color = require( 'SCENERY/util/Color' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
 
   class temperatureDataSet {
@@ -83,8 +84,28 @@ define( require => {
       // console.log( 'airTemperatureNearSurfaceValues[ latitudeIndex * gridWidth + longitudeIndex ] = ' + airTemperatureNearSurfaceValues[ latitudeIndex * gridWidth + longitudeIndex ] );
       return airTemperatureNearSurfaceValues[ latitudeIndex * gridWidth + longitudeIndex ];
     }
+
+    /**
+     * get the color corresponding to a given temperature, with colors matching the heatmap image used
+     * where dark blue corresponds to low temps, dark red to high temps, and white to medium temps
+     * @param {number} temperature
+     * @returns {Color}
+     */
+    getColorAtTemperature( temperature ) {
+      const t2 = Math.pow( temperature, 2 );
+      const red = redCoefficients[ 0 ] + redCoefficients[ 1 ] * temperature + redCoefficients[ 2 ] * t2;
+      const green = greenCoefficients[ 0 ] + greenCoefficients[ 1 ] * temperature + greenCoefficients[ 2 ] * t2;
+      const blue = blueCoefficients[ 0 ] + blueCoefficients[ 1 ] * temperature + blueCoefficients[ 2 ] * t2;
+
+      return new Color( red, green, blue, 1 );
+    }
   }
 
+  const blueCoefficients = [ -6369, -0.092, 49.3 ];
+
+  const redCoefficients = [ -6559, -0.0806, 46.8 ];
+
+  const greenCoefficients = [ -8174, -0.112, 61.3 ];
 
   const longitudeValues = [
     -180, -179, -178, -177, -176, -175, -174, -173,

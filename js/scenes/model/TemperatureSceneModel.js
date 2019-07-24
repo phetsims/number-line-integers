@@ -146,11 +146,13 @@ define( require => {
         return null;
       }
 
+      const temp = this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees );
+
       return {
 
         //TODO: temporary conversion from Kelvin to Celsius; doesn't seem to use up whole range of -20 to 100 unless Fahrenheit
-        temperature: this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees ) - 273,
-        color: Color.GREEN
+        temperature: temp - 273,
+        color: this.dataSet.getColorAtTemperature( temp )
       };
     }
 
