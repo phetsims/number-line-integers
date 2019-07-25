@@ -47,6 +47,9 @@ define( require => {
         stroke: 'black',
         lineJoin: 'round'
       } );
+      pointController.colorProperty.link( function( color ) {
+        colorIndicatorNode.fill = color;
+      } );
       compositeThermometerNode.addChild( colorIndicatorNode );
 
       // TODO: min/max Temp values will need to be put into constants file
