@@ -52,9 +52,14 @@ define( require => {
       } );
       this.addChild( draggableNode );
 
+      // account for offset for nodes with (0,0) point not in center
+      const draggableNodeXOffset = draggableNode.centerX;
+      const draggableNodeYOffset = draggableNode.centerY;
+
       // monitor the point controller and adjust positions to match
       const handlePointControllerPositionChange = position => {
-        draggableNode.center = position;
+        draggableNode.centerX = position.x + draggableNodeXOffset;
+        draggableNode.centerY = position.y + draggableNodeYOffset;
 
         if ( options.connectorLine && pointController.numberLinePoint ) {
           const pointPosition = pointController.numberLinePoint.getPositionInModelSpace();

@@ -6,6 +6,7 @@
  *
  * @author John Blanco
  * @author Saurabh Totey
+ * @author Arnab Purkayastha
  */
 define( require => {
   'use strict';
@@ -99,7 +100,7 @@ define( require => {
         } );
       } );
 
-      // @publc (read-only) - the point controllers that are attached to the number line when a corresponding elevatable
+      // @public (read-only) - the point controllers that are attached to the number line when a corresponding elevatable
       // controller is over the scene
       this.numberLineAttachedPointControllers = new ObservableArray();
 
@@ -149,8 +150,8 @@ define( require => {
 
       return {
 
-        //TODO: temporary conversion from Kelvin to Celsius; doesn't seem to use up whole range of -20 to 100 unless Fahrenheit
-        temperature: temp - 273,
+        //TODO: temporary conversion from Kelvin to Fahrenheit
+        temperature: Math.floor( ( temp - 273 ) * 9 / 5 + 32 ),
         color: this.dataSet.getColorAtTemperature( temp )
       };
     }
@@ -175,7 +176,7 @@ define( require => {
       const spacing = this.thermometerBoxBounds.width / numPositions;
       const destination = new Vector2(
         this.thermometerBoxBounds.minX + spacing / 2 + spacing * index,
-        this.thermometerBoxBounds.centerY
+        this.thermometerBoxBounds.centerY + 25 // TODO: empirically determined value, should be handled in view instead
       );
       pointController.goToPosition( destination, animate );
     }

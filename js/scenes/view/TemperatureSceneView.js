@@ -11,7 +11,6 @@ define( require => {
   'use strict';
 
   // modules
-  // const DownUpListener = require( 'SCENERY/input/DownUpListener' );
   const Image = require( 'SCENERY/nodes/Image' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -21,7 +20,8 @@ define( require => {
   const TemperaturePointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/TemperaturePointControllerNode' );
 
   // strings
-  const temperatureAmountCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountCelsius' );
+  //const temperatureAmountCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountCelsius' );
+  const temperatureAmountFahrenheitString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountFahrenheit' );
 
   // images
   const temperatureMap = require( 'image!NUMBER_LINE_INTEGERS/temperature-map.png' );
@@ -31,7 +31,7 @@ define( require => {
 
       super( sceneModel, layoutBounds, {
         numberLineOptions: {
-          numberDisplayTemplate: temperatureAmountCelsiusString
+          numberDisplayTemplate: temperatureAmountFahrenheitString
         }
       } );
 
@@ -45,14 +45,6 @@ define( require => {
       this.temperatureMap = new Node( {
         children: [ temperatureMapImage ]
       } );
-
-      // this.temperatureMap.addInputListener( new DownUpListener( {
-      //   down: event => {
-      //     const clickPoint = this.temperatureMap.globalToLocalPoint( event.pointer.point );
-      //     console.log( sceneModel.getTemperatureAndColorAtLocation( clickPoint ).temperature );
-      //     console.log( sceneModel.getTemperatureAndColorAtLocation( clickPoint ).color );
-      //   }
-      // } ) );
 
       this.temperatureMap.center = sceneModel.mapBounds.center;
 
