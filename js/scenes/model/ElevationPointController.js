@@ -68,6 +68,14 @@ define( require => {
         }
 
       } );
+
+      this.numberLine.showAbsoluteValuesProperty.link( shouldShowAbsoluteValues => {
+        if ( shouldShowAbsoluteValues && overElevationAreaProperty.value ) {
+          // TODO: show a line to the ocean
+        } else {
+          // TODO: make line to ocean invisible
+        }
+      } );
     }
 
     /**
