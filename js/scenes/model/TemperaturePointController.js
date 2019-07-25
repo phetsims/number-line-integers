@@ -12,8 +12,11 @@ define( require => {
 
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const Color = require( 'SCENERY/util/Color' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
+  const PaintColorProperty = require( 'SCENERY/util/PaintColorProperty' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
 
   /**
@@ -28,7 +31,9 @@ define( require => {
     constructor( sceneModel, options ) {
 
       options = _.extend( {
-        lockToNumberLine: 'never'
+        lockToNumberLine: 'never',
+        baseDisabledColor: new Color( 0, 0, 0, 0 ),
+        baseDisabledTemperature: 0
       }, options );
 
       super( sceneModel.numberLine, options );
@@ -39,8 +44,17 @@ define( require => {
       // @public (readonly) whether the point controller is over the map
       this.isOverMapProperty = new BooleanProperty( false );
 
+      // @public temperature at the position of the point controller on the map
+      this.temperatureProperty = new NumberProperty( 0 );
+
+      // @public color represented by temperature on map
+      this.colorProperty = new PaintColorProperty( options.baseDisabledColor );
+
       this.positionProperty.link( position => {
         const data = sceneModel.getTemperatureAndColorAtLocation( position );
+        this.temperatureProperty.value = data ? data.temperature : options.baseDisabledTemperature;
+        this.colorProperty.value = data ? data.color : options.baseDisabledColor;
+
         this.isOverMapProperty.value = data !== null;
         if ( this.isOverMapProperty.value && this.numberLinePoint ) {
           this.numberLinePoint.valueProperty.value = data.temperature;
@@ -56,10 +70,9 @@ define( require => {
           assert && assert( !this.numberLinePoint, 'should not already have a point' );
 
           // create a new point on the number line
-          const data = sceneModel.getTemperatureAndColorAtLocation( this.positionProperty.value );
           const numberLinePoint = new NumberLinePoint(
-            data.temperature,
-            data.color,
+            this.temperatureProperty.value,
+            this.colorProperty.value,
             this.numberLine,
             this
           );
