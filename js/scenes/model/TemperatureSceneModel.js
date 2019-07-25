@@ -135,7 +135,7 @@ define( require => {
      * @returns {{color, temperature: number}|null} returns data unless location is invalid, in which case null is returned
      */
     getTemperatureAndColorAtLocation( location ) {
-      const coordinate = this.dataSet.getLatLongAtPoint( location.x, location.y );
+      const coordinate = this.dataSet.getLatLongAtPoint( location.x - this.mapBounds.minX, location.y - this.mapBounds.minY );
 
       const latDegrees = coordinate.latitude / Math.PI * 180;
       const lonDegrees = coordinate.longitude / Math.PI * 180;
