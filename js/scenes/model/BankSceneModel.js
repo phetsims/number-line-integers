@@ -57,6 +57,9 @@ define( require => {
       this.primaryAccountBalanceProperty.link( balance => {
         this.numberLine.residentPoints.get( 0 ).valueProperty.value = balance;
       } );
+      this.numberLine.residentPoints.get( 0 ).valueProperty.link( value => {
+        this.primaryAccountBalanceProperty.value = value;
+      } );
 
       // @public {NumberProperty} - balance of the bank account that is shown when the user wants to compare two accounts
       this.comparisonAccountBalanceProperty = new NumberProperty( INITIAL_COMPARISON_ACCOUNT_BALANCE );
@@ -107,6 +110,10 @@ define( require => {
             this.numberLine
           );
           this.numberLine.addPoint( comparisonAccountNumberLinePoint );
+
+          comparisonAccountNumberLinePoint.valueProperty.link( value => {
+            this.comparisonAccountBalanceProperty.value = value;
+          } );
 
           // create the controller fo this point
           this.comparisonAccountPointControllerProperty.value = new PointController( this.numberLine, {
