@@ -355,7 +355,8 @@ define( require => {
       const tmCenter = this.numberLine.valueToModelPosition( value );
 
       //TODO: think up of how to handle negative signs
-      // option 1: always put negative sign in front of everything ( MathSymbols.UNARY_MINUS + StringUtils.fillIn(...) )
+      // option 1: always put negative sign in front of everything < 0 ( MathSymbols.UNARY_MINUS + StringUtils.fillIn(...) )
+      //  this is what is done in BankPointControllerNode
       // option 2: make the minus sign a part of the string template
       // option 3: check if '{{negativeSign}}' is in the template, and insert - there, otherwise include as part of value
       //When this issue is worked on, be sure to update also in PointNode constructor

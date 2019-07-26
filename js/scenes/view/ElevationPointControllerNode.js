@@ -48,6 +48,8 @@ define( require => {
 
       super( pointController, options );
 
+      // handling of what the point controller does when the absolute value checkbox is checked
+      // TODO: also put text nodes here labelling how far above or below the sea each controller is
       const absoluteValueLine = new Path( null, { stroke: pointController.color, lineWidth: 2 } );
       this.addChild( absoluteValueLine );
       absoluteValueLine.moveToBack();
