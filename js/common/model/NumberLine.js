@@ -190,7 +190,7 @@ define( require => {
       }
 
       // round the value to an integer
-      return numberLineValue;
+      return Util.roundSymmetric( numberLineValue );
     }
 
     /**

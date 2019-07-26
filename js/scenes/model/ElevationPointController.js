@@ -4,7 +4,6 @@
  * a point controller with some extensions that are specific to the "Elevation" scene
  *
  * @author John Blanco
- * @author Saurabh Totey
  */
 define( require => {
   'use strict';

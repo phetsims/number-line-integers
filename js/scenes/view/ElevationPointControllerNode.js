@@ -4,6 +4,7 @@
  * a Scenery node that is used to control point positions in the "Elevation" scene of the Number Line Integers sim
  *
  * @author John Blanco (PhET Interactive Simulations)
+ * @author Saurabh Totey
  */
 define( require => {
   'use strict';
