@@ -19,9 +19,6 @@ define( require => {
   const PaintColorProperty = require( 'SCENERY/util/PaintColorProperty' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
 
-  /**
-   * TODO: this class should eventually extend some common code temperature sensor model or something
-   */
   class TemperaturePointController extends PointController {
 
     /**
