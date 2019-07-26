@@ -184,7 +184,7 @@ define( require => {
       this.numberLine.reset();
 
       // clear any associations that the point controllers have with points on the number line
-      this.pointControllers.forEach( function( pointController ) {
+      this.pointControllers.forEach( pointController => {
         pointController.reset();
       } );
 

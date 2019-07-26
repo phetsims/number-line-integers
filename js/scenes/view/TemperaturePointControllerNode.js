@@ -47,7 +47,7 @@ define( require => {
         stroke: 'black',
         lineJoin: 'round'
       } );
-      pointController.colorProperty.link( function( color ) {
+      pointController.colorProperty.link( color => {
         colorIndicatorNode.fill = color;
       } );
       compositeThermometerNode.addChild( colorIndicatorNode );
