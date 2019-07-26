@@ -89,6 +89,7 @@ define( require => {
           new Image( girlInAir, { maxWidth: 90, center: Vector2.ZERO } ),
           new Image( girlOnRock, { maxWidth: 30, center: Vector2.ZERO } )
         ],
+        sceneModel.seaLevel,
         {
           // special highly tweaked function for having the hiker image show up over the cliff
           imageSelectionFunction: position => {
@@ -118,6 +119,7 @@ define( require => {
           new Image( birdInWater, { maxWidth: 65, center: Vector2.ZERO } ),
           new Image( birdInAir, { maxWidth: 60, center: Vector2.ZERO } )
         ],
+        sceneModel.seaLevel,
         {
           imageSelectionFunction: selectImageIndex,
           connectorLine: false
@@ -131,6 +133,7 @@ define( require => {
           new Image( fishInWater, { maxWidth: 60, center: Vector2.ZERO } ),
           new Image( fishInAir, { maxWidth: 60, center: Vector2.ZERO } )
         ],
+        sceneModel.seaLevel,
         {
           imageSelectionFunction: selectImageIndex,
           connectorLine: false

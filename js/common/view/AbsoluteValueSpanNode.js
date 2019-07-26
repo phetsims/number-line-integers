@@ -111,7 +111,7 @@ define( require => {
             pointPosition.y
           );
         }
-        spanIndicatorNode.setShape( spanIndicatorShape );
+        spanIndicatorNode.shape = spanIndicatorShape;
       };
 
       // define a function to update the text label

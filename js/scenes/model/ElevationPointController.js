@@ -35,16 +35,16 @@ define( require => {
       // @private {Bounds2}
       this.elevationsAreaBounds = elevationAreaBounds;
 
-      // local property that tracks whether this point controller is in the area where it should be controlling a point
-      const overElevationAreaProperty = new BooleanProperty( false );
+      // @public (read-only) property that tracks whether this point controller is in the area where it should be controlling a point
+      this.overElevationAreaProperty = new BooleanProperty( false );
 
       // as of this writing, these point controllers are never disposed, so no unlinking is needed
       this.positionProperty.link( position => {
-        overElevationAreaProperty.value = elevationAreaBounds.containsPoint( position );
+        this.overElevationAreaProperty.value = elevationAreaBounds.containsPoint( position );
       } );
 
       // create/remove number line points based on whether we're over the elevation area
-      overElevationAreaProperty.lazyLink( over => {
+      this.overElevationAreaProperty.lazyLink( over => {
         if ( over && this.isDraggingProperty.value ) {
 
           // state checking
@@ -69,13 +69,6 @@ define( require => {
 
       } );
 
-      this.numberLine.showAbsoluteValuesProperty.link( shouldShowAbsoluteValues => {
-        if ( shouldShowAbsoluteValues && overElevationAreaProperty.value ) {
-          // TODO: show a line to the ocean
-        } else {
-          // TODO: make line to ocean invisible
-        }
-      } );
     }
 
     /**
