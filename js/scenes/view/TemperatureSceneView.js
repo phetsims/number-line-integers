@@ -72,9 +72,8 @@ define( require => {
       sceneModel.showNumberLineProperty.linkAttribute( attachedPointControllersLayer, 'visible' );
 
       // add/remove the nodes that represent the point controllers that are attached to the number line
-      //TODO: disable dragging on these new PointControllerNodes
       sceneModel.numberLineAttachedPointControllers.addItemAddedListener( addedPointController => {
-        const pointControllerNode = new PointControllerNode( addedPointController );
+        const pointControllerNode = new PointControllerNode( addedPointController, { pickable: false } );
         attachedPointControllersLayer.addChild( pointControllerNode );
         const handlePointControllerRemoved = removedPointController => {
           if ( addedPointController === removedPointController ) {
