@@ -49,6 +49,7 @@ define( require => {
 
       const absoluteValueLine = new Path( null, { stroke: pointController.color, lineWidth: 2 } );
       this.addChild( absoluteValueLine );
+      absoluteValueLine.moveToBack();
       Property.multilink( [ pointController.numberLine.showAbsoluteValuesProperty, pointController.positionProperty ], () => {
         if ( pointController.numberLine.showAbsoluteValuesProperty.value && pointController.overElevationAreaProperty.value ) {
           absoluteValueLine.shape = new Shape()
@@ -57,7 +58,6 @@ define( require => {
         } else {
           absoluteValueLine.shape = null;
         }
-        absoluteValueLine.moveToFront();
       } );
     }
   }
