@@ -16,13 +16,14 @@ define( require => {
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const Property = require( 'AXON/Property' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const Shape = require( 'KITE/Shape' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
 
   // strings
-  const amountBelowSeaLevelString = require( 'string!NUMBER_LINE_INTEGERS/amountBelowSeaLevel' );
   const amountAboveSeaLevelString = require( 'string!NUMBER_LINE_INTEGERS/amountAboveSeaLevel' );
+  const amountBelowSeaLevelString = require( 'string!NUMBER_LINE_INTEGERS/amountBelowSeaLevel' );
 
   class ElevationPointControllerNode extends PointControllerNode {
 
@@ -57,29 +58,41 @@ define( require => {
 
       // handling of what the point controller does when the absolute value checkbox is checked
       const absoluteValueLine = new Path( null, { stroke: pointController.color, lineWidth: 2 } );
-      const distanceText = new Text( '', { font: new PhetFont( 12 ) } ); // TODO: give this text a background rectangle
+      const distanceText = new Text( '', { font: new PhetFont( 12 ) } );
+      const distanceTextBackgroundRectangle = new Rectangle( 0, 0, 0, 0, 3, 3, {
+          fill: 'white',
+          opacity: 0.75
+      } );
       this.addChild( absoluteValueLine );
+      this.addChild( distanceTextBackgroundRectangle );
       this.addChild( distanceText );
       absoluteValueLine.moveToBack();
 
       Property.multilink( [ pointController.numberLine.showAbsoluteValuesProperty, pointController.positionProperty ], () => {
-        distanceText.left = compositeImageNode.right + 5;
-        distanceText.centerY = compositeImageNode.centerY;
-
         if ( pointController.numberLine.showAbsoluteValuesProperty.value
              && pointController.overElevationAreaProperty.value
              && pointController.numberLinePoint ) {
+
           absoluteValueLine.shape = new Shape()
             .moveTo( compositeImageNode.centerX, compositeImageNode.centerY )
             .lineTo( compositeImageNode.centerX, seaLevel );
+
           const value = pointController.numberLinePoint.valueProperty.value;
           distanceText.text = StringUtils.fillIn( value < 0 ? amountBelowSeaLevelString : amountAboveSeaLevelString, {
             value: value
           } );
+          distanceTextBackgroundRectangle.visible = true;
           distanceText.visible = true;
+
+          distanceTextBackgroundRectangle.setRect( 0, 0, distanceText.width + 5, distanceText.height + 5 );
+          distanceTextBackgroundRectangle.left = compositeImageNode.right + 5;
+          distanceTextBackgroundRectangle.centerY = compositeImageNode.centerY;
+          distanceText.center = distanceTextBackgroundRectangle.center;
+
         }
         else {
           absoluteValueLine.shape = null;
+          distanceTextBackgroundRectangle.visible = false;
           distanceText.visible = false;
         }
       } );
