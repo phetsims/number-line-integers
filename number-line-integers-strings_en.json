@@ -17,6 +17,12 @@
   "labels": {
     "value": "Labels"
   },
+  "amountBelowSeaLevel": {
+    "value": "{{value}} m below sea level"
+  },
+  "amountAboveSeaLevel": {
+    "value": "{{value}} m above sea level"
+  },
   "elevationAmount": {
     "value": "{{value}} m"
   },

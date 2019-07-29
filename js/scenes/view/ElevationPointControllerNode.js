@@ -17,7 +17,12 @@ define( require => {
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const Property = require( 'AXON/Property' );
   const Shape = require( 'KITE/Shape' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
+
+  // strings
+  const amountBelowSeaLevelString = require( 'string!NUMBER_LINE_INTEGERS/amountBelowSeaLevel' );
+  const amountAboveSeaLevelString = require( 'string!NUMBER_LINE_INTEGERS/amountAboveSeaLevel' );
 
   class ElevationPointControllerNode extends PointControllerNode {
 
@@ -52,7 +57,7 @@ define( require => {
 
       // handling of what the point controller does when the absolute value checkbox is checked
       const absoluteValueLine = new Path( null, { stroke: pointController.color, lineWidth: 2 } );
-      const distanceText = new Text( '', { font: new PhetFont( 12 ) } );
+      const distanceText = new Text( '', { font: new PhetFont( 12 ) } ); // TODO: give this text a background rectangle
       this.addChild( absoluteValueLine );
       this.addChild( distanceText );
       absoluteValueLine.moveToBack();
@@ -67,10 +72,13 @@ define( require => {
           absoluteValueLine.shape = new Shape()
             .moveTo( compositeImageNode.centerX, compositeImageNode.centerY )
             .lineTo( compositeImageNode.centerX, seaLevel );
-          // TODO: make a string template for this
-          distanceText.text = `${pointController.numberLinePoint.valueProperty.value} m away from sea level`;
+          const value = pointController.numberLinePoint.valueProperty.value;
+          distanceText.text = StringUtils.fillIn( value < 0 ? amountBelowSeaLevelString : amountAboveSeaLevelString, {
+            value: value
+          } );
           distanceText.visible = true;
-        } else {
+        }
+        else {
           absoluteValueLine.shape = null;
           distanceText.visible = false;
         }
