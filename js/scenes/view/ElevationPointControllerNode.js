@@ -56,14 +56,18 @@ define( require => {
       this.addChild( absoluteValueLine );
       this.addChild( distanceText );
       absoluteValueLine.moveToBack();
+
       Property.multilink( [ pointController.numberLine.showAbsoluteValuesProperty, pointController.positionProperty ], () => {
         distanceText.left = compositeImageNode.right + 5;
         distanceText.centerY = compositeImageNode.centerY;
-        if ( pointController.numberLine.showAbsoluteValuesProperty.value && pointController.overElevationAreaProperty.value ) {
+
+        if ( pointController.numberLine.showAbsoluteValuesProperty.value
+             && pointController.overElevationAreaProperty.value
+             && pointController.numberLinePoint ) {
           absoluteValueLine.shape = new Shape()
             .moveTo( compositeImageNode.centerX, compositeImageNode.centerY )
             .lineTo( compositeImageNode.centerX, seaLevel );
-          // TODO: this errors when animating back and also make a string template for this
+          // TODO: make a string template for this
           distanceText.text = `${pointController.numberLinePoint.valueProperty.value} m away from sea level`;
           distanceText.visible = true;
         } else {
