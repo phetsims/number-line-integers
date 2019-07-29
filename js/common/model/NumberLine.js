@@ -114,8 +114,7 @@ define( require => {
           }
 
           // there is already a point at this location, so we have to choose another
-          // TODO: the below line is causing #10 because points that haven't been on the graph have a default mostRecentlyProposed value of 0
-          addedPoint.valueProperty.value = this.getNearestUnoccupiedValue( addedPoint.mostRecentlyProposedValue );
+          addedPoint.valueProperty.value = this.getNearestUnoccupiedValue( addedPoint.valueProperty.value );
         };
         addedPoint.isDraggingProperty.link( pointDragListener );
 

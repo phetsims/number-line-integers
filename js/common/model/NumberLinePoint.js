@@ -39,8 +39,6 @@ define( require => {
       // @private {PointController|null} - a "point controller" that controls where this point is, can be null
       this.controller = controller;
 
-      // @public (read-only) {number|null} - the most recently proposed value, used when deciding where to land on number line
-      this.mostRecentlyProposedValue = null;
     }
 
     /**
@@ -62,7 +60,6 @@ define( require => {
       if ( constrainedValue !== this.valueProperty.value ) {
         this.valueProperty.value = constrainedValue;
       }
-      this.mostRecentlyProposedValue = numberLineValue;
     }
   }
 
