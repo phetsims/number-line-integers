@@ -75,7 +75,7 @@ define( require => {
       // pop to the front of the z-order when dragged
       const dragStateChangeHandler = dragging => {
         if ( dragging ) {
-          this.moveToFront();
+          this.moveToFront(); // TODO: this line is problematic for #11
         }
       };
       pointController.isDraggingProperty.link( dragStateChangeHandler );
