@@ -13,9 +13,11 @@ define( require => {
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Path = require( 'SCENERY/nodes/Path' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const Property = require( 'AXON/Property' );
   const Shape = require( 'KITE/Shape' );
+  const Text = require( 'SCENERY/nodes/Text' );
 
   class ElevationPointControllerNode extends PointControllerNode {
 
@@ -49,17 +51,24 @@ define( require => {
       super( pointController, options );
 
       // handling of what the point controller does when the absolute value checkbox is checked
-      // TODO: also put text nodes here labelling how far above or below the sea each controller is
       const absoluteValueLine = new Path( null, { stroke: pointController.color, lineWidth: 2 } );
+      const distanceText = new Text( '', { font: new PhetFont( 12 ) } );
       this.addChild( absoluteValueLine );
+      this.addChild( distanceText );
       absoluteValueLine.moveToBack();
       Property.multilink( [ pointController.numberLine.showAbsoluteValuesProperty, pointController.positionProperty ], () => {
+        distanceText.left = compositeImageNode.right + 5;
+        distanceText.centerY = compositeImageNode.centerY;
         if ( pointController.numberLine.showAbsoluteValuesProperty.value && pointController.overElevationAreaProperty.value ) {
           absoluteValueLine.shape = new Shape()
             .moveTo( compositeImageNode.centerX, compositeImageNode.centerY )
             .lineTo( compositeImageNode.centerX, seaLevel );
+          // TODO: this errors when animating back and also make a string template for this
+          distanceText.text = `${pointController.numberLinePoint.valueProperty.value} m away from sea level`;
+          distanceText.visible = true;
         } else {
           absoluteValueLine.shape = null;
+          distanceText.visible = false;
         }
       } );
     }
