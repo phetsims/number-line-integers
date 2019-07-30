@@ -115,7 +115,11 @@ define( require => {
             value: Math.abs( value )
           } );
           absoluteValueText.centerX = controllerNode.centerX;
-          absoluteValueText.top = controllerNode.bottom + 5;
+          if ( overlayType === 'flowers' ) {
+            absoluteValueText.top = controllerNode.bottom + 5;
+          } else {
+            absoluteValueText.bottom = controllerNode.top - 5;
+          }
         } else {
           absoluteValueText.visible = false;
         }
