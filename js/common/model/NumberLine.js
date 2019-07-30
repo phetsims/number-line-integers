@@ -327,9 +327,12 @@ define( require => {
 
     /**
      * get the closest valid value that isn't already occupied by a point
+     * TODO: this works best with decimal values, but is getting integer values which means it always rounds down
+     *  rounded values are coming from modelPositionToValue
      * @param {number} value
      */
     getNearestUnoccupiedValue( value ) {
+      console.log( value );
       const roundedValue = Util.roundSymmetric( value );
       let currentDistance = 0;
       const getValidValuesAtDistance = distance => {

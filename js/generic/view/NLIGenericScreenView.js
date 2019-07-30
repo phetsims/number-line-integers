@@ -130,7 +130,9 @@ define( require => {
 
       // add the point controller nodes
       model.pointControllers.forEach( pointController => {
-        pointControllerLayer.addChild( new PointControllerNode( pointController ) );
+        const pointControllerNode = new PointControllerNode( pointController );
+        pointControllerLayer.addChild( pointControllerNode );
+        pointController.positionProperty.link( () => { pointControllerNode.moveToFront(); } );
       } );
 
       // add the number line node
