@@ -23,6 +23,12 @@
   "amountAboveSeaLevel": {
     "value": "{{value}} m above sea level"
   },
+  "debtAmount": {
+    "value": "debt of ${{value}}"
+  },
+  "balanceAmount": {
+    "value": "balance of ${{value}}"
+  },
   "elevationAmount": {
     "value": "{{value}} m"
   },

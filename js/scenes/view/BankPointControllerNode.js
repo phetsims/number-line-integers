@@ -35,6 +35,8 @@ define( require => {
 
   // strings
   const moneyAmountString = require( 'string!NUMBER_LINE_INTEGERS/moneyAmount' );
+  const balanceAmountString = require( 'string!NUMBER_LINE_INTEGERS/balanceAmount' );
+  const debtAmountString = require( 'string!NUMBER_LINE_INTEGERS/debtAmount' );
 
   class BankPointControllerNode extends PointControllerNode {
 
@@ -108,9 +110,22 @@ define( require => {
       Property.multilink( [ pointController.numberLine.showAbsoluteValuesProperty, pointController.positionProperty ], () => {
         if ( pointController.numberLine.showAbsoluteValuesProperty.value ) {
           absoluteValueText.visible = true;
-          absoluteValueText.text = 'TODO: this is a filler test text';
+          const value = pointController.numberLinePoint.valueProperty.value;
+          let stringTemplate;
+          if ( value < 0 ) {
+            stringTemplate = debtAmountString;
+            absoluteValueText.fill = PIGGY_BANK_RED_FILL;
+          } else {
+            stringTemplate = balanceAmountString;
+            absoluteValueText.fill = PIGGY_BANK_GREEN_FILL;
+          }
+          absoluteValueText.text = StringUtils.fillIn( stringTemplate, { value: Math.abs( value ) } );
           absoluteValueText.centerX = controllerNode.centerX;
-          absoluteValueText.top = controllerNode.bottom + 5;
+          if ( overlayType === 'flowers' ) {
+            absoluteValueText.top = controllerNode.bottom + 5;
+          } else {
+            absoluteValueText.bottom = controllerNode.top - 5;
+          }
         } else {
           absoluteValueText.visible = false;
         }
