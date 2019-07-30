@@ -35,6 +35,8 @@ define( require => {
 
   // strings
   const moneyAmountString = require( 'string!NUMBER_LINE_INTEGERS/moneyAmount' );
+  const balanceAmountString = require( 'string!NUMBER_LINE_INTEGERS/balanceAmount' );
+  const debtAmountString = require( 'string!NUMBER_LINE_INTEGERS/debtAmount' );
 
   class BankPointControllerNode extends PointControllerNode {
 
@@ -108,7 +110,10 @@ define( require => {
       Property.multilink( [ pointController.numberLine.showAbsoluteValuesProperty, pointController.positionProperty ], () => {
         if ( pointController.numberLine.showAbsoluteValuesProperty.value ) {
           absoluteValueText.visible = true;
-          absoluteValueText.text = 'TODO: this is a filler test text';
+          const value = pointController.numberLinePoint.valueProperty.value;
+          absoluteValueText.text = StringUtils.fillIn( value < 0 ? debtAmountString : balanceAmountString, {
+            value: Math.abs( value )
+          } );
           absoluteValueText.centerX = controllerNode.centerX;
           absoluteValueText.top = controllerNode.bottom + 5;
         } else {
