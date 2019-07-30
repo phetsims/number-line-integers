@@ -111,9 +111,15 @@ define( require => {
         if ( pointController.numberLine.showAbsoluteValuesProperty.value ) {
           absoluteValueText.visible = true;
           const value = pointController.numberLinePoint.valueProperty.value;
-          absoluteValueText.text = StringUtils.fillIn( value < 0 ? debtAmountString : balanceAmountString, {
-            value: Math.abs( value )
-          } );
+          let stringTemplate;
+          if ( value < 0 ) {
+            stringTemplate = debtAmountString;
+            absoluteValueText.fill = PIGGY_BANK_RED_FILL;
+          } else {
+            stringTemplate = balanceAmountString;
+            absoluteValueText.fill = PIGGY_BANK_GREEN_FILL;
+          }
+          absoluteValueText.text = StringUtils.fillIn( stringTemplate, { value: Math.abs( value ) } );
           absoluteValueText.centerX = controllerNode.centerX;
           if ( overlayType === 'flowers' ) {
             absoluteValueText.top = controllerNode.bottom + 5;
