@@ -47,7 +47,7 @@ define( require => {
       this.addChild( connectorLine );
 
       // set up the node that the user will drag to move this around
-      const draggableNode = options.node || new ShadedSphereNode( SPHERE_RADIUS * 2, {
+      let draggableNode = options.node || new ShadedSphereNode( SPHERE_RADIUS * 2, {
         mainColor: pointController.color
       } );
       this.addChild( draggableNode );
@@ -58,10 +58,15 @@ define( require => {
 
       // monitor the point controller and adjust positions to match
       const handlePointControllerPositionChange = position => {
-        draggableNode.centerX = position.x + draggableNodeXOffset;
-        draggableNode.centerY = position.y + draggableNodeYOffset;
-
         if ( options.connectorLine && pointController.numberLinePoint ) {
+          if ( pointController.color !== pointController.numberLinePoint.colorProperty.value && options.node === null ) {
+
+            // draggableNode must be removed and readded with new colors
+            this.removeChild( draggableNode );
+            pointController.color = pointController.numberLinePoint.colorProperty.value;
+            draggableNode = new ShadedSphereNode( SPHERE_RADIUS * 2, { mainColor: pointController.color } );
+            this.addChild( draggableNode );
+          }
           const pointPosition = pointController.numberLinePoint.getPositionInModelSpace();
           connectorLine.setLine( position.x, position.y, pointPosition.x, pointPosition.y );
           connectorLine.visible = true;
@@ -69,6 +74,8 @@ define( require => {
         else {
           connectorLine.visible = false;
         }
+        draggableNode.centerX = position.x + draggableNodeXOffset;
+        draggableNode.centerY = position.y + draggableNodeYOffset;
       };
       pointController.positionProperty.link( handlePointControllerPositionChange );
 
