@@ -15,6 +15,7 @@ define( require => {
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Path = require( 'SCENERY/nodes/Path' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Property = require( 'AXON/Property' );
   const piggyBankShapes = require( 'NUMBER_LINE_INTEGERS/scenes/view/piggyBankShapes' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
@@ -100,6 +101,20 @@ define( require => {
       } );
 
       super( pointController, options );
+
+      // how the node handles absolute values
+      const absoluteValueText = new Text( '', { font: new PhetFont( 12 ) } );
+      this.addChild( absoluteValueText );
+      Property.multilink( [ pointController.numberLine.showAbsoluteValuesProperty, pointController.positionProperty ], () => {
+        if ( pointController.numberLine.showAbsoluteValuesProperty.value ) {
+          absoluteValueText.visible = true;
+          absoluteValueText.text = 'TODO: this is a filler test text';
+          absoluteValueText.centerX = controllerNode.centerX;
+          absoluteValueText.top = controllerNode.bottom + 5;
+        } else {
+          absoluteValueText.visible = false;
+        }
+      } );
     }
   }
 
