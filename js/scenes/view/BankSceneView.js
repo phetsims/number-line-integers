@@ -39,8 +39,6 @@ define( require => {
 
       super( sceneModel, layoutBounds, {
         numberLineOptions: {
-
-          //TODO: this doesn't quite work well with negative signs
           numberDisplayTemplate: moneyAmountString
         }
       } );

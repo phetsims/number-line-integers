@@ -14,6 +14,7 @@ define( require => {
   const Bounds2 = require( 'DOT/Bounds2' );
   const Circle = require( 'SCENERY/nodes/Circle' );
   const Line = require( 'SCENERY/nodes/Line' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -354,13 +355,11 @@ define( require => {
       // get the center position of the tick mark
       const tmCenter = this.numberLine.valueToModelPosition( value );
 
-      //TODO: think up of how to handle negative signs
-      // option 1: always put negative sign in front of everything < 0 ( MathSymbols.UNARY_MINUS + StringUtils.fillIn(...) )
-      //  this is what is done in BankPointControllerNode
-      // option 2: make the minus sign a part of the string template
-      // option 3: check if '{{negativeSign}}' is in the template, and insert - there, otherwise include as part of value
       //When this issue is worked on, be sure to update also in PointNode constructor
-      const stringValue = StringUtils.fillIn( this.options.numberDisplayTemplate, { value: value } );
+      let stringValue = StringUtils.fillIn( this.options.numberDisplayTemplate, { value: Math.abs( value ) } );
+      if ( value < 0 ) {
+        stringValue = MathSymbols.UNARY_MINUS + stringValue;
+      }
 
       if ( this.numberLine.isHorizontal ) {
 
@@ -411,8 +410,13 @@ define( require => {
       } );
       this.addChild( circle );
 
-      // create the label text TODO: see todo in NumberLineNode addTickMark about negative signs
-      const getLabelText = value => StringUtils.fillIn( options.numberDisplayTemplate, { value: value } );
+      const getLabelText = value => {
+        let stringValue =  StringUtils.fillIn( options.numberDisplayTemplate, { value: Math.abs( value ) } );
+        if ( value < 0 ) {
+          stringValue = MathSymbols.UNARY_MINUS + stringValue;
+        }
+        return stringValue;
+      };
       const labelTextNode = new Text( getLabelText( numberLinePoint.valueProperty.value ), {
         font: new PhetFont( 16 ),
         fill: numberLinePoint.colorProperty

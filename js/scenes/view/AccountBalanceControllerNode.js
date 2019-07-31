@@ -9,17 +9,14 @@ define( require => {
   'use strict';
 
   // modules
-  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const Image = require( 'SCENERY/nodes/Image' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
-  const Text = require( 'SCENERY/nodes/Text' );
   const Util = require( 'DOT/Util' );
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
-  const LABEL_FONT = new PhetFont( 40 );
-  const MARGIN = 1;
+  const MARGIN = 7;
   const BUTTON_OPTIONS = {
     minXMargin: MARGIN,
     minYMargin: MARGIN,
@@ -27,6 +24,10 @@ define( require => {
     fireOnHoldDelay: 400,
     fireOnHoldInterval: 30
   };
+
+  // images TODO: replace the coin PNG images with SVGs
+  const depositingCoinsImage = require( 'image!NUMBER_LINE_INTEGERS/coin_icons-01.png' );
+  const withdrawingCoinsImage = require( 'image!NUMBER_LINE_INTEGERS/coin_icons-02.png' );
 
   class AccountBalanceControllerNode extends VBox {
 
@@ -42,13 +43,13 @@ define( require => {
         balanceProperty.value = Util.clamp( balanceProperty.value + balanceChangeAmount, range.min, range.max );
       };
 
-      // create the buttons
+      // create the buttons TODO use SVGs instead of PNG images
       const upButton = new RoundPushButton( _.extend( {
-        content: new Text( MathSymbols.PLUS, { font: LABEL_FONT } ),
+        content: new Image( depositingCoinsImage, { scale: 0.15 } ),
         listener: () => { changeBalanceBy( changeAmount ); }
       }, BUTTON_OPTIONS ) );
       const downButton = new RoundPushButton( _.extend( {
-        content: new Text( MathSymbols.MINUS, { font: LABEL_FONT } ),
+        content: new Image( withdrawingCoinsImage, { scale: 0.15 } ),
         listener: () => { changeBalanceBy( -changeAmount ); }
       }, BUTTON_OPTIONS ) );
 
