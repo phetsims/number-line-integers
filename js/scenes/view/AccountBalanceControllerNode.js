@@ -16,7 +16,7 @@ define( require => {
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
-  const MARGIN = 1;
+  const MARGIN = 7;
   const BUTTON_OPTIONS = {
     minXMargin: MARGIN,
     minYMargin: MARGIN,
@@ -45,11 +45,11 @@ define( require => {
 
       // create the buttons TODO use SVGs instead of PNG images
       const upButton = new RoundPushButton( _.extend( {
-        content: new Image( depositingCoinsImage, { scale: 0.2 } ),
+        content: new Image( depositingCoinsImage, { scale: 0.15 } ),
         listener: () => { changeBalanceBy( changeAmount ); }
       }, BUTTON_OPTIONS ) );
       const downButton = new RoundPushButton( _.extend( {
-        content: new Image( withdrawingCoinsImage, { scale: 0.2 } ),
+        content: new Image( withdrawingCoinsImage, { scale: 0.15 } ),
         listener: () => { changeBalanceBy( -changeAmount ); }
       }, BUTTON_OPTIONS ) );
 
