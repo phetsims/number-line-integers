@@ -47,14 +47,14 @@ define( require => {
       this.addChild( connectorLine );
 
       // set up the node that the user will drag to move this around
-      let draggableNode = options.node || new ShadedSphereNode( SPHERE_RADIUS * 2, {
+      this.draggableNode = options.node || new ShadedSphereNode( SPHERE_RADIUS * 2, {
         mainColor: pointController.color
       } );
-      this.addChild( draggableNode );
+      this.addChild( this.draggableNode );
 
       // account for offset for nodes with (0,0) point not in center
-      const draggableNodeXOffset = draggableNode.centerX;
-      const draggableNodeYOffset = draggableNode.centerY;
+      const draggableNodeXOffset = this.draggableNode.centerX;
+      const draggableNodeYOffset = this.draggableNode.centerY;
 
       // monitor the point controller and adjust positions to match
       const handlePointControllerPositionChange = position => {
@@ -62,10 +62,10 @@ define( require => {
           if ( pointController.color !== pointController.numberLinePoint.colorProperty.value && options.node === null ) {
 
             // draggableNode must be removed and readded with new colors
-            this.removeChild( draggableNode );
+            this.removeChild( this.draggableNode );
             pointController.color = pointController.numberLinePoint.colorProperty.value;
-            draggableNode = new ShadedSphereNode( SPHERE_RADIUS * 2, { mainColor: pointController.color } );
-            this.addChild( draggableNode );
+            this.draggableNode = new ShadedSphereNode( SPHERE_RADIUS * 2, { mainColor: pointController.color } );
+            this.addChild( this.draggableNode );
           }
           const pointPosition = pointController.numberLinePoint.getPositionInModelSpace();
           connectorLine.setLine( position.x, position.y, pointPosition.x, pointPosition.y );
@@ -74,14 +74,14 @@ define( require => {
         else {
           connectorLine.visible = false;
         }
-        const scaleVector = draggableNode.getScaleVector();
-        draggableNode.centerX = position.x + ( draggableNodeXOffset * scaleVector.x );
-        draggableNode.centerY = position.y + ( draggableNodeYOffset * scaleVector.y );
+        const scaleVector = this.draggableNode.getScaleVector();
+        this.draggableNode.centerX = position.x + ( draggableNodeXOffset * scaleVector.x );
+        this.draggableNode.centerY = position.y + ( draggableNodeYOffset * scaleVector.y );
       };
       pointController.positionProperty.link( handlePointControllerPositionChange );
 
       const handlePointControllerScaleChange = scale => {
-        draggableNode.setScaleMagnitude( scale );
+        this.draggableNode.setScaleMagnitude( scale );
       };
       pointController.scaleProperty.link( handlePointControllerScaleChange );
 
@@ -101,15 +101,17 @@ define( require => {
 
       // drag handler if intended to be dragged
       if ( options.pickable !== false ) {
+        let pointOffset;
         this.addInputListener( new DragListener( {
           dragBoundsProperty: new Property( this.layoutBounds ),
           start: event => {
             pointController.isDraggingProperty.value = true;
             pointController.scaleProperty.value = 1.0;
-            pointController.proposePosition( this.globalToParentPoint( event.pointer.point ) );
+            pointOffset = this.draggableNode.globalToParentPoint( event.pointer.point ).minus( this.draggableNode );
           },
           drag: event => {
-            pointController.proposePosition( this.globalToParentPoint( event.pointer.point ) );
+            const parentPoint = this.globalToParentPoint( event.pointer.point );
+            pointController.proposePosition( parentPoint.minus( pointOffset ) );
           },
           end: () => {
             pointController.isDraggingProperty.value = false;
