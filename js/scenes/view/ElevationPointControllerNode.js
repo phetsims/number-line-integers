@@ -78,6 +78,9 @@ define( require => {
             .moveTo( compositeImageNode.centerX, compositeImageNode.centerY )
             .lineTo( compositeImageNode.centerX, seaLevel );
 
+          // TODO: should Math.abs(value) be passed into StringUtils.fillIn instead?
+          //  -37 m below sea level to me makes less sense than 37 m below sea level
+          //  furthermore, in the bank scene, negative numbers aren't used for debt: it is just 'debt of [some positive value]'
           const value = pointController.numberLinePoint.valueProperty.value;
           distanceText.text = StringUtils.fillIn( value < 0 ? amountBelowSeaLevelString : amountAboveSeaLevelString, {
             value: value
