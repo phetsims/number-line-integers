@@ -80,6 +80,11 @@ define( require => {
       };
       pointController.positionProperty.link( handlePointControllerPositionChange );
 
+      const handlePointControllerScaleChange = scale => {
+        draggableNode.setScaleMagnitude( scale );
+      };
+      pointController.scaleProperty.link( handlePointControllerScaleChange );
+
       // pop to the front of the z-order when dragged
       const dragStateChangeHandler = dragging => {
         if ( dragging ) {
@@ -100,6 +105,7 @@ define( require => {
           dragBoundsProperty: new Property( this.layoutBounds ),
           start: event => {
             pointController.isDraggingProperty.value = true;
+            pointController.scaleProperty.value = 1.0;
             pointController.proposePosition( this.globalToParentPoint( event.pointer.point ) );
           },
           drag: event => {
