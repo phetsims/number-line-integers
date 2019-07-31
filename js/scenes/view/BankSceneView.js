@@ -14,6 +14,7 @@ define( require => {
   const BankPointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/BankPointControllerNode' );
   const Dimension2 = require( 'DOT/Dimension2' );
   const HBox = require( 'SCENERY/nodes/HBox' );
+  const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Path = require( 'SCENERY/nodes/Path' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -57,24 +58,27 @@ define( require => {
         centerY: this.numberLineNode.centerY
       } ) );
 
+      const pointControllerNodesLayer = new Node();
+      this.addChild( pointControllerNodesLayer );
+      pointControllerNodesLayer.moveToBack();
+
       // add node to represent the point controller that is always visible
       const permanentPointControllerNode = new BankPointControllerNode(
         sceneModel.primaryAccountPointController,
         'flowers'
       );
-      this.addChild( permanentPointControllerNode );
-      permanentPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
+      pointControllerNodesLayer.addChild( permanentPointControllerNode );
 
       // add and remove a node for the comparison account point controller as it comes and goes
       let comparisonAccountPointControllerNode = null;
       sceneModel.comparisonAccountPointControllerProperty.lazyLink( pointController => {
         if ( pointController ) {
           comparisonAccountPointControllerNode = new BankPointControllerNode( pointController, 'lightning' );
-          this.addChild( comparisonAccountPointControllerNode );
+          pointControllerNodesLayer.addChild( comparisonAccountPointControllerNode );
           comparisonAccountPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
         }
         else {
-          this.removeChild( comparisonAccountPointControllerNode );
+          pointControllerNodesLayer.removeChild( comparisonAccountPointControllerNode );
           comparisonAccountPointControllerNode.dispose();
         }
       } );
