@@ -74,8 +74,9 @@ define( require => {
         else {
           connectorLine.visible = false;
         }
-        draggableNode.centerX = position.x + draggableNodeXOffset;
-        draggableNode.centerY = position.y + draggableNodeYOffset;
+        const scaleVector = draggableNode.getScaleVector();
+        draggableNode.centerX = position.x + ( draggableNodeXOffset * scaleVector.x );
+        draggableNode.centerY = position.y + ( draggableNodeYOffset * scaleVector.y );
       };
       pointController.positionProperty.link( handlePointControllerPositionChange );
 
