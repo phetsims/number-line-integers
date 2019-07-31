@@ -18,16 +18,21 @@ define( require => {
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const SceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/SceneView' );
   const TemperaturePointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/TemperaturePointControllerNode' );
+  const TemperatureSceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/TemperatureSceneModel' );
   const Text = require( 'SCENERY/nodes/Text' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const VerticalAquaRadioButtonGroup = require( 'SUN/VerticalAquaRadioButtonGroup' );
 
   // constants
   const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
+  const UNIT_PICKER_LABEL_FONT = new PhetFont( { size: 18 } );
 
   // strings
   const temperatureString = require( 'string!NUMBER_LINE_INTEGERS/temperature' );
-  //const temperatureAmountCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountCelsius' );
+  const temperatureAmountCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountCelsius' );
   const temperatureAmountFahrenheitString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountFahrenheit' );
+  const temperatureLabelFahrenheitString = require( 'string!NUMBER_LINE_INTEGERS/temperatureLabelFahrenheit' );
+  const temperatureLabelCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureLabelCelsius' );
 
   // images
   const temperatureMap = require( 'image!NUMBER_LINE_INTEGERS/temperature-map.png' );
@@ -35,9 +40,13 @@ define( require => {
   class TemperatureSceneView extends SceneView {
     constructor( sceneModel, layoutBounds ) {
 
+      // TODO: this change should be specific to the TemperatureScene implementation of the numberline
+      const numberLineUnits = sceneModel.temperatureUnitsProperty.value === TemperatureSceneModel.Units.FAHRENHEIT ?
+                              temperatureAmountFahrenheitString : temperatureAmountCelsiusString;
+
       super( sceneModel, layoutBounds, {
         numberLineOptions: {
-          numberDisplayTemplate: temperatureAmountFahrenheitString
+          numberDisplayTemplate: numberLineUnits
         }
       } );
 
@@ -71,6 +80,22 @@ define( require => {
       } );
       sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
       this.addChild( numberLineLabel );
+
+      const temperatureUnitPicker = new VerticalAquaRadioButtonGroup(
+        sceneModel.temperatureUnitsProperty,
+        [
+          {
+            value: TemperatureSceneModel.Units.FAHRENHEIT,
+            node: new Text( temperatureLabelFahrenheitString, { font: UNIT_PICKER_LABEL_FONT } )
+          },
+          {
+            value: TemperatureSceneModel.Units.CELSIUS,
+            node: new Text( temperatureLabelCelsiusString, { font: UNIT_PICKER_LABEL_FONT } )
+          }
+        ],
+        { top: numberLineLabel.top, left: numberLineLabel.right + 10 }
+      );
+      this.addChild( temperatureUnitPicker );
 
       this.addChild( new Node( {
         children: sceneModel.permanentPointControllers.map(

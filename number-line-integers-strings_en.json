@@ -41,6 +41,12 @@
   "temperatureAmountFahrenheit": {
     "value": "{{value}}° F"
   },
+  "temperatureLabelCelsius": {
+    "value": "°C"
+  },
+  "temperatureLabelFahrenheit": {
+    "value": "°F"
+  },
   "number-line-integers.title": {
     "value": "Number Line: Integers"
   },

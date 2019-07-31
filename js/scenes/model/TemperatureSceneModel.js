@@ -13,6 +13,8 @@ define( require => {
 
   // modules
   const Bounds2 = require( 'DOT/Bounds2' );
+  const Enumeration = require( 'PHET_CORE/Enumeration' );
+  const EnumerationProperty = require( 'AXON/EnumerationProperty' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
@@ -128,6 +130,10 @@ define( require => {
         this.numberLine.residentPoints.addItemRemovedListener( handlePointRemoved );
       } );
 
+      this.temperatureUnitsProperty = new EnumerationProperty(
+        TemperatureSceneModel.Units,
+        TemperatureSceneModel.Units.FAHRENHEIT,
+      );
     }
 
     /**
@@ -148,11 +154,16 @@ define( require => {
       }
 
       const temp = this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees );
+      let convertedTemp = temp - 273;
+      debugger;
+      if ( this.temperatureUnitsProperty.value === TemperatureSceneModel.Units.FAHRENHEIT ) {
+        convertedTemp = convertedTemp * 9 / 5 + 32;
+      }
 
       return {
 
         //TODO: temporary conversion from Kelvin to Fahrenheit
-        temperature: Math.floor( ( temp - 273 ) * 9 / 5 + 32 ),
+        temperature: Math.floor( convertedTemp ),
         color: this.dataSet.getColorAtTemperature( temp )
       };
     }
@@ -195,9 +206,14 @@ define( require => {
         pointController.reset();
         this.putPointControllerInBox( pointController );
       } );
+
+      this.unitsProperty.reset();
     }
 
   }
+
+  // @public Choice of temperature units that the scene can display
+  TemperatureSceneModel.Units = new Enumeration( [ 'FAHRENHEIT', 'CELSIUS' ] );
 
   return numberLineIntegers.register( 'TemperatureSceneModel', TemperatureSceneModel );
 } );
