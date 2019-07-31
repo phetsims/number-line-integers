@@ -18,8 +18,14 @@ define( require => {
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const SceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/SceneView' );
   const TemperaturePointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/TemperaturePointControllerNode' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+
+  // constants
+  const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
 
   // strings
+  const temperatureString = require( 'string!NUMBER_LINE_INTEGERS/temperature' );
   //const temperatureAmountCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountCelsius' );
   const temperatureAmountFahrenheitString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountFahrenheit' );
 
@@ -56,6 +62,15 @@ define( require => {
         stroke: 'black',
         cornerRadius: 6
       } ) );
+
+      // add label for the number line
+      const numberLineLabel = new Text( temperatureString, {
+        font: NUMBER_LINE_LABEL_FONT,
+        centerX: sceneModel.numberLine.centerPosition.x,
+        bottom: this.numberLineNode.top - 5
+      } );
+      sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
+      this.addChild( numberLineLabel );
 
       this.addChild( new Node( {
         children: sceneModel.permanentPointControllers.map(
