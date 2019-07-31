@@ -108,10 +108,7 @@ define( require => {
       const absoluteValueText = new Text( '', { font: new PhetFont( 12 ) } );
       this.addChild( absoluteValueText );
       Property.multilink( [ pointController.numberLine.showAbsoluteValuesProperty, pointController.positionProperty ], () => {
-        if ( pointController.numberLine.showAbsoluteValuesProperty.value ) {
-          if ( !pointController.numberLinePoint ) {
-            return;
-          }
+        if ( pointController.numberLinePoint && pointController.numberLine.showAbsoluteValuesProperty.value ) {
           absoluteValueText.visible = true;
           const value = pointController.numberLinePoint.valueProperty.value;
           let stringTemplate;
