@@ -206,7 +206,7 @@ define( require => {
         this.putPointControllerInBox( pointController );
       } );
 
-      this.unitsProperty.reset();
+      this.temperatureUnitsProperty.reset();
     }
 
   }
