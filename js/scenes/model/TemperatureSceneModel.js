@@ -155,7 +155,6 @@ define( require => {
 
       const temp = this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees );
       let convertedTemp = temp - 273;
-      debugger;
       if ( this.temperatureUnitsProperty.value === TemperatureSceneModel.Units.FAHRENHEIT ) {
         convertedTemp = convertedTemp * 9 / 5 + 32;
       }
