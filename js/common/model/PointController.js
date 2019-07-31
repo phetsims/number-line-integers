@@ -16,6 +16,7 @@ define( require => {
   const Easing = require( 'TWIXT/Easing' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
   const Property = require( 'AXON/Property' );
   const Vector2 = require( 'DOT/Vector2' );
   const Vector2Property = require( 'DOT/Vector2Property' );
@@ -43,6 +44,9 @@ define( require => {
         // {number} - offset in model coords from a vertical number line when controlling a point
         offsetFromVerticalNumberLine: 52,
 
+        // {number} - scale of controller node when animated back into box
+        scaleInBox: 1.0,
+
         // {string} - Controls whether this point controller is, or can, lock to the number line.  Valid values
         // are 'always', 'never', and 'whenClose'.
         lockToNumberLine: 'whenClose',
@@ -64,6 +68,11 @@ define( require => {
         // allowing reentry is necessary because of two-way position relationship with number line points
         reentrant: true
       } );
+
+      this.scaleInBox = options.scaleInBox;
+
+      // @public (read-only) {NumberProperty} - scale of this point
+      this.scaleProperty = new NumberProperty( this.scaleInBox );
 
       // @public {BooleanProperty} - indicates whether this is being dragged by the user
       this.isDraggingProperty = new BooleanProperty( false );
@@ -234,11 +243,21 @@ define( require => {
             MIN_ANIMATION_TIME,
             this.positionProperty.value.distance( position ) / AVERAGE_ANIMATION_SPEED
           ),
-          targets: [ {
-            property: this.positionProperty,
-            easing: Easing.CUBIC_IN_OUT,
-            to: position
-          } ]
+          targets: [
+
+            // scale
+            {
+              to: this.scaleInBox,
+              property: this.scaleProperty,
+              easing: Easing.CUBIC_IN_OUT
+            },
+
+            // position
+            {
+              property: this.positionProperty,
+              easing: Easing.CUBIC_IN_OUT,
+              to: position
+            } ]
         } );
         this.inProgressAnimationProperty.value = animation;
         animation.start();

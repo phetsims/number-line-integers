@@ -81,7 +81,8 @@ define( require => {
 
       // @public (read-only) - the point controllers that can be moved into the elevation scene
       this.permanentPointControllers = _.times( 3, () => new TemperaturePointController( this, {
-        lockToNumberLine: 'never'
+        lockToNumberLine: 'never',
+        scaleInBox: 0.5
       } ) );
 
       // put the permanent point controllers in their starting positions
