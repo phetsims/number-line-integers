@@ -79,6 +79,14 @@ define( require => {
       };
       pointController.positionProperty.link( handlePointControllerPositionChange );
 
+      // pop to the front of the z-order when dragged
+      const dragStateChangeHandler = dragging => {
+        if ( dragging ) {
+          this.moveToFront(); // TODO: this line is problematic for #11
+        }
+      };
+      pointController.isDraggingProperty.link( dragStateChangeHandler );
+
       // don't allow the point controller node to be grabbed if the point controller is animating somewhere
       const inProgressAnimationChangedHandler = inProgressAnimation => {
         this.pickable = inProgressAnimation === null;
@@ -104,6 +112,7 @@ define( require => {
 
       this.disposePointControllerNode = () => {
         pointController.positionProperty.unlink( handlePointControllerPositionChange );
+        pointController.isDraggingProperty.unlink( dragStateChangeHandler );
         pointController.inProgressAnimationProperty.unlink( inProgressAnimationChangedHandler );
       };
     }

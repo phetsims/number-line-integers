@@ -46,16 +46,15 @@ define( require => {
         node: compositeImageNode
       }, options );
 
-      super( pointController, options );
-
       // update the visibility of the images as the position changes
       pointController.positionProperty.link( position => {
         const selectedImageIndex = options.imageSelectionFunction( position );
         imageList.forEach( ( image, index ) => {
           image.visible = selectedImageIndex === index;
         } );
-        this.moveToFront();
       } );
+
+      super( pointController, options );
 
       // handling of what the point controller does when the absolute value checkbox is checked
       const absoluteValueLine = new Path( null, { stroke: pointController.color, lineWidth: 2 } );

@@ -78,8 +78,6 @@ define( require => {
 
       super( pointController, options );
 
-      pointController.positionProperty.link( () => { this.moveToFront(); } );
-
     }
 
   }
