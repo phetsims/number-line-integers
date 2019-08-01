@@ -28,7 +28,6 @@ define( require => {
   const MAX_WIDTH = 200; // screen coords, empirically determined
   const PIGGY_BANK_GREEN_FILL = new Color( 77, 177, 148 );
   const PIGGY_BANK_RED_FILL = new Color( 235, 66, 44 );
-  const OUTLINE_LINE_WIDTH = 4;
 
   // images
   const piggyBankWithFlowers = require( 'image!NUMBER_LINE_INTEGERS/piggy-bank-with-flowers.png' );
@@ -54,16 +53,16 @@ define( require => {
 
       // create a node that is shaped like a piggy bank, the description comes from piggy-bank.svg in the assets file
       const piggyBankOutlineNode = new Path( piggyBankShapes.MEDIUM_PIGGY_BANK_SHAPE, {
-        stroke: pointController.numberLinePoint.colorProperty.value,
-        lineWidth: 4,
+        fill: 'rgba( 0, 0, 0, 0)', // transparent to start so it has size
+        lineWidth: 0,
         center: Vector2.ZERO
       } );
       controllerNode.addChild( piggyBankOutlineNode );
 
       // choose the overlay image source, which is artwork that must exactly match the shape of the outline
       const overlayImageSource = overlayType === 'flowers' ? piggyBankWithFlowers : piggyBankWithLightning;
-      const overlayImageNode = new Image( overlayImageSource, { opacity: 0.4 } );
-      overlayImageNode.setScaleMagnitude( ( piggyBankOutlineNode.width - OUTLINE_LINE_WIDTH * 2 ) / overlayImageNode.width );
+      const overlayImageNode = new Image( overlayImageSource, { opacity: 0.8 } );
+      overlayImageNode.setScaleMagnitude( ( piggyBankOutlineNode.width ) / overlayImageNode.width );
       overlayImageNode.center = Vector2.ZERO;
       controllerNode.addChild( overlayImageNode );
 

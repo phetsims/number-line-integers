@@ -61,7 +61,7 @@ define( require => {
         if ( options.connectorLine && pointController.numberLinePoint ) {
           if ( pointController.color !== pointController.numberLinePoint.colorProperty.value && options.node === null ) {
 
-            // draggableNode must be removed and readded with new colors
+            // draggableNode must be removed and re-added with new colors
             this.removeChild( this.draggableNode );
             pointController.color = pointController.numberLinePoint.colorProperty.value;
             this.draggableNode = new ShadedSphereNode( SPHERE_RADIUS * 2, { mainColor: pointController.color } );
