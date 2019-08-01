@@ -13,6 +13,7 @@ define( require => {
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
+  const Util = require( 'DOT/Util' );
 
   class ElevationPointController extends PointController {
 
@@ -52,7 +53,7 @@ define( require => {
 
           // create a new point on the number line
           const numberLinePoint = new NumberLinePoint(
-            this.numberLine.modelPositionToValue( this.positionProperty.value ),
+            Util.roundSymmetric( this.numberLine.modelPositionToValue( this.positionProperty.value ) ),
             this.color,
             this.numberLine,
             this
