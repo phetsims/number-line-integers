@@ -114,7 +114,11 @@ define( require => {
           }
 
           // there is already a point at this location, so we have to choose another
-          addedPoint.valueProperty.value = this.getNearestUnoccupiedValue( addedPoint.valueProperty.value );
+          let beginningValue = addedPoint.mostRecentlyProposedValue;
+          if ( beginningValue === null ) {
+            beginningValue = addedPoint.valueProperty.value;
+          }
+          addedPoint.valueProperty.value = this.getNearestUnoccupiedValue( beginningValue );
         };
         addedPoint.isDraggingProperty.link( pointDragListener );
 
@@ -189,8 +193,7 @@ define( require => {
         numberLineValue = ( modelPosition.y - this.centerPosition.y ) * -this.modelToPositonScale.y;
       }
 
-      // round the value to an integer
-      return Util.roundSymmetric( numberLineValue );
+      return numberLineValue;
     }
 
     /**
@@ -327,7 +330,6 @@ define( require => {
 
     /**
      * get the closest valid value that isn't already occupied by a point
-     * TODO: this works best with decimal values, but is getting integer values which means it always rounds down
      * @param {number} value
      */
     getNearestUnoccupiedValue( value ) {
