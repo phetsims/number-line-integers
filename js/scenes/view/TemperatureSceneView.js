@@ -45,7 +45,8 @@ define( require => {
 
       super( sceneModel, layoutBounds, {
         numberLineOptions: {
-          numberDisplayTemplate: numberLineUnits
+          numberDisplayTemplate: numberLineUnits,
+          flipSideOfLabels: true
         }
       } );
 
