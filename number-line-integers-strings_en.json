@@ -35,6 +35,9 @@
   "moneyAmount": {
     "value": "${{value}}"
   },
+  "currencyUnits": {
+    "value": "$"
+  },
   "temperatureAmountCelsius": {
     "value": "{{value}}° C"
   },

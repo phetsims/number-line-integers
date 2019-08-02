@@ -10,13 +10,16 @@ define( require => {
 
   // modules
   const Image = require( 'SCENERY/nodes/Image' );
+  const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
+  const Text = require( 'SCENERY/nodes/Text' );
   const Util = require( 'DOT/Util' );
   const VBox = require( 'SCENERY/nodes/VBox' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  const MARGIN = 7;
+  const MARGIN = 10;
   const BUTTON_OPTIONS = {
     minXMargin: MARGIN,
     minYMargin: MARGIN,
@@ -24,6 +27,10 @@ define( require => {
     fireOnHoldDelay: 400,
     fireOnHoldInterval: 30
   };
+  const CURRENCY_TEXT_CENTER = new Vector2( 24, 17 );
+
+  // strings
+  const currencyUnitsString = require( 'string!NUMBER_LINE_INTEGERS/currencyUnits' );
 
   // images TODO: replace the coin PNG images with SVGs
   const depositingCoinsImage = require( 'image!NUMBER_LINE_INTEGERS/coin_icons-01.png' );
@@ -39,17 +46,25 @@ define( require => {
      */
     constructor( balanceProperty, range, changeAmount, options ) {
 
+      // TODO use SVGs instead of PNG images
+      const makeCoinIcon = image => {
+        const coinIconNode = new Node();
+        coinIconNode.addChild( new Image( image, { scale: 0.15 } ) );
+        coinIconNode.addChild( new Text( currencyUnitsString, { center: CURRENCY_TEXT_CENTER, scale: 1.15 } ) );
+        return coinIconNode;
+      };
+
       const changeBalanceBy = balanceChangeAmount => {
         balanceProperty.value = Util.clamp( balanceProperty.value + balanceChangeAmount, range.min, range.max );
       };
 
-      // create the buttons TODO use SVGs instead of PNG images
+      // create the buttons
       const upButton = new RoundPushButton( _.extend( {
-        content: new Image( depositingCoinsImage, { scale: 0.15 } ),
+        content: makeCoinIcon( depositingCoinsImage ),
         listener: () => { changeBalanceBy( changeAmount ); }
       }, BUTTON_OPTIONS ) );
       const downButton = new RoundPushButton( _.extend( {
-        content: new Image( withdrawingCoinsImage, { scale: 0.15 } ),
+        content: makeCoinIcon( withdrawingCoinsImage ),
         listener: () => { changeBalanceBy( -changeAmount ); }
       }, BUTTON_OPTIONS ) );
 
