@@ -46,6 +46,7 @@ define( require => {
         mapCenter.y + mapHeight / 2
       );
 
+      // TODO: make two number lines: one for fahrenheit and one for celsius
       const numberLineRange = new Range( -20, 100 );
       const numberLineHeight = 405;
       super( {
@@ -107,6 +108,7 @@ define( require => {
       // controller is over the scene
       this.numberLineAttachedPointControllers = new ObservableArray();
 
+      // TODO: think of how to handle doing this when managing multiple number lines for different temperature units
       // watch for points coming and going on the number line and add the additional point controllers for them
       this.numberLine.residentPoints.addItemAddedListener( addedPoint => {
 
@@ -153,6 +155,7 @@ define( require => {
         return null;
       }
 
+      // TODO: remove this????
       const temp = this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees );
       let convertedTemp = temp - 273;
       if ( this.temperatureUnitsProperty.value === TemperatureSceneModel.Units.FAHRENHEIT ) {

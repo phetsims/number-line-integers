@@ -62,7 +62,7 @@ define( require => {
       // choose the overlay image source, which is artwork that must exactly match the shape of the outline
       const overlayImageSource = overlayType === 'flowers' ? piggyBankWithFlowers : piggyBankWithLightning;
       const overlayImageNode = new Image( overlayImageSource, { opacity: 0.8 } );
-      overlayImageNode.setScaleMagnitude( ( piggyBankOutlineNode.width ) / overlayImageNode.width );
+      overlayImageNode.setScaleMagnitude( piggyBankOutlineNode.width / overlayImageNode.width );
       overlayImageNode.center = Vector2.ZERO;
       controllerNode.addChild( overlayImageNode );
 
@@ -74,14 +74,12 @@ define( require => {
       } );
       controllerNode.addChild( balanceNode );
 
-      options = _.extend( {
-        node: controllerNode
-      }, options );
+      options = _.extend( { node: controllerNode }, options );
 
       // update the node's appearance as its position changes
       const maxBalance = pointController.numberLine.displayedRangeProperty.value.max;
       const unscaledWidth = controllerNode.width;
-      pointController.positionProperty.link( () => {
+      const updateController = () => {
 
         // variables needed to make the updates
         const numberLinePoint = pointController.numberLinePoint;
@@ -100,9 +98,11 @@ define( require => {
           value: Math.abs( currentBalance )
         } );
         balanceNode.center = Vector2.ZERO;
-      } );
+      };
+      pointController.positionProperty.link( updateController );
 
       super( pointController, options );
+      updateController();
 
       // how the node handles absolute values
       const absoluteValueText = new Text( '', { font: new PhetFont( 12 ) } );
