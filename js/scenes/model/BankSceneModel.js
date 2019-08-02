@@ -161,6 +161,10 @@ define( require => {
 
       // the reset will add back the initial point, so associate the permanent point controller with it
       this.primaryAccountPointController.associateWithNumberLinePoint( this.numberLine.residentPoints.get( 0 ) );
+
+      this.numberLine.residentPoints.get( 0 ).valueProperty.link( value => {
+        this.primaryAccountBalanceProperty.value = value;
+      } );
     }
   }
 
