@@ -11,13 +11,14 @@ define( require => {
   'use strict';
 
   // modules
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Image = require( 'SCENERY/nodes/Image' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+  const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const SceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/SceneView' );
   const TemperaturePointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/TemperaturePointControllerNode' );
-  const TemperatureSceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/TemperatureSceneModel' );
   const Text = require( 'SCENERY/nodes/Text' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const VerticalAquaRadioButtonGroup = require( 'SUN/VerticalAquaRadioButtonGroup' );
@@ -39,16 +40,22 @@ define( require => {
   class TemperatureSceneView extends SceneView {
     constructor( sceneModel, layoutBounds ) {
 
-      // TODO: this change should be specific to the TemperatureScene implementation of the numberline
-      const numberLineUnits = sceneModel.temperatureUnitsProperty.value === TemperatureSceneModel.Units.FAHRENHEIT ?
-                              temperatureAmountFahrenheitString : temperatureAmountCelsiusString;
-
       super( sceneModel, layoutBounds, {
         numberLineOptions: {
-          numberDisplayTemplate: numberLineUnits,
+          numberDisplayTemplate: temperatureAmountFahrenheitString,
           flipSideOfLabels: true
         }
       } );
+
+      this.celsiusNumberLineNode = new NumberLineNode( sceneModel.celsiusNumberLine, {
+        numberDisplayTemplate: temperatureAmountCelsiusString,
+        flipSideOfLabels: true
+      } );
+      this.fahrenheitNumberLineNode = this.numberLineNode;
+
+      sceneModel.showNumberLineProperty.unlinkAll(); // TODO: relink this to work better with 2 number lines
+      this.celsiusNumberLineNode.visible = false;
+      this.addChild( this.celsiusNumberLineNode );
 
       // TODO: temporary version of the map image
       const temperatureMapImage = new Image( temperatureMap );
@@ -81,15 +88,24 @@ define( require => {
       sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
       this.addChild( numberLineLabel );
 
+      const isTemperatureInCelsiusProperty = new BooleanProperty( false );
+
+      // TODO: this link below is temporary: rework with sceneModel.showNumberLineProperty in mind
+      // TODO: switch scene model number lines so that the comparison statement is updated with the new temperatures
+      isTemperatureInCelsiusProperty.link( isTemperatureInCelsius => {
+        this.celsiusNumberLineNode.visible = isTemperatureInCelsius;
+        this.fahrenheitNumberLineNode.visible = !this.celsiusNumberLineNode.visible;
+      } );
+
       const temperatureUnitPicker = new VerticalAquaRadioButtonGroup(
-        sceneModel.temperatureUnitsProperty,
+        isTemperatureInCelsiusProperty,
         [
           {
-            value: TemperatureSceneModel.Units.FAHRENHEIT,
+            value: false,
             node: new Text( temperatureLabelFahrenheitString, { font: UNIT_PICKER_LABEL_FONT } )
           },
           {
-            value: TemperatureSceneModel.Units.CELSIUS,
+            value: true,
             node: new Text( temperatureLabelCelsiusString, { font: UNIT_PICKER_LABEL_FONT } )
           }
         ],

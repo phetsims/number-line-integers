@@ -14,8 +14,8 @@ define( require => {
   // modules
   const Bounds2 = require( 'DOT/Bounds2' );
   const Enumeration = require( 'PHET_CORE/Enumeration' );
-  const EnumerationProperty = require( 'AXON/EnumerationProperty' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
+  const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const Range = require( 'DOT/Range' );
@@ -44,22 +44,31 @@ define( require => {
         mapCenter.y + mapHeight / 2
       );
 
-      // TODO: make two number lines: one for fahrenheit and one for celsius
-      const numberLineRange = new Range( -20, 100 );
+      const celsiusNumberLineRange = new Range( -51, 40 );
+      const fahrenheitNumberLineRange = new Range( -60, 104 );
       const numberLineHeight = 405;
-      super( {
-        numberLineZeroPosition: new Vector2(
-          mapBounds.minX / 2,
 
-          // y position for number line 0 is calculation that centers number line vertically within scene
-          0.5 * SCENE_BOUNDS.height + numberLineHeight * ( 0.5 + numberLineRange.min / numberLineRange.getLength() )
-        ),
-        numberLineOptions: {
-          initialOrientation: NumberLineOrientation.VERTICAL,
-          initialDisplayedRange: numberLineRange,
-          heightInModelSpace: numberLineHeight
-        }
-      } );
+      const makeNumberLineOptions = range => {
+        return {
+          numberLineZeroPosition: new Vector2(
+            mapBounds.minX / 2,
+
+            // y position for number line 0 is calculation that centers number line vertically within scene
+            0.5 * SCENE_BOUNDS.height + numberLineHeight * ( 0.5 + range.min / range.getLength() )
+          ),
+          numberLineOptions: {
+            initialOrientation: NumberLineOrientation.VERTICAL,
+            initialDisplayedRange: range,
+            heightInModelSpace: numberLineHeight
+          }
+        };
+      };
+
+      super( makeNumberLineOptions( fahrenheitNumberLineRange ) );
+
+      const celsiusNumberLineOptions = makeNumberLineOptions( celsiusNumberLineRange );
+      this.celsiusNumberLine = new NumberLine( celsiusNumberLineOptions.numberLineZeroPosition, celsiusNumberLineOptions.numberLineOptions );
+      this.fahrenheitNumberLine = this.numberLine;
 
       // @public (read-only) {Bounds2} - bounds of the map area
       this.mapBounds = mapBounds;
@@ -101,18 +110,13 @@ define( require => {
           }
         } );
       } );
-
-      this.temperatureUnitsProperty = new EnumerationProperty(
-        TemperatureSceneModel.Units,
-        TemperatureSceneModel.Units.FAHRENHEIT,
-      );
     }
 
     /**
      * get the temperature and color at the specified model location
      * @public
      * @param {Vector2} location - model coordinates for where to get the temperature
-     * @returns {{color, temperature: number}|null} returns data unless location is invalid, in which case null is returned
+     * @returns {{celsiusTemperature: number, color: Color, fahrenheitTemperature: number}} returns data unless location is invalid, in which case null is returned
      */
     getTemperatureAndColorAtLocation( location ) {
       const coordinate = this.dataSet.getLatLongAtPoint( location.x - this.mapBounds.minX, location.y - this.mapBounds.minY );
@@ -125,18 +129,13 @@ define( require => {
         return null;
       }
 
-      // TODO: remove this????
-      const temp = this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees );
-      let convertedTemp = temp - 273;
-      if ( this.temperatureUnitsProperty.value === TemperatureSceneModel.Units.FAHRENHEIT ) {
-        convertedTemp = convertedTemp * 9 / 5 + 32;
-      }
+      const celsiusTemperature = this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees ) - 273;
+      const fahrenheitTemperature = celsiusTemperature * 9 / 5 + 32;
 
       return {
-
-        //TODO: temporary conversion from Kelvin to Fahrenheit
-        temperature: Math.floor( convertedTemp ),
-        color: this.dataSet.getColorAtTemperature( temp )
+        celsiusTemperature: celsiusTemperature,
+        fahrenheitTemperature: Math.floor( fahrenheitTemperature ),
+        color: this.dataSet.getColorAtTemperature( celsiusTemperature + 273 )
       };
     }
 
@@ -178,8 +177,6 @@ define( require => {
         pointController.reset();
         this.putPointControllerInBox( pointController );
       } );
-
-      this.temperatureUnitsProperty.reset();
     }
 
   }
