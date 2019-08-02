@@ -55,7 +55,9 @@ define( require => {
 
       // hook the primary account balance up to the first number line point
       this.primaryAccountBalanceProperty.link( balance => {
-        this.numberLine.residentPoints.get( 0 ).valueProperty.value = balance;
+        this.numberLine.residentPoints.get( 0 ).proposeValue( balance );
+        //TODO: if we want to prevent points from overlapping, numberline.getNearestUnoccupiedValue should be called here
+        // preventing points from overlapping would make the control buttons potentially difficult to use
       } );
       this.numberLine.residentPoints.get( 0 ).valueProperty.link( value => {
         this.primaryAccountBalanceProperty.value = value;
@@ -67,7 +69,8 @@ define( require => {
       // hook the comparison account balance up to the second number line point
       this.comparisonAccountBalanceProperty.link( balance => {
         if ( this.numberLine.residentPoints.length > 1 ) {
-          this.numberLine.residentPoints.get( 1 ).valueProperty.value = balance;
+          this.numberLine.residentPoints.get( 1 ).proposeValue( balance );
+          //TODO: if we want to prevent points from overlapping, numberline.getNearestUnoccupiedValue should be called here
         }
       } );
 
