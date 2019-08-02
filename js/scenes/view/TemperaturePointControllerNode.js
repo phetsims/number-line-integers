@@ -68,7 +68,9 @@ define( require => {
           minorTickLength: 5,
           backgroundFill: new Color( 256, 256, 256, 0.67 ),
           left: colorIndicatorNode.right + 3,
-          bottom: colorIndicatorNode.bottom + 5
+          bottom: colorIndicatorNode.bottom + 5,
+          fluidMainColor: new Color( 66, 66, 65 ),
+          fluidHighlightColor: new Color( 215, 215, 215 )
         } );
       compositeThermometerNode.addChild( thermometerNode );
 
