@@ -47,12 +47,12 @@ define( require => {
     constructor( balanceProperty, range, changeAmount, options ) {
 
       // TODO use SVGs instead of PNG images
-      const makeCoinIcon = image => {
-        const coinIconNode = new Node();
-        coinIconNode.addChild( new Image( image, { scale: 0.15 } ) );
-        coinIconNode.addChild( new Text( currencyUnitsString, { center: CURRENCY_TEXT_CENTER, scale: 1.15 } ) );
-        return coinIconNode;
-      };
+      const makeCoinIcon = image => new Node( {
+        children: [
+          new Image( image, { scale: 0.15 } ),
+          new Text( currencyUnitsString, { center: CURRENCY_TEXT_CENTER, scale: 1.15 } )
+        ]
+      } );
 
       const changeBalanceBy = balanceChangeAmount => {
         balanceProperty.value = Util.clamp( balanceProperty.value + balanceChangeAmount, range.min, range.max );
