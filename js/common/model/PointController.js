@@ -326,6 +326,7 @@ define( require => {
       this.clearNumberLinePoint();
       this.stopAnimation();
       this.positionProperty.reset();
+      this.scaleProperty.reset();
     }
   }
 

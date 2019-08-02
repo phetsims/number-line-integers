@@ -14,7 +14,6 @@ define( require => {
   const Image = require( 'SCENERY/nodes/Image' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const SceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/SceneView' );
   const TemperaturePointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/TemperaturePointControllerNode' );
@@ -102,28 +101,6 @@ define( require => {
           pointController => new TemperaturePointControllerNode( pointController )
         )
       } ) );
-
-      // add the layer where the attached point controllers go
-      const attachedPointControllersLayer = new Node();
-      this.addChild( attachedPointControllersLayer );
-      attachedPointControllersLayer.moveToBack(); // so that they are behind the number line in z-order
-
-      // the visibility of the attached point controllers should be the same as the number line
-      sceneModel.showNumberLineProperty.linkAttribute( attachedPointControllersLayer, 'visible' );
-
-      // add/remove the nodes that represent the point controllers that are attached to the number line
-      sceneModel.numberLineAttachedPointControllers.addItemAddedListener( addedPointController => {
-        const pointControllerNode = new PointControllerNode( addedPointController, { pickable: false } );
-        attachedPointControllersLayer.addChild( pointControllerNode );
-        const handlePointControllerRemoved = removedPointController => {
-          if ( addedPointController === removedPointController ) {
-            attachedPointControllersLayer.removeChild( pointControllerNode );
-            pointControllerNode.dispose();
-            sceneModel.numberLineAttachedPointControllers.removeItemRemovedListener( handlePointControllerRemoved );
-          }
-        };
-        sceneModel.numberLineAttachedPointControllers.addItemRemovedListener( handlePointControllerRemoved );
-      } );
 
     }
   }

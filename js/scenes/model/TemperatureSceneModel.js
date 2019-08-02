@@ -18,8 +18,6 @@ define( require => {
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
-  const ObservableArray = require( 'AXON/ObservableArray' );
-  const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
   const Range = require( 'DOT/Range' );
   const SceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/SceneModel' );
   const temperatureDataSet = require( 'NUMBER_LINE_INTEGERS/scenes/model/temperatureDataSet' );
@@ -102,34 +100,6 @@ define( require => {
             this.putPointControllerInBox( pointController, true );
           }
         } );
-      } );
-
-      // @public (read-only) - the point controllers that are attached to the number line when a corresponding elevatable
-      // controller is over the scene
-      this.numberLineAttachedPointControllers = new ObservableArray();
-
-      // TODO: think of how to handle doing this when managing multiple number lines for different temperature units
-      // watch for points coming and going on the number line and add the additional point controllers for them
-      this.numberLine.residentPoints.addItemAddedListener( addedPoint => {
-
-        // add a point controller that will remain attached to the number line that will control this point
-        const pointController = new PointController( this.numberLine, {
-          color: addedPoint.colorProperty.value,
-          lockToNumberLine: 'always',
-          numberLinePoint: addedPoint
-        } );
-        this.numberLineAttachedPointControllers.push( pointController );
-
-        // handle removal of this point from the number line
-        const handlePointRemoved = removedPoint => {
-          if ( addedPoint === removedPoint ) {
-            pointController.clearNumberLinePoint();
-            pointController.dispose();
-            this.numberLine.residentPoints.removeItemRemovedListener( handlePointRemoved );
-            this.numberLineAttachedPointControllers.remove( pointController );
-          }
-        };
-        this.numberLine.residentPoints.addItemRemovedListener( handlePointRemoved );
       } );
 
       this.temperatureUnitsProperty = new EnumerationProperty(

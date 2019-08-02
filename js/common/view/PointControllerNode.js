@@ -59,14 +59,6 @@ define( require => {
       // monitor the point controller and adjust positions to match
       const handlePointControllerPositionChange = position => {
         if ( options.connectorLine && pointController.numberLinePoint ) {
-          if ( pointController.color !== pointController.numberLinePoint.colorProperty.value && options.node === null ) {
-
-            // draggableNode must be removed and re-added with new colors
-            this.removeChild( this.draggableNode );
-            pointController.color = pointController.numberLinePoint.colorProperty.value;
-            this.draggableNode = new ShadedSphereNode( SPHERE_RADIUS * 2, { mainColor: pointController.color } );
-            this.addChild( this.draggableNode );
-          }
           const pointPosition = pointController.numberLinePoint.getPositionInModelSpace();
           connectorLine.setLine( position.x, position.y, pointPosition.x, pointPosition.y );
           connectorLine.visible = true;
