@@ -116,7 +116,7 @@ define( require => {
      * get the temperature and color at the specified model location
      * @public
      * @param {Vector2} location - model coordinates for where to get the temperature
-     * @returns {{celsiusTemperature: number, color: Color, fahrenheitTemperature: number}} returns data unless location is invalid, in which case null is returned
+     * @returns {{celsiusTemperature: number, color: Color, fahrenheitTemperature: number}|null} returns data unless location is invalid, in which case null is returned
      */
     getTemperatureAndColorAtLocation( location ) {
       const coordinate = this.dataSet.getLatLongAtPoint( location.x - this.mapBounds.minX, location.y - this.mapBounds.minY );
