@@ -15,6 +15,7 @@ define( require => {
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
+  const Property = require( 'AXON/Property' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const SceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/SceneView' );
   const TemperaturePointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/TemperaturePointControllerNode' );
@@ -52,7 +53,6 @@ define( require => {
       } );
       this.fahrenheitNumberLineNode = this.numberLineNode;
 
-      sceneModel.showNumberLineProperty.unlinkAll(); // TODO: relink this to work better with 2 number lines
       this.celsiusNumberLineNode.visible = false;
       this.addChild( this.celsiusNumberLineNode );
 
@@ -84,15 +84,7 @@ define( require => {
         centerX: sceneModel.numberLine.centerPosition.x,
         bottom: this.numberLineNode.top - 5
       } );
-      sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
       this.addChild( numberLineLabel );
-
-      // TODO: this link below is temporary: rework with sceneModel.showNumberLineProperty in mind
-      // TODO: switch scene model number lines so that the comparison statement is updated with the new temperatures
-      sceneModel.isTemperatureInCelsiusProperty.link( isTemperatureInCelsius => {
-        this.celsiusNumberLineNode.visible = isTemperatureInCelsius;
-        this.fahrenheitNumberLineNode.visible = !this.celsiusNumberLineNode.visible;
-      } );
 
       const temperatureUnitPicker = new VerticalAquaRadioButtonGroup(
         sceneModel.isTemperatureInCelsiusProperty,
@@ -109,6 +101,16 @@ define( require => {
         { top: numberLineLabel.top, left: numberLineLabel.right + 10 }
       );
       this.addChild( temperatureUnitPicker );
+
+      Property.multilink(
+        [ sceneModel.isTemperatureInCelsiusProperty, sceneModel.showNumberLineProperty ],
+        ( isTemperatureInCelsius, showNumberLine ) => {
+          this.celsiusNumberLineNode.visible = isTemperatureInCelsius && showNumberLine;
+          this.fahrenheitNumberLineNode.visible = !isTemperatureInCelsius && showNumberLine;
+          temperatureUnitPicker.visible = showNumberLine;
+          numberLineLabel.visible = showNumberLine;
+        }
+      );
 
       this.addChild( new Node( {
         children: sceneModel.permanentPointControllers.map(
