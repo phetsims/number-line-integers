@@ -11,6 +11,7 @@ define( require => {
   'use strict';
 
   // modules
+  const Panel = require( 'SUN/Panel' );
   const Image = require( 'SCENERY/nodes/Image' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -49,12 +50,15 @@ define( require => {
 
       this.celsiusNumberLineNode = new NumberLineNode( sceneModel.celsiusNumberLine, {
         numberDisplayTemplate: temperatureAmountCelsiusString,
-        flipSideOfLabels: true
+        flipSideOfLabels: true,
+        visible: false
       } );
       this.fahrenheitNumberLineNode = this.numberLineNode;
 
-      this.celsiusNumberLineNode.visible = false;
-      this.addChild( this.celsiusNumberLineNode );
+      this.removeChild( this.numberLineNode );
+      const numberLinePanelContent = new Node();
+      numberLinePanelContent.addChild( this.fahrenheitNumberLineNode );
+      numberLinePanelContent.addChild( this.celsiusNumberLineNode );
 
       // TODO: temporary version of the map image
       const temperatureMapImage = new Image( temperatureMap );
@@ -63,12 +67,11 @@ define( require => {
         sceneModel.mapBounds.height / temperatureMapImage.height
       );
 
+      // @private
       this.temperatureMap = new Node( {
-        children: [ temperatureMapImage ]
+        children: [ temperatureMapImage ],
+        center: sceneModel.mapBounds.center
       } );
-
-      this.temperatureMap.center = sceneModel.mapBounds.center;
-
       this.addChild( this.temperatureMap );
 
       // add the node that represents the box that will hold the thermometers
@@ -84,7 +87,7 @@ define( require => {
         centerX: sceneModel.numberLine.centerPosition.x,
         bottom: this.numberLineNode.top - 5
       } );
-      this.addChild( numberLineLabel );
+      numberLinePanelContent.addChild( numberLineLabel );
 
       const temperatureUnitPicker = new VerticalAquaRadioButtonGroup(
         sceneModel.isTemperatureInCelsiusProperty,
@@ -100,16 +103,27 @@ define( require => {
         ],
         { top: numberLineLabel.top, left: numberLineLabel.right + 10 }
       );
-      this.addChild( temperatureUnitPicker );
+      numberLinePanelContent.addChild( temperatureUnitPicker );
+
+      const numberLinePanel = new Panel(
+        numberLinePanelContent,
+        {
+          fill: 'lightgray',
+          resize: false,
+          xMargin: 10,
+          yMargin: 10
+        }
+      );
+      numberLinePanel.centerY = this.temperatureMap.centerY + 40;
+      numberLinePanel.centerX -= 20;
+      this.addChild( numberLinePanel );
 
       Property.multilink(
         [ sceneModel.isTemperatureInCelsiusProperty, sceneModel.showNumberLineProperty ],
         ( isTemperatureInCelsius, showNumberLine ) => {
-          this.celsiusNumberLineNode.visible = isTemperatureInCelsius && showNumberLine;
-          this.fahrenheitNumberLineNode.visible = !isTemperatureInCelsius && showNumberLine;
-          temperatureUnitPicker.visible = showNumberLine;
-          numberLineLabel.visible = showNumberLine;
-          sceneModel.numberLine = isTemperatureInCelsius ? sceneModel.celsiusNumberLine : sceneModel.fahrenheitNumberLine;
+          this.celsiusNumberLineNode.visible = isTemperatureInCelsius;
+          this.fahrenheitNumberLineNode.visible = !isTemperatureInCelsius;
+          numberLinePanel.visible = showNumberLine;
 
           // TODO: figure out how to update the comparison statement node
         }
