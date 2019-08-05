@@ -85,9 +85,9 @@ define( require => {
       elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
         sceneModel.permanentPointControllers[ 0 ],
         [
-          new Image( girlInWater, { maxWidth: 85, center: Vector2.ZERO } ),
-          new Image( girlInAir, { maxWidth: 90, center: Vector2.ZERO } ),
-          new Image( girlOnRock, { maxWidth: 30, center: Vector2.ZERO } )
+          new Image( girlInWater, { maxWidth: 85, center: new Vector2( 3, 5 ) } ),
+          new Image( girlInAir, { maxWidth: 90, center: new Vector2( 6, -25 ) } ),
+          new Image( girlOnRock, { maxWidth: 30, center: new Vector2( 0, 0 ) } )
         ],
         sceneModel.seaLevel,
         {
@@ -117,7 +117,7 @@ define( require => {
         sceneModel.permanentPointControllers[ 1 ],
         [
           new Image( birdInWater, { maxWidth: 65, center: Vector2.ZERO } ),
-          new Image( birdInAir, { maxWidth: 60, center: Vector2.ZERO } )
+          new Image( birdInAir, { maxWidth: 60, center: new Vector2( 0, -10 ) } )
         ],
         sceneModel.seaLevel,
         {

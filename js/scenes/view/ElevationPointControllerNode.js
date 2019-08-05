@@ -74,8 +74,8 @@ define( require => {
              && pointController.numberLinePoint ) {
 
           absoluteValueLine.shape = new Shape()
-            .moveTo( compositeImageNode.centerX, compositeImageNode.centerY )
-            .lineTo( compositeImageNode.centerX, seaLevel );
+            .moveTo( compositeImageNode.x, compositeImageNode.y )
+            .lineTo( compositeImageNode.x, seaLevel );
 
           const value = pointController.numberLinePoint.valueProperty.value;
           distanceText.text = StringUtils.fillIn( value < 0 ? amountBelowSeaLevelString : amountAboveSeaLevelString, {
@@ -85,8 +85,8 @@ define( require => {
           distanceText.visible = true;
 
           distanceTextBackgroundRectangle.setRect( 0, 0, distanceText.width + 5, distanceText.height + 5 );
-          distanceTextBackgroundRectangle.left = compositeImageNode.right + 5;
-          distanceTextBackgroundRectangle.centerY = compositeImageNode.centerY;
+          distanceTextBackgroundRectangle.left = compositeImageNode.right; // TODO: align the x value of this label better
+          distanceTextBackgroundRectangle.centerY = compositeImageNode.y;
           distanceText.center = distanceTextBackgroundRectangle.center;
 
         }
