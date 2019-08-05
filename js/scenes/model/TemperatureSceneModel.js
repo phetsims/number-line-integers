@@ -45,8 +45,8 @@ define( require => {
         mapCenter.y + mapHeight / 2
       );
 
-      const celsiusNumberLineRange = new Range( -51, 40 );
-      const fahrenheitNumberLineRange = new Range( -60, 104 );
+      const celsiusNumberLineRange = new Range( -52, 40 );
+      const fahrenheitNumberLineRange = new Range( -62, 104 );
       const numberLineHeight = 405;
 
       const makeNumberLineOptions = range => {

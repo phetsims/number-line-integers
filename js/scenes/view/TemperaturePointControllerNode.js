@@ -56,7 +56,7 @@ define( require => {
 
       // TODO: min/max Temp values will need to be put into constants file
       const thermometerNode = new ThermometerNode(
-        -51,
+        -52,
         40,
         pointController.celsiusTemperatureProperty,
         {
