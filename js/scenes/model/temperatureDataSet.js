@@ -20,8 +20,8 @@ define( require => {
       this.x0 = width / 2;
       this.y0 = height / 2;
 
-      const sphereCircumferance = width * 1.178;
-      this.sphereRadius = sphereCircumferance / ( 2 * Math.PI );
+      const sphereCircumference = width * 1.178;
+      this.sphereRadius = sphereCircumference / ( 2 * Math.PI );
       const expectedHeight = width * 0.5072;
       this.yScale = expectedHeight / height;
     }
@@ -74,14 +74,6 @@ define( require => {
         longitudeIndex++;
       }
       const gridWidth = longitudeValues.length;
-      // console.log( '------------------' );
-      // console.log( 'latitude = ' + latitude );
-      // console.log( 'latitudeIndex = ' + latitudeIndex );
-      // console.log( 'latitudeValues[ latitudeIndex ] = ' + latitudeValues[ latitudeIndex ] );
-      // console.log( 'longitude = ' + longitude );
-      // console.log( 'longitudeIndex = ' + longitudeIndex );
-      // console.log( 'longitudeValues[ longitudeIndex ] = ' + longitudeValues[ longitudeIndex ] );
-      // console.log( 'airTemperatureNearSurfaceValues[ latitudeIndex * gridWidth + longitudeIndex ] = ' + airTemperatureNearSurfaceValues[ latitudeIndex * gridWidth + longitudeIndex ] );
       return airTemperatureNearSurfaceValues[ latitudeIndex * gridWidth + longitudeIndex ];
     }
 

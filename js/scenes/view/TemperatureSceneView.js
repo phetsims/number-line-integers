@@ -109,6 +109,7 @@ define( require => {
         numberLinePanelContent,
         {
           fill: 'lightgray',
+          stroke: 'transparent',
           resize: false,
           xMargin: 10,
           yMargin: 10
