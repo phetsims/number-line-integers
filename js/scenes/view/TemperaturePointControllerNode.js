@@ -3,7 +3,6 @@
 /**
  * A scenery node that is used to control point positions in the temperature scene
  * based on the temperature of the map below this node
- * TODO: decide how to merge this and EFAC TemperatureAndColorSensorNode to SCENERY_PHET
  *
  * @author Arnab Purkayastha
  * @author Saurabh Totey
@@ -15,13 +14,8 @@ define( require => {
   const Color = require( 'SCENERY/util/Color' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const Path = require( 'SCENERY/nodes/Path' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
-  const Shape = require( 'KITE/Shape' );
-  const ThermometerNode = require( 'SCENERY_PHET/ThermometerNode' );
-
-  // constants
-  const TRIANGLE_SIDE_LENGTH = 18; // in screen coordinates
+  const TemperatureAndColorSensorNode = require( 'SCENERY_PHET/TemperatureAndColorSensorNode' );
 
   class TemperaturePointControllerNode extends PointControllerNode {
 
@@ -39,40 +33,21 @@ define( require => {
         connectorLine: false
       }, options );
 
-      const triangleShape = new Shape();
-      triangleShape.moveTo( 0, 0 )
-        .lineTo( Math.cos( Math.PI / 6 ) * TRIANGLE_SIDE_LENGTH, -Math.sin( Math.PI / 6 ) * TRIANGLE_SIDE_LENGTH )
-        .lineTo( Math.cos( Math.PI / 6 ) * TRIANGLE_SIDE_LENGTH, Math.sin( Math.PI / 6 ) * TRIANGLE_SIDE_LENGTH )
-        .close();
-
-      const colorIndicatorNode = new Path( triangleShape, {
-        fill: new Color( 0, 0, 0, 0 ),
-        lineWidth: 2,
-        stroke: 'black',
-        lineJoin: 'round'
-      } );
-      pointController.colorProperty.link( color => { colorIndicatorNode.fill = color; } );
-      compositeThermometerNode.addChild( colorIndicatorNode );
-
       // TODO: min/max Temp values will need to be put into constants file
-      const thermometerNode = new ThermometerNode(
-        -52,
-        40,
-        pointController.celsiusTemperatureProperty,
+      const temperatureAndColorSensorNode = new TemperatureAndColorSensorNode(
+        -62,
+        104,
+        pointController.fahrenheitTemperatureProperty,
         {
-          bulbDiameter: 30,
-          tubeWidth: 18,
-          lineWidth: 2,
-          tickSpacingTemperature: 25,
-          majorTickLength: 10,
-          minorTickLength: 5,
-          backgroundFill: new Color( 256, 256, 256, 0.67 ),
-          left: colorIndicatorNode.right + 3,
-          bottom: colorIndicatorNode.bottom + 5,
-          fluidMainColor: new Color( 66, 66, 65 ),
-          fluidHighlightColor: new Color( 215, 215, 215 )
-        } );
-      compositeThermometerNode.addChild( thermometerNode );
+          thermometerNodeOptions: {
+            fluidMainColor: new Color( 66, 66, 65 ),
+            fluidHighlightColor: new Color( 215, 215, 215 ),
+            tickSpacingTemperature: 20
+          }
+        }
+      );
+      pointController.colorProperty.link( color => { temperatureAndColorSensorNode.changeColor( color ); } );
+      compositeThermometerNode.addChild( temperatureAndColorSensorNode );
 
       super( pointController, options );
 
