@@ -68,7 +68,11 @@ define( require => {
       super( makeNumberLineOptions( fahrenheitNumberLineRange ) );
 
       const celsiusNumberLineOptions = makeNumberLineOptions( celsiusNumberLineRange );
+
+      // @public (read-only)
       this.celsiusNumberLine = new NumberLine( celsiusNumberLineOptions.numberLineZeroPosition, celsiusNumberLineOptions.numberLineOptions );
+
+      // @public (read-only)
       this.fahrenheitNumberLine = this.numberLine;
 
       // @public (read-only) {Bounds2} - bounds of the map area

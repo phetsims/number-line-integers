@@ -109,6 +109,9 @@ define( require => {
           this.fahrenheitNumberLineNode.visible = !isTemperatureInCelsius && showNumberLine;
           temperatureUnitPicker.visible = showNumberLine;
           numberLineLabel.visible = showNumberLine;
+          sceneModel.numberLine = isTemperatureInCelsius ? sceneModel.celsiusNumberLine : sceneModel.fahrenheitNumberLine;
+
+          // TODO: figure out how to update the comparison statement node
         }
       );
 
