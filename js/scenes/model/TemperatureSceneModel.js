@@ -12,6 +12,7 @@ define( require => {
   'use strict';
 
   // modules
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const Enumeration = require( 'PHET_CORE/Enumeration' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
@@ -110,6 +111,9 @@ define( require => {
           }
         } );
       } );
+
+      // @public
+      this.isTemperatureInCelsiusProperty = new BooleanProperty( false );
     }
 
     /**
@@ -171,6 +175,11 @@ define( require => {
     reset() {
 
       super.reset();
+
+      this.isTemperatureInCelsiusProperty.reset();
+      this.fahrenheitNumberLine.reset();
+      this.celsiusNumberLine.reset();
+
 
       // put the point controllers back into their starting positions
       this.permanentPointControllers.forEach( pointController => {

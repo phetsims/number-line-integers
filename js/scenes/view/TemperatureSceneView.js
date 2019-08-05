@@ -11,7 +11,6 @@ define( require => {
   'use strict';
 
   // modules
-  const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Image = require( 'SCENERY/nodes/Image' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -88,17 +87,15 @@ define( require => {
       sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
       this.addChild( numberLineLabel );
 
-      const isTemperatureInCelsiusProperty = new BooleanProperty( false );
-
       // TODO: this link below is temporary: rework with sceneModel.showNumberLineProperty in mind
       // TODO: switch scene model number lines so that the comparison statement is updated with the new temperatures
-      isTemperatureInCelsiusProperty.link( isTemperatureInCelsius => {
+      sceneModel.isTemperatureInCelsiusProperty.link( isTemperatureInCelsius => {
         this.celsiusNumberLineNode.visible = isTemperatureInCelsius;
         this.fahrenheitNumberLineNode.visible = !this.celsiusNumberLineNode.visible;
       } );
 
       const temperatureUnitPicker = new VerticalAquaRadioButtonGroup(
-        isTemperatureInCelsiusProperty,
+        sceneModel.isTemperatureInCelsiusProperty,
         [
           {
             value: false,
