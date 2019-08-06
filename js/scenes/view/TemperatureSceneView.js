@@ -11,6 +11,8 @@ define( require => {
   'use strict';
 
   // modules
+  const AccordionBox = require( 'SUN/AccordionBox' );
+  const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementNode' );
   const Panel = require( 'SUN/Panel' );
   const Image = require( 'SCENERY/nodes/Image' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -29,8 +31,10 @@ define( require => {
   // constants
   const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
   const UNIT_PICKER_LABEL_FONT = new PhetFont( { size: 18 } );
+  const COMPARISON_STATEMENT_BOX_WIDTH = 300; // TODO: Taken from SceneView, move to constants
 
   // strings
+  const comparisonStatementString = require( 'string!NUMBER_LINE_INTEGERS/comparisonStatement' );
   const temperatureString = require( 'string!NUMBER_LINE_INTEGERS/temperature' );
   const temperatureAmountCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountCelsius' );
   const temperatureAmountFahrenheitString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountFahrenheit' );
@@ -52,6 +56,7 @@ define( require => {
         }
       } );
 
+      // Replace single default numberLineNode with two from celsius and fahrenheit
       this.celsiusNumberLineNode = new NumberLineNode( sceneModel.celsiusNumberLine, {
         numberDisplayTemplate: temperatureAmountCelsiusString,
         flipSideOfLabels: true,
@@ -59,11 +64,33 @@ define( require => {
       } );
       this.fahrenheitNumberLineNode = this.numberLineNode;
 
+      // Do the same replacement with ComparisonStatementAccordionBox
+      const celsiusComparisonStatementNode = new ComparisonStatementNode( sceneModel.celsiusNumberLine );
+      // TODO: These options are copied from SceneView, move them to constants
+      this.celsiusComparisonAccordionBox = new AccordionBox( celsiusComparisonStatementNode, {
+        fill: 'white',
+        titleNode: new Text( comparisonStatementString, {
+          font: new PhetFont( 16 ),
+          maxWidth: COMPARISON_STATEMENT_BOX_WIDTH * 0.8
+        } ),
+        showTitleWhenExpanded: false,
+        cornerRadius: 5,
+        contentAlign: 'right',
+        centerX: this.layoutBounds.centerX,
+        top: 10,
+        minWidth: COMPARISON_STATEMENT_BOX_WIDTH,
+        maxWidth: COMPARISON_STATEMENT_BOX_WIDTH
+      } );
+      this.fahrenheitComparisonAccordionBox = this.comparisonStatementAccordionBox;
+
       sceneModel.fahrenheitNumberLine.showAbsoluteValuesProperty.link( showAbsoluteValues => {
         sceneModel.celsiusNumberLine.showAbsoluteValuesProperty.value = showAbsoluteValues;
       } );
 
       this.removeChild( this.numberLineNode );
+      this.removeChild( this.comparisonStatementAccordionBox );
+      this.addChild( this.celsiusComparisonAccordionBox );
+      this.addChild( this.fahrenheitComparisonAccordionBox );
       const numberLinePanelContent = new Node();
       numberLinePanelContent.addChild( this.fahrenheitNumberLineNode );
       numberLinePanelContent.addChild( this.celsiusNumberLineNode );
@@ -197,13 +224,13 @@ define( require => {
         ( isTemperatureInCelsius, showNumberLine, showAbsoluteValues ) => {
           this.celsiusNumberLineNode.visible = isTemperatureInCelsius;
           this.fahrenheitNumberLineNode.visible = !isTemperatureInCelsius;
+          this.celsiusComparisonAccordionBox.visible = this.celsiusNumberLineNode.visible;
+          this.fahrenheitComparisonAccordionBox.visible = this.fahrenheitNumberLineNode.visible;
           celsiusLabelsLayer.visible = this.celsiusNumberLineNode.visible;
           fahrenheitLabelsLayer.visible = this.fahrenheitNumberLineNode.visible;
           celsiusAbsoluteValueLabelsLayer.visible = this.celsiusNumberLineNode.visible && showAbsoluteValues;
           fahrenheitAbsoluteValueLabelsLayer.visible = this.fahrenheitNumberLineNode.visible && showAbsoluteValues;
           numberLinePanel.visible = showNumberLine;
-
-          // TODO: figure out how to update the comparison statement node
         }
       );
 

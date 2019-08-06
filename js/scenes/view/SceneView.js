@@ -64,8 +64,8 @@ define( require => {
       // add the comparison statement
       const comparisonStatementNode = new ComparisonStatementNode( sceneModel.numberLine );
 
-      // enclose the comparison statement in an accordion box
-      const comparisonStatementAccordionBox = new AccordionBox( comparisonStatementNode, {
+      // @protected {AccordionBox} - enclose the comparison statement in an accordion box
+      this.comparisonStatementAccordionBox = new AccordionBox( comparisonStatementNode, {
         fill: 'white',
         titleNode: new Text( comparisonStatementString, {
           font: new PhetFont( 16 ),
@@ -79,7 +79,7 @@ define( require => {
         minWidth: COMPARISON_STATEMENT_BOX_WIDTH,
         maxWidth: COMPARISON_STATEMENT_BOX_WIDTH
       } );
-      this.addChild( comparisonStatementAccordionBox );
+      this.addChild( this.comparisonStatementAccordionBox );
 
       // @protected (read-only) {NumberLine} - view of the number line
       this.numberLineNode = new NumberLineNode( sceneModel.numberLine, options.numberLineOptions );
