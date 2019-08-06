@@ -105,31 +105,6 @@ define( require => {
       );
       numberLinePanelContent.addChild( temperatureUnitPicker );
 
-      const numberLinePanel = new Panel(
-        numberLinePanelContent,
-        {
-          fill: 'lightgray',
-          stroke: 'transparent',
-          resize: false,
-          xMargin: 10,
-          yMargin: 10
-        }
-      );
-      numberLinePanel.centerY = this.temperatureMap.centerY + 40;
-      numberLinePanel.centerX -= 20;
-      this.addChild( numberLinePanel );
-
-      Property.multilink(
-        [ sceneModel.isTemperatureInCelsiusProperty, sceneModel.showNumberLineProperty ],
-        ( isTemperatureInCelsius, showNumberLine ) => {
-          this.celsiusNumberLineNode.visible = isTemperatureInCelsius;
-          this.fahrenheitNumberLineNode.visible = !isTemperatureInCelsius;
-          numberLinePanel.visible = showNumberLine;
-
-          // TODO: figure out how to update the comparison statement node
-        }
-      );
-
       this.addChild( new Node( {
         children: sceneModel.permanentPointControllers.map(
           pointController => new TemperaturePointControllerNode( pointController )
@@ -163,8 +138,35 @@ define( require => {
         addedPoint => onAddedNumberLinePoint( sceneModel.fahrenheitNumberLine, fahrenheitAbsoluteValueLabelsLayer, addedPoint )
       );
 
-      this.addChild( celsiusAbsoluteValueLabelsLayer );
-      this.addChild( fahrenheitAbsoluteValueLabelsLayer );
+      numberLinePanelContent.addChild( celsiusAbsoluteValueLabelsLayer );
+      numberLinePanelContent.addChild( fahrenheitAbsoluteValueLabelsLayer );
+
+      Property.multilink(
+        [ sceneModel.isTemperatureInCelsiusProperty, sceneModel.showNumberLineProperty ],
+        ( isTemperatureInCelsius, showNumberLine ) => {
+          this.celsiusNumberLineNode.visible = isTemperatureInCelsius;
+          this.fahrenheitNumberLineNode.visible = !isTemperatureInCelsius;
+          celsiusAbsoluteValueLabelsLayer.visible = this.celsiusNumberLineNode.visible;
+          fahrenheitAbsoluteValueLabelsLayer.visible = this.fahrenheitNumberLineNode.visible;
+          numberLinePanel.visible = showNumberLine;
+
+          // TODO: figure out how to update the comparison statement node
+        }
+      );
+
+      const numberLinePanel = new Panel(
+        numberLinePanelContent,
+        {
+          fill: 'lightgray',
+          stroke: 'transparent',
+          resize: false,
+          xMargin: 10,
+          yMargin: 10
+        }
+      );
+      numberLinePanel.centerY = this.temperatureMap.centerY + 40;
+      numberLinePanel.centerX -= 20;
+      this.addChild( numberLinePanel );
 
     }
   }
