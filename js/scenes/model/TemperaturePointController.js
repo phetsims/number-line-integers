@@ -23,9 +23,10 @@ define( require => {
 
     /**
      * @param {TemperatureSceneModel} sceneModel
+     * @param {string} controllerLabel
      * @param {Object} [options]
      */
-    constructor( sceneModel, options ) {
+    constructor( sceneModel, controllerLabel, options ) {
 
       options = _.extend( {
         lockToNumberLine: 'never',
@@ -38,6 +39,9 @@ define( require => {
 
       // @private
       this.sceneModel = sceneModel;
+
+      // @public (read-only) label for PointControllerNode and NumberLine point
+      this.label = controllerLabel;
 
       // @public (readonly) whether the point controller is over the map
       this.isOverMapProperty = new BooleanProperty( false );

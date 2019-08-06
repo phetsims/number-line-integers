@@ -70,5 +70,14 @@
   },
   "tickMarks": {
     "value": "Tick Marks"
+  },
+  "a": {
+    "value": "A"
+  },
+  "b": {
+    "value": "B"
+  },
+  "c": {
+    "value": "C"
   }
 }

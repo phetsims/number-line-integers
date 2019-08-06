@@ -25,8 +25,14 @@ define( require => {
   const TemperaturePointController = require( 'NUMBER_LINE_INTEGERS/scenes/model/TemperaturePointController' );
   const Vector2 = require( 'DOT/Vector2' );
 
+  // strings
+  const aString = require( 'string!NUMBER_LINE_INTEGERS/a' );
+  const bString = require( 'string!NUMBER_LINE_INTEGERS/b' );
+  const cString = require( 'string!NUMBER_LINE_INTEGERS/c' );
+
   // constants
   const SCENE_BOUNDS = NLIConstants.NLI_LAYOUT_BOUNDS; // bounds for the scenes match the layout bounds
+  const THERMOMETER_LABELS = [ aString, bString, cString ];
 
   class TemperatureSceneModel extends SceneModel {
 
@@ -95,10 +101,11 @@ define( require => {
       );
 
       // @public (read-only) - the point controllers that can be moved into the elevation scene
-      this.permanentPointControllers = _.times( 3, () => new TemperaturePointController( this, {
-        lockToNumberLine: 'never',
-        scaleInBox: 0.5
-      } ) );
+      this.permanentPointControllers = _.times( 3, ( i ) => new TemperaturePointController(
+        this,
+        THERMOMETER_LABELS[ i ],
+        { lockToNumberLine: 'never', scaleInBox: 0.5 }
+      ) );
 
       // put the permanent point controllers in their starting positions
       this.permanentPointControllers.forEach( pointController => {
