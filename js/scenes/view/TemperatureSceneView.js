@@ -117,13 +117,18 @@ define( require => {
       const celsiusAbsoluteValueLabelsLayer = new Node();
       const fahrenheitAbsoluteValueLabelsLayer = new Node();
       const onAddedNumberLinePoint = ( numberLine, absoluteValueLabelsLayer, addedNumberLinePoint ) => {
+        const textBackground = new Rectangle( 0, 0, 1, 1, 0, 0, { fill: 'black' } );
         const absoluteValueText = new Text( '', { font: new PhetFont( 12 ) } );
         const numberLinePointListener = value => {
           const template = value < 0 ? negativeTemperatureAmountString : positiveTemperatureAmountString;
           absoluteValueText.text = StringUtils.fillIn( template, { value: value } );
-          absoluteValueText.leftCenter = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 10, 0 ) );
           absoluteValueText.fill = addedNumberLinePoint.colorProperty.value;
+          textBackground.setRectWidth( absoluteValueText.width + 3 );
+          textBackground.setRectHeight( absoluteValueText.height + 3 );
+          textBackground.leftCenter = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 10, 0 ) );
+          absoluteValueText.center = textBackground.center;
         };
+        absoluteValueLabelsLayer.addChild( textBackground );
         absoluteValueLabelsLayer.addChild( absoluteValueText );
         addedNumberLinePoint.valueProperty.link( numberLinePointListener );
         const removalListener = removedNumberLinePoint => {
@@ -132,6 +137,7 @@ define( require => {
           }
           numberLine.residentPoints.removeItemRemovedListener( removalListener );
           absoluteValueLabelsLayer.removeChild( absoluteValueText );
+          absoluteValueLabelsLayer.removeChild( textBackground );
           addedNumberLinePoint.valueProperty.unlink( numberLinePointListener );
         };
         numberLine.residentPoints.addItemRemovedListener( removalListener );
