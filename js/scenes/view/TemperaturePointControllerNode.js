@@ -14,8 +14,10 @@ define( require => {
   const Color = require( 'SCENERY/util/Color' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const TemperatureAndColorSensorNode = require( 'SCENERY_PHET/TemperatureAndColorSensorNode' );
+  const Text = require( 'SCENERY/nodes/Text' );
 
   class TemperaturePointControllerNode extends PointControllerNode {
 
@@ -48,6 +50,13 @@ define( require => {
       );
       pointController.colorProperty.link( color => { temperatureAndColorSensorNode.changeColor( color ); } );
       compositeThermometerNode.addChild( temperatureAndColorSensorNode );
+
+      const thermometerLabel = new Text( pointController.label, {
+        font: new PhetFont( 16 ),
+        centerX: temperatureAndColorSensorNode.thermometerBounds.centerX,
+        top: temperatureAndColorSensorNode.top + 2
+      } );
+      compositeThermometerNode.addChild( thermometerLabel );
 
       super( pointController, options );
 
