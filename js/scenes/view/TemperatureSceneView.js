@@ -19,6 +19,7 @@ define( require => {
   const Property = require( 'AXON/Property' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const SceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/SceneView' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const TemperaturePointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/TemperaturePointControllerNode' );
   const Text = require( 'SCENERY/nodes/Text' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -35,6 +36,8 @@ define( require => {
   const temperatureAmountFahrenheitString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountFahrenheit' );
   const temperatureLabelFahrenheitString = require( 'string!NUMBER_LINE_INTEGERS/temperatureLabelFahrenheit' );
   const temperatureLabelCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureLabelCelsius' );
+  const negativeTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/negativeTemperatureAmount' );
+  const positiveTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/positiveTemperatureAmount' );
 
   // images
   const temperatureMap = require( 'image!NUMBER_LINE_INTEGERS/temperature-map.png' );
@@ -116,8 +119,9 @@ define( require => {
       const onAddedNumberLinePoint = ( numberLine, absoluteValueLabelsLayer, addedNumberLinePoint ) => {
         const absoluteValueText = new Text( '', { font: new PhetFont( 12 ) } );
         const numberLinePointListener = value => {
-          absoluteValueText.text = Math.abs( value );
-          absoluteValueText.center = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 30, 0 ) );
+          const template = value < 0 ? negativeTemperatureAmountString : positiveTemperatureAmountString;
+          absoluteValueText.text = StringUtils.fillIn( template, { value: value } );
+          absoluteValueText.leftCenter = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 10, 0 ) );
           absoluteValueText.fill = addedNumberLinePoint.colorProperty.value;
         };
         absoluteValueLabelsLayer.addChild( absoluteValueText );
