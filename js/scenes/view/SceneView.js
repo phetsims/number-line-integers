@@ -13,6 +13,7 @@ define( require => {
   const AccordionBox = require( 'SUN/AccordionBox' );
   const Checkbox = require( 'SUN/Checkbox' );
   const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementNode' );
+  const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
@@ -22,11 +23,9 @@ define( require => {
 
   // constants
   const CHECK_BOX_FONT = new PhetFont( 16 );
-  const COMPARISON_STATEMENT_BOX_WIDTH = 300; // empirically determined to look decent
 
   // strings
   const absoluteValueString = require( 'string!NUMBER_LINE_INTEGERS/absoluteValue' );
-  const comparisonStatementString = require( 'string!NUMBER_LINE_INTEGERS/comparisonStatement' );
   const numberLineString = require( 'string!NUMBER_LINE_INTEGERS/numberLine' );
 
   class SceneView extends Node {
@@ -65,20 +64,10 @@ define( require => {
       const comparisonStatementNode = new ComparisonStatementNode( sceneModel.numberLine );
 
       // @protected {AccordionBox} - enclose the comparison statement in an accordion box
-      this.comparisonStatementAccordionBox = new AccordionBox( comparisonStatementNode, {
-        fill: 'white',
-        titleNode: new Text( comparisonStatementString, {
-          font: new PhetFont( 16 ),
-          maxWidth: COMPARISON_STATEMENT_BOX_WIDTH * 0.8
-        } ),
-        showTitleWhenExpanded: false,
-        cornerRadius: 5,
-        contentAlign: 'right',
-        centerX: this.layoutBounds.centerX,
-        top: 10,
-        minWidth: COMPARISON_STATEMENT_BOX_WIDTH,
-        maxWidth: COMPARISON_STATEMENT_BOX_WIDTH
-      } );
+      this.comparisonStatementAccordionBox = new AccordionBox(
+        comparisonStatementNode,
+        NLIConstants.COMPARISON_STATEMENT_ACCORDION_BOX_OPTIONS
+      );
       this.addChild( this.comparisonStatementAccordionBox );
 
       // @protected (read-only) {NumberLine} - view of the number line

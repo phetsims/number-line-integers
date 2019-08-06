@@ -35,11 +35,9 @@ define( require => {
   const CHECK_BOX_FONT = new PhetFont( 20 );
   const ARROW_ICON_LENGTH = 40;
   const COMBO_BOX_FONT = new PhetFont( 14 );
-  const COMPARISON_STATEMENT_BOX_WIDTH = 300; // empirically determined to look decent
 
   // strings
   const absoluteValueString = require( 'string!NUMBER_LINE_INTEGERS/absoluteValue' );
-  const comparisonStatementString = require( 'string!NUMBER_LINE_INTEGERS/comparisonStatement' );
   const labelsString = require( 'string!NUMBER_LINE_INTEGERS/labels' );
   const tickMarksString = require( 'string!NUMBER_LINE_INTEGERS/tickMarks' );
   const oppositeString = require( 'string!NUMBER_LINE_INTEGERS/opposite' );
@@ -57,22 +55,10 @@ define( require => {
       // add the display of the inequality
       const comparisonStatementNode = new ComparisonStatementNode( model.numberLine );
 
-      // TODO: If the options for the accordion box are the same through all usages of the sim, create a class that
-      // inherits from accordion box and implements all of this (to avoid code duplication).
-      const comparisonStatementAccordionBox = new AccordionBox( comparisonStatementNode, {
-        fill: 'white',
-        titleNode: new Text( comparisonStatementString, {
-          font: new PhetFont( 16 ),
-          maxWidth: COMPARISON_STATEMENT_BOX_WIDTH * 0.8
-        } ),
-        showTitleWhenExpanded: false,
-        cornerRadius: 5,
-        contentAlign: 'right',
-        centerX: this.layoutBounds.centerX,
-        top: 10,
-        minWidth: COMPARISON_STATEMENT_BOX_WIDTH,
-        maxWidth: COMPARISON_STATEMENT_BOX_WIDTH
-      } );
+      const comparisonStatementAccordionBox = new AccordionBox(
+        comparisonStatementNode,
+        NLIConstants.COMPARISON_STATEMENT_ACCORDION_BOX_OPTIONS
+      );
       this.addChild( comparisonStatementAccordionBox );
 
       // add the check boxes that will control the number line's presentation

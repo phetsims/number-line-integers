@@ -15,6 +15,7 @@ define( require => {
   const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementNode' );
   const Panel = require( 'SUN/Panel' );
   const Image = require( 'SCENERY/nodes/Image' );
+  const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
@@ -31,10 +32,8 @@ define( require => {
   // constants
   const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
   const UNIT_PICKER_LABEL_FONT = new PhetFont( { size: 18 } );
-  const COMPARISON_STATEMENT_BOX_WIDTH = 300; // TODO: Taken from SceneView, move to constants
 
   // strings
-  const comparisonStatementString = require( 'string!NUMBER_LINE_INTEGERS/comparisonStatement' );
   const temperatureString = require( 'string!NUMBER_LINE_INTEGERS/temperature' );
   const temperatureAmountCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountCelsius' );
   const temperatureAmountFahrenheitString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountFahrenheit' );
@@ -66,21 +65,10 @@ define( require => {
 
       // Do the same replacement with ComparisonStatementAccordionBox
       const celsiusComparisonStatementNode = new ComparisonStatementNode( sceneModel.celsiusNumberLine );
-      // TODO: These options are copied from SceneView, move them to constants
-      this.celsiusComparisonAccordionBox = new AccordionBox( celsiusComparisonStatementNode, {
-        fill: 'white',
-        titleNode: new Text( comparisonStatementString, {
-          font: new PhetFont( 16 ),
-          maxWidth: COMPARISON_STATEMENT_BOX_WIDTH * 0.8
-        } ),
-        showTitleWhenExpanded: false,
-        cornerRadius: 5,
-        contentAlign: 'right',
-        centerX: this.layoutBounds.centerX,
-        top: 10,
-        minWidth: COMPARISON_STATEMENT_BOX_WIDTH,
-        maxWidth: COMPARISON_STATEMENT_BOX_WIDTH
-      } );
+      this.celsiusComparisonAccordionBox = new AccordionBox(
+        celsiusComparisonStatementNode,
+        NLIConstants.COMPARISON_STATEMENT_ACCORDION_BOX_OPTIONS
+      );
       this.fahrenheitComparisonAccordionBox = this.comparisonStatementAccordionBox;
 
       sceneModel.fahrenheitNumberLine.showAbsoluteValuesProperty.link( showAbsoluteValues => {
