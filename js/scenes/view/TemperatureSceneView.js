@@ -136,12 +136,13 @@ define( require => {
         )
       } ) );
 
-      const absoluteValueLabelsLayer = new Node();
-      const onAddedNumberLinePoint = ( observableArray, addedNumberLinePoint ) => {
+      const celsiusAbsoluteValueLabelsLayer = new Node();
+      const fahrenheitAbsoluteValueLabelsLayer = new Node();
+      const onAddedNumberLinePoint = ( numberLine, absoluteValueLabelsLayer, addedNumberLinePoint ) => {
         const absoluteValueText = new Text( '', { font: new PhetFont( 12 ) } );
         const numberLinePointListener = value => {
-          absoluteValueText.text = value;
-          absoluteValueText.centerY = value; // TODO: figure out positioning
+          absoluteValueText.text = Math.abs( value );
+          absoluteValueText.center = addedNumberLinePoint.getPositionInModelSpace();
         };
         absoluteValueLabelsLayer.addChild( absoluteValueText );
         addedNumberLinePoint.valueProperty.link( numberLinePointListener );
@@ -149,20 +150,21 @@ define( require => {
           if ( removedNumberLinePoint !== addedNumberLinePoint ) {
             return;
           }
-          observableArray.removeItemRemovedListener( removalListener );
+          numberLine.residentPoints.removeItemRemovedListener( removalListener );
           absoluteValueLabelsLayer.removeChild( absoluteValueText );
           addedNumberLinePoint.valueProperty.unlink( numberLinePointListener );
         };
-        observableArray.addItemRemovedListener( removalListener );
+        numberLine.residentPoints.addItemRemovedListener( removalListener );
       };
       sceneModel.celsiusNumberLine.residentPoints.addItemAddedListener(
-        addedPoint => onAddedNumberLinePoint( sceneModel.celsiusNumberLine.residentPoints, addedPoint )
+        addedPoint => onAddedNumberLinePoint( sceneModel.celsiusNumberLine, celsiusAbsoluteValueLabelsLayer, addedPoint )
       );
       sceneModel.fahrenheitNumberLine.residentPoints.addItemAddedListener(
-        addedPoint => onAddedNumberLinePoint( sceneModel.fahrenheitNumberLine.residentPoints, addedPoint )
+        addedPoint => onAddedNumberLinePoint( sceneModel.fahrenheitNumberLine, fahrenheitAbsoluteValueLabelsLayer, addedPoint )
       );
 
-      this.addChild( absoluteValueLabelsLayer );
+      this.addChild( celsiusAbsoluteValueLabelsLayer );
+      this.addChild( fahrenheitAbsoluteValueLabelsLayer );
 
     }
   }
