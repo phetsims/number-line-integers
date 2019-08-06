@@ -20,7 +20,7 @@ define( require => {
   class TemperaturePointControllerNode extends PointControllerNode {
 
     /**
-     * @param {PointController} pointController
+     * @param {TemperaturePointController} pointController
      * @param {Object} [options]
      */
     constructor( pointController, options ) {

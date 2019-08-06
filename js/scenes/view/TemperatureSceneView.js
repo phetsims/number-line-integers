@@ -136,6 +136,34 @@ define( require => {
         )
       } ) );
 
+      const absoluteValueLabelsLayer = new Node();
+      const onAddedNumberLinePoint = ( observableArray, addedNumberLinePoint ) => {
+        const absoluteValueText = new Text( '', { font: new PhetFont( 12 ) } );
+        const numberLinePointListener = value => {
+          absoluteValueText.text = value;
+          absoluteValueText.centerY = value; // TODO: figure out positioning
+        };
+        absoluteValueLabelsLayer.addChild( absoluteValueText );
+        addedNumberLinePoint.valueProperty.link( numberLinePointListener );
+        const removalListener = removedNumberLinePoint => {
+          if ( removedNumberLinePoint !== addedNumberLinePoint ) {
+            return;
+          }
+          observableArray.removeItemRemovedListener( removalListener );
+          absoluteValueLabelsLayer.removeChild( absoluteValueText );
+          addedNumberLinePoint.valueProperty.unlink( numberLinePointListener );
+        };
+        observableArray.addItemRemovedListener( removalListener );
+      };
+      sceneModel.celsiusNumberLine.residentPoints.addItemAddedListener(
+        addedPoint => onAddedNumberLinePoint( sceneModel.celsiusNumberLine.residentPoints, addedPoint )
+      );
+      sceneModel.fahrenheitNumberLine.residentPoints.addItemAddedListener(
+        addedPoint => onAddedNumberLinePoint( sceneModel.fahrenheitNumberLine.residentPoints, addedPoint )
+      );
+
+      this.addChild( absoluteValueLabelsLayer );
+
     }
   }
 
