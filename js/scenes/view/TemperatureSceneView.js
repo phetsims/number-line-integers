@@ -110,12 +110,6 @@ define( require => {
       );
       numberLinePanelContent.addChild( temperatureUnitPicker );
 
-      this.addChild( new Node( {
-        children: sceneModel.permanentPointControllers.map(
-          pointController => new TemperaturePointControllerNode( pointController )
-        )
-      } ) );
-
       // manages absolute value texts whenever thermometers go on and off the map
       const celsiusAbsoluteValueLabelsLayer = new Node();
       const fahrenheitAbsoluteValueLabelsLayer = new Node();
@@ -124,6 +118,7 @@ define( require => {
         const numberLinePointListener = value => {
           absoluteValueText.text = Math.abs( value );
           absoluteValueText.center = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 30, 0 ) );
+          absoluteValueText.fill = addedNumberLinePoint.colorProperty.value;
         };
         absoluteValueLabelsLayer.addChild( absoluteValueText );
         addedNumberLinePoint.valueProperty.link( numberLinePointListener );
@@ -173,6 +168,12 @@ define( require => {
           // TODO: figure out how to update the comparison statement node
         }
       );
+
+      this.addChild( new Node( {
+        children: sceneModel.permanentPointControllers.map(
+          pointController => new TemperaturePointControllerNode( pointController )
+        )
+      } ) );
 
     }
   }
