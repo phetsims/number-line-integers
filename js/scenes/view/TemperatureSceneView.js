@@ -22,6 +22,7 @@ define( require => {
   const TemperaturePointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/TemperaturePointControllerNode' );
   const Text = require( 'SCENERY/nodes/Text' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Vector2 = require( 'DOT/Vector2' );
   const VerticalAquaRadioButtonGroup = require( 'SUN/VerticalAquaRadioButtonGroup' );
 
   // constants
@@ -111,13 +112,14 @@ define( require => {
         )
       } ) );
 
+      // manages absolute value texts whenever thermometers go on and off the map
       const celsiusAbsoluteValueLabelsLayer = new Node();
       const fahrenheitAbsoluteValueLabelsLayer = new Node();
       const onAddedNumberLinePoint = ( numberLine, absoluteValueLabelsLayer, addedNumberLinePoint ) => {
         const absoluteValueText = new Text( '', { font: new PhetFont( 12 ) } );
         const numberLinePointListener = value => {
           absoluteValueText.text = Math.abs( value );
-          absoluteValueText.center = addedNumberLinePoint.getPositionInModelSpace();
+          absoluteValueText.center = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 30, 0 ) );
         };
         absoluteValueLabelsLayer.addChild( absoluteValueText );
         addedNumberLinePoint.valueProperty.link( numberLinePointListener );
@@ -141,19 +143,6 @@ define( require => {
       numberLinePanelContent.addChild( celsiusAbsoluteValueLabelsLayer );
       numberLinePanelContent.addChild( fahrenheitAbsoluteValueLabelsLayer );
 
-      Property.multilink(
-        [ sceneModel.isTemperatureInCelsiusProperty, sceneModel.showNumberLineProperty ],
-        ( isTemperatureInCelsius, showNumberLine ) => {
-          this.celsiusNumberLineNode.visible = isTemperatureInCelsius;
-          this.fahrenheitNumberLineNode.visible = !isTemperatureInCelsius;
-          celsiusAbsoluteValueLabelsLayer.visible = this.celsiusNumberLineNode.visible;
-          fahrenheitAbsoluteValueLabelsLayer.visible = this.fahrenheitNumberLineNode.visible;
-          numberLinePanel.visible = showNumberLine;
-
-          // TODO: figure out how to update the comparison statement node
-        }
-      );
-
       const numberLinePanel = new Panel(
         numberLinePanelContent,
         {
@@ -167,6 +156,20 @@ define( require => {
       numberLinePanel.centerY = this.temperatureMap.centerY + 40;
       numberLinePanel.centerX -= 20;
       this.addChild( numberLinePanel );
+
+      // TODO: only linked to the showAbsoluteValuesProperty for one number line
+      Property.multilink(
+        [ sceneModel.isTemperatureInCelsiusProperty, sceneModel.showNumberLineProperty, sceneModel.fahrenheitNumberLine.showAbsoluteValuesProperty ],
+        ( isTemperatureInCelsius, showNumberLine, showAbsoluteValues ) => {
+          this.celsiusNumberLineNode.visible = isTemperatureInCelsius;
+          this.fahrenheitNumberLineNode.visible = !isTemperatureInCelsius;
+          celsiusAbsoluteValueLabelsLayer.visible = this.celsiusNumberLineNode.visible && showAbsoluteValues;
+          fahrenheitAbsoluteValueLabelsLayer.visible = this.fahrenheitNumberLineNode.visible && showAbsoluteValues;
+          numberLinePanel.visible = showNumberLine;
+
+          // TODO: figure out how to update the comparison statement node
+        }
+      );
 
     }
   }
