@@ -19,6 +19,7 @@ define( require => {
   const Property = require( 'AXON/Property' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const SceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/SceneView' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const TemperaturePointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/TemperaturePointControllerNode' );
   const Text = require( 'SCENERY/nodes/Text' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -35,6 +36,8 @@ define( require => {
   const temperatureAmountFahrenheitString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountFahrenheit' );
   const temperatureLabelFahrenheitString = require( 'string!NUMBER_LINE_INTEGERS/temperatureLabelFahrenheit' );
   const temperatureLabelCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureLabelCelsius' );
+  const negativeTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/negativeTemperatureAmount' );
+  const positiveTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/positiveTemperatureAmount' );
 
   // images
   const temperatureMap = require( 'image!NUMBER_LINE_INTEGERS/temperature-map.png' );
@@ -55,6 +58,10 @@ define( require => {
         visible: false
       } );
       this.fahrenheitNumberLineNode = this.numberLineNode;
+
+      sceneModel.fahrenheitNumberLine.showAbsoluteValuesProperty.link( showAbsoluteValues => {
+        sceneModel.celsiusNumberLine.showAbsoluteValuesProperty.value = showAbsoluteValues;
+      } );
 
       this.removeChild( this.numberLineNode );
       const numberLinePanelContent = new Node();
@@ -106,20 +113,16 @@ define( require => {
       );
       numberLinePanelContent.addChild( temperatureUnitPicker );
 
-      this.addChild( new Node( {
-        children: sceneModel.permanentPointControllers.map(
-          pointController => new TemperaturePointControllerNode( pointController )
-        )
-      } ) );
-
       // manages absolute value texts whenever thermometers go on and off the map
       const celsiusAbsoluteValueLabelsLayer = new Node();
       const fahrenheitAbsoluteValueLabelsLayer = new Node();
       const onAddedNumberLinePoint = ( numberLine, absoluteValueLabelsLayer, addedNumberLinePoint ) => {
         const absoluteValueText = new Text( '', { font: new PhetFont( 12 ) } );
         const numberLinePointListener = value => {
-          absoluteValueText.text = Math.abs( value );
-          absoluteValueText.center = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 30, 0 ) );
+          const template = value < 0 ? negativeTemperatureAmountString : positiveTemperatureAmountString;
+          absoluteValueText.text = StringUtils.fillIn( template, { value: value } );
+          absoluteValueText.leftCenter = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 10, 0 ) );
+          absoluteValueText.fill = addedNumberLinePoint.colorProperty.value;
         };
         absoluteValueLabelsLayer.addChild( absoluteValueText );
         addedNumberLinePoint.valueProperty.link( numberLinePointListener );
@@ -157,9 +160,8 @@ define( require => {
       numberLinePanel.centerX -= 20;
       this.addChild( numberLinePanel );
 
-      // TODO: only linked to the showAbsoluteValuesProperty for one number line
       Property.multilink(
-        [ sceneModel.isTemperatureInCelsiusProperty, sceneModel.showNumberLineProperty, sceneModel.fahrenheitNumberLine.showAbsoluteValuesProperty ],
+        [ sceneModel.isTemperatureInCelsiusProperty, sceneModel.showNumberLineProperty, sceneModel.numberLine.showAbsoluteValuesProperty ],
         ( isTemperatureInCelsius, showNumberLine, showAbsoluteValues ) => {
           this.celsiusNumberLineNode.visible = isTemperatureInCelsius;
           this.fahrenheitNumberLineNode.visible = !isTemperatureInCelsius;
@@ -170,6 +172,12 @@ define( require => {
           // TODO: figure out how to update the comparison statement node
         }
       );
+
+      this.addChild( new Node( {
+        children: sceneModel.permanentPointControllers.map(
+          pointController => new TemperaturePointControllerNode( pointController )
+        )
+      } ) );
 
     }
   }

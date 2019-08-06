@@ -29,6 +29,12 @@
   "balanceAmount": {
     "value": "balance of ${{value}}"
   },
+  "negativeTemperatureAmount": {
+    "value": "{{value}}° below 0"
+  },
+  "positiveTemperatureAmount": {
+    "value": "{{value}}° above 0"
+  },
   "elevationAmount": {
     "value": "{{value}} m"
   },
