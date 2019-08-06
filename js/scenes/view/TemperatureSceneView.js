@@ -56,6 +56,10 @@ define( require => {
       } );
       this.fahrenheitNumberLineNode = this.numberLineNode;
 
+      sceneModel.fahrenheitNumberLine.showAbsoluteValuesProperty.link( showAbsoluteValues => {
+        sceneModel.celsiusNumberLine.showAbsoluteValuesProperty.value = showAbsoluteValues;
+      } );
+
       this.removeChild( this.numberLineNode );
       const numberLinePanelContent = new Node();
       numberLinePanelContent.addChild( this.fahrenheitNumberLineNode );
@@ -157,9 +161,8 @@ define( require => {
       numberLinePanel.centerX -= 20;
       this.addChild( numberLinePanel );
 
-      // TODO: only linked to the showAbsoluteValuesProperty for one number line
       Property.multilink(
-        [ sceneModel.isTemperatureInCelsiusProperty, sceneModel.showNumberLineProperty, sceneModel.fahrenheitNumberLine.showAbsoluteValuesProperty ],
+        [ sceneModel.isTemperatureInCelsiusProperty, sceneModel.showNumberLineProperty, sceneModel.numberLine.showAbsoluteValuesProperty ],
         ( isTemperatureInCelsius, showNumberLine, showAbsoluteValues ) => {
           this.celsiusNumberLineNode.visible = isTemperatureInCelsius;
           this.fahrenheitNumberLineNode.visible = !isTemperatureInCelsius;
