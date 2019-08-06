@@ -113,10 +113,31 @@ define( require => {
       );
       numberLinePanelContent.addChild( temperatureUnitPicker );
 
+      // manages the label texts for each thermometer
+      const celsiusLabelsLayer = new Node();
+      const fahrenheitLabelsLayer = new Node();
+      const onAddedNumberLinePoint = ( numberLine, labelsLayer, addedNumberLinePoint ) => {
+        const labelText = new Text( addedNumberLinePoint.controller.label, { font: new PhetFont( 16 ) } );
+        const numberLinePointLIstener = () => {
+          labelText.leftCenter = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 15, 0 ) );
+        };
+        labelsLayer.addChild( labelText );
+        addedNumberLinePoint.valueProperty.link( numberLinePointLIstener );
+        const removalListener = removedNumberLinePoint => {
+          if ( removedNumberLinePoint !== addedNumberLinePoint ) {
+            return;
+          }
+          numberLine.residentPoints.removeItemRemovedListener( removalListener );
+          labelsLayer.removeChild( labelText );
+          addedNumberLinePoint.valueProperty.unlink( numberLinePointLIstener );
+        };
+        numberLine.residentPoints.addItemRemovedListener( removalListener );
+      };
+
       // manages absolute value texts whenever thermometers go on and off the map
       const celsiusAbsoluteValueLabelsLayer = new Node();
       const fahrenheitAbsoluteValueLabelsLayer = new Node();
-      const onAddedNumberLinePoint = ( numberLine, absoluteValueLabelsLayer, addedNumberLinePoint ) => {
+      const onAddedNumberLinePointAbsoluteValue = ( numberLine, absoluteValueLabelsLayer, addedNumberLinePoint ) => {
         const textBackground = new Rectangle( 0, 0, 1, 1, 0, 0, { fill: 'black' } );
         const absoluteValueText = new Text( '', { font: new PhetFont( 12 ) } );
         const numberLinePointListener = value => {
@@ -125,7 +146,7 @@ define( require => {
           absoluteValueText.fill = addedNumberLinePoint.colorProperty.value;
           textBackground.setRectWidth( absoluteValueText.width + 3 );
           textBackground.setRectHeight( absoluteValueText.height + 3 );
-          textBackground.leftCenter = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 10, 0 ) );
+          textBackground.leftCenter = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 30, 0 ) );
           absoluteValueText.center = textBackground.center;
         };
         absoluteValueLabelsLayer.addChild( textBackground );
@@ -142,13 +163,18 @@ define( require => {
         };
         numberLine.residentPoints.addItemRemovedListener( removalListener );
       };
-      sceneModel.celsiusNumberLine.residentPoints.addItemAddedListener(
-        addedPoint => onAddedNumberLinePoint( sceneModel.celsiusNumberLine, celsiusAbsoluteValueLabelsLayer, addedPoint )
-      );
-      sceneModel.fahrenheitNumberLine.residentPoints.addItemAddedListener(
-        addedPoint => onAddedNumberLinePoint( sceneModel.fahrenheitNumberLine, fahrenheitAbsoluteValueLabelsLayer, addedPoint )
-      );
 
+      sceneModel.celsiusNumberLine.residentPoints.addItemAddedListener( addedPoint => {
+        onAddedNumberLinePoint( sceneModel.celsiusNumberLine, celsiusLabelsLayer, addedPoint );
+        onAddedNumberLinePointAbsoluteValue( sceneModel.celsiusNumberLine, celsiusAbsoluteValueLabelsLayer, addedPoint );
+      } );
+      sceneModel.fahrenheitNumberLine.residentPoints.addItemAddedListener( addedPoint => {
+        onAddedNumberLinePoint( sceneModel.fahrenheitNumberLine, fahrenheitLabelsLayer, addedPoint );
+        onAddedNumberLinePointAbsoluteValue( sceneModel.fahrenheitNumberLine, fahrenheitAbsoluteValueLabelsLayer, addedPoint );
+      } );
+
+      numberLinePanelContent.addChild( celsiusLabelsLayer );
+      numberLinePanelContent.addChild( fahrenheitLabelsLayer );
       numberLinePanelContent.addChild( celsiusAbsoluteValueLabelsLayer );
       numberLinePanelContent.addChild( fahrenheitAbsoluteValueLabelsLayer );
 
@@ -171,6 +197,8 @@ define( require => {
         ( isTemperatureInCelsius, showNumberLine, showAbsoluteValues ) => {
           this.celsiusNumberLineNode.visible = isTemperatureInCelsius;
           this.fahrenheitNumberLineNode.visible = !isTemperatureInCelsius;
+          celsiusLabelsLayer.visible = this.celsiusNumberLineNode.visible;
+          fahrenheitLabelsLayer.visible = this.fahrenheitNumberLineNode.visible;
           celsiusAbsoluteValueLabelsLayer.visible = this.celsiusNumberLineNode.visible && showAbsoluteValues;
           fahrenheitAbsoluteValueLabelsLayer.visible = this.fahrenheitNumberLineNode.visible && showAbsoluteValues;
           numberLinePanel.visible = showNumberLine;
