@@ -2,7 +2,7 @@
 
 /**
  * view for the "Temperature" scene
- * TODO: discus how to reduce code duplication between this and ElevationSceneView
+ * TODO: investigate reducing code duplication between this and ElevationSceneView
  *
  * @author John Blanco (PhET Interactive Simulations)
  * @author Saurabh Totey
@@ -89,7 +89,7 @@ define( require => {
       numberLinePanelContent.addChild( this.fahrenheitNumberLineNode );
       numberLinePanelContent.addChild( this.celsiusNumberLineNode );
 
-      // TODO: temporary version of the map image
+      // world map with temperature data
       const temperatureMapImage = new Image( temperatureMap );
       temperatureMapImage.scale(
         sceneModel.mapBounds.width / temperatureMapImage.width,
@@ -206,11 +206,11 @@ define( require => {
           stroke: 'transparent',
           resize: false,
           xMargin: 10,
-          yMargin: 10
+          yMargin: 10,
+          centerX: this.temperatureMap.left / 2, // centered between left edge of scene and left edge of map
+          top: this.comparisonStatementAccordionBox.top
         }
       );
-      numberLinePanel.centerY = this.temperatureMap.centerY + 40;
-      numberLinePanel.centerX -= 20;
       this.addChild( numberLinePanel );
 
       Property.multilink(

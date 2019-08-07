@@ -33,22 +33,22 @@ define( require => {
   // constants
   const SCENE_BOUNDS = NLIConstants.NLI_LAYOUT_BOUNDS; // bounds for the scenes match the layout bounds
   const THERMOMETER_LABELS = [ aString, bString, cString ];
+  const MAP_WIDTH = 550;
+  const MAP_HEIGHT = 280;
+  const MAP_CENTER = new Vector2(
+    SCENE_BOUNDS.centerX,
+    SCENE_BOUNDS.centerY * 0.85
+  );
 
   class TemperatureSceneModel extends SceneModel {
 
     constructor() {
 
-      const mapWidth = 650;
-      const mapHeight = 330;
-      const mapCenter = new Vector2(
-        SCENE_BOUNDS.centerX,
-        SCENE_BOUNDS.centerY * 0.85
-      );
       const mapBounds = new Bounds2(
-        mapCenter.x - mapWidth / 2,
-        mapCenter.y - mapHeight / 2,
-        mapCenter.x + mapWidth / 2,
-        mapCenter.y + mapHeight / 2
+        MAP_CENTER.x - MAP_WIDTH / 2,
+        MAP_CENTER.y - MAP_HEIGHT / 2,
+        MAP_CENTER.x + MAP_WIDTH / 2,
+        MAP_CENTER.y + MAP_HEIGHT / 2
       );
 
       const celsiusNumberLineRange = new Range( -52, 40 );
@@ -85,12 +85,12 @@ define( require => {
       this.mapBounds = mapBounds;
 
       // @private temperature data set
-      this.dataSet = new temperatureDataSet( mapWidth, mapHeight );
+      this.dataSet = new temperatureDataSet( MAP_WIDTH, MAP_HEIGHT );
 
       // specify the position of the box that will hold the thermometers
-      const boxWidth = mapWidth * 0.5;
+      const boxWidth = MAP_WIDTH * 0.5;
       const boxHeight = ( SCENE_BOUNDS.maxY - mapBounds.maxY ) * 0.4;
-      const boxCenter = new Vector2( mapCenter.x, ( SCENE_BOUNDS.maxY + mapBounds.maxY ) / 2 );
+      const boxCenter = new Vector2( MAP_CENTER.x, ( SCENE_BOUNDS.maxY + mapBounds.maxY ) / 2 );
 
       // @public (read-only) {Bounds2} - holding area for the thermometers
       this.thermometerBoxBounds = new Bounds2(
