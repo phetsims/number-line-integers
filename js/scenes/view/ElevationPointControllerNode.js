@@ -31,9 +31,10 @@ define( require => {
      * @param {ElevationPointController} pointController
      * @param {Image[]} imageList - an array of images used to depict this node
      * @param {number} seaLevel - the y value in view coordinates of the sea level
+     * @param {Vector2[]} textOffsets - the offsets for the centerLeft positions of the absolute value texts relative to the image rightCenter
      * @param {Object} [options]
      */
-    constructor( pointController, imageList, seaLevel, options ) {
+    constructor( pointController, imageList, seaLevel, textOffsets, options ) {
 
       assert && assert( !options || !options.node, 'options should not include a node for this constructor' );
 
@@ -46,12 +47,15 @@ define( require => {
         node: compositeImageNode
       }, options );
 
+      let textOffset;
+
       // update the visibility of the images as the position changes
       pointController.positionProperty.link( position => {
         const selectedImageIndex = options.imageSelectionFunction( position );
         imageList.forEach( ( image, index ) => {
           image.visible = selectedImageIndex === index;
         } );
+        textOffset = textOffsets[ selectedImageIndex ];
       } );
 
       super( pointController, options );
@@ -85,8 +89,7 @@ define( require => {
           distanceText.visible = true;
 
           distanceTextBackgroundRectangle.setRect( 0, 0, distanceText.width + 5, distanceText.height + 5 );
-          distanceTextBackgroundRectangle.left = compositeImageNode.right; // TODO: align the x value of this label better
-          distanceTextBackgroundRectangle.centerY = compositeImageNode.y;
+          distanceTextBackgroundRectangle.leftCenter = compositeImageNode.rightCenter.plus( textOffset );
           distanceText.center = distanceTextBackgroundRectangle.center;
 
         }
