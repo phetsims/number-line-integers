@@ -70,6 +70,12 @@ define( require => {
         NLIConstants.COMPARISON_STATEMENT_ACCORDION_BOX_OPTIONS
       );
       this.fahrenheitComparisonAccordionBox = this.comparisonStatementAccordionBox;
+      celsiusComparisonStatementNode.selectedOperatorProperty.link( selectedOperator => {
+        this.comparisonStatementNode.selectedOperatorProperty.value = selectedOperator;
+      } );
+      this.comparisonStatementNode.selectedOperatorProperty.link( selectedOperator => {
+        celsiusComparisonStatementNode.selectedOperatorProperty.value = selectedOperator;
+      } );
 
       sceneModel.fahrenheitNumberLine.showAbsoluteValuesProperty.link( showAbsoluteValues => {
         sceneModel.celsiusNumberLine.showAbsoluteValuesProperty.value = showAbsoluteValues;

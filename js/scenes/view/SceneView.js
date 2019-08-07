@@ -60,12 +60,12 @@ define( require => {
       } );
       this.addChild( this.checkboxGroup );
 
-      // add the comparison statement
-      const comparisonStatementNode = new ComparisonStatementNode( sceneModel.numberLine );
+      // @protected add the comparison statement
+      this.comparisonStatementNode = new ComparisonStatementNode( sceneModel.numberLine );
 
       // @protected {AccordionBox} - enclose the comparison statement in an accordion box
       this.comparisonStatementAccordionBox = new AccordionBox(
-        comparisonStatementNode,
+        this.comparisonStatementNode,
         NLIConstants.COMPARISON_STATEMENT_ACCORDION_BOX_OPTIONS
       );
       this.addChild( this.comparisonStatementAccordionBox );

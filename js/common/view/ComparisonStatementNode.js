@@ -37,7 +37,7 @@ define( require => {
 
       super();
 
-      // @private {StringProperty} - controls what comparison operator is used
+      // @public {StringProperty} - controls what comparison operator is used
       this.selectedOperatorProperty = new StringProperty( '<' );
 
       // comparison statement root node
