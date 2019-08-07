@@ -75,6 +75,13 @@ define( require => {
       sceneModel.showNumberLineProperty.linkAttribute( this.numberLineNode, 'visible' );
       this.addChild( this.numberLineNode );
     }
+
+    /**
+     * @public
+     */
+    reset() {
+      this.comparisonStatementNode.selectedOperatorProperty.reset();
+    }
   }
 
   return numberLineIntegers.register( 'SceneView', SceneView );

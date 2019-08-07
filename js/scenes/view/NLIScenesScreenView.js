@@ -84,6 +84,9 @@ define( require => {
       const resetAllButton = new ResetAllButton( {
         listener: () => {
           model.reset();
+          elevationScene.reset();
+          bankScene.reset();
+          temperatureScene.reset();
         },
         right: this.layoutBounds.maxX - INSET,
         bottom: this.layoutBounds.maxY - INSET
