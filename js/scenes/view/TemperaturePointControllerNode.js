@@ -16,6 +16,7 @@ define( require => {
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
+  const Range = require( 'DOT/Range' );
   const TemperatureAndColorSensorNode = require( 'SCENERY_PHET/TemperatureAndColorSensorNode' );
   const Text = require( 'SCENERY/nodes/Text' );
 
@@ -37,8 +38,7 @@ define( require => {
 
       // TODO: min/max Temp values will need to be put into constants file
       const temperatureAndColorSensorNode = new TemperatureAndColorSensorNode(
-        -62,
-        104,
+        new Range( -62, 104 ),
         pointController.fahrenheitTemperatureProperty,
         {
           thermometerNodeOptions: {
