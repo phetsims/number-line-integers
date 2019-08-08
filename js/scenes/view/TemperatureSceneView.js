@@ -63,6 +63,14 @@ define( require => {
         visible: false
       } );
       this.fahrenheitNumberLineNode = this.numberLineNode;
+      sceneModel.fahrenheitNumberLine.showAbsoluteValuesProperty.link( showAbsoluteValues => {
+        sceneModel.celsiusNumberLine.showAbsoluteValuesProperty.value = showAbsoluteValues;
+      } );
+      this.removeChild( this.numberLineNode );
+
+      const numberLinePanelContent = new Node();
+      numberLinePanelContent.addChild( this.fahrenheitNumberLineNode );
+      numberLinePanelContent.addChild( this.celsiusNumberLineNode );
 
       // Do the same replacement with ComparisonStatementAccordionBox
       const celsiusComparisonStatementNode = new ComparisonStatementNode( sceneModel.celsiusNumberLine );
@@ -77,18 +85,7 @@ define( require => {
       this.comparisonStatementNode.selectedOperatorProperty.link( selectedOperator => {
         celsiusComparisonStatementNode.selectedOperatorProperty.value = selectedOperator;
       } );
-
-      sceneModel.fahrenheitNumberLine.showAbsoluteValuesProperty.link( showAbsoluteValues => {
-        sceneModel.celsiusNumberLine.showAbsoluteValuesProperty.value = showAbsoluteValues;
-      } );
-
-      this.removeChild( this.numberLineNode );
-      this.removeChild( this.comparisonStatementAccordionBox );
       this.addChild( this.celsiusComparisonAccordionBox );
-      this.addChild( this.fahrenheitComparisonAccordionBox );
-      const numberLinePanelContent = new Node();
-      numberLinePanelContent.addChild( this.fahrenheitNumberLineNode );
-      numberLinePanelContent.addChild( this.celsiusNumberLineNode );
 
       // world map with temperature data
       const temperatureMapImage = new Image( temperatureMap );
