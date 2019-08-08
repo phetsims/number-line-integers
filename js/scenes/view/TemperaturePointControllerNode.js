@@ -59,9 +59,7 @@ define( require => {
       compositeThermometerNode.addChild( thermometerLabel );
 
       super( pointController, options );
-
     }
-
   }
 
   return numberLineIntegers.register( 'TemperaturePointControllerNode', TemperaturePointControllerNode );

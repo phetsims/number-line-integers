@@ -46,6 +46,7 @@ define( require => {
   const temperatureMap = require( 'image!NUMBER_LINE_INTEGERS/temperature-map.png' );
 
   class TemperatureSceneView extends SceneView {
+
     constructor( sceneModel, layoutBounds ) {
 
       super( sceneModel, layoutBounds, {
