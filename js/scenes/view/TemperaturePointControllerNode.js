@@ -40,6 +40,7 @@ define( require => {
       const temperatureAndColorSensorNode = new TemperatureAndColorSensorNode(
         new Range( -62, 104 ),
         pointController.fahrenheitTemperatureProperty,
+        pointController.colorProperty,
         {
           thermometerNodeOptions: {
             fluidMainColor: new Color( 66, 66, 65 ),
@@ -48,7 +49,6 @@ define( require => {
           }
         }
       );
-      pointController.colorProperty.link( color => { temperatureAndColorSensorNode.changeColor( color ); } );
       compositeThermometerNode.addChild( temperatureAndColorSensorNode );
 
       const thermometerLabel = new Text( pointController.label, {
