@@ -102,6 +102,7 @@ define( require => {
             pointOffset = this.draggableNode.globalToParentPoint( event.pointer.point ).minus( this.draggableNode );
           },
           drag: event => {
+            pointController.isDraggingProperty.value = true; // necessary in case isDraggingProperty is changed while dragging
             const parentPoint = this.globalToParentPoint( event.pointer.point );
             pointController.proposePosition( parentPoint.minus( pointOffset ) );
           },
