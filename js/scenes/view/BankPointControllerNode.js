@@ -26,8 +26,8 @@ define( require => {
   // constants
   const MIN_WIDTH = 80; // screen coords, empirically determined
   const MAX_WIDTH = 200; // screen coords, empirically determined
-  const PIGGY_BANK_GREEN_FILL = new Color( 77, 177, 148 );
-  const PIGGY_BANK_RED_FILL = new Color( 235, 66, 44 );
+  const PIGGY_BANK_GREEN_FILL = new Color( 0, 180, 147 );
+  const PIGGY_BANK_RED_FILL = new Color( 255, 29, 37 );
 
   // images
   const piggyBankWithFlowers = require( 'image!NUMBER_LINE_INTEGERS/piggy-bank-with-flowers.png' );
