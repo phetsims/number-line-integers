@@ -137,18 +137,18 @@ define( require => {
       const fahrenheitLabelsLayer = new Node();
       const onAddedNumberLinePoint = ( numberLine, labelsLayer, addedNumberLinePoint ) => {
         const labelText = new Text( addedNumberLinePoint.controller.label, { font: new PhetFont( 16 ) } );
-        const numberLinePointLIstener = () => {
+        const numberLinePointListener = () => {
           labelText.leftCenter = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 15, 0 ) );
         };
         labelsLayer.addChild( labelText );
-        addedNumberLinePoint.valueProperty.link( numberLinePointLIstener );
+        addedNumberLinePoint.valueProperty.link( numberLinePointListener );
         const removalListener = removedNumberLinePoint => {
           if ( removedNumberLinePoint !== addedNumberLinePoint ) {
             return;
           }
           numberLine.residentPoints.removeItemRemovedListener( removalListener );
           labelsLayer.removeChild( labelText );
-          addedNumberLinePoint.valueProperty.unlink( numberLinePointLIstener );
+          addedNumberLinePoint.valueProperty.unlink( numberLinePointListener );
         };
         numberLine.residentPoints.addItemRemovedListener( removalListener );
       };
