@@ -135,9 +135,11 @@ define( require => {
       doubleLightningPiggyBankNode.maxWidth = 40;
 
       property.link( isDoublePiggyBank => {
-        singleFlowersPiggyBankNode.setHasFill( !isDoublePiggyBank );
-        doubleFlowersPiggyBankNode.setHasFill( isDoublePiggyBank );
-        doubleLightningPiggyBankNode.setHasFill( isDoublePiggyBank );
+        const singleFill = `rgba( 255, 255, 255, ${ isDoublePiggyBank ? 0 : 255 } )`;
+        const doubleFill = `rgba( 255, 255, 255, ${ isDoublePiggyBank ? 255 : 0 } )`;
+        singleFlowersPiggyBankNode.fill = singleFill;
+        doubleFlowersPiggyBankNode.fill = doubleFill;
+        doubleLightningPiggyBankNode.fill = doubleFill;
       } );
 
       super(

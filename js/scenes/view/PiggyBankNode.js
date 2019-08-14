@@ -35,9 +35,13 @@ define( require => {
       this.outline = piggyBankOutlineNode;
     }
 
-    setHasFill( hasFill ) {
-      this.outline.fill = `rgba( 255, 255, 255, ${ hasFill ? 255 : 0 } )`;
+    /**
+     * @param {ColorDef} fill
+     */
+    setFill( fill ) {
+      this.outline.fill = fill;
     }
+    set fill( fill ) { this.setFill( fill ); }
 
   }
 
