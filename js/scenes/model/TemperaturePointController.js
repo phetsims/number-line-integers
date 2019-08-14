@@ -54,17 +54,19 @@ define( require => {
       this.colorProperty = new PaintColorProperty( options.baseDisabledColor );
 
       this.positionProperty.link( position => {
-        const data = sceneModel.getTemperatureAndColorAtLocation( position );
-        this.celsiusTemperatureProperty.value = data ? data.celsiusTemperature : options.baseDisabledCelsiusTemperature;
-        this.fahrenheitTemperatureProperty.value = data ? data.fahrenheitTemperature : options.baseDisabledFahrenheitTemperature;
-        this.colorProperty.value = data ? data.color : options.baseDisabledColor;
+        const temperatureAndColor = sceneModel.getTemperatureAndColorAtLocation( position );
+        this.celsiusTemperatureProperty.value = temperatureAndColor ? temperatureAndColor.celsiusTemperature :
+                                                options.baseDisabledCelsiusTemperature;
+        this.fahrenheitTemperatureProperty.value = temperatureAndColor ? temperatureAndColor.fahrenheitTemperature :
+                                                   options.baseDisabledFahrenheitTemperature;
+        this.colorProperty.value = temperatureAndColor ? temperatureAndColor.color : options.baseDisabledColor;
 
-        this.isOverMapProperty.value = data !== null;
+        this.isOverMapProperty.value = temperatureAndColor !== null;
         if ( this.isOverMapProperty.value && this.numberLinePoint ) {
-          this.fahrenheitNumberLinePoint.valueProperty.value = data.fahrenheitTemperature;
-          this.celsiusNumberLinePoint.valueProperty.value = data.celsiusTemperature;
-          this.fahrenheitNumberLinePoint.colorProperty.value = data.color;
-          this.celsiusNumberLinePoint.colorProperty.value = data.color;
+          this.fahrenheitNumberLinePoint.valueProperty.value = temperatureAndColor.fahrenheitTemperature;
+          this.celsiusNumberLinePoint.valueProperty.value = temperatureAndColor.celsiusTemperature;
+          this.fahrenheitNumberLinePoint.colorProperty.value = temperatureAndColor.color;
+          this.celsiusNumberLinePoint.colorProperty.value = temperatureAndColor.color;
         }
       } );
 

@@ -24,6 +24,7 @@ define( require => {
   const SceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/SceneModel' );
   const temperatureDataSet = require( 'NUMBER_LINE_INTEGERS/scenes/model/temperatureDataSet' );
   const TemperaturePointController = require( 'NUMBER_LINE_INTEGERS/scenes/model/TemperaturePointController' );
+  const Util = require( 'DOT/Util' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // strings
@@ -174,8 +175,8 @@ define( require => {
       const temperatureInKelvin = this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees );
 
       return {
-        celsiusTemperature: temperatureInKelvin - 273.15,
-        fahrenheitTemperature: temperatureInKelvin * 9 / 5 - 459.67,
+        celsiusTemperature: Util.roundSymmetric( temperatureInKelvin - 273.15 ),
+        fahrenheitTemperature: Util.roundSymmetric( temperatureInKelvin * 9 / 5 - 459.67 ),
         color: this.dataSet.getColorAtTemperature( temperatureInKelvin )
       };
     }
