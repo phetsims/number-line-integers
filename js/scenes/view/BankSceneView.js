@@ -128,7 +128,7 @@ define( require => {
 
       class PiggyBankNode extends Node {
 
-        // TODO: lots of duplication between here and BankPointControllerNode
+        // TODO: lots of duplication between here and BankPointControllerNode; this class could probably be pulled out into its own file
         constructor( imageSource ) {
           const piggyBankOutlineNode = new Path( piggyBankShapes.MEDIUM_PIGGY_BANK_SHAPE, {
             fill: 'rgba( 0, 0, 0, 0 )', // transparent to start so it has size
@@ -148,6 +148,8 @@ define( require => {
 
       }
 
+      // TODO: these are not named well: single means on the left side to allow user to control single piggy bank
+      //  double means that user can control 2 piggy banks
       const singleFlowersPiggyBankNode = new PiggyBankNode( piggyBankWithFlowers );
       const doubleFlowersPiggyBankNode = new PiggyBankNode( piggyBankWithFlowers );
       const doubleLightningPiggyBankNode = new PiggyBankNode( piggyBankWithLightning );
