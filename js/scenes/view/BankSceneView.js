@@ -134,9 +134,12 @@ define( require => {
       doubleFlowersPiggyBankNode.maxWidth = 30;
       doubleLightningPiggyBankNode.maxWidth = 40;
 
+      const inactiveColor = 'rgb( 255, 255, 255 )';
+      const activeColor = 'rgb( 0, 180, 147 )';
+
       property.link( isDoublePiggyBank => {
-        const singleFill = `rgba( 255, 255, 255, ${ isDoublePiggyBank ? 0 : 255 } )`;
-        const doubleFill = `rgba( 255, 255, 255, ${ isDoublePiggyBank ? 255 : 0 } )`;
+        const singleFill = isDoublePiggyBank ? inactiveColor : activeColor;
+        const doubleFill = isDoublePiggyBank ? activeColor : inactiveColor;
         singleFlowersPiggyBankNode.fill = singleFill;
         doubleFlowersPiggyBankNode.fill = doubleFill;
         doubleLightningPiggyBankNode.fill = doubleFill;
