@@ -126,26 +126,41 @@ define( require => {
         setEnabled: () => {}
       }, options );
 
-      // TODO: lots of duplication between here and BankPointControllerNode
-      const makePiggyBankNode = imageSource => {
-        const piggyBankOutlineNode = new Path( piggyBankShapes.MEDIUM_PIGGY_BANK_SHAPE, {
-          fill: 'rgba( 0, 0, 0, 0 )', // transparent to start so it has size
-          lineWidth: 0,
-          center: Vector2.ZERO
-        } );
-        const overlayImage = new Image( imageSource, { opacity: 0.8 } );
-        overlayImage.setScaleMagnitude( piggyBankOutlineNode.width / overlayImage.width );
-        overlayImage.center = Vector2.ZERO;
-        return new Node( { children: [ piggyBankOutlineNode, overlayImage ] } );
-      };
+      class PiggyBankNode extends Node {
 
-      const singleFlowersPiggyBankNode = makePiggyBankNode( piggyBankWithFlowers );
-      const doubleFlowersPiggyBankNode = makePiggyBankNode( piggyBankWithFlowers );
-      const doubleLightningPiggyBankNode = makePiggyBankNode( piggyBankWithLightning );
+        // TODO: lots of duplication between here and BankPointControllerNode
+        constructor( imageSource ) {
+          const piggyBankOutlineNode = new Path( piggyBankShapes.MEDIUM_PIGGY_BANK_SHAPE, {
+            fill: 'rgba( 0, 0, 0, 0 )', // transparent to start so it has size
+            lineWidth: 0,
+            center: Vector2.ZERO
+          } );
+          const overlayImage = new Image( imageSource, { opacity: 0.8 } );
+          overlayImage.setScaleMagnitude( piggyBankOutlineNode.width / overlayImage.width );
+          overlayImage.center = Vector2.ZERO;
+          super( { children: [ piggyBankOutlineNode, overlayImage ] } );
+          this.outline = piggyBankOutlineNode;
+        }
 
-      singleFlowersPiggyBankNode.maxWidth = 30;
-      doubleFlowersPiggyBankNode.maxWidth = 20;
-      doubleLightningPiggyBankNode.maxWidth = 30;
+        setHasFill( hasFill ) {
+          this.outline.fill = `rgba( 255, 255, 255, ${ hasFill ? 255 : 0 } )`;
+        }
+
+      }
+
+      const singleFlowersPiggyBankNode = new PiggyBankNode( piggyBankWithFlowers );
+      const doubleFlowersPiggyBankNode = new PiggyBankNode( piggyBankWithFlowers );
+      const doubleLightningPiggyBankNode = new PiggyBankNode( piggyBankWithLightning );
+
+      singleFlowersPiggyBankNode.maxWidth = 40;
+      doubleFlowersPiggyBankNode.maxWidth = 30;
+      doubleLightningPiggyBankNode.maxWidth = 40;
+
+      property.link( isDoublePiggyBank => {
+        singleFlowersPiggyBankNode.setHasFill( !isDoublePiggyBank );
+        doubleFlowersPiggyBankNode.setHasFill( isDoublePiggyBank );
+        doubleLightningPiggyBankNode.setHasFill( isDoublePiggyBank );
+      } );
 
       super(
         property,
