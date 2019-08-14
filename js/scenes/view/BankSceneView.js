@@ -14,6 +14,7 @@ define( require => {
   const BankPointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/BankPointControllerNode' );
   const Dimension2 = require( 'DOT/Dimension2' );
   const HBox = require( 'SCENERY/nodes/HBox' );
+  const Image = require( 'SCENERY/nodes/Image' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Path = require( 'SCENERY/nodes/Path' );
@@ -21,10 +22,15 @@ define( require => {
   const piggyBankShapes = require( 'NUMBER_LINE_INTEGERS/scenes/view/piggyBankShapes' );
   const SceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/SceneView' );
   const Text = require( 'SCENERY/nodes/Text' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // constants
   const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
   const BALANCE_CHANGE_AMOUNT = 1; // in dollars (or whatever currency units are being used)
+
+  // images
+  const piggyBankWithFlowers = require( 'image!NUMBER_LINE_INTEGERS/piggy-bank-with-flowers.png' );
+  const piggyBankWithLightning = require( 'image!NUMBER_LINE_INTEGERS/piggy-bank-with-lightning.png' );
 
   // strings
   const balanceString = require( 'string!NUMBER_LINE_INTEGERS/balance' );
@@ -116,36 +122,38 @@ define( require => {
     constructor( property, options ) {
 
       options = _.extend( {
-        switchSize: new Dimension2( 50, 15 )
+        switchSize: new Dimension2( 50, 15 ),
+        setEnabled: () => {}
       }, options );
 
-      const lineWidth = 2;
+      // TODO: lots of duplication between here and BankPointControllerNode
+      const makePiggyBankNode = imageSource => {
+        const piggyBankOutlineNode = new Path( piggyBankShapes.MEDIUM_PIGGY_BANK_SHAPE, {
+          fill: 'rgba( 0, 0, 0, 0 )', // transparent to start so it has size
+          lineWidth: 0,
+          center: Vector2.ZERO
+        } );
+        const overlayImage = new Image( imageSource, { opacity: 0.8 } );
+        overlayImage.setScaleMagnitude( piggyBankOutlineNode.width / overlayImage.width );
+        overlayImage.center = Vector2.ZERO;
+        return new Node( { children: [ piggyBankOutlineNode, overlayImage ] } );
+      };
+
+      const singleFlowersPiggyBankNode = makePiggyBankNode( piggyBankWithFlowers );
+      const doubleFlowersPiggyBankNode = makePiggyBankNode( piggyBankWithFlowers );
+      const doubleLightningPiggyBankNode = makePiggyBankNode( piggyBankWithLightning );
+
+      singleFlowersPiggyBankNode.maxWidth = 30;
+      doubleFlowersPiggyBankNode.maxWidth = 20;
+      doubleLightningPiggyBankNode.maxWidth = 30;
 
       super(
         property,
         false,
-        new Path( piggyBankShapes.SMALL_PIGGY_BANK_SHAPE, {
-          maxWidth: 30,
-          fill: 'white',
-          stroke: 'blue',
-          lineWidth: lineWidth
-        } ),
+        singleFlowersPiggyBankNode,
         true,
         new HBox( {
-          children: [
-            new Path( piggyBankShapes.SMALL_PIGGY_BANK_SHAPE, {
-              maxWidth: 20,
-              fill: 'white',
-              stroke: 'blue',
-              lineWidth: lineWidth
-            } ),
-            new Path( piggyBankShapes.SMALL_PIGGY_BANK_SHAPE, {
-              maxWidth: 30,
-              fill: 'white',
-              stroke: 'orange',
-              lineWidth: lineWidth
-            } )
-          ],
+          children: [ doubleFlowersPiggyBankNode, doubleLightningPiggyBankNode ],
           spacing: 10
         } ),
         options

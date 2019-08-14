@@ -53,7 +53,7 @@ define( require => {
 
       // create a node that is shaped like a piggy bank, the description comes from piggy-bank.svg in the assets file
       const piggyBankOutlineNode = new Path( piggyBankShapes.MEDIUM_PIGGY_BANK_SHAPE, {
-        fill: 'rgba( 0, 0, 0, 0)', // transparent to start so it has size
+        fill: 'rgba( 0, 0, 0, 0 )', // transparent to start so it has size
         lineWidth: 0,
         center: Vector2.ZERO
       } );
