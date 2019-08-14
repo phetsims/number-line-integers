@@ -20,6 +20,7 @@ define( require => {
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const Range = require( 'DOT/Range' );
+  const reverseRobinsonProjector = require( 'NUMBER_LINE_INTEGERS/scenes/model/reverseRobinsonProjector' );
   const SceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/SceneModel' );
   const temperatureDataSet = require( 'NUMBER_LINE_INTEGERS/scenes/model/temperatureDataSet' );
   const TemperaturePointController = require( 'NUMBER_LINE_INTEGERS/scenes/model/TemperaturePointController' );
@@ -131,26 +132,51 @@ define( require => {
      * get the temperature and color at the specified model location
      * @public
      * @param {Vector2} location - model coordinates for where to get the temperature
-     * @returns {{celsiusTemperature: number, color: Color, fahrenheitTemperature: number}|null} returns data unless location is invalid, in which case null is returned
+     * @returns {{celsiusTemperature: number, color: Color, fahrenheitTemperature: number}|null} returns data unless
+     * location is invalid, in which case null is returned
      */
     getTemperatureAndColorAtLocation( location ) {
+
+      // convert the location into normalized values based on the map's position and size, centered in the middle
+      const normalizedXPosition = ( location.x - this.mapBounds.centerX ) / this.mapBounds.width;
+      const normalizedYPosition = ( this.mapBounds.centerY - location.y ) / this.mapBounds.height;
+
+      if ( normalizedXPosition < -0.5 || normalizedXPosition > 0.5 ||
+           normalizedYPosition < -0.5 || normalizedYPosition > 0.5 ) {
+
+        // the point is not over the map
+        return null;
+      }
+
+      // convert the normalized coordinates to latitude and longitude
+      const latLong = reverseRobinsonProjector.xyToLatLong( normalizedXPosition, normalizedYPosition );
+
+      if ( latLong === null ) {
+        return null;
+      }
+
+      console.log( '------------------' );
+
+      console.log( 'latLong from reverseRobinsonProjector = ' + JSON.stringify( latLong ) );
+
       const coordinate = this.dataSet.getLatLongAtPoint( location.x - this.mapBounds.minX, location.y - this.mapBounds.minY );
 
       const latDegrees = coordinate.latitude / Math.PI * 180;
       const lonDegrees = coordinate.longitude / Math.PI * 180;
+      console.log( 'latDegrees from formula version = ' + latDegrees );
+      console.log( 'lonDegrees from formula version = ' + lonDegrees );
 
       // returns null if location is not in map bounds
       if ( latDegrees > 89 || latDegrees < -90 || lonDegrees > 180 || lonDegrees < -180 ) {
         return null;
       }
 
-      const celsiusTemperature = this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees ) - 273;
-      const fahrenheitTemperature = celsiusTemperature * 9 / 5 + 32;
+      const temperatureInKelvin = this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees );
 
       return {
-        celsiusTemperature: celsiusTemperature,
-        fahrenheitTemperature: Math.floor( fahrenheitTemperature ),
-        color: this.dataSet.getColorAtTemperature( celsiusTemperature + 273 )
+        celsiusTemperature: temperatureInKelvin - 273.15,
+        fahrenheitTemperature: temperatureInKelvin * 9 / 5 - 459.67,
+        color: this.dataSet.getColorAtTemperature( temperatureInKelvin )
       };
     }
 
