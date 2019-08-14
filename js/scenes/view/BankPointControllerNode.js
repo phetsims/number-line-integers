@@ -11,13 +11,11 @@ define( require => {
 
   // modules
   const Color = require( 'SCENERY/util/Color' );
-  const Image = require( 'SCENERY/nodes/Image' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const Path = require( 'SCENERY/nodes/Path' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const PiggyBankNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/PiggyBankNode' );
   const Property = require( 'AXON/Property' );
-  const piggyBankShapes = require( 'NUMBER_LINE_INTEGERS/scenes/view/piggyBankShapes' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -51,20 +49,9 @@ define( require => {
 
       const controllerNode = new Node();
 
-      // create a node that is shaped like a piggy bank, the description comes from piggy-bank.svg in the assets file
-      const piggyBankOutlineNode = new Path( piggyBankShapes.MEDIUM_PIGGY_BANK_SHAPE, {
-        fill: 'rgba( 0, 0, 0, 0 )', // transparent to start so it has size
-        lineWidth: 0,
-        center: Vector2.ZERO
-      } );
-      controllerNode.addChild( piggyBankOutlineNode );
-
       // choose the overlay image source, which is artwork that must exactly match the shape of the outline
-      const overlayImageSource = overlayType === 'flowers' ? piggyBankWithFlowers : piggyBankWithLightning;
-      const overlayImageNode = new Image( overlayImageSource, { opacity: 0.8 } );
-      overlayImageNode.setScaleMagnitude( piggyBankOutlineNode.width / overlayImageNode.width );
-      overlayImageNode.center = Vector2.ZERO;
-      controllerNode.addChild( overlayImageNode );
+      const piggyBankNode = new PiggyBankNode( overlayType === 'flowers' ? piggyBankWithFlowers : piggyBankWithLightning );
+      controllerNode.addChild( piggyBankNode );
 
       // add the balance indicator node
       const balanceNode = new Text( 'X', {
@@ -90,7 +77,7 @@ define( require => {
         controllerNode.setScaleMagnitude( desiredWidth / unscaledWidth );
 
         // update the color of the point and the node's fill
-        piggyBankOutlineNode.fill = currentBalance >= 0 ? PIGGY_BANK_GREEN_FILL : PIGGY_BANK_RED_FILL;
+        piggyBankNode.fill = currentBalance >= 0 ? PIGGY_BANK_GREEN_FILL : PIGGY_BANK_RED_FILL;
 
         // update the balance indicator text
         const signIndicator = currentBalance < 0 ? '-' : '';
