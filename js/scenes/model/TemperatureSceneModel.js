@@ -228,8 +228,5 @@ define( require => {
 
   }
 
-  // @public Choice of temperature units that the scene can display
-  TemperatureSceneModel.Units = new Enumeration( [ 'FAHRENHEIT', 'CELSIUS' ] );
-
   return numberLineIntegers.register( 'TemperatureSceneModel', TemperatureSceneModel );
 } );
