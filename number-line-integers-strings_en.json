@@ -85,5 +85,41 @@
   },
   "c": {
     "value": "C"
+  },
+  "january": {
+    "value": "January"
+  },
+  "february": {
+    "value": "February"
+  },
+  "march": {
+    "value": "March"
+  },
+  "april": {
+    "value": "April"
+  },
+  "may": {
+    "value": "May"
+  },
+  "june": {
+    "value": "June"
+  },
+  "july": {
+    "value": "July"
+  },
+  "august": {
+    "value": "August"
+  },
+  "september": {
+    "value": "September"
+  },
+  "october": {
+    "value": "October"
+  },
+  "november": {
+    "value": "November"
+  },
+  "december": {
+    "value": "December"
   }
 }
