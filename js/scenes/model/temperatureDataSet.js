@@ -14,35 +14,25 @@ define( require => {
   const Color = require( 'SCENERY/util/Color' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
 
-  class temperatureDataSet {
-
-    constructor( width, height ) {
-      this.x0 = width / 2;
-      this.y0 = height / 2;
-
-      const sphereCircumference = width * 1.178;
-      this.sphereRadius = sphereCircumference / ( 2 * Math.PI );
-      const expectedHeight = width * 0.5072;
-      this.yScale = expectedHeight / height;
-    }
-
+  const temperatureDataSet = {
     /**
      * get latitude and longitude at a given x, y coordinate on robinson projection map
      * @param {number} x
      * @param {number} y
      * @returns {number, number} latitude, longitude
      */
-    getLatLongAtPoint( x, y ) {
-      const relativeX = Math.abs( x - this.x0 );
-      const relativeY = Math.abs( this.yScale * y - this.y0 );
+    getLatLongAtPoint: ( x, y ) => {
+      const relativeX = Math.abs( x );
+      const relativeY = Math.abs( 0.5072 * y );
 
-      const thisBStar = relativeY / this.sphereRadius;
+      const sphereRadius = 1.178 / ( 2 * Math.PI );
+      const thisBStar = relativeY / sphereRadius;
       let thisAStar = 0;
       for ( let i = 0; i <= 18; i++ ) {
         thisAStar += mValues[ i ] * Math.abs( BStarValues[ i ] - thisBStar );
       }
 
-      const long = relativeX / ( this.sphereRadius * thisAStar );
+      const long = relativeX / ( sphereRadius * thisAStar );
 
       let lat = 0;
       for ( let i = 0; i <= 18; i++ ) {
@@ -53,10 +43,10 @@ define( require => {
       }
 
       return {
-        latitude: y < this.y0 ? lat : -lat,
-        longitude: x > this.x0 ? long : -long
+        latitude: y > 0 ? lat : -lat,
+        longitude: x > 0 ? long : -long
       };
-    }
+    },
 
     /**
      * get the near-surface temperature at the given latitude and longitude for the contained data set
@@ -64,7 +54,7 @@ define( require => {
      * @param {number} longitude
      * @returns {number} - temperature at specified location in Kelvin
      */
-    getTemperatureAtLatLong( latitude, longitude ) {
+    getTemperatureAtLatLong: ( latitude, longitude ) => {
 
       if ( longitude < 0 ) {
         longitude = 360 + longitude;
@@ -97,7 +87,7 @@ define( require => {
       // get the value of the temperature associated with the two index values
       const gridWidth = longitudeValues.length;
       return airTemperatureNearSurfaceValues[ latitudeIndex * gridWidth + longitudeIndex ];
-    }
+    },
 
     /**
      * get the color corresponding to a given temperature, with colors matching the heatmap image used
@@ -105,7 +95,7 @@ define( require => {
      * @param {number} temperature
      * @returns {Color}
      */
-    getColorAtTemperature( temperature ) {
+    getColorAtTemperature: ( temperature ) => {
       const t2 = Math.pow( temperature, 2 );
       const red = redCoefficients[ 0 ] + redCoefficients[ 1 ] * temperature + redCoefficients[ 2 ] * t2;
       const green = greenCoefficients[ 0 ] + greenCoefficients[ 1 ] * temperature + greenCoefficients[ 2 ] * t2;
@@ -113,7 +103,7 @@ define( require => {
 
       return new Color( red, green, blue, 1 );
     }
-  }
+  };
 
   const blueCoefficients = [ -6369, 49.3, -0.092 ];
 

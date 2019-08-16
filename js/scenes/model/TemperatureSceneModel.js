@@ -87,9 +87,6 @@ define( require => {
       // @public (read-only) {Bounds2} - bounds of the map area
       this.mapBounds = mapBounds;
 
-      // @private temperature data set
-      this.dataSet = new temperatureDataSet( MAP_WIDTH, MAP_HEIGHT );
-
       // @public
       this.monthProperty = new EnumerationProperty(
         TemperatureSceneModel.Months,
@@ -167,7 +164,7 @@ define( require => {
 
       console.log( 'latLong from reverseRobinsonProjector = ' + JSON.stringify( latLong ) );
 
-      const coordinate = this.dataSet.getLatLongAtPoint( location.x - this.mapBounds.minX, location.y - this.mapBounds.minY );
+      const coordinate = temperatureDataSet.getLatLongAtPoint( normalizedXPosition, normalizedYPosition );
 
       const latDegrees = coordinate.latitude / Math.PI * 180;
       const lonDegrees = coordinate.longitude / Math.PI * 180;
@@ -179,13 +176,13 @@ define( require => {
         return null;
       }
 
-      // const temperatureInKelvin = this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees );
-      const temperatureInKelvin = this.dataSet.getTemperatureAtLatLong( latLong.latitude, latLong.longitude );
+      // const temperatureInKelvin = temperatureDataSet.getTemperatureAtLatLong( latDegrees, lonDegrees );
+      const temperatureInKelvin = temperatureDataSet.getTemperatureAtLatLong( latLong.latitude, latLong.longitude );
 
       return {
         celsiusTemperature: Util.roundSymmetric( temperatureInKelvin - 273.15 ),
         fahrenheitTemperature: Util.roundSymmetric( temperatureInKelvin * 9 / 5 - 459.67 ),
-        color: this.dataSet.getColorAtTemperature( temperatureInKelvin )
+        color: temperatureDataSet.getColorAtTemperature( temperatureInKelvin )
       };
     }
 
