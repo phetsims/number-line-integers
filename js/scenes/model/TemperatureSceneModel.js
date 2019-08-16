@@ -172,7 +172,8 @@ define( require => {
         return null;
       }
 
-      const temperatureInKelvin = this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees );
+      // const temperatureInKelvin = this.dataSet.getTemperatureAtLatLong( latDegrees, lonDegrees );
+      const temperatureInKelvin = this.dataSet.getTemperatureAtLatLong( latLong.latitude, latLong.longitude );
 
       return {
         celsiusTemperature: Util.roundSymmetric( temperatureInKelvin - 273.15 ),
