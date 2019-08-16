@@ -91,7 +91,7 @@ define( require => {
       this.dataSet = new temperatureDataSet( MAP_WIDTH, MAP_HEIGHT );
 
       // @public
-      this.month = new EnumerationProperty(
+      this.monthProperty = new EnumerationProperty(
         TemperatureSceneModel.Months,
         TemperatureSceneModel.Months.JANUARY
       );

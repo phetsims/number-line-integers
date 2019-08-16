@@ -25,14 +25,36 @@ define( require => {
   const SceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/SceneView' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const TemperaturePointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/TemperaturePointControllerNode' );
+  const TemperatureSceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/TemperatureSceneModel' );
   const Text = require( 'SCENERY/nodes/Text' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Vector2 = require( 'DOT/Vector2' );
   const VerticalAquaRadioButtonGroup = require( 'SUN/VerticalAquaRadioButtonGroup' );
 
+  // images
+  const temperatureMapJanuary = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.png' );
+  const temperatureMapFebruary = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.png' );
+  const temperatureMapMarch = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.png' );
+  const temperatureMapApril = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.png' );
+  const temperatureMapMay = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.png' );
+  const temperatureMapJune = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.png' );
+  const temperatureMapJuly = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.png' );
+  const temperatureMapAugust = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.png' );
+  const temperatureMapSeptember = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.png' );
+  const temperatureMapOctober = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.png' );
+  const temperatureMapNovember = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.png' );
+  const temperatureMapDecember = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.png' );
+
   // constants
   const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
   const UNIT_PICKER_LABEL_FONT = new PhetFont( { size: 18 } );
+  const TEMPERATURE_IMAGES_MONTHS = [ temperatureMapJanuary, temperatureMapFebruary, temperatureMapMarch,
+    temperatureMapApril, temperatureMapMay, temperatureMapJune, temperatureMapJuly, temperatureMapAugust,
+    temperatureMapSeptember, temperatureMapOctober, temperatureMapNovember, temperatureMapDecember ];
+  const TEMPERATURE_MAP_MONTHS = _.zipObject( TemperatureSceneModel.Months.VALUES,
+    _.map( TemperatureSceneModel.Months.KEYS, function( key, index ) {
+      return TEMPERATURE_IMAGES_MONTHS[ index ];
+    } ) );
 
   // strings
   const temperatureString = require( 'string!NUMBER_LINE_INTEGERS/temperature' );
@@ -42,9 +64,6 @@ define( require => {
   const temperatureLabelCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureLabelCelsius' );
   const negativeTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/negativeTemperatureAmount' );
   const positiveTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/positiveTemperatureAmount' );
-
-  // images
-  const temperatureMap = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.png' );
 
   class TemperatureSceneView extends SceneView {
 
@@ -89,14 +108,17 @@ define( require => {
       this.addChild( this.celsiusComparisonAccordionBox );
 
       // world map with temperature data
-      const temperatureMapImage = new Image( temperatureMap );
-      temperatureMapImage.scale(
-        sceneModel.mapBounds.width / temperatureMapImage.width,
-        sceneModel.mapBounds.height / temperatureMapImage.height
-      );
+      let temperatureMapImage;
+      sceneModel.monthProperty.link( month => {
+        temperatureMapImage = new Image( TEMPERATURE_MAP_MONTHS[ month ] );
+        temperatureMapImage.scale(
+          sceneModel.mapBounds.width / temperatureMapImage.width,
+          sceneModel.mapBounds.height / temperatureMapImage.height
+        );
+      } );
 
       // @private
-      this.monthsComboBox = new MonthsComboBox( sceneModel.month, this );
+      this.monthsComboBox = new MonthsComboBox( sceneModel.monthProperty, this );
       this.addChild( this.monthsComboBox );
 
       // @private
