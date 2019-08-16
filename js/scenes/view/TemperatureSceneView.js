@@ -44,7 +44,7 @@ define( require => {
   const positiveTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/positiveTemperatureAmount' );
 
   // images
-  const temperatureMap = require( 'image!NUMBER_LINE_INTEGERS/temperature-map.png' );
+  const temperatureMap = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.png' );
 
   class TemperatureSceneView extends SceneView {
 
