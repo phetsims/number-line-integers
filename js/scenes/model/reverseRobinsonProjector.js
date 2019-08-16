@@ -220,6 +220,21 @@ define( require => {
       }
 
       return returnValue;
+    },
+
+    /**
+     * This is a purely mathematical way to map x,y on a map image to a latitude and longitude, see
+     * https://vdocuments.site/a-computational-approach-to-the-robinson-projection.html or, if that link goes dead,
+     * search on "A Computational Approach to the Robinson Projection". The x and y values are taken from a position on
+     * a map where the point (0,0) is in the center.
+     * @param {number} x
+     * @param {number} y
+     * @return {null|{latitude: {number}, longitude: {number}}}
+     */
+    xyToLatLongCalculated( x, y ) {
+
+      // stubbed, work in progress
+      return null;
     }
   };
 
