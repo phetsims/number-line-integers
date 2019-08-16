@@ -229,7 +229,7 @@ define( require => {
      * a map where the point (0,0) is in the center.
      * @param {number} x
      * @param {number} y
-     * @return {null|{latitude: {number}, longitude: {number}}}
+     * @returns {null|{latitude: {number}, longitude: {number}}}
      */
     xyToLatLongCalculated( x, y ) {
 
