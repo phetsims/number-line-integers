@@ -15,6 +15,7 @@ define( require => {
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const Enumeration = require( 'PHET_CORE/Enumeration' );
+  const EnumerationProperty = require( 'AXON/EnumerationProperty' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -88,6 +89,12 @@ define( require => {
 
       // @private temperature data set
       this.dataSet = new temperatureDataSet( MAP_WIDTH, MAP_HEIGHT );
+
+      // @public
+      this.month = new EnumerationProperty(
+        TemperatureSceneModel.Months,
+        TemperatureSceneModel.Months.JANUARY
+      );
 
       // specify the position of the box that will hold the thermometers
       const boxWidth = MAP_WIDTH * 0.5;
@@ -229,8 +236,8 @@ define( require => {
 
   }
 
-  // @public Choice of temperature units that the scene can display
-  TemperatureSceneModel.Units = new Enumeration( [ 'FAHRENHEIT', 'CELSIUS' ] );
+  TemperatureSceneModel.Months = new Enumeration( [ 'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY',
+    'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER' ] );
 
   return numberLineIntegers.register( 'TemperatureSceneModel', TemperatureSceneModel );
 } );

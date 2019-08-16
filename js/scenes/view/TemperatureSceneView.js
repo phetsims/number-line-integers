@@ -15,6 +15,7 @@ define( require => {
   const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementNode' );
   const Panel = require( 'SUN/Panel' );
   const Image = require( 'SCENERY/nodes/Image' );
+  const MonthsComboBox = require( 'NUMBER_LINE_INTEGERS/scenes/view/MonthsComboBox' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -95,11 +96,18 @@ define( require => {
       );
 
       // @private
+      this.monthsComboBox = new MonthsComboBox( sceneModel.month, this );
+      this.addChild( this.monthsComboBox );
+
+      // @private
       this.temperatureMap = new Node( {
         children: [ temperatureMapImage ],
         center: sceneModel.mapBounds.center
       } );
       this.addChild( this.temperatureMap );
+
+      this.monthsComboBox.left = this.temperatureMap.right + 50;
+      this.monthsComboBox.top = this.temperatureMap.top;
 
       // add the node that represents the box that will hold the thermometers
       this.addChild( new Rectangle.bounds( sceneModel.thermometerBoxBounds, {
