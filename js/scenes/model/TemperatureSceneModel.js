@@ -14,6 +14,7 @@ define( require => {
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Bounds2 = require( 'DOT/Bounds2' );
+  const TemperatureToColorMapper = require( 'NUMBER_LINE_INTEGERS/scenes/model/TemperatureToColorMapper' );
   const Enumeration = require( 'PHET_CORE/Enumeration' );
   const EnumerationProperty = require( 'AXON/EnumerationProperty' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
@@ -42,6 +43,8 @@ define( require => {
     SCENE_BOUNDS.centerX,
     SCENE_BOUNDS.centerY * 0.85
   );
+  const TEMPERATURE_RANGE_ON_MAP = new Range( -60, 50 ); // in Celsius, must match range used to make map images
+  const TEMPERATURE_TO_COLOR_MAPPER = new TemperatureToColorMapper( TEMPERATURE_RANGE_ON_MAP );
 
   class TemperatureSceneModel extends SceneModel {
 
@@ -178,11 +181,12 @@ define( require => {
 
       // const temperatureInKelvin = temperatureDataSet.getTemperatureAtLatLong( latDegrees, lonDegrees );
       const temperatureInKelvin = temperatureDataSet.getTemperatureAtLatLong( latLong.latitude, latLong.longitude );
+      const temperatureInCelsius = Util.roundSymmetric( temperatureInKelvin - 273.15 );
 
       return {
-        celsiusTemperature: Util.roundSymmetric( temperatureInKelvin - 273.15 ),
+        celsiusTemperature: temperatureInCelsius,
         fahrenheitTemperature: Util.roundSymmetric( temperatureInKelvin * 9 / 5 - 459.67 ),
-        color: temperatureDataSet.getColorAtTemperature( temperatureInKelvin )
+        color: TEMPERATURE_TO_COLOR_MAPPER.mapTemperatureToColor( temperatureInCelsius )
       };
     }
 

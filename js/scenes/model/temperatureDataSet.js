@@ -1,8 +1,9 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * data set that contains temperature data at 2m above the surface of the earth mapped to lat and lon values
- * along with the data necessary to map lat and lon values to a robinson projection world map: https://vdocuments.site/a-computational-approach-to-the-robinson-projection.html
+ * This singleton contains a data set that maps latitude and longitude values to air temperature values near the surface
+ * of the Earth.  Details about how this was created are contained in the README file in the assets directory for this
+ * sim.  The data was obtained from the Copernicus Climate Data Store, see https://cds.climate.copernicus.eu.
  *
  * @author John Blanco
  * @author Arnab Purkayastha
@@ -11,15 +12,17 @@ define( require => {
   'use strict';
 
   // modules
-  const Color = require( 'SCENERY/util/Color' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
 
   const temperatureDataSet = {
+
     /**
      * get latitude and longitude at a given x, y coordinate on robinson projection map
      * @param {number} x
      * @param {number} y
-     * @returns {number, number} latitude, longitude
+     * @returns {{latitude:{number}, longitude:{number}}|null} - an object containing latitude and longitude, null if
+     * the provided values are out of range
+     * @public
      */
     getLatLongAtPoint: ( x, y ) => {
       const relativeX = Math.abs( x );
@@ -53,6 +56,7 @@ define( require => {
      * @param {number} latitude
      * @param {number} longitude
      * @returns {number} - temperature at specified location in Kelvin
+     * @public
      */
     getTemperatureAtLatLong: ( latitude, longitude ) => {
 
@@ -87,29 +91,8 @@ define( require => {
       // get the value of the temperature associated with the two index values
       const gridWidth = longitudeValues.length;
       return airTemperatureNearSurfaceValues[ latitudeIndex * gridWidth + longitudeIndex ];
-    },
-
-    /**
-     * get the color corresponding to a given temperature, with colors matching the heatmap image used
-     * where dark blue corresponds to low temps, dark red to high temps, and white to medium temps
-     * @param {number} temperature
-     * @returns {Color}
-     */
-    getColorAtTemperature: ( temperature ) => {
-      const t2 = Math.pow( temperature, 2 );
-      const red = redCoefficients[ 0 ] + redCoefficients[ 1 ] * temperature + redCoefficients[ 2 ] * t2;
-      const green = greenCoefficients[ 0 ] + greenCoefficients[ 1 ] * temperature + greenCoefficients[ 2 ] * t2;
-      const blue = blueCoefficients[ 0 ] + blueCoefficients[ 1 ] * temperature + blueCoefficients[ 2 ] * t2;
-
-      return new Color( red, green, blue, 1 );
     }
   };
-
-  const blueCoefficients = [ -6369, 49.3, -0.092 ];
-
-  const redCoefficients = [ -6559, 46.8, -0.0806 ];
-
-  const greenCoefficients = [ -8174, 61.3, -0.112 ];
 
   const longitudeValues = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
