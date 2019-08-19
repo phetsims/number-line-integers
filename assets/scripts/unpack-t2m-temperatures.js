@@ -9,6 +9,7 @@
  * EXAMPLE USAGE:
  * node ./js/unpack-t2m-temperatures.js
  */
+/* eslint-disable bad-sim-text */
 
 // modules
 const fs = require( 'fs' );
@@ -6515,6 +6516,7 @@ const VALUES_TO_BE_ADJUSTED = [
 let output = '';
 
 VALUES_TO_BE_ADJUSTED.forEach( ( value, index ) => {
+  'use strict';
 
   // adjust the value and add it to the output string
   output += Math.round( value * SCALE_FACTOR + OFFSET_FACTOR );
