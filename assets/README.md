@@ -10,18 +10,26 @@ https://cds.climate.copernicus.eu/cdsapp#!/home.  I (jbphet) learned just enough
 needed.  There is a lot to it, and there may be better and quicker ways to get the information needed, but this got the
 job done.
 
-Before doing any of this, you'll need to set up Python and pip on your machine if you don't already have it, then
-Steps:
-+ Create and download the map using the CDSToolbox and the Python code (TODO: put in final script name for getting the
-images), adjusting the date as needed, to get one map per month.
-+ Download the image, crop it, make the portions outside the map transparent (Photoshop was generally used for this)
-+ Download data that matches the map by using the Python code and adjusting the date
-+ The data set is higher resolution than we need, so to reduce it to a size that we can work with, take the following
-steps
-  + Install the NetCDF software utilities from UniData for manipulating NetCDF (.cd) files (you only need to do this
-  once).  I (jbphet) installed the netCDF4 v4.7.0 without DAP (whatever that is) from
-   https://www.unidata.ucar.edu/software/netcdf/docs/winbin.html
-  + Convert the data set to 
+Steps to get set up:
++ Set up Python and pip on your machine if you don't already have it
++ Install the Climate Data Store API for python.  At the time of this writing, directions on how to install this
+were found at https://cds.climate.copernicus.eu/api-how-to. 
++ Install the NetCDF software utilities from UniData for manipulating NetCDF (.cd).  I (jbphet) installed the netCDF4
+v4.7.0 without DAP (whatever that is) from https://www.unidata.ucar.edu/software/netcdf/docs/winbin.html. 
 
-The data and maps were retrieved using the CDS toolbox.  The scripts that were developed can be found...TODO: Decide
-where to keep these and put them there!!!!!!!!!!!
+Steps to create the map images:
++ Create and download the maps using the CDSToolbox and the Python code.  The script for this is `get-nli-map.py`, and
+  it is used at the CDS Toolbox website.  The script needs to be run once for each month.
++ Download each image, crop it, make the portions outside the map transparent (Photoshop was used to do this for the
+original images)
+
+Steps to get the temperature data:
+TODO - finalize this!!!!!!!!!!
++ Download data that matches the map by using the Python code and adjusting the date
++ Run the command `ncdump -v longitude,latitude,t2m download.nc > extracted-data.txt` to pull the data we need from the
+downloaded NetCDF file
++ Unfortunately the temperature data, which is the array in the `t2m` variable, is in "packed" format in order to reduce
+the file size.  This has be be unpacked, and the process for this is a bit of a pain in the butt.  First, you need to
+look at the header by typing `ncdump -h download.nc`.  From the output of this command, extract the scale factor and the
+offset and paste them into the NodeJS script `unpack-t2m-temperature.js`.  The extract the `t2m`.... 
+
