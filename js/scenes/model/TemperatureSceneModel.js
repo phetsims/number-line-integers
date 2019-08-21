@@ -175,8 +175,8 @@ define( require => {
         return null;
       }
 
-      // const temperatureInKelvin = temperatureDataSet.getTemperatureAtLatLong( latDegrees, lonDegrees );
-      const temperatureInKelvin = temperatureDataSet.getTemperatureAtLatLong( latLong.latitude, latLong.longitude );
+      // const temperatureInKelvin = temperatureDataSet.getNearSurfaceTemperature( 1, latDegrees, lonDegrees );
+      const temperatureInKelvin = temperatureDataSet.getNearSurfaceTemperature( 1, latLong.latitude, latLong.longitude );
       const temperatureInCelsius = Util.roundSymmetric( temperatureInKelvin - 273.15 );
 
       return {
