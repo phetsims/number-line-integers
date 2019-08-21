@@ -8,7 +8,7 @@ c.retrieve(
     'variable':'2m_temperature',
     'grid':[2.0,2.0],
     'year':'2018',
-    'month':'01',
+    'month':['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
     'time':'00:00',
     'format':'netcdf'
   },
