@@ -38,7 +38,7 @@ define( require => {
 
       // TODO: min/max Temp values will need to be put into constants file
       const temperatureAndColorSensorNode = new TemperatureAndColorSensorNode(
-        new Range( -62, 104 ),
+        new Range( -80, 104 ),
         pointController.fahrenheitTemperatureProperty,
         pointController.colorProperty,
         {

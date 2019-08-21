@@ -73,7 +73,7 @@ define( require => {
       let blue = 0;
 
       const numColors = RdYlBu_data.length;
-      const scaledValue = value * numColors;
+      const scaledValue = value * ( numColors - 1 );
       const lowerEntryIndex = Math.floor( scaledValue );
       const upperEntryIndex = Math.ceil( scaledValue );
       if ( lowerEntryIndex === upperEntryIndex ) {
