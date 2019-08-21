@@ -226,6 +226,7 @@ define( require => {
       this.isTemperatureInCelsiusProperty.reset();
       this.fahrenheitNumberLine.reset();
       this.celsiusNumberLine.reset();
+      this.monthProperty.reset();
 
 
       // put the point controllers back into their starting positions
