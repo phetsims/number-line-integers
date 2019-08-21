@@ -1,7 +1,8 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * a point controller with some extensions that are specific to the "Temperature" scene
+ * TemperaturePointController looks like a thermometer with a little triangle that pinpoints the point where the
+ * temperature and color are sense, and it also controls points on a number line.
  * TODO: discuss how to reduce code duplication between this and ElevationPointController
  *
  * @author John Blanco
@@ -18,6 +19,7 @@ define( require => {
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
   const PaintColorProperty = require( 'SCENERY/util/PaintColorProperty' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
+  const Property = require( 'AXON/Property' );
 
   class TemperaturePointController extends PointController {
 
@@ -25,6 +27,7 @@ define( require => {
      * @param {TemperatureSceneModel} sceneModel
      * @param {string} controllerLabel
      * @param {Object} [options]
+     * @public
      */
     constructor( sceneModel, controllerLabel, options ) {
 
@@ -53,22 +56,26 @@ define( require => {
       // @public color represented by temperature on map
       this.colorProperty = new PaintColorProperty( options.baseDisabledColor );
 
-      this.positionProperty.link( position => {
-        const temperatureAndColor = sceneModel.getTemperatureAndColorAtLocation( position );
-        this.celsiusTemperatureProperty.value = temperatureAndColor ? temperatureAndColor.celsiusTemperature :
-                                                options.baseDisabledCelsiusTemperature;
-        this.fahrenheitTemperatureProperty.value = temperatureAndColor ? temperatureAndColor.fahrenheitTemperature :
-                                                   options.baseDisabledFahrenheitTemperature;
-        this.colorProperty.value = temperatureAndColor ? temperatureAndColor.color : options.baseDisabledColor;
+      Property.multilink(
+        [ this.positionProperty, sceneModel.monthProperty ],
+        ( position ) => {
 
-        this.isOverMapProperty.value = temperatureAndColor !== null;
-        if ( this.isOverMapProperty.value && this.numberLinePoint ) {
-          this.fahrenheitNumberLinePoint.valueProperty.value = temperatureAndColor.fahrenheitTemperature;
-          this.celsiusNumberLinePoint.valueProperty.value = temperatureAndColor.celsiusTemperature;
-          this.fahrenheitNumberLinePoint.colorProperty.value = temperatureAndColor.color;
-          this.celsiusNumberLinePoint.colorProperty.value = temperatureAndColor.color;
+          const temperatureAndColor = sceneModel.getTemperatureAndColorAtLocation( position );
+          this.celsiusTemperatureProperty.value = temperatureAndColor ? temperatureAndColor.celsiusTemperature :
+                                                  options.baseDisabledCelsiusTemperature;
+          this.fahrenheitTemperatureProperty.value = temperatureAndColor ? temperatureAndColor.fahrenheitTemperature :
+                                                     options.baseDisabledFahrenheitTemperature;
+          this.colorProperty.value = temperatureAndColor ? temperatureAndColor.color : options.baseDisabledColor;
+
+          this.isOverMapProperty.value = temperatureAndColor !== null;
+          if ( this.isOverMapProperty.value && this.numberLinePoint ) {
+            this.fahrenheitNumberLinePoint.valueProperty.value = temperatureAndColor.fahrenheitTemperature;
+            this.celsiusNumberLinePoint.valueProperty.value = temperatureAndColor.celsiusTemperature;
+            this.fahrenheitNumberLinePoint.colorProperty.value = temperatureAndColor.color;
+            this.celsiusNumberLinePoint.colorProperty.value = temperatureAndColor.color;
+          }
         }
-      } );
+      );
 
       // create/remove number line points based on whether we're over the elevation area
       this.isOverMapProperty.lazyLink( over => {
@@ -106,17 +113,16 @@ define( require => {
         }
 
       } );
-
     }
 
     /**
      * @param {Vector2} proposedPosition
      * @override - see base class for more information
+     * @public
      */
     proposePosition( proposedPosition ) {
       this.positionProperty.value = proposedPosition;
     }
-
   }
 
   return numberLineIntegers.register( 'TemperaturePointController', TemperaturePointController );
