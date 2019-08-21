@@ -44,16 +44,18 @@ define( require => {
       // @private
       this.mapBounds = mapBounds;
 
-      // @private
-      this.image = new Image( TEMPERATURE_IMAGES_MONTHS[ 0 ] );
-      this.scaleImage();
-      this.addChild( this.image );
+      const lastMonth = 0;
+
+      const images = _.map( TEMPERATURE_IMAGES_MONTHS, png => {
+        const image = new Image( png, { visible: false } );
+        this.scaleImage( image );
+        this.addChild( image );
+        return image;
+      } );
 
       monthProperty.link( month => {
-        this.removeChild( this.image );
-        this.image = new Image( TEMPERATURE_IMAGES_MONTHS[ month - 1 ] );
-        this.scaleImage();
-        this.addChild( this.image );
+        images[ lastMonth ].visible = false;
+        images[ month - 1 ].visible = true;
       } );
     }
 
@@ -61,10 +63,10 @@ define( require => {
      * Rescales new images to fit in map bounds
      * @private
      */
-    scaleImage() {
-      this.image.scale(
-        this.mapBounds.width / this.image.width,
-        this.mapBounds.height / this.image.height
+    scaleImage( image ) {
+      image.scale(
+        this.mapBounds.width / image.width,
+        this.mapBounds.height / image.height
       );
     }
 
