@@ -6,6 +6,7 @@
  *
  * @author John Blanco (PhET Interactive Simulations)
  * @author Saurabh Totey
+ * @author Arnab Purkayastha
  */
 define( require => {
   'use strict';
@@ -14,7 +15,6 @@ define( require => {
   const AccordionBox = require( 'SUN/AccordionBox' );
   const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementNode' );
   const Panel = require( 'SUN/Panel' );
-  const Image = require( 'SCENERY/nodes/Image' );
   const MonthsComboBox = require( 'NUMBER_LINE_INTEGERS/scenes/view/MonthsComboBox' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -24,32 +24,16 @@ define( require => {
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const SceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/SceneView' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const TemperatureMapNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/TemperatureMapNode' );
   const TemperaturePointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/TemperaturePointControllerNode' );
   const Text = require( 'SCENERY/nodes/Text' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Vector2 = require( 'DOT/Vector2' );
   const VerticalAquaRadioButtonGroup = require( 'SUN/VerticalAquaRadioButtonGroup' );
 
-  // images
-  const temperatureMapJanuary = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.png' );
-  const temperatureMapFebruary = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-02.png' );
-  const temperatureMapMarch = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-03.png' );
-  const temperatureMapApril = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-04.png' );
-  const temperatureMapMay = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-05.png' );
-  const temperatureMapJune = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-06.png' );
-  const temperatureMapJuly = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-07.png' );
-  const temperatureMapAugust = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-08.png' );
-  const temperatureMapSeptember = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-09.png' );
-  const temperatureMapOctober = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-10.png' );
-  const temperatureMapNovember = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-11.png' );
-  const temperatureMapDecember = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-12.png' );
-
   // constants
   const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
   const UNIT_PICKER_LABEL_FONT = new PhetFont( { size: 18 } );
-  const TEMPERATURE_IMAGES_MONTHS = [ temperatureMapJanuary, temperatureMapFebruary, temperatureMapMarch,
-    temperatureMapApril, temperatureMapMay, temperatureMapJune, temperatureMapJuly, temperatureMapAugust,
-    temperatureMapSeptember, temperatureMapOctober, temperatureMapNovember, temperatureMapDecember ];
 
   // strings
   const temperatureString = require( 'string!NUMBER_LINE_INTEGERS/temperature' );
@@ -102,25 +86,13 @@ define( require => {
       } );
       this.addChild( this.celsiusComparisonAccordionBox );
 
-      // world map with temperature data
-      let temperatureMapImage;
-      sceneModel.monthProperty.link( month => {
-        temperatureMapImage = new Image( TEMPERATURE_IMAGES_MONTHS[ month - 1 ] );
-        temperatureMapImage.scale(
-          sceneModel.mapBounds.width / temperatureMapImage.width,
-          sceneModel.mapBounds.height / temperatureMapImage.height
-        );
-      } );
-
       // @private
       this.monthsComboBox = new MonthsComboBox( sceneModel.monthProperty, this );
       this.addChild( this.monthsComboBox );
 
       // @private
-      this.temperatureMap = new Node( {
-        children: [ temperatureMapImage ],
-        center: sceneModel.mapBounds.center
-      } );
+      this.temperatureMap = new TemperatureMapNode( sceneModel.monthProperty, sceneModel.mapBounds );
+      this.temperatureMap.center = sceneModel.mapBounds.center;
       this.addChild( this.temperatureMap );
 
       this.monthsComboBox.left = this.temperatureMap.right + 50;
