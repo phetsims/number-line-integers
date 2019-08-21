@@ -1,7 +1,8 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * a point controller with some extensions that are specific to the "Temperature" scene
+ * TemperaturePointController looks like a thermometer with a little triangle that pinpoints the point where the
+ * temperature and color are sense, and it also controls points on a number line.
  * TODO: discuss how to reduce code duplication between this and ElevationPointController
  *
  * @author John Blanco
@@ -26,6 +27,7 @@ define( require => {
      * @param {TemperatureSceneModel} sceneModel
      * @param {string} controllerLabel
      * @param {Object} [options]
+     * @public
      */
     constructor( sceneModel, controllerLabel, options ) {
 
@@ -111,17 +113,16 @@ define( require => {
         }
 
       } );
-
     }
 
     /**
      * @param {Vector2} proposedPosition
      * @override - see base class for more information
+     * @public
      */
     proposePosition( proposedPosition ) {
       this.positionProperty.value = proposedPosition;
     }
-
   }
 
   return numberLineIntegers.register( 'TemperaturePointController', TemperaturePointController );
