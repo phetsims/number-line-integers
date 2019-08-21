@@ -15,12 +15,11 @@ define( require => {
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const TemperatureToColorMapper = require( 'NUMBER_LINE_INTEGERS/scenes/model/TemperatureToColorMapper' );
-  const Enumeration = require( 'PHET_CORE/Enumeration' );
-  const EnumerationProperty = require( 'AXON/EnumerationProperty' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
   const Range = require( 'DOT/Range' );
   const reverseRobinsonProjector = require( 'NUMBER_LINE_INTEGERS/scenes/model/reverseRobinsonProjector' );
   const SceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/SceneModel' );
@@ -91,10 +90,7 @@ define( require => {
       this.mapBounds = mapBounds;
 
       // @public
-      this.monthProperty = new EnumerationProperty(
-        TemperatureSceneModel.Months,
-        TemperatureSceneModel.Months.JANUARY
-      );
+      this.monthProperty = new NumberProperty( 1 );
 
       // specify the position of the box that will hold the thermometers
       const boxWidth = MAP_WIDTH * 0.5;
@@ -236,9 +232,6 @@ define( require => {
     }
 
   }
-
-  TemperatureSceneModel.Months = new Enumeration( [ 'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY',
-    'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER' ] );
 
   return numberLineIntegers.register( 'TemperatureSceneModel', TemperatureSceneModel );
 } );

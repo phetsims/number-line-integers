@@ -12,7 +12,6 @@ define( require => {
   const ComboBox = require( 'SUN/ComboBox' );
   const ComboBoxItem = require( 'SUN/ComboBoxItem' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const TemperatureSceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/TemperatureSceneModel' );
   const Text = require( 'SCENERY/nodes/Text' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
@@ -48,18 +47,18 @@ define( require => {
       }, options );
 
       const items = [
-        new ComboBoxItem( new Text( januaryString, itemOptions ), TemperatureSceneModel.Months.JANUARY ),
-        new ComboBoxItem( new Text( februaryString, itemOptions ), TemperatureSceneModel.Months.FEBRUARY ),
-        new ComboBoxItem( new Text( marchString, itemOptions ), TemperatureSceneModel.Months.MARCH ),
-        new ComboBoxItem( new Text( aprilString, itemOptions ), TemperatureSceneModel.Months.APRIL ),
-        new ComboBoxItem( new Text( mayString, itemOptions ), TemperatureSceneModel.Months.MAY ),
-        new ComboBoxItem( new Text( juneString, itemOptions ), TemperatureSceneModel.Months.JUNE ),
-        new ComboBoxItem( new Text( julyString, itemOptions ), TemperatureSceneModel.Months.JULY ),
-        new ComboBoxItem( new Text( augustString, itemOptions ), TemperatureSceneModel.Months.AUGUST ),
-        new ComboBoxItem( new Text( septemberString, itemOptions ), TemperatureSceneModel.Months.SEPTEMBER ),
-        new ComboBoxItem( new Text( octoberString, itemOptions ), TemperatureSceneModel.Months.OCTOBER ),
-        new ComboBoxItem( new Text( novemberString, itemOptions ), TemperatureSceneModel.Months.NOVEMBER ),
-        new ComboBoxItem( new Text( decemberString, itemOptions ), TemperatureSceneModel.Months.DECEMBER )
+        new ComboBoxItem( new Text( januaryString, itemOptions ), 1 ),
+        new ComboBoxItem( new Text( februaryString, itemOptions ), 2 ),
+        new ComboBoxItem( new Text( marchString, itemOptions ), 3 ),
+        new ComboBoxItem( new Text( aprilString, itemOptions ), 4 ),
+        new ComboBoxItem( new Text( mayString, itemOptions ), 5 ),
+        new ComboBoxItem( new Text( juneString, itemOptions ), 6 ),
+        new ComboBoxItem( new Text( julyString, itemOptions ), 7 ),
+        new ComboBoxItem( new Text( augustString, itemOptions ), 8 ),
+        new ComboBoxItem( new Text( septemberString, itemOptions ), 9 ),
+        new ComboBoxItem( new Text( octoberString, itemOptions ), 10 ),
+        new ComboBoxItem( new Text( novemberString, itemOptions ), 11 ),
+        new ComboBoxItem( new Text( decemberString, itemOptions ), 12 )
       ];
 
       super( items, monthProperty, listParent, options );
