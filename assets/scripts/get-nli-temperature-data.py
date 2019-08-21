@@ -6,7 +6,7 @@ c.retrieve(
   {
     'product_type':'monthly_averaged_reanalysis',
     'variable':'2m_temperature',
-    'grid':[1.0,1.0],
+    'grid':[2.0,2.0],
     'year':'2018',
     'month':'01',
     'time':'00:00',
