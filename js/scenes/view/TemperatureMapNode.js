@@ -44,7 +44,7 @@ define( require => {
       // @private
       this.mapBounds = mapBounds;
 
-      const lastMonth = 0;
+      let lastMonth = 1;
 
       const images = _.map( TEMPERATURE_IMAGES_MONTHS, png => {
         const image = new Image( png, { visible: false } );
@@ -54,8 +54,9 @@ define( require => {
       } );
 
       monthProperty.link( month => {
-        images[ lastMonth ].visible = false;
+        images[ lastMonth - 1 ].visible = false;
         images[ month - 1 ].visible = true;
+        lastMonth = month;
       } );
     }
 
