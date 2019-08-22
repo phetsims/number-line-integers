@@ -45,7 +45,9 @@ define( require => {
           thermometerNodeOptions: {
             fluidMainColor: new Color( 66, 66, 65 ),
             fluidHighlightColor: new Color( 215, 215, 215 ),
-            tickSpacingTemperature: 20
+            tickSpacingTemperature: 20,
+            majorTickLength: 0,
+            minorTickLength: 0
           }
         }
       );
@@ -54,7 +56,7 @@ define( require => {
       const thermometerLabel = new Text( pointController.label, {
         font: new PhetFont( 16 ),
         centerX: temperatureAndColorSensorNode.thermometerBounds.centerX,
-        top: temperatureAndColorSensorNode.top + 2
+        top: temperatureAndColorSensorNode.top + 3 // offset empirically determined
       } );
       compositeThermometerNode.addChild( thermometerLabel );
 
