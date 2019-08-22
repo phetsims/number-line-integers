@@ -1,10 +1,10 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * This is a singleton that takes a normalized X Y coordinate on a Robinson projection of the Earth and converts it to
- * latitude and longitude values based on the definition of a Robinson projection.  The information for this was derived
- * from the Wikipedia article at https://en.wikipedia.org/wiki/Robinson_projection.  The table values and equations used
- * herein were taken from this article as it existed on 8/12/2019.
+ * reverseRobminsonProjector is a singleton that takes a normalized X Y coordinate on a Robinson projection of the Earth
+ * and converts it to latitude and longitude values based on the definition of a Robinson projection.  The information
+ * for this was derived from the Wikipedia article at https://en.wikipedia.org/wiki/Robinson_projection.  The table
+ * values and equations used herein were taken from this article as it existed on 8/12/2019.
  *
  * The Robinson projection defines two equations for mapping a latitude and longitude to an X-Y position:
  *   x = 0.8487 * R * X * ( lambda - lambdaZero )
@@ -13,7 +13,7 @@
  * longitude of the central meridian for the map (also in radians).  The values for X and Y are from an empirically
  * derived table, indexed by latitude.  The Wikipedia article contains details on what these values signify.  This
  * object reverses the projection such that given a normalized X-Y position on the map where the (0,0) point is in the
- * center, a latitude and lognitude value can be determined.
+ * center, a latitude and longitude value can be determined.
  *
  * @author John Blanco (PhET Interactive Simulations)
  */
@@ -30,7 +30,7 @@ define( require => {
 
   // table of projection values - these are standard for this type of projection, and the values are in 5-degree
   // increments of latitude and are listed in the array in ascending order of latitude
-  const ROBINSON_PROJECTION_VALUES = [
+  const ROBINSON_PROJECTION_TABLE = [
     {
       latitudeInDegrees: 0,
       X: 1,
@@ -129,12 +129,12 @@ define( require => {
   ];
 
   // calculate the max projection values based on our assumptions for R and LAMBDA_ZERO
-  const MAX_X_PROJECTION_VALUE = 0.8487 * R * ROBINSON_PROJECTION_VALUES[ 0 ].X * ( ( Math.PI ) - LAMBDA_ZERO );
-  const MAX_Y_PROJECTION_VALUE = 1.3523 * R * ROBINSON_PROJECTION_VALUES[ 18 ].Y;
+  const MAX_X_PROJECTION_VALUE = 0.8487 * R * ROBINSON_PROJECTION_TABLE[ 0 ].X * ( ( Math.PI ) - LAMBDA_ZERO );
+  const MAX_Y_PROJECTION_VALUE = 1.3523 * R * ROBINSON_PROJECTION_TABLE[ 18 ].Y;
 
   // using our assumptions, create a table of latitude to y projection values
   const LATITUDE_TO_Y_PROJECTION_MAPPING = [];
-  ROBINSON_PROJECTION_VALUES.forEach( projectionTableEntry => {
+  ROBINSON_PROJECTION_TABLE.forEach( projectionTableEntry => {
     LATITUDE_TO_Y_PROJECTION_MAPPING.push( {
       latitudeInDegrees: projectionTableEntry.latitudeInDegrees,
       yProjectionValue: 1.3523 * R * projectionTableEntry.Y
@@ -172,8 +172,8 @@ define( require => {
     }
 
     // get the Robinson projection table rows for the two latitude values found
-    const lowerRobinsonProjectionTableRow = ROBINSON_PROJECTION_VALUES[ Util.roundSymmetric( lowerLatitude / 5 ) ];
-    const higherRobinsonProjectionTableRow = ROBINSON_PROJECTION_VALUES[ Util.roundSymmetric( higherLatitude / 5 ) ];
+    const lowerRobinsonProjectionTableRow = ROBINSON_PROJECTION_TABLE[ Util.roundSymmetric( lowerLatitude / 5 ) ];
+    const higherRobinsonProjectionTableRow = ROBINSON_PROJECTION_TABLE[ Util.roundSymmetric( higherLatitude / 5 ) ];
 
     // return an object with the interpolated latitude, X, and Y values
     // TODO: This uses linear interpolation.  Is that good enough for our purposes?
@@ -233,10 +233,75 @@ define( require => {
      */
     xyToLatLongCalculated( x, y ) {
 
-      // stubbed, work in progress
-      return null;
+      const relativeX = Math.abs( x );
+      const relativeY = Math.abs( 0.5072 * y );
+
+      const sphereRadius = 1.178 / ( 2 * Math.PI );
+      const thisBStar = relativeY / sphereRadius;
+      let thisAStar = 0;
+      for ( let i = 0; i <= 18; i++ ) {
+        thisAStar += mValues[ i ] * Math.abs( BStarValues[ i ] - thisBStar );
+      }
+
+      const long = relativeX / ( sphereRadius * thisAStar );
+
+      let lat = 0;
+      for ( let i = 0; i <= 18; i++ ) {
+        lat += nValues[ i ] * Math.sqrt(
+          Math.pow( AStarValues[ i ] - thisAStar, 2 ) +
+          Math.pow( BStarValues[ i ] - thisBStar, 2 )
+        );
+      }
+
+      const latitudeInRadians = y > 0 ? lat : -lat;
+      const longitudeInRadians = x > 0 ? long : -long;
+
+      return {
+        latitude: latitudeInRadians / Math.PI * 180,
+        longitude: longitudeInRadians / Math.PI * 180
+      };
     }
   };
+
+  const AStarValues = [
+    0.84870000, 0.84751182, 0.84479598,
+    0.84021300, 0.83359314, 0.82578510,
+    0.81475200, 0.80006949, 0.78216192,
+    0.76060494, 0.73658673, 0.70866450,
+    0.67777182, 0.64475739, 0.60987582,
+    0.57134484, 0.52729731, 0.48562614,
+    0.45167814
+  ];
+
+  const BStarValues = [
+    0.00000000, 0.08384260, 0.16768520,
+    0.25152780, 0.33537040, 0.41921300,
+    0.50305560, 0.58689820, 0.67047034,
+    0.75336633, 0.83518048, 0.91537187,
+    0.99339958, 1.06872269, 1.14066505,
+    1.20841528, 1.27035062, 1.31998003,
+    1.35230000
+  ];
+
+  const mValues = [
+    0.4737166113, -0.00911028522, -0.01113479305,
+    -0.01214704697, -0.00708577740, -0.01923282436,
+    -0.02176345915, -0.01957843209, -0.02288586729,
+    -0.01676092031, -0.02731224791, -0.02386224240,
+    -0.02119239013, -0.02327513775, -0.04193330922,
+    -0.07123235442, -0.06423048161, -0.10536278437,
+    1.00598851957
+  ];
+
+  const nValues = [
+    1.07729625255, -0.00012324928, -0.00032923415,
+    -0.00056627609, -0.00045168290, -0.00141388769,
+    -0.00211521349, -0.00083658786, 0.00073523299,
+    0.00349045186, 0.00502041018, 0.00860101415,
+    0.01281238969, 0.01794606372, 0.02090220870,
+    0.02831504310, 0.11177176318, 0.28108668066,
+    -0.45126573496
+  ];
 
   return numberLineIntegers.register( 'reverseRobinsonProjector', reverseRobinsonProjector );
 } );

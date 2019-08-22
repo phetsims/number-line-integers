@@ -152,26 +152,33 @@ define( require => {
         return null;
       }
 
-      // convert the normalized coordinates to latitude and longitude
+      console.log( '------------------' );
+
+      // const latLong = reverseRobinsonProjector.xyToLatLongCalculated( normalizedXPosition, normalizedYPosition );
+      console.time( 'i' );
       const latLong = reverseRobinsonProjector.xyToLatLong( normalizedXPosition, normalizedYPosition );
+      console.timeEnd( 'i' );
 
       if ( latLong === null ) {
         return null;
       }
 
-      console.log( '------------------' );
 
-      console.log( 'latLong from reverseRobinsonProjector = ' + JSON.stringify( latLong ) );
+      console.log( 'from table+interpolation:' );
+      console.log( 'latDegrees = ' + latLong.latitude );
+      console.log( 'lonDegrees = ' + latLong.longitude );
 
-      const coordinate = temperatureDataSet.getLatLongAtPoint( normalizedXPosition, normalizedYPosition );
+      console.time( 'c' );
+      const coordinate = reverseRobinsonProjector.xyToLatLongCalculated( normalizedXPosition, normalizedYPosition );
+      console.timeEnd( 'c' );
 
-      const latDegrees = coordinate.latitude / Math.PI * 180;
-      const lonDegrees = coordinate.longitude / Math.PI * 180;
-      console.log( 'latDegrees from formula version = ' + latDegrees );
-      console.log( 'lonDegrees from formula version = ' + lonDegrees );
+      console.log( 'from formula:' );
+      console.log( 'latDegrees = ' + coordinate.latitude );
+      console.log( 'lonDegrees = ' + coordinate.longitude );
 
       // returns null if location is not in map bounds
-      if ( latDegrees > 89 || latDegrees < -90 || lonDegrees > 180 || lonDegrees < -180 ) {
+      if ( coordinate.latitude > 89 || coordinate.latitude < -90 ||
+           coordinate.longitude > 180 || coordinate.longitude < -180 ) {
         return null;
       }
 
