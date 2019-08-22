@@ -152,33 +152,11 @@ define( require => {
         return null;
       }
 
-      console.log( '------------------' );
-
-      // const latLong = reverseRobinsonProjector.xyToLatLongCalculated( normalizedXPosition, normalizedYPosition );
-      console.time( 'i' );
       const latLong = reverseRobinsonProjector.xyToLatLong( normalizedXPosition, normalizedYPosition );
-      console.timeEnd( 'i' );
-
-      if ( latLong === null ) {
-        return null;
-      }
-
-
-      console.log( 'from table+interpolation:' );
-      console.log( 'latDegrees = ' + latLong.latitude );
-      console.log( 'lonDegrees = ' + latLong.longitude );
-
-      console.time( 'c' );
-      const coordinate = reverseRobinsonProjector.xyToLatLongCalculated( normalizedXPosition, normalizedYPosition );
-      console.timeEnd( 'c' );
-
-      console.log( 'from formula:' );
-      console.log( 'latDegrees = ' + coordinate.latitude );
-      console.log( 'lonDegrees = ' + coordinate.longitude );
 
       // returns null if location is not in map bounds
-      if ( coordinate.latitude > 89 || coordinate.latitude < -90 ||
-           coordinate.longitude > 180 || coordinate.longitude < -180 ) {
+      if ( latLong.latitude > 90 || latLong.latitude < -90 ||
+           latLong.longitude > 180 || latLong.longitude < -180 ) {
         return null;
       }
 
