@@ -12,5 +12,5 @@ c.retrieve(
     'time':'00:00',
     'format':'netcdf'
   },
-  "download.nc"
+  "temperature-data.nc"
 )

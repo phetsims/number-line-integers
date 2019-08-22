@@ -41,19 +41,19 @@ Steps to Get the Temperature Data
 ---------------------------------
 
 + Download data that matches the map by using the Python script `get-nli-temperature-data`
-+ Run the command `ncdump -v longitude,latitude,t2m download.nc > extracted-data.txt` to obtain the data set we need
-from the downloaded NetCDF file
++ Run the command `ncdump -v longitude,latitude,t2m temperature-data.nc > extracted-data.txt` to obtain the data set we
+need from the downloaded NetCDF file
 + Verify that the `latitude` and `longitude` arrays in the extracted data file match that in `temperatureDataSet.js`.
 They should, but if they don't, you'll need to figure out why and straighten everything out. 
 + Unfortunately, the temperature data (in the t2m array for "temperature at two meters from the surface') is in "packed"
 format, which is apparently done to reduce the file size.  This has be be unpacked, and the Unidata command line tools
 don't support this, so the process is a bit of a pain in the butt.  First, you need to look at the header of the
-downloaded data file by executing the command `ncdump -h download.nc`.  The output of this command will have a section
-that describes the t2m data, in included in that will be a `scale_factor` value and an `add_offset` value.  These values
-need to be pasted into the appropriate constant values in the `unpack-t2m-temperature.js` NodeJS script.  The location
-for this should be fairly obvious from looking at the code.  The next step is to copy and past all of the `t2m` values
-from the extracted data file into the `VALUES_TO_BE_ADJUSTED` field in that same script, and then run the script by
-executing the command `node unpack-t2m-temperature.js`.  This will output the adjusted data into a file, and you'll need
-to open that file and cut and paste the unpacked temperature values into the `airTemperatureNearSurfaceValues` field in 
-`temperatureDataSet.js`.
+downloaded data file by executing the command `ncdump -h temperature-data.nc`.  The output of this command will have a
+section that describes the t2m data, in included in that will be a `scale_factor` value and an `add_offset` value.  
+These values need to be pasted into the appropriate constant values in the `unpack-t2m-temperature.js` NodeJS script.
+The location for this should be fairly obvious from looking at the code.  The next step is to copy and past all of the
+`t2m` values from the extracted data file into the `VALUES_TO_BE_ADJUSTED` field in that same script, and then run the
+script by executing the command `node unpack-t2m-temperature.js`.  This will output the adjusted data into a file, and
+you'll need to open that file and cut and paste the unpacked temperature values into the
+`airTemperatureNearSurfaceValues` field in `temperatureDataSet.js`.
 + At this point, the temperature data set should be fully updated, and can be tested in the context of the sim.
