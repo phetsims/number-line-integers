@@ -51,7 +51,7 @@ define( require => {
         // {Range} - range of values to be displayed
         initialDisplayedRange: new Range( -10, 10 ),
 
-        // {boolean} - whether tick marks should be initially displayed
+        // {boolean} - whether point labels should initially be shown
         labelsInitiallyVisible: false,
 
         // {boolean} - whether tick marks should be initially displayed
@@ -59,9 +59,6 @@ define( require => {
 
         // {boolean} - whether absolute value indicators should be initially displayed
         absoluteValuesInitiallyVisible: false,
-
-        // {boolean} - whether point labels should initially be shown
-        pointLabelsInitiallyShown: false,
 
         // {number} - The width and height values used when projecting the number line into model space. The default
         // values are pretty arbitrary and at least one of these will generally need to be set. However, if the number
@@ -84,7 +81,7 @@ define( require => {
       // @public {Property<Range>} - the range of values that should be displayed to the user
       this.displayedRangeProperty = new Property( options.initialDisplayedRange );
 
-      // @public {BooleanProperty} - controls whether tick marks should be displayed to the user
+      // @public {BooleanProperty} - controls whether point labels are displayed to the user
       this.labelsVisibleProperty = new BooleanProperty( options.labelsInitiallyVisible );
 
       // @public {BooleanProperty} - controls whether tick marks should be displayed to the user
@@ -95,9 +92,6 @@ define( require => {
 
       // @public {BooleanProperty} - controls whether tick marks should be displayed to the user
       this.oppositesVisibleProperty = new BooleanProperty( false );
-
-      // @public {BooleanProperty} - controls whether point labels are displayed to the user
-      this.showPointLabels = new BooleanProperty( options.pointLabelsInitiallyShown );
 
       // @public (read-only) {ObservableArray<NumberLinePoint>} - array of points on this number line
       this.residentPoints = new ObservableArray();
@@ -359,7 +353,6 @@ define( require => {
       this.labelsVisibleProperty.reset();
       this.tickMarksVisibleProperty.reset();
       this.oppositesVisibleProperty.reset();
-      this.showPointLabels.reset();
       this.addInitialPoints();
     }
   }
