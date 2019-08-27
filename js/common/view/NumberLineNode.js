@@ -60,6 +60,7 @@ define( require => {
         zeroTickMarkLength: 16,
         tickMarkLabelFont: new PhetFont( 16 ),
         flipSideOfLabels: false,
+        customColorsForLabels: true,
         color: 'black',
         pointRadius: 10,
         numberDisplayTemplate: '{{value}}',
@@ -236,13 +237,17 @@ define( require => {
       const handlePointAdded = point => {
 
         // add the node that will represent the point on the number line
-        const pointNode = new PointNode( point, numberLine, { numberDisplayTemplate: options.numberDisplayTemplate } );
+        const pointNode = new PointNode( point, numberLine, {
+          numberDisplayTemplate: options.numberDisplayTemplate,
+          customColorsForLabels: options.customColorsForLabels
+        } );
         pointDisplayLayer.addChild( pointNode );
 
         // add the point that will represent the opposite point
         const oppositePointNode = new PointNode( point, numberLine, {
           isDoppelganger: true,
-          numberDisplayTemplate: options.numberDisplayTemplate
+          numberDisplayTemplate: options.numberDisplayTemplate,
+          customColorsForLabels: options.customColorsForLabels
         } );
         oppositePointDisplayLayer.addChild( oppositePointNode );
 
@@ -417,6 +422,7 @@ define( require => {
 
       options = _.extend( {
         isDoppelganger: false,
+        customColorsForLabels: true,
         numberDisplayTemplate: '{{number}}'
       }, options );
 
@@ -438,7 +444,7 @@ define( require => {
       };
       const labelTextNode = new Text( getLabelText( numberLinePoint.valueProperty.value ), {
         font: new PhetFont( 16 ),
-        fill: numberLinePoint.colorProperty
+        fill: options.customColorsForLabels ? numberLinePoint.colorProperty : 'black'
       } );
 
       // update the background to be the correct size and shape for the given text node
