@@ -71,7 +71,8 @@ define( require => {
           numberLineOptions: {
             initialOrientation: NumberLineOrientation.VERTICAL,
             initialDisplayedRange: range,
-            heightInModelSpace: numberLineHeight
+            heightInModelSpace: numberLineHeight,
+            labelsInitiallyVisible: true
           }
         };
       };
