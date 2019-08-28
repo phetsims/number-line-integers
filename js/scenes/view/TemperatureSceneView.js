@@ -51,7 +51,7 @@ define( require => {
       super( sceneModel, layoutBounds, {
         numberLineNodeOptions: {
           numberDisplayTemplate: temperatureAmountFahrenheitString,
-          flipSideOfLabels: true,
+          tickMarkLabelPositionWhenVertical: 'left',
           customColorsForLabels: false
         }
       } );
@@ -59,7 +59,7 @@ define( require => {
       // Replace single default numberLineNode with two from celsius and fahrenheit
       this.celsiusNumberLineNode = new NumberLineNode( sceneModel.celsiusNumberLine, {
         numberDisplayTemplate: temperatureAmountCelsiusString,
-        flipSideOfLabels: true,
+        tickMarkLabelPositionWhenVertical: 'left',
         customColorsForLabels: false,
         visible: false
       } );

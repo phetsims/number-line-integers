@@ -59,7 +59,8 @@ define( require => {
         zeroTickMarkLineWidth: 2,
         zeroTickMarkLength: 16,
         tickMarkLabelFont: new PhetFont( 16 ),
-        flipSideOfLabels: false,
+        tickMarkLabelPositionWhenVertical: 'right', // valid values are 'right' and 'left'
+        tickMarkLabelPositionWhenHorizontal: 'below', // valid values are 'above' and 'below'
         customColorsForLabels: true,
         color: 'black',
         pointRadius: 10,
@@ -371,7 +372,7 @@ define( require => {
       let tickLabelOptions;
       if ( this.numberLine.isHorizontal ) {
         tickMark = new Line( tmCenter.x, tmCenter.y - length, tmCenter.x, tmCenter.y + length, tickMarkOptions );
-        if ( this.options.flipSideOfLabels ) {
+        if ( this.options.tickMarkLabelPositionWhenHorizontal === 'above' ) {
           tickLabelOptions = {
             centerX: tickMark.centerX,
             bottom: tickMark.top - TICK_MARK_LABEL_DISTANCE
@@ -386,7 +387,7 @@ define( require => {
       }
       else {
         tickMark = new Line( tmCenter.x - length, tmCenter.y, tmCenter.x + length, tmCenter.y, tickMarkOptions );
-        if ( this.options.flipSideOfLabels ) {
+        if ( this.options.tickMarkLabelPositionWhenVertical === 'left' ) {
           tickLabelOptions = {
             right: tickMark.left - 5,
             centerY: tickMark.centerY
