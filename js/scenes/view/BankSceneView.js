@@ -42,7 +42,7 @@ define( require => {
     constructor( sceneModel, layoutBounds ) {
 
       super( sceneModel, layoutBounds, {
-        numberLineOptions: {
+        numberLineNodeOptions: {
           numberDisplayTemplate: moneyAmountString
         }
       } );

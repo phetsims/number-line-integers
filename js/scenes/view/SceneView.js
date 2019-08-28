@@ -33,7 +33,7 @@ define( require => {
     constructor( sceneModel, layoutBounds, options ) {
 
       options = _.extend( {
-        numberLineOptions: {}
+        numberLineNodeOptions: {}
       }, options );
 
       super();
@@ -71,7 +71,7 @@ define( require => {
       this.addChild( this.comparisonStatementAccordionBox );
 
       // @protected (read-only) {NumberLine} - view of the number line
-      this.numberLineNode = new NumberLineNode( sceneModel.numberLine, options.numberLineOptions );
+      this.numberLineNode = new NumberLineNode( sceneModel.numberLine, options.numberLineNodeOptions );
       sceneModel.showNumberLineProperty.linkAttribute( this.numberLineNode, 'visible' );
       this.addChild( this.numberLineNode );
     }
