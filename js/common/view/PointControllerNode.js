@@ -98,8 +98,16 @@ define( require => {
           dragBoundsProperty: new Property( this.layoutBounds ),
           start: event => {
             pointController.isDraggingProperty.value = true;
+            const point = this.draggableNode.globalToParentPoint( event.pointer.point ); // pointer in parent frame
+            const relativePoint = point.minus( this.draggableNode ); // pointer in local frame
+            const startingOffset = relativePoint
+              .dividedScalar( pointController.scaleProperty.value )
+              .minus( relativePoint ); // if node has a scale, find offset of node after it is set to 1.0 scale
             pointController.scaleProperty.value = 1.0;
-            pointOffset = this.draggableNode.globalToParentPoint( event.pointer.point ).minus( this.draggableNode );
+            pointController.proposePosition(
+              this.draggableNode.translation.minus( startingOffset ) // if node had scale, move node back to where pointer clicked
+            );
+            pointOffset = point.minus( this.draggableNode );
           },
           drag: event => {
             pointController.isDraggingProperty.value = true; // necessary in case isDraggingProperty is changed while dragging
