@@ -43,7 +43,8 @@ define( require => {
 
       super( sceneModel, layoutBounds, {
         numberLineNodeOptions: {
-          numberDisplayTemplate: elevationAmountString
+          numberDisplayTemplate: elevationAmountString,
+          flipSideOfLabels: true
         }
       } );
 
