@@ -13,6 +13,7 @@ define( require => {
 
   // modules
   const AccordionBox = require( 'SUN/AccordionBox' );
+  const Bounds2 = require( 'DOT/Bounds2' );
   const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementNode' );
   const Panel = require( 'SUN/Panel' );
   const MonthsComboBox = require( 'NUMBER_LINE_INTEGERS/scenes/view/MonthsComboBox' );
@@ -135,18 +136,35 @@ define( require => {
       const celsiusLabelsLayer = new Node();
       const fahrenheitLabelsLayer = new Node();
       const onAddedNumberLinePoint = ( numberLine, labelsLayer, addedNumberLinePoint ) => {
+
+        // Create and resize background for label text
         const labelText = new Text( addedNumberLinePoint.controller.label, { font: new PhetFont( 16 ) } );
+        const labelNode = new Rectangle( 0, 0, 1, 1, { fill: 'white', opacity: 0.85 } );
+        labelNode.addChild( labelText );
+        const textBounds = new Bounds2( labelText.left, labelText.top, labelText.right, labelText.bottom );
+        textBounds.dilate( 3 );
+        labelNode.setRectBounds( textBounds );
+        labelNode.setCornerRadius( 4 );
+        labelsLayer.addChild( labelNode );
+
         const numberLinePointListener = () => {
-          labelText.leftCenter = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 15, 0 ) );
+          labelNode.leftCenter = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 15, 0 ) );
         };
-        labelsLayer.addChild( labelText );
         addedNumberLinePoint.valueProperty.link( numberLinePointListener );
+
+        const dragStateChangeHandler = dragging => {
+          if ( dragging ) {
+            labelNode.moveToFront();
+          }
+        };
+        addedNumberLinePoint.isDraggingProperty.link( dragStateChangeHandler );
+
         const removalListener = removedNumberLinePoint => {
           if ( removedNumberLinePoint !== addedNumberLinePoint ) {
             return;
           }
           numberLine.residentPoints.removeItemRemovedListener( removalListener );
-          labelsLayer.removeChild( labelText );
+          labelsLayer.removeChild( labelNode );
           addedNumberLinePoint.valueProperty.unlink( numberLinePointListener );
         };
         numberLine.residentPoints.addItemRemovedListener( removalListener );
@@ -156,27 +174,36 @@ define( require => {
       const celsiusAbsoluteValueLabelsLayer = new Node();
       const fahrenheitAbsoluteValueLabelsLayer = new Node();
       const onAddedNumberLinePointAbsoluteValue = ( numberLine, absoluteValueLabelsLayer, addedNumberLinePoint ) => {
-        const textBackground = new Rectangle( 0, 0, 1, 1, 0, 0, { fill: 'black' } );
+
+        /** TODO: Changed textBackground to inverted greyscale of text color */
+        const absoluteValueNode = new Rectangle( 0, 0, 1, 1, 0, 0, { fill: 'black' } );
         const absoluteValueText = new Text( '', { font: new PhetFont( 12 ) } );
+        absoluteValueNode.addChild( absoluteValueText );
+        absoluteValueLabelsLayer.addChild( absoluteValueNode );
+
         const numberLinePointListener = value => {
           const template = value < 0 ? negativeTemperatureAmountString : positiveTemperatureAmountString;
           absoluteValueText.text = StringUtils.fillIn( template, { value: value } );
           absoluteValueText.fill = addedNumberLinePoint.colorProperty.value;
-          textBackground.setRectWidth( absoluteValueText.width + 3 );
-          textBackground.setRectHeight( absoluteValueText.height + 3 );
-          textBackground.leftCenter = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 30, 0 ) );
-          absoluteValueText.center = textBackground.center;
+          const textBounds = absoluteValueText.bounds.copy().dilate( 3 );
+          absoluteValueNode.setRectBounds( textBounds );
+          absoluteValueNode.leftCenter = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 40, 0 ) );
         };
-        absoluteValueLabelsLayer.addChild( textBackground );
-        absoluteValueLabelsLayer.addChild( absoluteValueText );
         addedNumberLinePoint.valueProperty.link( numberLinePointListener );
+
+        const dragStateChangeHandler = dragging => {
+          if ( dragging ) {
+            absoluteValueNode.moveToFront();
+          }
+        };
+        addedNumberLinePoint.isDraggingProperty.link( dragStateChangeHandler );
+
         const removalListener = removedNumberLinePoint => {
           if ( removedNumberLinePoint !== addedNumberLinePoint ) {
             return;
           }
           numberLine.residentPoints.removeItemRemovedListener( removalListener );
-          absoluteValueLabelsLayer.removeChild( absoluteValueText );
-          absoluteValueLabelsLayer.removeChild( textBackground );
+          absoluteValueLabelsLayer.removeChild( absoluteValueNode );
           addedNumberLinePoint.valueProperty.unlink( numberLinePointListener );
         };
         numberLine.residentPoints.addItemRemovedListener( removalListener );

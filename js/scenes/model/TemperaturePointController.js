@@ -97,6 +97,10 @@ define( require => {
             this.sceneModel.fahrenheitNumberLine,
             this
           );
+          this.isDraggingProperty.link( isDragging => {
+            this.celsiusNumberLinePoint.isDraggingProperty.value = isDragging;
+            this.fahrenheitNumberLinePoint.isDraggingProperty.value = isDragging;
+          } );
           this.sceneModel.celsiusNumberLine.addPoint( this.celsiusNumberLinePoint );
           this.sceneModel.fahrenheitNumberLine.addPoint( this.fahrenheitNumberLinePoint );
           this.numberLinePoint = this.celsiusNumberLinePoint;
