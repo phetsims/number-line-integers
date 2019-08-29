@@ -35,6 +35,7 @@ define( require => {
   // constants
   const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
   const UNIT_PICKER_LABEL_FONT = new PhetFont( { size: 18 } );
+  const DARK_COLOR_THRESHOLD = 150;
 
   // strings
   const temperatureString = require( 'string!NUMBER_LINE_INTEGERS/temperature' );
@@ -176,7 +177,9 @@ define( require => {
       const onAddedNumberLinePointAbsoluteValue = ( numberLine, absoluteValueLabelsLayer, addedNumberLinePoint ) => {
 
         /** TODO: Changed textBackground to inverted greyscale of text color */
-        const absoluteValueNode = new Rectangle( 0, 0, 1, 1, 0, 0, { fill: 'black' } );
+        const absoluteValueNode = new Rectangle( 0, 0, 1, 1, 0, 0,
+          { fill: this.generateBackgroundColor( addedNumberLinePoint.colorProperty.value ) }
+        );
         const absoluteValueText = new Text( '', { font: new PhetFont( 12 ) } );
         absoluteValueNode.addChild( absoluteValueText );
         absoluteValueLabelsLayer.addChild( absoluteValueNode );
@@ -185,6 +188,7 @@ define( require => {
           const template = value < 0 ? negativeTemperatureAmountString : positiveTemperatureAmountString;
           absoluteValueText.text = StringUtils.fillIn( template, { value: value } );
           absoluteValueText.fill = addedNumberLinePoint.colorProperty.value;
+          absoluteValueNode.fill = this.generateBackgroundColor( addedNumberLinePoint.colorProperty.value );
           const textBounds = absoluteValueText.bounds.copy().dilate( 3 );
           absoluteValueNode.setRectBounds( textBounds );
           absoluteValueNode.leftCenter = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 40, 0 ) );
@@ -258,6 +262,23 @@ define( require => {
         )
       } ) );
 
+    }
+
+    /**
+     * Calculate inverse greyscale background for a given color
+     * @param {Color} c
+     * @returns {Color}
+     */
+    generateBackgroundColor( c ) {
+      const r = c.red;
+      const g = c.green;
+      const b = c.blue;
+      const all = ( r + g + b ) / 3;
+      if ( all > DARK_COLOR_THRESHOLD ) {
+        return 'black';
+      }
+      //const grey = 255 - ( all * 255 / DARK_COLOR_THRESHOLD );
+      return 'white';
     }
   }
 
