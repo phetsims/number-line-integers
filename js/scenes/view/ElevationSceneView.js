@@ -44,7 +44,7 @@ define( require => {
       super( sceneModel, layoutBounds, {
         numberLineNodeOptions: {
           numberDisplayTemplate: elevationAmountString,
-          flipSideOfLabels: true
+          tickMarkLabelPositionWhenVertical: 'left'
         }
       } );
 
