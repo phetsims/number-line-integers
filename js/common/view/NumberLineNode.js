@@ -231,6 +231,27 @@ define( require => {
         } );
       };
 
+      // update the color of the lines separately to avoid race conditions between point value and color
+      const updateAbsoluteValueIndicatorColors = () => {
+
+        // create a list of the resident points on the number line sorted by absolute value
+        const pointsSortedByValue = _.sortBy( numberLine.residentPoints.getArray(), point => {
+          return Math.abs( point.valueProperty.value );
+        } );
+
+        pointsSortedByValue.forEach( ( point, index ) => {
+
+          // get a line that will display the absolute value on the number line itself
+          const lineOnNumberLine = absoluteValueLines[ index ];
+
+          // get the span indicator that is associated with this point
+          const pointValue = point.valueProperty.value;
+          if ( pointValue !== 0 ) {
+            lineOnNumberLine.stroke = point.colorProperty.value;
+          }
+        } );
+      };
+
       // array where absolute value span nodes are tracked if displayed for this number line node
       let absoluteValueSpanNodes = [];
 
@@ -262,8 +283,9 @@ define( require => {
           this.addChild( absValSpanNode );
         }
 
-        // add a listener that will update the absolute value indicators
+        // add a listeners that will update the absolute value indicators
         point.valueProperty.link( updateAbsoluteValueIndicators );
+        point.colorProperty.link( updateAbsoluteValueIndicatorColors );
 
         // add a listener that will unhook everything if and when this point is removed
         const removeItemListener = removedPoint => {
@@ -437,7 +459,7 @@ define( require => {
       this.addChild( circle );
 
       const getLabelText = value => {
-        let stringValue =  StringUtils.fillIn( options.numberDisplayTemplate, { value: Math.abs( value ) } );
+        let stringValue = StringUtils.fillIn( options.numberDisplayTemplate, { value: Math.abs( value ) } );
         if ( value < 0 ) {
           stringValue = MathSymbols.UNARY_MINUS + stringValue;
         }

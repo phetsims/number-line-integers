@@ -187,13 +187,17 @@ define( require => {
         const numberLinePointListener = value => {
           const template = value < 0 ? negativeTemperatureAmountString : positiveTemperatureAmountString;
           absoluteValueText.text = StringUtils.fillIn( template, { value: value } );
-          absoluteValueText.fill = addedNumberLinePoint.colorProperty.value;
-          absoluteValueNode.fill = this.generateBackgroundColor( addedNumberLinePoint.colorProperty.value );
           const textBounds = absoluteValueText.bounds.copy().dilate( 3 );
           absoluteValueNode.setRectBounds( textBounds );
           absoluteValueNode.leftCenter = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 40, 0 ) );
         };
         addedNumberLinePoint.valueProperty.link( numberLinePointListener );
+
+        const numberLineColorListener = color => {
+          absoluteValueText.fill = color;
+          absoluteValueNode.fill = this.generateBackgroundColor( color );
+        };
+        addedNumberLinePoint.colorProperty.link( numberLineColorListener );
 
         const dragStateChangeHandler = dragging => {
           if ( dragging ) {
