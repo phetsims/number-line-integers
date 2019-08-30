@@ -1,12 +1,11 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * Shared constants for the Number Line: Integers simulation
+ * shared constants for the "Number Line: Integers" simulation
  *
  * @author John Blanco (PhET Interactive Simulations)
  * @author Chris Klusendorf (PhET Interactive Simulations)
  */
-
 define( require => {
   'use strict';
 
@@ -23,8 +22,6 @@ define( require => {
   const COMPARISON_STATEMENT_BOX_WIDTH = 300; // empirically determined to look decent
 
   const NLIConstants = {
-
-    // Common
 
     // layout bounds used for all screens
     NLI_LAYOUT_BOUNDS: ScreenView.DEFAULT_LAYOUT_BOUNDS,

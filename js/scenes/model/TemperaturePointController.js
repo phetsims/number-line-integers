@@ -1,9 +1,8 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * TemperaturePointController looks like a thermometer with a little triangle that pinpoints the point where the
- * temperature and color are sense, and it also controls points on a number line.
- * TODO: discuss how to reduce code duplication between this and ElevationPointController
+ * TemperaturePointController looks like a thermometer with a little triangle that pinpoints the location where the
+ * temperature and color are sensed, and it also controls points on a number line.
  *
  * @author John Blanco
  * @author Saurabh Totey
@@ -25,17 +24,17 @@ define( require => {
 
     /**
      * @param {TemperatureSceneModel} sceneModel
-     * @param {string} controllerLabel
+     * @param {string} labelText - the text with which this controller will be identified in the view
      * @param {Object} [options]
      * @public
      */
-    constructor( sceneModel, controllerLabel, options ) {
+    constructor( sceneModel, labelText, options ) {
 
       options = _.extend( {
-        lockToNumberLine: 'never',
         baseDisabledColor: new Color( 0, 0, 0, 0 ),
         baseDisabledCelsiusTemperature: 0,
-        baseDisabledFahrenheitTemperature: 32
+        baseDisabledFahrenheitTemperature: 32,
+        lockToNumberLine: 'never'
       }, options );
 
       super( sceneModel.numberLine, options );
@@ -43,10 +42,10 @@ define( require => {
       // @private
       this.sceneModel = sceneModel;
 
-      // @public (read-only) label for PointControllerNode and NumberLine point
-      this.label = controllerLabel;
+      // @public (read-only) {string} - label for PointControllerNode and number line point
+      this.label = labelText;
 
-      // @public (readonly) whether the point controller is over the map
+      // @public (read-only) - whether this point controller is over the map
       this.isOverMapProperty = new BooleanProperty( false );
 
       // @public temperatures at the position of the point controller on the map
