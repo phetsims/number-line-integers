@@ -16,6 +16,7 @@ define( require => {
   const Bounds2 = require( 'DOT/Bounds2' );
   const TemperatureToColorMapper = require( 'NUMBER_LINE_INTEGERS/scenes/model/TemperatureToColorMapper' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
+  const NLIQueryParameters = require( 'NUMBER_LINE_INTEGERS/common/NLIQueryParameters' );
   const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
@@ -130,7 +131,7 @@ define( require => {
       } );
 
       // @public
-      this.isTemperatureInCelsiusProperty = new BooleanProperty( false );
+      this.isTemperatureInCelsiusProperty = new BooleanProperty( NLIQueryParameters.defaultCelsius );
     }
 
     /**
