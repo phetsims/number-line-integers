@@ -9,6 +9,7 @@ define( require => {
   'use strict';
 
   // modules
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
   const DragListener = require( 'SCENERY/listeners/DragListener' );
   const Line = require( 'SCENERY/nodes/Line' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -18,6 +19,7 @@ define( require => {
 
   // constants
   const SPHERE_RADIUS = 10; // in screen coords, radius of sphere that is used if no controller node is provided
+  const ALWAYS_TRUE_PROPERTY = new BooleanProperty( true );
 
   class PointControllerNode extends Node {
 
@@ -34,6 +36,9 @@ define( require => {
 
         // controls whether there is a line drawn from this controller to the number line
         connectorLine: true,
+
+        // if the connector line is present, a property can optionally be provided to control its visibility
+        connectorLineVisibleProperty: ALWAYS_TRUE_PROPERTY,
 
         cursor: 'pointer'
 
@@ -56,21 +61,28 @@ define( require => {
       const draggableNodeXOffset = this.draggableNode.centerX;
       const draggableNodeYOffset = this.draggableNode.centerY;
 
-      // monitor the point controller and adjust positions to match
+      // function to update the visibility of the connector line
+      const updateConnectorLineVisibility = () => {
+        connectorLine.visible = options.connectorLineVisibleProperty.value && !!pointController.numberLinePoint;
+      };
+
+      // handle changes to the point controller position
       const handlePointControllerPositionChange = position => {
         if ( options.connectorLine && pointController.numberLinePoint ) {
           const pointPosition = pointController.numberLinePoint.getPositionInModelSpace();
           connectorLine.setLine( position.x, position.y, pointPosition.x, pointPosition.y );
-          connectorLine.visible = true;
         }
-        else {
-          connectorLine.visible = false;
-        }
+        updateConnectorLineVisibility();
         const scaleVector = this.draggableNode.getScaleVector();
         this.draggableNode.centerX = position.x + ( draggableNodeXOffset * scaleVector.x );
         this.draggableNode.centerY = position.y + ( draggableNodeYOffset * scaleVector.y );
       };
       pointController.positionProperty.link( handlePointControllerPositionChange );
+
+      if ( options.connectorLineVisibleProperty !== ALWAYS_TRUE_PROPERTY ) {
+        assert && assert( options.connectorLine, 'must have connector line turned on for the viz property to make sense' );
+        options.connectorLineVisibleProperty.link( updateConnectorLineVisibility );
+      }
 
       const handlePointControllerScaleChange = scale => {
         this.draggableNode.setScaleMagnitude( scale );
@@ -124,6 +136,9 @@ define( require => {
         pointController.positionProperty.unlink( handlePointControllerPositionChange );
         pointController.isDraggingProperty.unlink( dragStateChangeHandler );
         pointController.inProgressAnimationProperty.unlink( inProgressAnimationChangedHandler );
+        if ( options.connectorLineVisibleProperty.hasListener( updateConnectorLineVisibility ) ) {
+          options.connectorLineVisibleProperty.unlink( updateConnectorLineVisibility );
+        }
       };
     }
 

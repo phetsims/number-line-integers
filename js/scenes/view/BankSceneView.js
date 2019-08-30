@@ -67,7 +67,8 @@ define( require => {
       // add node to represent the point controller that is always visible
       const permanentPointControllerNode = new BankPointControllerNode(
         sceneModel.primaryAccountPointController,
-        'flowers'
+        'flowers',
+        { connectorLineVisibleProperty: sceneModel.showNumberLineProperty }
       );
       pointControllerNodesLayer.addChild( permanentPointControllerNode );
 
@@ -75,7 +76,11 @@ define( require => {
       let comparisonAccountPointControllerNode = null;
       sceneModel.comparisonAccountPointControllerProperty.lazyLink( pointController => {
         if ( pointController ) {
-          comparisonAccountPointControllerNode = new BankPointControllerNode( pointController, 'lightning' );
+          comparisonAccountPointControllerNode = new BankPointControllerNode(
+            pointController,
+            'lightning',
+            { connectorLineVisibleProperty: sceneModel.showNumberLineProperty }
+          );
           pointControllerNodesLayer.addChild( comparisonAccountPointControllerNode );
           comparisonAccountPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
         }
