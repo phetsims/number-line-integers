@@ -19,7 +19,6 @@ define( require => {
   // constants
   const NLI_LAYOUT_BOUNDS = ScreenView.DEFAULT_LAYOUT_BOUNDS;
 
-  // the SVG string as exported from the original art file
   const PIGGY_BANK_SVG_STRING =
     'M471.262,415.361c-3,15.5-13.5,47-41.5,66c0,0-16,7.5-24.5,32.5\n' +
     '\tc0,0,2.5,7-20.5,7s-19.5-6-19.5-6s-2-10.5-32-9.5c-27.503,0.916-33-3-43.5,0s-11.5,11-11.5,11s-2,4.5-20,4c0,0-20.5,2-21.5-6.5\n' +
@@ -31,7 +30,11 @@ define( require => {
     '\tc1.419,4.26,0.534,7.22-1.983,9.94C476.816,371.247,473.151,405.6,471.262,415.361z';
 
   // unscaled version of the piggy bank shape
-  const FULL_SIZE_PIGGY_BANK_SHAPE = new Shape( PIGGY_BANK_SVG_STRING );
+  // NOTE: In late August 2019 we decided to reverse the orientation of the piggy banks to point to the right instead of
+  // the left.  However, flipping the image in the AI file and then saving it as SVG didn't seem to work - it kept
+  // throwing exceptions upon loading, so I (jbphet) worked around this by loading the left-facing version and flipping
+  // it.  Hence the transformation on the next line.
+  const FULL_SIZE_PIGGY_BANK_SHAPE = new Shape( PIGGY_BANK_SVG_STRING ).transformed( Matrix3.scale( -1, 1 ) );
 
   class PiggyBankShapes {
 
