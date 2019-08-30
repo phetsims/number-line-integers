@@ -244,9 +244,8 @@ define( require => {
           // get a line that will display the absolute value on the number line itself
           const lineOnNumberLine = absoluteValueLines[ index ];
 
-          // get the span indicator that is associated with this point
-          const pointValue = point.valueProperty.value;
-          if ( pointValue !== 0 ) {
+          // update color of line if it exists
+          if ( point.valueProperty.value !== 0 ) {
             lineOnNumberLine.stroke = point.colorProperty.value;
           }
         } );
