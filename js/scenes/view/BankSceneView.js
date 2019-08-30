@@ -48,11 +48,13 @@ define( require => {
       } );
 
       // number line label
-      this.addChild( new Text( balanceString, {
+      const numberLineLabel = new Text( balanceString, {
         font: NUMBER_LINE_LABEL_FONT,
         right: this.numberLineNode.left - 4,
         centerY: sceneModel.numberLine.centerPosition.y
-      } ) );
+      } );
+      this.addChild( numberLineLabel );
+      sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
 
       // add the switch that controls whether one or two accounts are shown
       this.addChild( new AccountVisibilityControlSwitch( sceneModel.showComparisonAccountProperty, {
