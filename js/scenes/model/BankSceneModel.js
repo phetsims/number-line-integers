@@ -24,7 +24,7 @@ define( require => {
 
   // constants
   const SCENE_BOUNDS = NLIConstants.NLI_LAYOUT_BOUNDS; // bounds for the scenes match the layout bounds
-  const COMPARISON_ACCOUNT_POINT_COLOR = Color.orange;
+  const COMPARISON_ACCOUNT_POINT_COLOR = new Color( '#ADA131' );
   const INITIAL_PRIMARY_ACCOUNT_BALANCE = 10;
   const INITIAL_COMPARISON_ACCOUNT_BALANCE = 40;
 
@@ -46,7 +46,7 @@ define( require => {
           initialDisplayedRange: new Range( -100, 100 ),
           labelsInitiallyVisible: true,
           widthInModelSpace: SCENE_BOUNDS.width * 0.4,
-          initialPointSpecs: [ { initialValue: INITIAL_PRIMARY_ACCOUNT_BALANCE, color: new Color( 39, 16, 225 ) } ]
+          initialPointSpecs: [ { initialValue: INITIAL_PRIMARY_ACCOUNT_BALANCE, color: new Color( '#d25da3' ) } ]
         }
       } );
 
