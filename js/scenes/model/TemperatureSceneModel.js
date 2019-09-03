@@ -14,7 +14,6 @@ define( require => {
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Bounds2 = require( 'DOT/Bounds2' );
-  const TemperatureToColorMapper = require( 'NUMBER_LINE_INTEGERS/scenes/model/TemperatureToColorMapper' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const NLIQueryParameters = require( 'NUMBER_LINE_INTEGERS/common/NLIQueryParameters' );
   const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
@@ -26,7 +25,6 @@ define( require => {
   const SceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/SceneModel' );
   const temperatureDataSet = require( 'NUMBER_LINE_INTEGERS/scenes/model/temperatureDataSet' );
   const TemperaturePointController = require( 'NUMBER_LINE_INTEGERS/scenes/model/TemperaturePointController' );
-  const Util = require( 'DOT/Util' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // strings
@@ -43,8 +41,6 @@ define( require => {
     SCENE_BOUNDS.centerX,
     SCENE_BOUNDS.centerY * 0.85
   );
-  const TEMPERATURE_RANGE_ON_MAP = new Range( -60, 50 ); // in Celsius, must match range used to make map images
-  const TEMPERATURE_TO_COLOR_MAPPER = new TemperatureToColorMapper( TEMPERATURE_RANGE_ON_MAP );
 
   class TemperatureSceneModel extends SceneModel {
 
@@ -135,46 +131,39 @@ define( require => {
     }
 
     /**
-     * get the temperature and color at the specified model location
-     * @public
+     * get the temperature at the specified location
      * @param {Vector2} location - model coordinates for where to get the temperature
-     * @returns {{celsiusTemperature: number, color: Color, fahrenheitTemperature: number}|null} returns data unless
-     * location is invalid, in which case null is returned
+     * @returns {number|null} - the temperature in degrees Kelvin if the location is over the map, null otherwise
      */
-    getTemperatureAndColorAtLocation( location ) {
+    getTemperatureAtLocation( location ) {
 
-      // convert the location into normalized values based on the map's position and size, centered in the middle
+      // Convert the location into normalized values based on the map's position and size.  These values assume a total
+      // span of 1 in the vertical and horizontal directions with the point (0,0) being in the center of the map.
       const normalizedXPosition = ( location.x - this.mapBounds.centerX ) / this.mapBounds.width;
       const normalizedYPosition = ( this.mapBounds.centerY - location.y ) / this.mapBounds.height;
 
       if ( normalizedXPosition < -0.5 || normalizedXPosition > 0.5 ||
            normalizedYPosition < -0.5 || normalizedYPosition > 0.5 ) {
 
-        // the point is not over the map
+        // the point is not over the map, bail
         return null;
       }
 
+      // convert the normalized x and y values into latitude and longitude values
       const latLong = reverseRobinsonProjector.xyToLatLong( normalizedXPosition, normalizedYPosition );
 
-      // returns null if location is not in map bounds
+      // return null if location is not in map bounds
       if ( latLong.latitude > 90 || latLong.latitude < -90 ||
            latLong.longitude > 180 || latLong.longitude < -180 ) {
         return null;
       }
 
-      // const temperatureInKelvin = temperatureDataSet.getNearSurfaceTemperature( 1, latDegrees, lonDegrees );
-      const temperatureInKelvin = temperatureDataSet.getNearSurfaceTemperature(
+      // return the temperature at this location on the surface of the Earth for the current month
+      return temperatureDataSet.getNearSurfaceTemperature(
         this.monthProperty.value,
         latLong.latitude,
         latLong.longitude
       );
-      const temperatureInCelsius = Util.roundSymmetric( temperatureInKelvin - 273.15 );
-
-      return {
-        celsiusTemperature: temperatureInCelsius,
-        fahrenheitTemperature: Util.roundSymmetric( temperatureInKelvin * 9 / 5 - 459.67 ),
-        color: TEMPERATURE_TO_COLOR_MAPPER.mapTemperatureToColor( temperatureInCelsius )
-      };
     }
 
     /**

@@ -19,6 +19,19 @@ define( require => {
   const PaintColorProperty = require( 'SCENERY/util/PaintColorProperty' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
   const Property = require( 'AXON/Property' );
+  const Range = require( 'DOT/Range' );
+  const TemperatureToColorMapper = require( 'NUMBER_LINE_INTEGERS/scenes/model/TemperatureToColorMapper' );
+  const Util = require( 'DOT/Util' );
+
+  // constants
+  const TEMPERATURE_RANGE_ON_MAP = new Range( -60, 50 ); // in Celsius, must match range used to make map images
+
+  // convenience functions
+  const kelvinToCelsiusInteger = temperatureInKelvin => { return Util.roundSymmetric( temperatureInKelvin - 273.15 ); };
+  const kelvinToFahrenheitInteger = temperatureInKelvin => { return Util.roundSymmetric( temperatureInKelvin * 9 / 5 - 459.67 ); };
+
+  // color map for obtaining a color given a temperature value, must match algorithm used on maps
+  const CELSIUS_TEMPERATURE_TO_COLOR_MAPPER = new TemperatureToColorMapper( TEMPERATURE_RANGE_ON_MAP );
 
   class TemperaturePointController extends PointController {
 
@@ -31,9 +44,8 @@ define( require => {
     constructor( sceneModel, labelText, options ) {
 
       options = _.extend( {
-        baseDisabledColor: new Color( 0, 0, 0, 0 ),
-        baseDisabledCelsiusTemperature: 0,
-        baseDisabledFahrenheitTemperature: 32,
+        noTemperatureColor: Color.white,
+        defaultTemperature: 273, // in Kelvin, used when no temperature is available from the model
         lockToNumberLine: 'never'
       }, options );
 
@@ -49,29 +61,42 @@ define( require => {
       this.isOverMapProperty = new BooleanProperty( false );
 
       // @public temperatures at the position of the point controller on the map
-      this.celsiusTemperatureProperty = new NumberProperty( 0 );
-      this.fahrenheitTemperatureProperty = new NumberProperty( 32 );
+      this.celsiusTemperatureProperty = new NumberProperty( kelvinToCelsiusInteger( options.defaultTemperature ) );
+      this.fahrenheitTemperatureProperty = new NumberProperty( kelvinToFahrenheitInteger( options.defaultTemperature ) );
 
       // @public color represented by temperature on map
-      this.colorProperty = new PaintColorProperty( options.baseDisabledColor );
+      this.colorProperty = new PaintColorProperty( options.noTemperatureColor );
 
       Property.multilink(
         [ this.positionProperty, sceneModel.monthProperty ],
         ( position ) => {
 
-          const temperatureAndColor = sceneModel.getTemperatureAndColorAtLocation( position );
-          this.celsiusTemperatureProperty.value = temperatureAndColor ? temperatureAndColor.celsiusTemperature :
-                                                  options.baseDisabledCelsiusTemperature;
-          this.fahrenheitTemperatureProperty.value = temperatureAndColor ? temperatureAndColor.fahrenheitTemperature :
-                                                     options.baseDisabledFahrenheitTemperature;
-          this.colorProperty.value = temperatureAndColor ? temperatureAndColor.color : options.baseDisabledColor;
+          const temperatureInKelvin = sceneModel.getTemperatureAtLocation( position );
+          if ( temperatureInKelvin === null ) {
 
-          this.isOverMapProperty.value = temperatureAndColor !== null;
-          if ( this.isOverMapProperty.value && this.numberLinePoint ) {
-            this.fahrenheitNumberLinePoint.valueProperty.value = temperatureAndColor.fahrenheitTemperature;
-            this.celsiusNumberLinePoint.valueProperty.value = temperatureAndColor.celsiusTemperature;
-            this.fahrenheitNumberLinePoint.colorProperty.value = temperatureAndColor.color;
-            this.celsiusNumberLinePoint.colorProperty.value = temperatureAndColor.color;
+            // the provided position isn't over the map, so no temperature value can be obtained
+            this.celsiusTemperatureProperty.value = this.celsiusTemperatureProperty.initialValue;
+            this.fahrenheitTemperatureProperty.value = this.celsiusTemperatureProperty.initialValue;
+            this.colorProperty.value = options.noTemperatureColor;
+            this.isOverMapProperty.value = false;
+          }
+          else {
+
+            // we got a valid temperature value back, update the values presented to the user
+            this.celsiusTemperatureProperty.value = kelvinToCelsiusInteger( temperatureInKelvin );
+            this.fahrenheitTemperatureProperty.value = kelvinToFahrenheitInteger( temperatureInKelvin );
+            this.colorProperty.value = CELSIUS_TEMPERATURE_TO_COLOR_MAPPER.mapTemperatureToColor(
+              this.celsiusTemperatureProperty.value
+            );
+            this.isOverMapProperty.value = true;
+
+            // if there are points on the number line being controlled, update them
+            if ( this.numberLinePoint ) {
+              this.celsiusNumberLinePoint.valueProperty.value = this.celsiusTemperatureProperty.value;
+              this.celsiusNumberLinePoint.colorProperty.value = this.colorProperty.value;
+              this.fahrenheitNumberLinePoint.valueProperty.value = this.fahrenheitTemperatureProperty.value;
+              this.fahrenheitNumberLinePoint.colorProperty.value = this.colorProperty.value;
+            }
           }
         }
       );
@@ -114,7 +139,6 @@ define( require => {
           this.numberLinePoint = this.fahrenheitNumberLinePoint;
           this.clearNumberLinePoint();
         }
-
       } );
     }
 
@@ -129,5 +153,4 @@ define( require => {
   }
 
   return numberLineIntegers.register( 'TemperaturePointController', TemperaturePointController );
-
 } );
