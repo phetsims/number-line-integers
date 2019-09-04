@@ -39,7 +39,7 @@ define( require => {
     NLIConstants.NLI_LAYOUT_BOUNDS.minX + INSET + SIDE_BOX_WIDTH,
     NLIConstants.NLI_LAYOUT_BOUNDS.centerY + SIDE_BOX_HEIGHT / 2
   );
-  const INITIAL_POINT_COLOR = new Color( 'orange' );
+  const INITIAL_POINT_COLOR = new Color( '#F7931E' );
   const NUMBER_LINE_RANGES = [
     new Range( -10, 10 ),
     new Range( -30, 30 ),
