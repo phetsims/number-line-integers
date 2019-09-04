@@ -163,7 +163,7 @@ define( require => {
         {
           left: sceneModel.elevationAreaBounds.minX,
           top: sceneModel.seaLevel,
-          fill: 'rgba( 0, 204, 204, 0.25 )'
+          fill: 'rgba( 0, 204, 204, 0.15 )'
         }
       ) );
 
