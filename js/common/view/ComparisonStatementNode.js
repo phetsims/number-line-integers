@@ -52,7 +52,7 @@ define( require => {
 
       // operator selector node - allows the user to choose between greater than or less than
       const operatorSelectionNode = new OperatorSelectorNode( this.selectedOperatorProperty, {
-        bottom: 7 // empirically determined to align vertically with the comparison statement
+        bottom: 4 // empirically determined to align vertically with the comparison statement
       } );
       this.addChild( operatorSelectionNode );
 
@@ -175,7 +175,7 @@ define( require => {
         }
 
         comparisonStatementRoot.centerX = 0;
-        operatorSelectionNode.left = 90; // empirically determined
+        operatorSelectionNode.left = 120; // empirically determined
       };
 
       // update the comparison statement as points appear, move, and disappear
@@ -217,9 +217,9 @@ define( require => {
     constructor( selectedOperatorProperty, options ) {
 
       options = _.extend( {
-        selectorWidth: 30,
-        selectorHeight: 30,
-        font: new PhetFont( 20 ),
+        selectorWidth: 25,
+        selectorHeight: 25,
+        font: new PhetFont( 18 ),
         roundedCornerRadius: 5
       }, options );
 

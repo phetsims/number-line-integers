@@ -19,7 +19,7 @@ define( require => {
   const comparisonStatementString = require( 'string!NUMBER_LINE_INTEGERS/comparisonStatement' );
 
   // constants
-  const COMPARISON_STATEMENT_BOX_WIDTH = 300; // empirically determined to look decent
+  const COMPARISON_STATEMENT_BOX_WIDTH = 340; // empirically determined to look decent
 
   const NLIConstants = {
 
