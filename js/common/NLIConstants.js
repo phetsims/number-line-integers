@@ -43,7 +43,9 @@ define( require => {
       centerX: 512, // taken from default layoutBounds.centerX
       top: 10,
       minWidth: COMPARISON_STATEMENT_BOX_WIDTH,
-      maxWidth: COMPARISON_STATEMENT_BOX_WIDTH
+      maxWidth: COMPARISON_STATEMENT_BOX_WIDTH,
+      buttonXMargin: 8,
+      buttonYMargin: 6
     }
   };
 
