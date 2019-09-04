@@ -55,7 +55,7 @@ define( require => {
 
       // add the balance indicator node
       const balanceNode = new Text( 'X', {
-        font: new PhetFont( 35 ),
+        font: new PhetFont( 30 ),
         fill: 'white',
         center: Vector2.ZERO
       } );
