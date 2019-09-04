@@ -65,7 +65,7 @@ define( require => {
       const distanceText = new Text( '', { font: new PhetFont( 12 ), fill: pointController.color } );
       const distanceTextBackgroundRectangle = new Rectangle( 0, 0, 0, 0, 3, 3, {
           fill: 'white',
-          opacity: 0.75
+        opacity: 0.85
       } );
       this.addChild( absoluteValueLine );
       this.addChild( distanceTextBackgroundRectangle );
