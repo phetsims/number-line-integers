@@ -92,7 +92,7 @@ define( require => {
       updateController();
 
       // how the node handles absolute values
-      const absoluteValueText = new Text( '', { font: new PhetFont( 12 ) } );
+      const absoluteValueText = new Text( '', { font: new PhetFont( 14 ) } );
       this.addChild( absoluteValueText );
       Property.multilink( [ pointController.numberLine.showAbsoluteValuesProperty, pointController.positionProperty ], () => {
         if ( pointController.numberLinePoint && pointController.numberLine.showAbsoluteValuesProperty.value ) {

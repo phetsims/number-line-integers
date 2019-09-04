@@ -62,7 +62,7 @@ define( require => {
 
       // handling of what the point controller does when the absolute value checkbox is checked
       const absoluteValueLine = new Path( null, { stroke: pointController.color, lineWidth: 2 } );
-      const distanceText = new Text( '', { font: new PhetFont( 12 ), fill: pointController.color } );
+      const distanceText = new Text( '', { font: new PhetFont( 14 ), fill: pointController.color } );
       const distanceTextBackgroundRectangle = new Rectangle( 0, 0, 0, 0, 3, 3, {
           fill: 'white',
         opacity: 0.85
