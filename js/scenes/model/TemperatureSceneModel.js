@@ -41,53 +41,44 @@ define( require => {
     SCENE_BOUNDS.centerX,
     SCENE_BOUNDS.centerY * 0.85
   );
+  const MAP_BOUNDS = new Bounds2(
+    MAP_CENTER.x - MAP_WIDTH / 2,
+    MAP_CENTER.y - MAP_HEIGHT / 2,
+    MAP_CENTER.x + MAP_WIDTH / 2,
+    MAP_CENTER.y + MAP_HEIGHT / 2
+  );
+  const CELSIUS_NUMBER_LINE_RANGE = new Range( -57, 40 );
+  const FAHRENHEIT_NUMBER_LINE_RANGE = new Range( -70, 104 );
+  const NUMBER_LINE_HEIGHT = 405;
   const X_MOVE_AMOUNT = 1; // in model/view coords, amount to move a point controller to avoid overlap with another
   const Y_MOVE_AMOUNT = 1; // in model/view coords, amount to move a point controller to avoid overlap with another
+  const COMMON_NUMBER_LINE_OPTIONS = {
+    initialOrientation: NumberLineOrientation.VERTICAL,
+    heightInModelSpace: NUMBER_LINE_HEIGHT,
+    labelsInitiallyVisible: true
+  };
 
   class TemperatureSceneModel extends SceneModel {
 
     constructor() {
 
-      const mapBounds = new Bounds2(
-        MAP_CENTER.x - MAP_WIDTH / 2,
-        MAP_CENTER.y - MAP_HEIGHT / 2,
-        MAP_CENTER.x + MAP_WIDTH / 2,
-        MAP_CENTER.y + MAP_HEIGHT / 2
+      // the base class has a single number line, so make that one the Fahrenheit version
+      super( {
+        numberLineZeroPosition: getNumberLineZeroPosition( FAHRENHEIT_NUMBER_LINE_RANGE ),
+        numberLineOptions: _.extend( COMMON_NUMBER_LINE_OPTIONS, { initialDisplayedRange: FAHRENHEIT_NUMBER_LINE_RANGE } )
+      } );
+
+      // @public (read-only) {NumberLIne} - the Celsius number line
+      this.celsiusNumberLine = new NumberLine(
+        getNumberLineZeroPosition( CELSIUS_NUMBER_LINE_RANGE ),
+        _.extend( COMMON_NUMBER_LINE_OPTIONS, { initialDisplayedRange: CELSIUS_NUMBER_LINE_RANGE } )
       );
 
-      const celsiusNumberLineRange = new Range( -57, 40 );
-      const fahrenheitNumberLineRange = new Range( -70, 104 );
-      const numberLineHeight = 405;
-
-      const makeNumberLineOptions = range => {
-        return {
-          numberLineZeroPosition: new Vector2(
-            mapBounds.minX / 2,
-
-            // y position for number line 0 is calculation that centers number line vertically within scene
-            0.5 * SCENE_BOUNDS.height + numberLineHeight * ( 0.5 + range.min / range.getLength() )
-          ),
-          numberLineOptions: {
-            initialOrientation: NumberLineOrientation.VERTICAL,
-            initialDisplayedRange: range,
-            heightInModelSpace: numberLineHeight,
-            labelsInitiallyVisible: true
-          }
-        };
-      };
-
-      super( makeNumberLineOptions( fahrenheitNumberLineRange ) );
-
-      const celsiusNumberLineOptions = makeNumberLineOptions( celsiusNumberLineRange );
-
-      // @public (read-only)
-      this.celsiusNumberLine = new NumberLine( celsiusNumberLineOptions.numberLineZeroPosition, celsiusNumberLineOptions.numberLineOptions );
-
-      // @public (read-only)
+      // @public (read-only)  {NumberLIne} - reference for the Fahrenheit number line that is consistent with the Celsius one
       this.fahrenheitNumberLine = this.numberLine;
 
       // @public (read-only) {Bounds2} - bounds of the map area
-      this.mapBounds = mapBounds;
+      this.mapBounds = MAP_BOUNDS;
 
       // @public
       this.monthProperty = new NumberProperty( 1 );
@@ -97,8 +88,8 @@ define( require => {
 
       // specify the position of the box that will hold the thermometers
       const boxWidth = MAP_WIDTH * 0.5;
-      const boxHeight = ( SCENE_BOUNDS.maxY - mapBounds.maxY ) * 0.4;
-      const boxCenter = new Vector2( MAP_CENTER.x, ( SCENE_BOUNDS.maxY + mapBounds.maxY ) / 2 );
+      const boxHeight = ( SCENE_BOUNDS.maxY - MAP_BOUNDS.maxY ) * 0.4;
+      const boxCenter = new Vector2( MAP_CENTER.x, ( SCENE_BOUNDS.maxY + MAP_BOUNDS.maxY ) / 2 );
 
       // @public (read-only) {Bounds2} - holding area for the thermometers
       this.thermometerBoxBounds = new Bounds2(
@@ -284,6 +275,19 @@ define( require => {
       } );
     }
 
+  }
+
+  /**
+   * helper function to avoid code duplication
+   */
+  function getNumberLineZeroPosition( range ) {
+    return new Vector2(
+      // halfway between the left edge of the scene and the left edge of the map
+      ( SCENE_BOUNDS.minX + MAP_BOUNDS.minX ) / 2,
+
+      // centers number line vertically within scene
+      0.5 * SCENE_BOUNDS.height + NUMBER_LINE_HEIGHT * ( 0.5 + range.min / range.getLength() )
+    );
   }
 
   return numberLineIntegers.register( 'TemperatureSceneModel', TemperatureSceneModel );
