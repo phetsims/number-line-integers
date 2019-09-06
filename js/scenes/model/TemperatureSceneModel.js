@@ -2,7 +2,7 @@
 
 /**
  * base class for all scenes in the "Scenes" screen
- * TODO: discuss how to reduce code duplication between this and ElevationSceneModel
+ * TODO: investigate reducing code duplication between this and ElevationSceneModel
  *
  * @author John Blanco
  * @author Saurabh Totey
@@ -41,6 +41,8 @@ define( require => {
     SCENE_BOUNDS.centerX,
     SCENE_BOUNDS.centerY * 0.85
   );
+  const X_MOVE_AMOUNT = 1; // in model/view coords, amount to move a point controller to avoid overlap with another
+  const Y_MOVE_AMOUNT = 1; // in model/view coords, amount to move a point controller to avoid overlap with another
 
   class TemperatureSceneModel extends SceneModel {
 
@@ -90,6 +92,9 @@ define( require => {
       // @public
       this.monthProperty = new NumberProperty( 1 );
 
+      // @public TODO - This shouldn't be a boolean. Make it use an enumeration.
+      this.isTemperatureInCelsiusProperty = new BooleanProperty( NLIQueryParameters.defaultCelsius );
+
       // specify the position of the box that will hold the thermometers
       const boxWidth = MAP_WIDTH * 0.5;
       const boxHeight = ( SCENE_BOUNDS.maxY - mapBounds.maxY ) * 0.4;
@@ -115,19 +120,28 @@ define( require => {
         this.putPointControllerInBox( pointController );
       } );
 
-      // if the point controllers are released outside of the elevation areas, send them home.
+      // monitor each point controller for when it is dropped and check for whether actions are needed
       this.permanentPointControllers.forEach( pointController => {
         pointController.isDraggingProperty.lazyLink( isDragging => {
-          if ( !isDragging &&
-               !pointController.isOverMapProperty.value &&
-               !pointController.numberLinePoint ) {
-            this.putPointControllerInBox( pointController, true );
+          if ( !isDragging ) {
+            if ( !pointController.isOverMapProperty.value ) {
+
+              // the point controller was released outside of the map area, so put it away in the holding box
+              this.putPointControllerInBox( pointController, true );
+            }
+            else {
+
+              // the point controller was dropped on the map, resolve any overlap with other point controllers
+              this.resolvePointControllerOverlap();
+            }
           }
         } );
       } );
 
-      // @public
-      this.isTemperatureInCelsiusProperty = new BooleanProperty( NLIQueryParameters.defaultCelsius );
+      // when the month changes, check and resolve any overlap in temperature values that may have occurred
+      this.monthProperty.lazyLink( () => {
+        this.resolvePointControllerOverlap();
+      } );
     }
 
     /**
@@ -189,6 +203,64 @@ define( require => {
         this.thermometerBoxBounds.centerY + 25 // TODO: empirically determined value, should be handled in view instead
       );
       pointController.goToPosition( destination, animate );
+    }
+
+    /**
+     * Resolve any temperature overlap between the point controllers.  Because the temperature is the same at the same
+     * location, this will also resolve any positional overlap.
+     * @private
+     */
+    resolvePointControllerOverlap() {
+
+      // make a list of all point controller that are currently on the map
+      const pointControllersOnMap = this.permanentPointControllers.filter( pointController => {
+        return pointController.isOverMapProperty.value && !pointController.isDraggingProperty.value;
+      } );
+
+      if ( pointControllersOnMap.length >= 2 ) {
+
+        // sort the point controllers such that the most recently added ones are towards the front of the array
+        pointControllersOnMap.sort( ( pc1, pc2 ) => {
+          return pc2.droppedOnMapTimestamp - pc1.droppedOnMapTimestamp;
+        } );
+
+        // loop through all controllers, moving them as necessary to eliminate temperature or position overlap
+        _.times( pointControllersOnMap.length - 1, () => {
+
+          // pull the first controller from the front of the list
+          const pointControllerUnderTest = pointControllersOnMap.splice( 0, 1 )[ 0 ];
+          const startPosition = pointControllerUnderTest.positionProperty.value.copy();
+          let moveCount = 0;
+
+          // test for overlap with all other temperature point controllers, move if detected
+          while ( _.some(
+            pointControllersOnMap,
+            pc => { return pc.celsiusTemperatureProperty.value === pointControllerUnderTest.celsiusTemperatureProperty.value; } )
+            ) {
+
+            // overlap detected, move the point controller towards the a reasonably large area of the map
+            const xMovement = ( startPosition.x > MAP_CENTER.x ? -1 : 1 ) * ( moveCount + 1 ) * X_MOVE_AMOUNT;
+            const yMovement = ( startPosition.y > MAP_CENTER.y ? -1 : 1 ) * ( moveCount + 1 ) * Y_MOVE_AMOUNT;
+
+            // calculate the new proposed position
+            const newProposedPosition = pointControllerUnderTest.positionProperty.value.plusXY( xMovement, yMovement );
+
+            // There could be some rare cases where a point controller moves all the way across the map and doesn't find
+            // a location with a non-overlapping temperature.  For instance, if all the temperature values on the map
+            // are the same, this could happen.  Since this seems very unlikely, we test for it and assert if it
+            // happens.
+            assert && assert(
+              this.getTemperatureAtLocation( newProposedPosition ) !== null,
+              'unable to find location with different temperature value'
+            );
+
+            // move the point controller
+            pointControllerUnderTest.positionProperty.set( newProposedPosition );
+
+            moveCount++;
+          }
+        } );
+      }
     }
 
     /**

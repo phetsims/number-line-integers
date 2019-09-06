@@ -60,6 +60,9 @@ define( require => {
       // @public (read-only) - whether this point controller is over the map
       this.isOverMapProperty = new BooleanProperty( false );
 
+      // @public (read-only) - timestamp in ms since epoch when this was most recently dropped on map, -1 when not on map
+      this.droppedOnMapTimestamp = -1;
+
       // @public temperatures at the position of the point controller on the map
       this.celsiusTemperatureProperty = new NumberProperty( kelvinToCelsiusInteger( options.defaultTemperature ) );
       this.fahrenheitTemperatureProperty = new NumberProperty( kelvinToFahrenheitInteger( options.defaultTemperature ) );
@@ -67,6 +70,7 @@ define( require => {
       // @public color represented by temperature on map
       this.colorProperty = new PaintColorProperty( options.noTemperatureColor );
 
+      // update temperature and other state information when moved or when month changes
       Property.multilink(
         [ this.positionProperty, sceneModel.monthProperty ],
         ( position ) => {
@@ -101,7 +105,7 @@ define( require => {
         }
       );
 
-      // create/remove number line points based on whether we're over the elevation area
+      // create/remove number line points based on whether we're over the map
       this.isOverMapProperty.lazyLink( over => {
         if ( over && this.isDraggingProperty.value ) {
 
@@ -138,6 +142,22 @@ define( require => {
           this.clearNumberLinePoint();
           this.numberLinePoint = this.fahrenheitNumberLinePoint;
           this.clearNumberLinePoint();
+        }
+      } );
+
+      // update the map drop timestamp when dropped
+      this.isDraggingProperty.lazyLink( isDragging => {
+        if ( isDragging ) {
+
+          // timestamp is set to -1 when not dropped on the map
+          this.droppedOnMapTimestamp = -1;
+        }
+        else {
+          if ( this.isOverMapProperty.value ) {
+
+            // this point controller is being dropped on the map, update the timestamp
+            this.droppedOnMapTimestamp = Date.now();
+          }
         }
       } );
     }
