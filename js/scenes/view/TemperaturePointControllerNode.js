@@ -43,8 +43,8 @@ define( require => {
         pointController.colorProperty,
         {
           thermometerNodeOptions: {
-            fluidMainColor: new Color( 0, 100, 0 ),
-            fluidHighlightColor: Color.green,
+            fluidMainColor: new Color( 0, 120, 0 ),
+            fluidHighlightColor: new Color( 0, 210, 0 ),
             tickSpacingTemperature: 20,
             majorTickLength: 0,
             minorTickLength: 0
