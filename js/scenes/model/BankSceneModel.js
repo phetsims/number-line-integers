@@ -24,7 +24,7 @@ define( require => {
 
   // constants
   const SCENE_BOUNDS = NLIConstants.NLI_LAYOUT_BOUNDS; // bounds for the scenes match the layout bounds
-  const COMPARISON_ACCOUNT_POINT_COLOR = new Color( '#ADA131' );
+  const COMPARISON_ACCOUNT_POINT_COLOR = new Color( '#001fff' );
   const INITIAL_PRIMARY_ACCOUNT_BALANCE = 10;
   const INITIAL_COMPARISON_ACCOUNT_BALANCE = 40;
 
