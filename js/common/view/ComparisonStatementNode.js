@@ -37,7 +37,7 @@ define( require => {
 
       super();
 
-      // @public {StringProperty} - controls what comparison operator is used
+      // @public - controls what comparison operator is used
       this.selectedOperatorProperty = new StringProperty( '<' );
 
       // comparison statement root node
@@ -312,10 +312,8 @@ define( require => {
       // @public (read-only) {NumberLinePoint}
       this.point = point;
 
-      // background - initial size is arbitrary, it will be updated in function linked below
+      // background - initial size and coloring is arbitrary, it will be updated in function linked below
       const background = new Rectangle( 0, 0, 1, 1, 2, 2, {
-        fill: point.colorProperty.value.colorUtilsBrighter( 0.75 ),
-        stroke: point.colorProperty.value,
         lineWidth: 2,
         visible: false // initially invisible, activated (made visible) when user interacts with the point
       } );
