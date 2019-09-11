@@ -29,7 +29,7 @@ define( require => {
   const PIGGY_BANK_LEAST_POSITIVE_FILL = Color.toColor( '#a5e1d4' );
   const PIGGY_BANK_MOST_NEGATIVE_FILL = Color.toColor( '#fb1d25' );
   const PIGGY_BANK_LEAST_NEGATIVE_FILL = Color.toColor( '#fda5a8' );
-  const PIGGY_BANK_EMPTY_FILL = Color.toColor( '#ffffff' );
+  const PIGGY_BANK_EMPTY_FILL = Color.toColor( '#fff' );
 
   // images
   const piggyBankWithFlowers = require( 'image!NUMBER_LINE_INTEGERS/piggy-bank-with-flowers.png' );
@@ -61,6 +61,7 @@ define( require => {
       const balanceNode = new Text( 'X', {
         font: new PhetFont( 30 ),
         fill: 'white',
+        stroke: '#000',
         center: Vector2.ZERO
       } );
       controllerNode.addChild( balanceNode );
