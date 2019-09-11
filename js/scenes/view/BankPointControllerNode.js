@@ -1,7 +1,8 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * a Scenery node that is used to control point positions in the "Bank" scene of the Number Line Integers sim
+ * BankPointControllerNode is a Scenery node that is used to control point positions in the "Bank" scene of the Number
+ * Line Integers sim
  *
  * @author John Blanco (PhET Interactive Simulations)
  * @author Saurabh Totey
@@ -15,7 +16,6 @@ define( require => {
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const PiggyBankNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/PiggyBankNode' );
-  const Property = require( 'AXON/Property' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
@@ -25,11 +25,12 @@ define( require => {
   // constants
   const MIN_WIDTH = 80; // screen coords, empirically determined
   const MAX_WIDTH = 200; // screen coords, empirically determined
-  const PIGGY_BANK_MOST_POSITIVE_FILL = Color.toColor( '#1fb493' );
-  const PIGGY_BANK_LEAST_POSITIVE_FILL = Color.toColor( '#a5e1d4' );
-  const PIGGY_BANK_MOST_NEGATIVE_FILL = Color.toColor( '#fb1d25' );
-  const PIGGY_BANK_LEAST_NEGATIVE_FILL = Color.toColor( '#fda5a8' );
-  const PIGGY_BANK_EMPTY_FILL = Color.toColor( '#fff' );
+  const MOST_POSITIVE_FILL = Color.toColor( '#1fb493' );
+  const LEAST_POSITIVE_FILL = Color.toColor( '#a5e1d4' );
+  const MOST_NEGATIVE_FILL = Color.toColor( '#fb1d25' );
+  const LEAST_NEGATIVE_FILL = Color.toColor( '#fda5a8' );
+  const EMPTY_FILL = Color.toColor( '#fff' );
+  const READOUT_DISTANCE_FROM_IMAGE = 5;
 
   // images
   const piggyBankWithFlowers = require( 'image!NUMBER_LINE_INTEGERS/piggy-bank-with-flowers.png' );
@@ -61,15 +62,29 @@ define( require => {
       const balanceNode = new Text( 'X', {
         font: new PhetFont( 30 ),
         fill: 'white',
-        stroke: '#000',
+        stroke: 'black',
         center: Vector2.ZERO
       } );
       controllerNode.addChild( balanceNode );
 
       options = _.extend( { node: controllerNode }, options );
 
+      super( pointController, options );
+
+      // the readout that will display the absolute value in a phrase
+      const absoluteValueText = new Text( '', { font: new PhetFont( 14 ) } );
+      const absoluteValueBackground = new Rectangle( 0, 0, 0, 0, 3, 3, {
+        fill: 'white',
+        opacity: 0.85
+      } );
+      this.addChild( absoluteValueBackground );
+      absoluteValueBackground.addChild( absoluteValueText );
+
+      // control visibility of the absolute value readout
+      pointController.numberLine.showAbsoluteValuesProperty.linkAttribute( absoluteValueBackground, 'visible' );
+
       // update the node's appearance as its position changes
-      const maxBalance = pointController.numberLine.displayedRangeProperty.value.max;
+      const valueRange = pointController.numberLine.displayedRangeProperty.value;
       const unscaledWidth = controllerNode.width;
       const updateController = () => {
 
@@ -78,25 +93,26 @@ define( require => {
         const currentBalance = numberLinePoint.valueProperty.value;
 
         // scale the size
-        const desiredWidth = MIN_WIDTH + ( Math.abs( currentBalance ) / maxBalance ) * ( MAX_WIDTH - MIN_WIDTH );
+        const desiredWidth = MIN_WIDTH + ( Math.abs( currentBalance ) / valueRange.max ) * ( MAX_WIDTH - MIN_WIDTH );
         controllerNode.setScaleMagnitude( desiredWidth / unscaledWidth );
 
         // update the color of the point and the node's fill
-        piggyBankNode.fill = PIGGY_BANK_EMPTY_FILL;
+        let fill = EMPTY_FILL;
         if ( currentBalance < 0 ) {
-          piggyBankNode.fill = Color.interpolateRGBA(
-            PIGGY_BANK_LEAST_NEGATIVE_FILL,
-            PIGGY_BANK_MOST_NEGATIVE_FILL,
-            ( currentBalance + 1 ) / -99
+          fill = Color.interpolateRGBA(
+            LEAST_NEGATIVE_FILL,
+            MOST_NEGATIVE_FILL,
+            currentBalance / valueRange.min
           );
         }
         else if ( currentBalance > 0 ) {
-          piggyBankNode.fill = Color.interpolateRGBA(
-            PIGGY_BANK_LEAST_POSITIVE_FILL,
-            PIGGY_BANK_MOST_POSITIVE_FILL,
-            ( currentBalance - 1 ) / 99
+          fill = Color.interpolateRGBA(
+            LEAST_POSITIVE_FILL,
+            MOST_POSITIVE_FILL,
+            currentBalance / valueRange.max
           );
         }
+        piggyBankNode.fill = fill;
 
         // update the balance indicator text
         const signIndicator = currentBalance < 0 ? '-' : '';
@@ -104,53 +120,31 @@ define( require => {
           value: Math.abs( currentBalance )
         } );
         balanceNode.center = Vector2.ZERO;
+
+        // update the absolute value readout
+        const value = pointController.numberLinePoint.valueProperty.value;
+        let stringTemplate;
+        if ( value < 0 ) {
+          stringTemplate = debtAmountString;
+          absoluteValueText.fill = MOST_NEGATIVE_FILL;
+        }
+        else {
+          stringTemplate = balanceAmountString;
+          absoluteValueText.fill = MOST_POSITIVE_FILL;
+        }
+        absoluteValueText.text = StringUtils.fillIn( stringTemplate, { value: Math.abs( value ) } );
+        absoluteValueBackground.setRect( 0, 0, absoluteValueText.width + 5, absoluteValueText.height + 5 );
+        if ( overlayType === 'flowers' ) {
+          absoluteValueBackground.centerX = controllerNode.centerX - 9; // tweaked a bit to be centered under feet
+          absoluteValueBackground.top = controllerNode.bottom + READOUT_DISTANCE_FROM_IMAGE;
+        }
+        else {
+          absoluteValueBackground.centerX = controllerNode.centerX - 2; // tweaked a bit to be centered over coin slot
+          absoluteValueBackground.bottom = controllerNode.top - READOUT_DISTANCE_FROM_IMAGE;
+        }
+        absoluteValueText.center = absoluteValueBackground.localBounds.center;
       };
       pointController.positionProperty.link( updateController );
-
-      super( pointController, options );
-      updateController();
-
-      // the rectangle and text that display the absolute value of the piggy bank's value
-      const absoluteValueText = new Text( '', { font: new PhetFont( 14 ) } );
-      const absoluteValueBackground = new Rectangle( 0, 0, 0, 0, 3, 3, {
-        fill: 'white',
-        opacity: 0.85
-      } );
-      this.addChild( absoluteValueBackground );
-      this.addChild( absoluteValueText );
-
-      // how the absoluteValueText and absoluteValueBackground are updated and shown
-      Property.multilink( [ pointController.numberLine.showAbsoluteValuesProperty, pointController.positionProperty ], () => {
-        if ( pointController.numberLinePoint && pointController.numberLine.showAbsoluteValuesProperty.value ) {
-          absoluteValueText.visible = true;
-          absoluteValueBackground.visible = true;
-
-          const value = pointController.numberLinePoint.valueProperty.value;
-          let stringTemplate;
-          if ( value < 0 ) {
-            stringTemplate = debtAmountString;
-            absoluteValueText.fill = PIGGY_BANK_MOST_NEGATIVE_FILL;
-          } else {
-            stringTemplate = balanceAmountString;
-            absoluteValueText.fill = PIGGY_BANK_MOST_POSITIVE_FILL;
-          }
-          absoluteValueText.text = StringUtils.fillIn( stringTemplate, { value: Math.abs( value ) } );
-
-          absoluteValueText.centerX = controllerNode.centerX;
-          if ( overlayType === 'flowers' ) {
-            absoluteValueText.top = controllerNode.bottom + 5;
-          } else {
-            absoluteValueText.bottom = controllerNode.top - 5;
-          }
-
-          absoluteValueBackground.setRect( 0, 0, absoluteValueText.width + 5, absoluteValueText.height + 5 );
-          absoluteValueBackground.center = absoluteValueText.center;
-
-        } else {
-          absoluteValueText.visible = false;
-          absoluteValueBackground.visible = false;
-        }
-      } );
     }
   }
 
