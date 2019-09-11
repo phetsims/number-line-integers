@@ -4,7 +4,7 @@
  * TemperaturePointController looks like a thermometer with a little triangle that pinpoints the location where the
  * temperature and color are sensed, and it also controls points on a number line.
  *
- * @author John Blanco
+ * @author John Blanco (PhET Interactive Simulations)
  * @author Saurabh Totey
  */
 define( require => {

@@ -3,7 +3,7 @@
 /**
  * a point on a number line in the "Number Line" suite of sims
  *
- * @author John Blanco
+ * @author John Blanco (PhET Interactive Simulations)
  */
 define( require => {
   'use strict';

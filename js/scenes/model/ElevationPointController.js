@@ -3,7 +3,7 @@
 /**
  * a point controller with some extensions that are specific to the "Elevation" scene
  *
- * @author John Blanco
+ * @author John Blanco (PhET Interactive Simulations)
  */
 define( require => {
   'use strict';

@@ -3,7 +3,7 @@
 /**
  * an object that implement the color mapping algorithms used in this sim
  *
- * @author John Blanco
+ * @author John Blanco (PhET Interactive Simulations)
  */
 define( require => {
   'use strict';

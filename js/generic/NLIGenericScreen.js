@@ -3,7 +3,7 @@
 /**
  * the 'Generic' screen in the Number Line: Integers simulation
  *
- * @author John Blanco
+ * @author John Blanco (PhET Interactive Simulations)
  */
 define( require => {
   'use strict';

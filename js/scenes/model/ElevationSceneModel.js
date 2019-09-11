@@ -3,7 +3,7 @@
 /**
  * base class for the "Elevation" scene
  *
- * @author John Blanco
+ * @author John Blanco (PhET Interactive Simulations)
  */
 define( require => {
   'use strict';

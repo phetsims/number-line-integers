@@ -1,11 +1,11 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * a Scenery node that depicts a "comparison statement" between zero to three numerical values, for example,
- * "1 < 5 < 7".  It also includes a selector that allows a user to choose between the greater than or less than
- * comparison operator.
+ * ComparisonStatementNode is a Scenery node that depicts a "comparison statement" between zero to three numerical
+ * values, for example, "1 < 5 < 7".  It also includes a selector that allows a user to choose between the greater than
+ * or less than comparison operator.
  *
- * @author John Blanco
+ * @author John Blanco (PhET Interactive Simulations)
  */
 define( require => {
   'use strict';

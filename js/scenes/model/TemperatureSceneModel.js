@@ -4,7 +4,7 @@
  * base class for all scenes in the "Scenes" screen
  * TODO: investigate reducing code duplication between this and ElevationSceneModel
  *
- * @author John Blanco
+ * @author John Blanco (PhET Interactive Simulations)
  * @author Saurabh Totey
  * @author Arnab Purkayastha
  */

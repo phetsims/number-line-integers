@@ -5,7 +5,7 @@
  * of the Earth.  Details about how this was created are contained in the README file in the assets directory for this
  * sim.  The data was obtained from the Copernicus Climate Data Store, see https://cds.climate.copernicus.eu.
  *
- * @author John Blanco
+ * @author John Blanco (PhET Interactive Simulations)
  * @author Arnab Purkayastha
  */
 define( require => {

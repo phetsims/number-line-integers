@@ -3,7 +3,7 @@
 /**
  * base class for all scenes in the "Scenes" screen
  *
- * @author John Blanco
+ * @author John Blanco (PhET Interactive Simulations)
  */
 define( require => {
   'use strict';

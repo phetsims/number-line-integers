@@ -3,7 +3,7 @@
 /**
  * model for the "bank" scene
  *
- * @author John Blanco
+ * @author John Blanco (PhET Interactive Simulations)
  */
 define( require => {
   'use strict';

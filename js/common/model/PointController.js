@@ -5,7 +5,7 @@
  * too. It can be locked to a number line, or can be set such that it can be dragged away, thus removing the associated
  * number line point from the number line.
  *
- * @author John Blanco
+ * @author John Blanco (PhET Interactive Simulations)
  */
 define( require => {
   'use strict';
