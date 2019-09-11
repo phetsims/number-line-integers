@@ -326,9 +326,11 @@ define( require => {
       this.addChild( numberText );
 
       // update appearance as the value changes
-      const handleValueChange = ( value ) => {
+      const handleValueChange = value => {
         numberText.text = value;
         background.setRectBounds( numberText.bounds.dilated( 3 ) );
+        background.fill = point.colorProperty.value.colorUtilsBrighter( 0.75 );
+        background.stroke = point.colorProperty.value;
       };
       point.valueProperty.link( handleValueChange );
 
@@ -345,24 +347,21 @@ define( require => {
           background.visible = true;
           background.opacity = 1;
         }
-        else {
+        else if ( !backgroundFadeAnimation ) {
 
-          if ( !backgroundFadeAnimation ) {
-
-            // start or restart the fade animation
-            backgroundFadeAnimation = new Animation( {
-              duration: 0.75,
-              easing: Easing.CUBIC_OUT,
-              setValue: value => { background.opacity = value; },
-              from: 1,
-              to: 0
-            } );
-            backgroundFadeAnimation.start();
-            backgroundFadeAnimation.endedEmitter.addListener( () => {
-              backgroundFadeAnimation = null;
-              background.visible = false;
-            } );
-          }
+          // start or restart the fade animation
+          backgroundFadeAnimation = new Animation( {
+            duration: 0.75,
+            easing: Easing.CUBIC_OUT,
+            setValue: value => { background.opacity = value; },
+            from: 1,
+            to: 0
+          } );
+          backgroundFadeAnimation.start();
+          backgroundFadeAnimation.endedEmitter.addListener( () => {
+            backgroundFadeAnimation = null;
+            background.visible = false;
+          } );
         }
       };
       point.isDraggingProperty.link( handleDragStateChange );
