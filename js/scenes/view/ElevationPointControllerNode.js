@@ -10,6 +10,7 @@ define( require => {
   'use strict';
 
   // modules
+  const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Path = require( 'SCENERY/nodes/Path' );
@@ -65,7 +66,7 @@ define( require => {
       const distanceText = new Text( '', { font: new PhetFont( 14 ), fill: pointController.color } );
       const distanceTextBackgroundRectangle = new Rectangle( 0, 0, 0, 0, 3, 3, {
         fill: 'white',
-        opacity: 0.85
+        opacity: NLIConstants.LABEL_BACKGROUND_OPACITY
       } );
       this.addChild( absoluteValueLine );
       this.addChild( distanceTextBackgroundRectangle );

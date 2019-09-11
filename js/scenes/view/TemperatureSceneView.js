@@ -140,7 +140,10 @@ define( require => {
 
         // Create and resize background for label text
         const labelText = new Text( addedNumberLinePoint.controller.label, { font: new PhetFont( 16 ) } );
-        const labelNode = new Rectangle( 0, 0, 1, 1, { fill: 'white', opacity: 0.85 } );
+        const labelNode = new Rectangle( 0, 0, 1, 1, {
+          fill: 'white',
+          opacity: NLIConstants.LABEL_BACKGROUND_OPACITY
+        } );
         labelNode.addChild( labelText );
         const textBounds = new Bounds2( labelText.left, labelText.top, labelText.right, labelText.bottom );
         textBounds.dilate( 3 );

@@ -479,7 +479,7 @@ define( require => {
       };
 
       // create a background and add the label text to it
-      let labelNode = new Rectangle( 0, 0, 1, 1, { fill: 'white', opacity: 0.85 } );
+      let labelNode = new Rectangle( 0, 0, 1, 1, { fill: 'white', opacity: NLIConstants.LABEL_BACKGROUND_OPACITY } );
       labelNode.addChild( labelTextNode );
       labelNode = updateBackgroundSize( labelNode, labelTextNode );
 

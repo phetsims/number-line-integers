@@ -30,6 +30,9 @@ define( require => {
     // of the number line itself.
     GENERIC_SCREEN_DISPLAYED_RANGE_INSET: 40,
 
+    // opacity of the background for most labels
+    LABEL_BACKGROUND_OPACITY: 0.85,
+
     // Comparison Statement Box
     COMPARISON_STATEMENT_ACCORDION_BOX_OPTIONS: {
       fill: 'white',

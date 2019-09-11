@@ -12,6 +12,7 @@ define( require => {
 
   // modules
   const Color = require( 'SCENERY/util/Color' );
+  const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -75,7 +76,7 @@ define( require => {
       const absoluteValueText = new Text( '', { font: new PhetFont( 14 ) } );
       const absoluteValueBackground = new Rectangle( 0, 0, 0, 0, 3, 3, {
         fill: 'white',
-        opacity: 0.85
+        opacity: NLIConstants.LABEL_BACKGROUND_OPACITY
       } );
       this.addChild( absoluteValueBackground );
       absoluteValueBackground.addChild( absoluteValueText );
