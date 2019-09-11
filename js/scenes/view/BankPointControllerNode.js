@@ -17,6 +17,7 @@ define( require => {
   const PiggyBankNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/PiggyBankNode' );
   const Property = require( 'AXON/Property' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
   const Vector2 = require( 'DOT/Vector2' );
@@ -91,12 +92,21 @@ define( require => {
       super( pointController, options );
       updateController();
 
-      // how the node handles absolute values
+      // the rectangle and text that display the absolute value of the piggy bank's value
       const absoluteValueText = new Text( '', { font: new PhetFont( 14 ) } );
+      const absoluteValueBackground = new Rectangle( 0, 0, 0, 0, 3, 3, {
+        fill: 'white',
+        opacity: 0.85
+      } );
+      this.addChild( absoluteValueBackground );
       this.addChild( absoluteValueText );
+
+      // how the absoluteValueText and absoluteValueBackground are updated and shown
       Property.multilink( [ pointController.numberLine.showAbsoluteValuesProperty, pointController.positionProperty ], () => {
         if ( pointController.numberLinePoint && pointController.numberLine.showAbsoluteValuesProperty.value ) {
           absoluteValueText.visible = true;
+          absoluteValueBackground.visible = true;
+
           const value = pointController.numberLinePoint.valueProperty.value;
           let stringTemplate;
           if ( value < 0 ) {
@@ -107,14 +117,20 @@ define( require => {
             absoluteValueText.fill = PIGGY_BANK_GREEN_FILL;
           }
           absoluteValueText.text = StringUtils.fillIn( stringTemplate, { value: Math.abs( value ) } );
+
           absoluteValueText.centerX = controllerNode.centerX;
           if ( overlayType === 'flowers' ) {
             absoluteValueText.top = controllerNode.bottom + 5;
           } else {
             absoluteValueText.bottom = controllerNode.top - 5;
           }
+
+          absoluteValueBackground.setRect( 0, 0, absoluteValueText.width + 5, absoluteValueText.height + 5 );
+          absoluteValueBackground.center = absoluteValueText.center;
+
         } else {
           absoluteValueText.visible = false;
+          absoluteValueBackground.visible = false;
         }
       } );
     }
