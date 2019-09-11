@@ -77,13 +77,13 @@
   "tickMarks": {
     "value": "Tick Marks"
   },
-  "a": {
+  "thermometerALabel": {
     "value": "A"
   },
-  "b": {
+  "thermometerBLabel": {
     "value": "B"
   },
-  "c": {
+  "thermometerCLabel": {
     "value": "C"
   },
   "january": {

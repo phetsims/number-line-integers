@@ -28,13 +28,13 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // strings
-  const aString = require( 'string!NUMBER_LINE_INTEGERS/a' );
-  const bString = require( 'string!NUMBER_LINE_INTEGERS/b' );
-  const cString = require( 'string!NUMBER_LINE_INTEGERS/c' );
+  const thermometerALabelString = require( 'string!NUMBER_LINE_INTEGERS/thermometerALabel' );
+  const thermometerBLabelString = require( 'string!NUMBER_LINE_INTEGERS/thermometerBLabel' );
+  const thermometerCLabelString = require( 'string!NUMBER_LINE_INTEGERS/thermometerCLabel' );
 
   // constants
   const SCENE_BOUNDS = NLIConstants.NLI_LAYOUT_BOUNDS; // bounds for the scenes match the layout bounds
-  const THERMOMETER_LABELS = [ aString, bString, cString ];
+  const THERMOMETER_LABELS = [ thermometerALabelString, thermometerBLabelString, thermometerCLabelString ];
   const MAP_WIDTH = 550;
   const MAP_HEIGHT = 280;
   const MAP_CENTER = new Vector2(

@@ -9,18 +9,19 @@ define( require => {
   'use strict';
 
   // modules
+  const Image = require( 'SCENERY/nodes/Image' );
   const NLIGenericModel = require( 'NUMBER_LINE_INTEGERS/generic/model/NLIGenericModel' );
   const NLIGenericScreenView = require( 'NUMBER_LINE_INTEGERS/generic/view/NLIGenericScreenView' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Property = require( 'AXON/Property' );
-  const RandomIconFactory = require( 'NUMBER_LINE_INTEGERS/common/view/RandomIconFactory' );
   const Screen = require( 'JOIST/Screen' );
+
+  // images
+  const genericScreenHomeIcon = require( 'image!NUMBER_LINE_INTEGERS/generic-screen-home.png' );
+  const genericScreenNavIcon = require( 'image!NUMBER_LINE_INTEGERS/generic-screen-nav.png' );
 
   // strings
   const genericString = require( 'string!NUMBER_LINE_INTEGERS/generic' );
-
-  // TODO: Just for fun
-  const iconFactory = new RandomIconFactory( 199584 );
 
   class NLIGenericScreen extends Screen {
 
@@ -32,7 +33,8 @@ define( require => {
       const options = {
         name: genericString,
         backgroundColorProperty: new Property( 'rgb( 245, 255, 254 )' ),
-        homeScreenIcon: iconFactory.createIcon(),
+        homeScreenIcon: new Image( genericScreenHomeIcon ),
+        navigationBarIcon: new Image( genericScreenNavIcon ),
         tandem: tandem
       };
 
