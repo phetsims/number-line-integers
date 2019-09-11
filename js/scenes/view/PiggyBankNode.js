@@ -32,6 +32,8 @@ define( require => {
       overlayImage.setScaleMagnitude( piggyBankOutlineNode.width / overlayImage.width );
       overlayImage.center = Vector2.ZERO;
       super( { children: [ piggyBankOutlineNode, overlayImage ] } );
+
+      // @private
       this.outline = piggyBankOutlineNode;
     }
 
