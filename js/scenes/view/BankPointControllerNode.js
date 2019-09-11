@@ -25,8 +25,11 @@ define( require => {
   // constants
   const MIN_WIDTH = 80; // screen coords, empirically determined
   const MAX_WIDTH = 200; // screen coords, empirically determined
-  const PIGGY_BANK_GREEN_FILL = new Color( 0, 180, 147 );
-  const PIGGY_BANK_RED_FILL = new Color( 255, 29, 37 );
+  const PIGGY_BANK_MOST_POSITIVE_FILL = Color.toColor( '#1fb493' );
+  const PIGGY_BANK_LEAST_POSITIVE_FILL = Color.toColor( '#a5e1d4' );
+  const PIGGY_BANK_MOST_NEGATIVE_FILL = Color.toColor( '#fb1d25' );
+  const PIGGY_BANK_LEAST_NEGATIVE_FILL = Color.toColor( '#fda5a8' );
+  const PIGGY_BANK_EMPTY_FILL = Color.toColor( '#ffffff' );
 
   // images
   const piggyBankWithFlowers = require( 'image!NUMBER_LINE_INTEGERS/piggy-bank-with-flowers.png' );
@@ -78,7 +81,21 @@ define( require => {
         controllerNode.setScaleMagnitude( desiredWidth / unscaledWidth );
 
         // update the color of the point and the node's fill
-        piggyBankNode.fill = currentBalance >= 0 ? PIGGY_BANK_GREEN_FILL : PIGGY_BANK_RED_FILL;
+        piggyBankNode.fill = PIGGY_BANK_EMPTY_FILL;
+        if ( currentBalance < 0 ) {
+          piggyBankNode.fill = Color.interpolateRGBA(
+            PIGGY_BANK_LEAST_NEGATIVE_FILL,
+            PIGGY_BANK_MOST_NEGATIVE_FILL,
+            ( currentBalance + 1 ) / -99
+          );
+        }
+        else if ( currentBalance > 0 ) {
+          piggyBankNode.fill = Color.interpolateRGBA(
+            PIGGY_BANK_LEAST_POSITIVE_FILL,
+            PIGGY_BANK_MOST_POSITIVE_FILL,
+            ( currentBalance - 1 ) / 99
+          );
+        }
 
         // update the balance indicator text
         const signIndicator = currentBalance < 0 ? '-' : '';
@@ -111,10 +128,10 @@ define( require => {
           let stringTemplate;
           if ( value < 0 ) {
             stringTemplate = debtAmountString;
-            absoluteValueText.fill = PIGGY_BANK_RED_FILL;
+            absoluteValueText.fill = PIGGY_BANK_MOST_NEGATIVE_FILL;
           } else {
             stringTemplate = balanceAmountString;
-            absoluteValueText.fill = PIGGY_BANK_GREEN_FILL;
+            absoluteValueText.fill = PIGGY_BANK_MOST_POSITIVE_FILL;
           }
           absoluteValueText.text = StringUtils.fillIn( stringTemplate, { value: Math.abs( value ) } );
 
