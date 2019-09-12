@@ -12,14 +12,13 @@ define( require => {
   const NLIScene = require( 'NUMBER_LINE_INTEGERS/scenes/model/NLIScene' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
-  const RandomIconFactory = require( 'NUMBER_LINE_INTEGERS/common/view/RandomIconFactory' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  const sceneIconFactory = require( 'NUMBER_LINE_INTEGERS/scenes/view/sceneIconFactory' );
   const ScreenView = require( 'JOIST/ScreenView' );
   const TemperatureSceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/TemperatureSceneView' );
 
   // constants
   const INSET = 10;
-  const ICON_FACTORY = new RandomIconFactory( 900005 );
 
   class NLIScenesScreenView extends ScreenView {
 
@@ -49,15 +48,15 @@ define( require => {
       const orientationButtonsContent = [
         {
           value: NLIScene.ELEVATION,
-          node: ICON_FACTORY.createIcon().setScaleMagnitude( 0.07, 0.1 )
+          node: sceneIconFactory.getIcon( NLIScene.ELEVATION )
         },
         {
           value: NLIScene.BANK,
-          node: ICON_FACTORY.createIcon().setScaleMagnitude( 0.07, 0.1 )
+          node: sceneIconFactory.getIcon( NLIScene.BANK )
         },
         {
           value: NLIScene.TEMPERATURE,
-          node: ICON_FACTORY.createIcon().setScaleMagnitude( 0.07, 0.1 )
+          node: sceneIconFactory.getIcon( NLIScene.TEMPERATURE )
         }
       ];
 

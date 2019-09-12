@@ -1,7 +1,7 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * A node that just represents a piggy bank
+ * A node that represents a piggy bank
  *
  * @author John Blanco (PhET Interactive Simulations)
  * @author Saurabh Totey
@@ -20,15 +20,15 @@ define( require => {
   class PiggyBankNode extends Node {
 
     /**
-     * @param {Image} imageSource
+     * @param {Image} overlayImageSource
      */
-    constructor( imageSource ) {
+    constructor( overlayImageSource ) {
       const piggyBankOutlineNode = new Path( piggyBankShapes.MEDIUM_PIGGY_BANK_SHAPE, {
         fill: 'rgba( 0, 0, 0, 0 )', // transparent to start so it has size
         lineWidth: 0,
         center: Vector2.ZERO
       } );
-      const overlayImage = new Image( imageSource, { opacity: 0.8 } );
+      const overlayImage = new Image( overlayImageSource, { opacity: 0.8 } );
       overlayImage.setScaleMagnitude( piggyBankOutlineNode.width / overlayImage.width );
       overlayImage.center = Vector2.ZERO;
       super( { children: [ piggyBankOutlineNode, overlayImage ] } );
