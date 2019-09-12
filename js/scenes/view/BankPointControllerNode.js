@@ -33,10 +33,6 @@ define( require => {
   const EMPTY_FILL = Color.toColor( '#fff' );
   const READOUT_DISTANCE_FROM_IMAGE = 5;
 
-  // images
-  const piggyBankWithFlowers = require( 'image!NUMBER_LINE_INTEGERS/piggy-bank-with-flowers.png' );
-  const piggyBankWithLightning = require( 'image!NUMBER_LINE_INTEGERS/piggy-bank-with-lightning.png' );
-
   // strings
   const moneyAmountString = require( 'string!NUMBER_LINE_INTEGERS/moneyAmount' );
   const balanceAmountString = require( 'string!NUMBER_LINE_INTEGERS/balanceAmount' );
@@ -46,17 +42,17 @@ define( require => {
 
     /**
      * @param {PointController} pointController
-     * @param {String} overlayType - indicates artwork on bank, either 'flowers' or 'lightning'
+     * @param {String} decorationType - indicates artwork on bank, either 'flowers' or 'lightning'
      * @param {Object} [options]
      */
-    constructor( pointController, overlayType, options ) {
+    constructor( pointController, decorationType, options ) {
 
       assert && assert( !options || !options.node, 'options should not include a node for this constructor' );
 
       const controllerNode = new Node();
 
       // choose the overlay image source, which is artwork that must exactly match the shape of the outline
-      const piggyBankNode = new PiggyBankNode( overlayType === 'flowers' ? piggyBankWithFlowers : piggyBankWithLightning );
+      const piggyBankNode = new PiggyBankNode( { decorationType: decorationType } );
       controllerNode.addChild( piggyBankNode );
 
       // add the balance indicator node
@@ -135,7 +131,7 @@ define( require => {
         }
         absoluteValueText.text = StringUtils.fillIn( stringTemplate, { value: Math.abs( value ) } );
         absoluteValueBackground.setRect( 0, 0, absoluteValueText.width + 5, absoluteValueText.height + 5 );
-        if ( overlayType === 'flowers' ) {
+        if ( decorationType === 'flowers' ) {
           absoluteValueBackground.centerX = controllerNode.centerX - 9; // tweaked a bit to be centered under feet
           absoluteValueBackground.top = controllerNode.bottom + READOUT_DISTANCE_FROM_IMAGE;
         }

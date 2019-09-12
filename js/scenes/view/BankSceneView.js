@@ -26,10 +26,6 @@ define( require => {
   const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
   const BALANCE_CHANGE_AMOUNT = 1; // in dollars (or whatever currency units are being used)
 
-  // images
-  const piggyBankWithFlowers = require( 'image!NUMBER_LINE_INTEGERS/piggy-bank-with-flowers.png' );
-  const piggyBankWithLightning = require( 'image!NUMBER_LINE_INTEGERS/piggy-bank-with-lightning.png' );
-
   // strings
   const balanceString = require( 'string!NUMBER_LINE_INTEGERS/balance' );
   const moneyAmountString = require( 'string!NUMBER_LINE_INTEGERS/moneyAmount' );
@@ -133,9 +129,9 @@ define( require => {
 
       // TODO: these are not named well: single means on the left side to allow user to control single piggy bank
       //  double means that user can control 2 piggy banks
-      const singleFlowersPiggyBankNode = new PiggyBankNode( piggyBankWithFlowers );
-      const doubleFlowersPiggyBankNode = new PiggyBankNode( piggyBankWithFlowers );
-      const doubleLightningPiggyBankNode = new PiggyBankNode( piggyBankWithLightning );
+      const singleFlowersPiggyBankNode = new PiggyBankNode( { decorationType: 'flowers' } );
+      const doubleFlowersPiggyBankNode = new PiggyBankNode( { decorationType: 'flowers' } );
+      const doubleLightningPiggyBankNode = new PiggyBankNode( { decorationType: 'lightning' } );
 
       singleFlowersPiggyBankNode.maxWidth = 40;
       doubleFlowersPiggyBankNode.maxWidth = 30;

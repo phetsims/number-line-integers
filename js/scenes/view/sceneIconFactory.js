@@ -24,7 +24,6 @@ define( require => {
 
   // images
   const birdInAir = require( 'image!NUMBER_LINE_INTEGERS/bird-air.png' );
-  const piggyBankWithFlowers = require( 'image!NUMBER_LINE_INTEGERS/piggy-bank-with-flowers.png' );
 
   // elevation scene icon
   const elevationSceneIconNode = new Image( birdInAir );
@@ -33,8 +32,8 @@ define( require => {
   elevationSceneIconNode.setScaleMagnitude( xScale, yScale );
 
   // bank scene icon
-  const piggyBankNode = new PiggyBankNode( piggyBankWithFlowers );
-  piggyBankNode.fill = 'green';
+  const piggyBankNode = new PiggyBankNode( { decorationType: 'lightning' } );
+  piggyBankNode.fill = '#1fb493';
   piggyBankNode.setScaleMagnitude( ICON_SIZE.width / piggyBankNode.width );
 
   // temperature scene icon

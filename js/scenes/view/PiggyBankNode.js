@@ -1,7 +1,7 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * A node that represents a piggy bank
+ * a node that represents a piggy bank
  *
  * @author John Blanco (PhET Interactive Simulations)
  * @author Saurabh Totey
@@ -17,21 +17,36 @@ define( require => {
   const piggyBankShapes = require( 'NUMBER_LINE_INTEGERS/scenes/view/piggyBankShapes' );
   const Vector2 = require( 'DOT/Vector2' );
 
+  // images
+  const piggyBankWithFlowers = require( 'image!NUMBER_LINE_INTEGERS/piggy-bank-with-flowers.png' );
+  const piggyBankWithLightning = require( 'image!NUMBER_LINE_INTEGERS/piggy-bank-with-lightning.png' );
+
   class PiggyBankNode extends Node {
 
     /**
-     * @param {Image} overlayImageSource
+     * @param {Object} [options]
      */
-    constructor( overlayImageSource ) {
-      const piggyBankOutlineNode = new Path( piggyBankShapes.MEDIUM_PIGGY_BANK_SHAPE, {
-        fill: 'rgba( 0, 0, 0, 0 )', // transparent to start so it has size
+    constructor( options ) {
+
+      options = _.extend( {
+        fill: 'rgba( 0, 0, 0, 0 )', // initially transparent so that it is invisible but has size
         lineWidth: 0,
+        decorationType: 'flowers'  // valid values are 'flowers' and 'lightning'
+      }, options );
+
+      const piggyBankOutlineNode = new Path( piggyBankShapes.MEDIUM_PIGGY_BANK_SHAPE, {
+        fill: options.fill,
+        lineWidth: options.lineWidth,
         center: Vector2.ZERO
       } );
-      const overlayImage = new Image( overlayImageSource, { opacity: 0.8 } );
+      const overlayImage = new Image(
+        options.decorationType === 'flowers' ? piggyBankWithFlowers : piggyBankWithLightning,
+        { opacity: 0.8 }
+      );
       overlayImage.setScaleMagnitude( piggyBankOutlineNode.width / overlayImage.width );
       overlayImage.center = Vector2.ZERO;
-      super( { children: [ piggyBankOutlineNode, overlayImage ] } );
+      options.children = [ piggyBankOutlineNode, overlayImage ];
+      super( options );
 
       // @private
       this.outline = piggyBankOutlineNode;
@@ -44,6 +59,7 @@ define( require => {
     getFill() {
       return this.outline.fill;
     }
+
     get fill() { return this.getFill(); }
 
     /**
@@ -53,6 +69,7 @@ define( require => {
     setFill( fill ) {
       this.outline.fill = fill;
     }
+
     set fill( fill ) { this.setFill( fill ); }
 
   }

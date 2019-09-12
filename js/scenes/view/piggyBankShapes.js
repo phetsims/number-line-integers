@@ -34,27 +34,16 @@ define( require => {
   // the left.  However, flipping the image in the AI file and then saving it as SVG didn't seem to work - it kept
   // throwing exceptions upon loading, so I (jbphet) worked around this by loading the left-facing version and flipping
   // it.  Hence the transformation on the next line.
-  const FULL_SIZE_PIGGY_BANK_SHAPE = new Shape( PIGGY_BANK_SVG_STRING ).transformed( Matrix3.scale( -1, 1 ) );
+  const PIGGY_BANK_SHAPE = new Shape( PIGGY_BANK_SVG_STRING ).transformed( Matrix3.scale( -1, 1 ) );
 
   class PiggyBankShapes {
 
     constructor() {
 
-      const fullSizeShapeWidth = FULL_SIZE_PIGGY_BANK_SHAPE.bounds.width;
-      // the large version is half the width of the layout bounds
-      const largeVersionScale = ( NLI_LAYOUT_BOUNDS.width / 2 ) / fullSizeShapeWidth;
-      const largeScaleTransform = Matrix3.scale( largeVersionScale, largeVersionScale );
-      this.LARGE_PIGGY_BANK_SHAPE = FULL_SIZE_PIGGY_BANK_SHAPE.transformed( largeScaleTransform );
-
-      // the medium version is 1/8 the width of the layout bounds
-      const mediumVersionScale = ( NLI_LAYOUT_BOUNDS.width / 8 ) / fullSizeShapeWidth;
+      // scale the shape to be reasonably sized
+      const mediumVersionScale = ( NLI_LAYOUT_BOUNDS.width / 8 ) / PIGGY_BANK_SHAPE.bounds.width;
       const mediumScaleTransform = Matrix3.scale( mediumVersionScale, mediumVersionScale );
-      this.MEDIUM_PIGGY_BANK_SHAPE = FULL_SIZE_PIGGY_BANK_SHAPE.transformed( mediumScaleTransform );
-
-      // the small version is 1/32 the width of the layout bounds
-      const smallVersionScale = ( NLI_LAYOUT_BOUNDS.width / 32 ) / fullSizeShapeWidth;
-      const smallScaleTransform = Matrix3.scale( smallVersionScale, smallVersionScale );
-      this.SMALL_PIGGY_BANK_SHAPE = FULL_SIZE_PIGGY_BANK_SHAPE.transformed( smallScaleTransform );
+      this.MEDIUM_PIGGY_BANK_SHAPE = PIGGY_BANK_SHAPE.transformed( mediumScaleTransform );
     }
   }
 
