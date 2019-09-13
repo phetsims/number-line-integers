@@ -32,7 +32,7 @@ define( require => {
   // strings
   const currencyUnitsString = require( 'string!NUMBER_LINE_INTEGERS/currencyUnits' );
 
-  // images TODO: replace the coin PNG images with SVGs
+  // images
   const depositingCoinsImage = require( 'image!NUMBER_LINE_INTEGERS/coin_icons-01.png' );
   const withdrawingCoinsImage = require( 'image!NUMBER_LINE_INTEGERS/coin_icons-02.png' );
 
@@ -46,7 +46,6 @@ define( require => {
      */
     constructor( balanceProperty, range, changeAmount, options ) {
 
-      // TODO use SVGs instead of PNG images
       const makeCoinIcon = image => new Node( {
         children: [
           new Image( image, { scale: 0.15 } ),

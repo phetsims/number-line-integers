@@ -35,6 +35,11 @@ define( require => {
 
   class BankSceneView extends SceneView {
 
+    /**
+     * @param {BankSceneModel} sceneModel
+     * @param {Bounds2} layoutBounds
+     * @public
+     */
     constructor( sceneModel, layoutBounds ) {
 
       super( sceneModel, layoutBounds, {
