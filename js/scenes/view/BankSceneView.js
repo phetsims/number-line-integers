@@ -70,6 +70,7 @@ define( require => {
       // add node to represent the point controller that is always visible
       const permanentPointControllerNode = new BankPointControllerNode(
         sceneModel.primaryAccountPointController,
+        sceneModel.primaryAccount.balanceChangedByButtonEmitter,
         'flowers',
         { connectorLineVisibleProperty: sceneModel.showNumberLineProperty }
       );
@@ -81,6 +82,7 @@ define( require => {
         if ( pointController ) {
           comparisonAccountPointControllerNode = new BankPointControllerNode(
             pointController,
+            sceneModel.comparisonAccount.balanceChangedByButtonEmitter,
             'lightning',
             { connectorLineVisibleProperty: sceneModel.showNumberLineProperty }
           );
@@ -95,7 +97,8 @@ define( require => {
 
       // add the controller for the primary account
       this.addChild( new AccountBalanceControllerNode(
-        sceneModel.primaryAccountBalanceProperty,
+        sceneModel.primaryAccount.balanceProperty,
+        sceneModel.primaryAccount.balanceChangedByButtonEmitter,
         sceneModel.numberLine.displayedRangeProperty.value,
         BALANCE_CHANGE_AMOUNT,
         {
@@ -106,7 +109,8 @@ define( require => {
 
       // add the controller for the comparison account, and show it only when that account is enabled
       const comparisonAccountBalanceControllerNode = new AccountBalanceControllerNode(
-        sceneModel.comparisonAccountBalanceProperty,
+        sceneModel.comparisonAccount.balanceProperty,
+        sceneModel.comparisonAccount.balanceChangedByButtonEmitter,
         sceneModel.numberLine.displayedRangeProperty.value,
         BALANCE_CHANGE_AMOUNT,
         {

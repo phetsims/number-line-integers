@@ -11,10 +11,12 @@ define( require => {
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Color = require( 'SCENERY/util/Color' );
+  const Emitter = require( 'AXON/Emitter' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
+  const NumberIO = require( 'TANDEM/types/NumberIO' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
   const Property = require( 'AXON/Property' );
@@ -50,24 +52,24 @@ define( require => {
         }
       } );
 
-      // @public {NumberProperty} - balance of the bank account that is always depicted in the view
-      this.primaryAccountBalanceProperty = new NumberProperty( INITIAL_PRIMARY_ACCOUNT_BALANCE );
+      // @public - bank account that is always shown in the view
+      this.primaryAccount = new Account( INITIAL_PRIMARY_ACCOUNT_BALANCE );
 
       // hook the primary account balance up to the first number line point
-      this.primaryAccountBalanceProperty.link( balance => {
+      this.primaryAccount.balanceProperty.link( balance => {
         this.numberLine.residentPoints.get( 0 ).proposeValue( balance );
         //TODO: if we want to prevent points from overlapping, numberline.getNearestUnoccupiedValue should be called here
         // preventing points from overlapping would make the control buttons potentially difficult to use
       } );
       this.numberLine.residentPoints.get( 0 ).valueProperty.link( value => {
-        this.primaryAccountBalanceProperty.value = value;
+        this.primaryAccount.balanceProperty.value = value;
       } );
 
-      // @public {NumberProperty} - balance of the bank account that is shown when the user wants to compare two accounts
-      this.comparisonAccountBalanceProperty = new NumberProperty( INITIAL_COMPARISON_ACCOUNT_BALANCE );
+      // @public {Account} - bank account that is shown when the user wants to compare two accounts
+      this.comparisonAccount = new Account( INITIAL_COMPARISON_ACCOUNT_BALANCE );
 
       // hook the comparison account balance up to the second number line point
-      this.comparisonAccountBalanceProperty.link( balance => {
+      this.comparisonAccount.balanceProperty.link( balance => {
         if ( this.numberLine.residentPoints.length > 1 ) {
           this.numberLine.residentPoints.get( 1 ).proposeValue( balance );
           //TODO: if we want to prevent points from overlapping, numberline.getNearestUnoccupiedValue should be called here
@@ -108,14 +110,14 @@ define( require => {
 
           // create the point and add it to the number line
           comparisonAccountNumberLinePoint = new NumberLinePoint(
-            this.comparisonAccountBalanceProperty.value,
+            this.comparisonAccount.balanceProperty.value,
             COMPARISON_ACCOUNT_POINT_COLOR,
             this.numberLine
           );
           this.numberLine.addPoint( comparisonAccountNumberLinePoint );
 
           comparisonAccountNumberLinePoint.valueProperty.link( value => {
-            this.comparisonAccountBalanceProperty.value = value;
+            this.comparisonAccount.balanceProperty.value = value;
           } );
 
           // create the controller fo this point
@@ -158,16 +160,39 @@ define( require => {
       // release the point that was being controlled
       this.primaryAccountPointController.clearNumberLinePoint();
       this.showComparisonAccountProperty.reset();
-      this.primaryAccountBalanceProperty.reset();
-      this.comparisonAccountBalanceProperty.reset();
+      this.primaryAccount.reset();
+      this.comparisonAccount.reset();
       super.reset();
 
       // the reset will add back the initial point, so associate the permanent point controller with it
       this.primaryAccountPointController.associateWithNumberLinePoint( this.numberLine.residentPoints.get( 0 ) );
 
       this.numberLine.residentPoints.get( 0 ).valueProperty.link( value => {
-        this.primaryAccountBalanceProperty.value = value;
+        this.primaryAccount.balanceProperty.value = value;
       } );
+    }
+  }
+
+  class Account {
+    constructor( initialBalance = 0 ) {
+
+      // @public
+      this.balanceProperty = new NumberProperty( initialBalance );
+
+      // @public - An emitter that should be triggered to signal that the balance was changed due to interaction with
+      // the add/remove buttons rather than by dragging, reset, or other means.  The value should be +1 for an increase
+      // and -1 for a decrease.
+      this.balanceChangedByButtonEmitter = new Emitter( {
+        parameters: [ { phetioType: NumberIO, name: 'balanceChange' } ]
+      } );
+    }
+
+    /**
+     * restore initial state
+     * @public
+     */
+    reset() {
+      this.balanceProperty.reset();
     }
   }
 

@@ -14,7 +14,6 @@ define( require => {
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   const Text = require( 'SCENERY/nodes/Text' );
-  const Util = require( 'DOT/Util' );
   const VBox = require( 'SCENERY/nodes/VBox' );
   const Vector2 = require( 'DOT/Vector2' );
 
@@ -40,11 +39,12 @@ define( require => {
 
     /**
      * @param {NumberProperty} balanceProperty
+     * @param {Emitter} balanceChangedByButtonEmitter
      * @param {Range} range
      * @param {number} changeAmount
      * @param {Object} [options]
      */
-    constructor( balanceProperty, range, changeAmount, options ) {
+    constructor( balanceProperty, balanceChangedByButtonEmitter, range, changeAmount, options ) {
 
       const makeCoinIcon = image => new Node( {
         children: [
@@ -54,7 +54,11 @@ define( require => {
       } );
 
       const changeBalanceBy = balanceChangeAmount => {
-        balanceProperty.value = Util.clamp( balanceProperty.value + balanceChangeAmount, range.min, range.max );
+        if ( ( balanceChangeAmount > 0 && balanceProperty.value < range.max ) ||
+             ( balanceChangeAmount < 0 && balanceProperty.value > range.min ) ) {
+          balanceProperty.value += balanceChangeAmount;
+          balanceChangedByButtonEmitter.emit( balanceChangeAmount );
+        }
       };
 
       // create the buttons

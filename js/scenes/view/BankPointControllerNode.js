@@ -11,7 +11,10 @@ define( require => {
   'use strict';
 
   // modules
+  const Animation = require( 'TWIXT/Animation' );
+  const Circle = require( 'SCENERY/nodes/Circle' );
   const Color = require( 'SCENERY/util/Color' );
+  const Easing = require( 'TWIXT/Easing' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -19,6 +22,7 @@ define( require => {
   const PiggyBankNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/PiggyBankNode' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const Shape = require( 'KITE/Shape' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
   const Vector2 = require( 'DOT/Vector2' );
@@ -32,22 +36,28 @@ define( require => {
   const LEAST_NEGATIVE_FILL = Color.toColor( '#fda5a8' );
   const EMPTY_FILL = Color.toColor( '#fff' );
   const READOUT_DISTANCE_FROM_IMAGE = 5;
+  const COIN_RADIUS = 10;
+  const COIN_COLOR = new Color( 213, 196, 39 );
 
   // strings
-  const moneyAmountString = require( 'string!NUMBER_LINE_INTEGERS/moneyAmount' );
   const balanceAmountString = require( 'string!NUMBER_LINE_INTEGERS/balanceAmount' );
+  const currencyUnitsString = require( 'string!NUMBER_LINE_INTEGERS/currencyUnits' );
   const debtAmountString = require( 'string!NUMBER_LINE_INTEGERS/debtAmount' );
+  const moneyAmountString = require( 'string!NUMBER_LINE_INTEGERS/moneyAmount' );
 
   class BankPointControllerNode extends PointControllerNode {
 
     /**
      * @param {PointController} pointController
+     * @param {Emitter} balanceChangedByButtonEmitter
      * @param {String} decorationType - indicates artwork on bank, either 'flowers' or 'lightning'
      * @param {Object} [options]
      */
-    constructor( pointController, decorationType, options ) {
+    constructor( pointController, balanceChangedByButtonEmitter, decorationType, options ) {
 
       assert && assert( !options || !options.node, 'options should not include a node for this constructor' );
+
+      // TODO: Why does this create a separate controller node and not just use the parent? (noted by jbphet 9/16/2019)
 
       const controllerNode = new Node();
 
@@ -142,7 +152,68 @@ define( require => {
         absoluteValueText.center = absoluteValueBackground.localBounds.center;
       };
       pointController.positionProperty.link( updateController );
+
+      // add the layer where the coin animations will occur
+      const coinAnimationLayer = new Node();
+      controllerNode.addChild( coinAnimationLayer );
+
+      // Add a clipping area so that the coins look like they are going in and out.  This must be manually updated if
+      // the artwork for the piggy bank changes.  Since the clipping area is intended to make the coins visible when
+      // they are outside the bank but invisible inside, this must be drawn as a set of two shapes, one inside the
+      // other, with the inner one drawn with the opposite winding order.
+      const coinClipArea = Shape.rectangle( -100, -100, 200, 200 );
+      coinClipArea.moveTo( -20, -40 );
+      coinClipArea.lineTo( -20, 40 );
+      coinClipArea.lineTo( 20, 40 );
+      coinClipArea.lineTo( 20, -40 );
+      coinClipArea.close();
+      coinAnimationLayer.clipArea = coinClipArea;
+
+      // list of the active animations for coin motions
+      let activeAnimations = [];
+
+      // watch for when the balance changes due to interaction with the account balance buttons
+      balanceChangedByButtonEmitter.addListener( balanceChange => {
+        assert && assert( Math.abs( balanceChange ) === 1, 'balance changes from the button should always be 1 or -1' );
+        const isDeposit = balanceChange > 0;
+        const coinNode = new CoinNode( { centerX: -3 } );
+        const startY = isDeposit ? -60 : 30;
+        const endY = isDeposit ? 0 : 60;
+        coinAnimationLayer.addChild( coinNode );
+        if ( isDeposit ) {
+          coinNode.moveToBack();
+        }
+        const coinMotionAnimation = new Animation( {
+          duration: 0.5, // TODO - make this a constant
+          easing: Easing.CUBIC_IN_OUT,
+          setValue: value => { coinNode.centerY = value; },
+          from: startY,
+          to: endY
+        } );
+        coinMotionAnimation.endedEmitter.addListener( () => {
+          coinAnimationLayer.removeChild( coinNode );
+          activeAnimations = _.without( activeAnimations, coinMotionAnimation );
+        } );
+        activeAnimations.push( coinMotionAnimation );
+        coinMotionAnimation.start();
+      } );
     }
+  }
+
+  class CoinNode extends Circle {
+
+    constructor( options ) {
+
+      options = _.extend( { stroke: Color.black, fill: COIN_COLOR }, options );
+      super( COIN_RADIUS, options );
+
+      // add the currency marking
+      this.addChild( new Text( currencyUnitsString, {
+        font: new PhetFont( 16 ),
+        center: Vector2.ZERO
+      } ) );
+    }
+
   }
 
   return numberLineIntegers.register( 'BankPointControllerNode', BankPointControllerNode );
