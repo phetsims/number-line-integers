@@ -327,10 +327,13 @@ define( require => {
       const handleValueChange = value => {
         numberText.text = value;
         background.setRectBounds( numberText.bounds.dilated( 3 ) );
-        background.fill = point.colorProperty.value.colorUtilsBrighter( 0.75 );
-        background.stroke = point.colorProperty.value;
       };
       point.valueProperty.link( handleValueChange );
+      const handleColorChange = color => {
+        background.fill = color.colorUtilsBrighter( 0.75 );
+        background.stroke = color;
+      };
+      point.colorProperty.link( handleColorChange );
 
       // an animation is used to made the background when the user stops dragging the point
       let backgroundFadeAnimation = null;
@@ -368,6 +371,7 @@ define( require => {
       this.disposeNumberWithColorNode = () => {
         point.valueProperty.unlink( handleValueChange );
         point.isDraggingProperty.unlink( handleDragStateChange );
+        point.colorProperty.unlink( handleColorChange );
       };
     }
 
