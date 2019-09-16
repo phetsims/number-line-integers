@@ -27,8 +27,7 @@ define( require => {
   const TEMPERATURE_RANGE_ON_MAP = new Range( -60, 50 ); // in Celsius, must match range used to make map images
 
   // convenience functions
-  const kelvinToCelsiusInteger = temperatureInKelvin => { return Util.roundSymmetric( temperatureInKelvin - 273.15 ); };
-  const kelvinToFahrenheitInteger = temperatureInKelvin => { return Util.roundSymmetric( temperatureInKelvin * 9 / 5 - 459.67 ); };
+  const celsiusToFahrenheitInteger = temperatureInCelsius => { return Util.roundSymmetric( temperatureInCelsius * 9 / 5 + 32 ); };
 
   // color map for obtaining a color given a temperature value, must match algorithm used on maps
   const CELSIUS_TEMPERATURE_TO_COLOR_MAPPER = new TemperatureToColorMapper( TEMPERATURE_RANGE_ON_MAP );
@@ -45,7 +44,7 @@ define( require => {
 
       options = _.extend( {
         noTemperatureColor: Color.white,
-        defaultTemperature: 273, // in Kelvin, used when no temperature is available from the model
+        defaultTemperature: 0, // in Celsius, used when no temperature is available from the model
         lockToNumberLine: 'never'
       }, options );
 
@@ -64,8 +63,8 @@ define( require => {
       this.droppedOnMapTimestamp = -1;
 
       // @public temperatures at the position of the point controller on the map
-      this.celsiusTemperatureProperty = new NumberProperty( kelvinToCelsiusInteger( options.defaultTemperature ) );
-      this.fahrenheitTemperatureProperty = new NumberProperty( kelvinToFahrenheitInteger( options.defaultTemperature ) );
+      this.celsiusTemperatureProperty = new NumberProperty( options.defaultTemperature );
+      this.fahrenheitTemperatureProperty = new NumberProperty( celsiusToFahrenheitInteger( options.defaultTemperature ) );
 
       // @public color represented by temperature on map
       this.colorProperty = new PaintColorProperty( options.noTemperatureColor );
@@ -75,8 +74,8 @@ define( require => {
         [ this.positionProperty, sceneModel.monthProperty ],
         ( position ) => {
 
-          const temperatureInKelvin = sceneModel.getTemperatureAtLocation( position );
-          if ( temperatureInKelvin === null ) {
+          const temperatureInCelsius = sceneModel.getTemperatureAtLocation( position );
+          if ( temperatureInCelsius === null ) {
 
             // the provided position isn't over the map, so no temperature value can be obtained
             this.celsiusTemperatureProperty.value = this.celsiusTemperatureProperty.initialValue;
@@ -87,8 +86,8 @@ define( require => {
           else {
 
             // we got a valid temperature value back, update the values presented to the user
-            this.celsiusTemperatureProperty.value = kelvinToCelsiusInteger( temperatureInKelvin );
-            this.fahrenheitTemperatureProperty.value = kelvinToFahrenheitInteger( temperatureInKelvin );
+            this.celsiusTemperatureProperty.value = temperatureInCelsius;
+            this.fahrenheitTemperatureProperty.value = celsiusToFahrenheitInteger( temperatureInCelsius );
             this.colorProperty.value = CELSIUS_TEMPERATURE_TO_COLOR_MAPPER.mapTemperatureToColor(
               this.celsiusTemperatureProperty.value
             );
