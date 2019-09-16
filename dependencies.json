@@ -1,11 +1,11 @@
 {
-  "comment": "# number-line-integers 1.0.0-dev.5 Fri Sep 13 2019 17:35:59 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# number-line-integers 1.0.0-dev.6 Mon Sep 16 2019 12:40:36 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "201c50a840e082354b013f4ab9e9d45006f98cfe",
     "branch": "master"
   },
   "axon": {
-    "sha": "14114d430aa12dd4f0961ed50dbb3ad4abef16cd",
+    "sha": "42e091a4388b79d3f57a6338fe4092cae5d49c0a",
     "branch": "master"
   },
   "brand": {
@@ -29,7 +29,7 @@
     "branch": "master"
   },
   "number-line-integers": {
-    "sha": "db4b817490bc4994512b7ff27a36d0ea7a6f57e4",
+    "sha": "b5a31fd1df338d58c6d9dfc9074ef3d8dd148854",
     "branch": "master"
   },
   "phet-core": {
@@ -57,11 +57,11 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "718cd5188697ff5e0a94c290fcd2813d9161895c",
+    "sha": "b4c7fb2d9c26d9e15679b2ebb65ff5ac76457abd",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "9aa663730b70461430e6abeaf40516c7b464a30e",
+    "sha": "f904ddfce3681f719d37ff2b86e601a131a04151",
     "branch": "master"
   },
   "sherpa": {
@@ -77,7 +77,7 @@
     "branch": "master"
   },
   "tandem": {
-    "sha": "51b395f92ee61842bd00fd9ca1de9ee40b61add2",
+    "sha": "070baca4892bd17b80c04f8de0f92a6b60a2b8a2",
     "branch": "master"
   },
   "twixt": {
