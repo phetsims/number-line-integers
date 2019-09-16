@@ -25,29 +25,8 @@ define( require => {
   // images
   const birdInAir = require( 'image!NUMBER_LINE_INTEGERS/bird-air.png' );
 
-  // elevation scene icon
-  const elevationSceneIconNode = new Image( birdInAir );
-  const xScale = ICON_SIZE.width / elevationSceneIconNode.width;
-  const yScale = ICON_SIZE.height / elevationSceneIconNode.height;
-  elevationSceneIconNode.setScaleMagnitude( xScale, yScale );
-
-  // bank scene icon
-  const piggyBankNode = new PiggyBankNode( { decorationType: 'lightning' } );
-  piggyBankNode.fill = '#1fb493';
-  piggyBankNode.setScaleMagnitude( ICON_SIZE.width / piggyBankNode.width );
-
-  // temperature scene icon
-  const temperatureSceneIconRoot = new Rectangle( 0, 0, ICON_SIZE.width, ICON_SIZE.height, { fill: 'white' } );
-  const thermometerNode = new ThermometerNode( 0, 1, new NumberProperty( 0.5 ) );
-  thermometerNode.setScaleMagnitude( ICON_SIZE.height / thermometerNode.height );
-  thermometerNode.center = temperatureSceneIconRoot.center;
-  temperatureSceneIconRoot.addChild( thermometerNode );
-
-  // map of values to icons
+  // map of values to icons, populated lazily to avoid race conditions with image loading
   const sceneIdToIconsMap = new Map();
-  sceneIdToIconsMap.set( NLIScene.ELEVATION, elevationSceneIconNode );
-  sceneIdToIconsMap.set( NLIScene.BANK, piggyBankNode );
-  sceneIdToIconsMap.set( NLIScene.TEMPERATURE, temperatureSceneIconRoot );
 
   const sceneIconFactory = {
 
@@ -58,6 +37,34 @@ define( require => {
      * @public
      */
     getIcon: sceneIdentifier => {
+
+      // The icon nodes are not created until the first time they are needed, which prevents race conditions with image
+      // loading.
+      if ( !sceneIdToIconsMap.get( sceneIdentifier ) ) {
+        if ( sceneIdentifier === NLIScene.ELEVATION ) {
+          const elevationSceneIconNode = new Image( birdInAir );
+          const xScale = ICON_SIZE.width / elevationSceneIconNode.width;
+          const yScale = ICON_SIZE.height / elevationSceneIconNode.height;
+          elevationSceneIconNode.setScaleMagnitude( xScale, yScale );
+          sceneIdToIconsMap.set( NLIScene.ELEVATION, elevationSceneIconNode );
+        }
+        else if ( sceneIdentifier === NLIScene.BANK ) {
+          const piggyBankNode = new PiggyBankNode( { decorationType: 'lightning' } );
+          piggyBankNode.fill = '#1fb493';
+          piggyBankNode.setScaleMagnitude( ICON_SIZE.width / piggyBankNode.width );
+          sceneIdToIconsMap.set( NLIScene.BANK, piggyBankNode );
+        }
+        else if ( sceneIdentifier === NLIScene.TEMPERATURE ) {
+          const temperatureSceneIconRoot = new Rectangle( 0, 0, ICON_SIZE.width, ICON_SIZE.height, { fill: 'white' } );
+          const thermometerNode = new ThermometerNode( 0, 1, new NumberProperty( 0.5 ) );
+          thermometerNode.setScaleMagnitude( ICON_SIZE.height / thermometerNode.height );
+          thermometerNode.center = temperatureSceneIconRoot.center;
+          temperatureSceneIconRoot.addChild( thermometerNode );
+          sceneIdToIconsMap.set( NLIScene.TEMPERATURE, temperatureSceneIconRoot );
+        }
+      }
+
+      // return the icon instance
       return sceneIdToIconsMap.get( sceneIdentifier );
     }
   };
