@@ -39,7 +39,7 @@
     "value": "{{value}} m"
   },
   "moneyAmount": {
-    "value": "${{value}}"
+    "value": "{{currencyUnit}}{{value}}"
   },
   "currencyUnits": {
     "value": "$"

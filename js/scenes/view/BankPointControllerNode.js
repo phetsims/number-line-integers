@@ -124,6 +124,7 @@ define( require => {
         // update the balance indicator text
         const signIndicator = currentBalance < 0 ? '-' : '';
         balanceNode.text = signIndicator + StringUtils.fillIn( moneyAmountString, {
+          currencyUnit: currencyUnitsString,
           value: Math.abs( currentBalance )
         } );
         balanceNode.center = Vector2.ZERO;

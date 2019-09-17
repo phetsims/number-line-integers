@@ -107,7 +107,7 @@ define( require => {
   
     const distinctValues = [];
     data.forEach( value => {
-      if ( distinctValues.length === 0 || distinctValues[ distinctValues.length - 1 ][0] !== value ) {
+      if ( distinctValues.length === 0 || distinctValues[ distinctValues.length - 1 ][ 0 ] !== value ) {
         distinctValues.push( [ value ] );
       } else {
         distinctValues[ distinctValues.length - 1 ].push( value );

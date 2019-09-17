@@ -20,6 +20,7 @@ define( require => {
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const PiggyBankNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/PiggyBankNode' );
   const SceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/SceneView' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
 
   // constants
@@ -28,6 +29,7 @@ define( require => {
 
   // strings
   const balanceString = require( 'string!NUMBER_LINE_INTEGERS/balance' );
+  const currencyUnitsString = require( 'string!NUMBER_LINE_INTEGERS/currencyUnits' );
   const moneyAmountString = require( 'string!NUMBER_LINE_INTEGERS/moneyAmount' );
 
   // constants
@@ -44,7 +46,7 @@ define( require => {
 
       super( sceneModel, layoutBounds, {
         numberLineNodeOptions: {
-          numberDisplayTemplate: moneyAmountString
+          numberDisplayTemplate: StringUtils.fillIn( moneyAmountString, { currencyUnit: currencyUnitsString } )
         }
       } );
 
