@@ -14,23 +14,23 @@ define( require => {
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
 
   // images
-  const temperatureMapJanuary = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.jpg' );
+  const temperatureMapJanuary = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.png' );
   const temperatureMapFebruary = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-02.png' );
-  // const temperatureMapMarch = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-03.png' );
-  // const temperatureMapApril = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-04.png' );
-  // const temperatureMapMay = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-05.png' );
-  // const temperatureMapJune = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-06.png' );
-  // const temperatureMapJuly = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-07.png' );
-  // const temperatureMapAugust = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-08.png' );
-  // const temperatureMapSeptember = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-09.png' );
-  // const temperatureMapOctober = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-10.png' );
-  // const temperatureMapNovember = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-11.png' );
-  // const temperatureMapDecember = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-12.png' );
+  const temperatureMapMarch = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-03.png' );
+  const temperatureMapApril = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-04.png' );
+  const temperatureMapMay = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-05.png' );
+  const temperatureMapJune = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-06.png' );
+  const temperatureMapJuly = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-07.png' );
+  const temperatureMapAugust = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-08.png' );
+  const temperatureMapSeptember = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-09.png' );
+  const temperatureMapOctober = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-10.png' );
+  const temperatureMapNovember = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-11.png' );
+  const temperatureMapDecember = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-12.png' );
 
   // constants
-  const TEMPERATURE_IMAGES_MONTHS = [ temperatureMapJanuary, temperatureMapFebruary, temperatureMapJanuary,
-    temperatureMapJanuary, temperatureMapJanuary, temperatureMapJanuary, temperatureMapJanuary, temperatureMapJanuary,
-    temperatureMapJanuary, temperatureMapJanuary, temperatureMapJanuary, temperatureMapJanuary ];
+  const TEMPERATURE_IMAGES_MONTHS = [ temperatureMapJanuary, temperatureMapFebruary, temperatureMapMarch,
+    temperatureMapApril, temperatureMapMay, temperatureMapJune, temperatureMapJuly, temperatureMapAugust,
+    temperatureMapSeptember, temperatureMapOctober, temperatureMapNovember, temperatureMapDecember ];
 
   class TemperatureMapNode extends Node {
 
