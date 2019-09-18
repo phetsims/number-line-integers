@@ -15,7 +15,7 @@ define( require => {
 
   // images
   const temperatureMapJanuary = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-01.jpg' );
-  // const temperatureMapFebruary = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-02.png' );
+  const temperatureMapFebruary = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-02.png' );
   // const temperatureMapMarch = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-03.png' );
   // const temperatureMapApril = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-04.png' );
   // const temperatureMapMay = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-05.png' );
@@ -28,7 +28,7 @@ define( require => {
   // const temperatureMapDecember = require( 'image!NUMBER_LINE_INTEGERS/world-temperatures-monthy-averaged-2018-12.png' );
 
   // constants
-  const TEMPERATURE_IMAGES_MONTHS = [ temperatureMapJanuary, temperatureMapJanuary, temperatureMapJanuary,
+  const TEMPERATURE_IMAGES_MONTHS = [ temperatureMapJanuary, temperatureMapFebruary, temperatureMapJanuary,
     temperatureMapJanuary, temperatureMapJanuary, temperatureMapJanuary, temperatureMapJanuary, temperatureMapJanuary,
     temperatureMapJanuary, temperatureMapJanuary, temperatureMapJanuary, temperatureMapJanuary ];
 
