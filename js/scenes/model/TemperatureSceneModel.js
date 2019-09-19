@@ -226,7 +226,7 @@ define( require => {
           // test for overlap with all other temperature point controllers, move if detected
           while ( _.some(
             pointControllersOnMap,
-            pc => { return pc.celsiusTemperatureProperty.value === pointControllerUnderTest.celsiusTemperatureProperty.value; } )
+            pc => pc.celsiusTemperatureProperty.value === pointControllerUnderTest.celsiusTemperatureProperty.value )
             ) {
 
             // overlap detected, move the point controller towards the a reasonably large area of the map

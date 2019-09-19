@@ -27,7 +27,7 @@ define( require => {
   const TEMPERATURE_RANGE_ON_MAP = new Range( -60, 50 ); // in Celsius, must match range used to make map images
 
   // convenience functions
-  const celsiusToFahrenheitInteger = temperatureInCelsius => { return Util.roundSymmetric( temperatureInCelsius * 9 / 5 + 32 ); };
+  const celsiusToFahrenheitInteger = temperatureInCelsius => Util.roundSymmetric( temperatureInCelsius * 9 / 5 + 32 );
 
   // color map for obtaining a color given a temperature value, must match algorithm used on maps
   const CELSIUS_TEMPERATURE_TO_COLOR_MAPPER = new TemperatureToColorMapper( TEMPERATURE_RANGE_ON_MAP );
