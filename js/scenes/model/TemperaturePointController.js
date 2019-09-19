@@ -72,7 +72,7 @@ define( require => {
       // update temperature and other state information when moved or when month changes
       Property.multilink(
         [ this.positionProperty, sceneModel.monthProperty ],
-        ( position ) => {
+        position => {
 
           const temperatureInCelsius = sceneModel.getTemperatureAtLocation( position );
           if ( temperatureInCelsius === null ) {
