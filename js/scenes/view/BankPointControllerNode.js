@@ -154,6 +154,9 @@ define( require => {
       };
       pointController.positionProperty.link( updateController );
 
+      // immediately called so that absolute value texts are positioned correctly
+      updateController();
+
       // add the layer where the coin animations will occur
       const coinAnimationLayer = new Node();
       controllerNode.addChild( coinAnimationLayer );
