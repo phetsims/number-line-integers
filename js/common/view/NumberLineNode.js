@@ -11,7 +11,7 @@ define( require => {
   // modules
   const AbsoluteValueSpanNode = require( 'NUMBER_LINE_INTEGERS/common/view/AbsoluteValueSpanNode' );
   const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  const Bounds2 = require( 'DOT/Bounds2' );
+  const BackgroundNode = require( 'SCENERY_PHET/BackgroundNode' );
   const Circle = require( 'SCENERY/nodes/Circle' );
   const Line = require( 'SCENERY/nodes/Line' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
@@ -21,7 +21,6 @@ define( require => {
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Property = require( 'AXON/Property' );
-  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
 
@@ -469,19 +468,17 @@ define( require => {
         fill: options.customColorsForLabels ? numberLinePoint.colorProperty : 'black'
       } );
 
-      // update the background to be the correct size and shape for the given text node
-      const updateBackgroundSize = ( backgroundNode, textNode ) => {
-        const textBounds = new Bounds2( textNode.left, textNode.top, textNode.right, textNode.bottom );
-        textBounds.dilate( 3 );
-        backgroundNode.setRectBounds( textBounds );
-        backgroundNode.setCornerRadius( 4 );
-        return backgroundNode;
-      };
-
       // create a background and add the label text to it
-      let labelNode = new Rectangle( 0, 0, 1, 1, { fill: 'white', opacity: NLIConstants.LABEL_BACKGROUND_OPACITY } );
+      const labelNode = new BackgroundNode( labelTextNode, {
+        backgroundOptions: {
+          opacity: NLIConstants.LABEL_BACKGROUND_OPACITY,
+          cornerXRadius: 4,
+          cornerYRadius: 4
+        },
+        xMargin: 3,
+        yMargin: 3
+      } );
       labelNode.addChild( labelTextNode );
-      labelNode = updateBackgroundSize( labelNode, labelTextNode );
 
       // add the label and link a listener for visibility
       labelNode.visible = false;
@@ -509,7 +506,6 @@ define( require => {
 
           // update the label text and position
           labelTextNode.text = getLabelText( value );
-          labelNode = updateBackgroundSize( labelNode, labelTextNode );
           if ( numberLine.isHorizontal ) {
             labelNode.centerX = circle.centerX;
             labelNode.bottom = circle.y - 20;
