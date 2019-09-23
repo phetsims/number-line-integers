@@ -478,7 +478,6 @@ define( require => {
         xMargin: 3,
         yMargin: 3
       } );
-      labelNode.addChild( labelTextNode );
 
       // add the label and link a listener for visibility
       labelNode.visible = false;
