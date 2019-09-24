@@ -36,12 +36,8 @@ define( require => {
       super();
 
       // control the visibility of this node
-      const visibilityMultilink = Property.multilink(
-        [ numberLine.showAbsoluteValuesProperty, numberLinePoint.valueProperty ],
-        ( showAbsoluteValues, pointValue ) => {
-          this.visible = showAbsoluteValues && pointValue !== 0;
-        }
-      );
+      const visibilityUpdater = showAbsoluteValues => { this.visible = showAbsoluteValues; };
+      numberLine.showAbsoluteValuesProperty.link( visibilityUpdater );
 
       // @public {number} - the distance in model/view coordinates of the line portion of the span from the number line
       this.distanceFromNumberLineProperty = new Property( initialDistanceFromNumberLine );
@@ -153,7 +149,7 @@ define( require => {
       // @private
       this.disposeAbsoluteValueSpanNode = () => {
         positionAndShapeMultilink.dispose();
-        visibilityMultilink.dispose();
+        numberLine.showAbsoluteValuesProperty.unlink( visibilityUpdater );
       };
     }
 
