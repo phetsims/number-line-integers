@@ -44,7 +44,7 @@ define( require => {
         temperatureScene.visible = selectedScene === NLIScene.TEMPERATURE;
       } );
 
-      // map the scene selection icons to their enum values (used in the radio buton group)
+      // map the scene selection icons to their enum values (used in the radio button group)
       const orientationButtonsContent = [
         {
           value: NLIScene.ELEVATION,
