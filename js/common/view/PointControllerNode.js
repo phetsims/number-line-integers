@@ -31,7 +31,9 @@ define( require => {
 
       options = _.extend( {
 
-        // node used for the view representation, a shaded sphere is created if no node is provided
+        // The node used for the view representation.  It's X and Y position will be set based on the position of the
+        // corresponding point controller, so it should be set up with the appropriate offset bounds.  A shaded sphere
+        // is created if no node is provided.
         node: null,
 
         // controls whether there is a line drawn from this controller to the number line
@@ -46,20 +48,16 @@ define( require => {
 
       super( options );
 
-      // create and add the line that will connect to the number line point, if present
+      // create and add the line that will connect to the number line point
       const connectorLine = new Line( 0, 0, 0, 0, { stroke: 'gray' } );
       connectorLine.visible = false;
       this.addChild( connectorLine );
 
-      // set up the node that the user will drag to move this around
+      // set up the node that the user will drag to move the point controller around
       this.draggableNode = options.node || new ShadedSphereNode( SPHERE_RADIUS * 2, {
         mainColor: pointController.color
       } );
       this.addChild( this.draggableNode );
-
-      // account for offset for nodes with (0,0) point not in center
-      const draggableNodeXOffset = this.draggableNode.centerX;
-      const draggableNodeYOffset = this.draggableNode.centerY;
 
       // function to update the visibility of the connector line
       const updateConnectorLineVisibility = () => {
@@ -73,9 +71,7 @@ define( require => {
           connectorLine.setLine( position.x, position.y, pointPosition.x, pointPosition.y );
         }
         updateConnectorLineVisibility();
-        const scaleVector = this.draggableNode.getScaleVector();
-        this.draggableNode.centerX = position.x + ( draggableNodeXOffset * scaleVector.x );
-        this.draggableNode.centerY = position.y + ( draggableNodeYOffset * scaleVector.y );
+        this.draggableNode.translation = position;
       };
       pointController.positionProperty.link( handlePointControllerPositionChange );
 
