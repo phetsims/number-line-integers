@@ -13,7 +13,7 @@ define( require => {
 
   // modules
   const AccordionBox = require( 'SUN/AccordionBox' );
-  const Bounds2 = require( 'DOT/Bounds2' );
+  const BackgroundNode = require( 'SCENERY_PHET/BackgroundNode' );
   const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementNode' );
   const Panel = require( 'SUN/Panel' );
   const MonthsComboBox = require( 'NUMBER_LINE_INTEGERS/scenes/view/MonthsComboBox' );
@@ -138,17 +138,9 @@ define( require => {
       const fahrenheitLabelsLayer = new Node();
       const onAddedNumberLinePoint = ( numberLine, labelsLayer, addedNumberLinePoint ) => {
 
-        // Create and resize background for label text
+        // create the textual label
         const labelText = new Text( addedNumberLinePoint.controller.label, { font: new PhetFont( 16 ) } );
-        const labelNode = new Rectangle( 0, 0, 1, 1, {
-          fill: 'white',
-          opacity: NLIConstants.LABEL_BACKGROUND_OPACITY
-        } );
-        labelNode.addChild( labelText );
-        const textBounds = new Bounds2( labelText.left, labelText.top, labelText.right, labelText.bottom );
-        textBounds.dilate( 3 );
-        labelNode.setRectBounds( textBounds );
-        labelNode.setCornerRadius( 4 );
+        const labelNode = new BackgroundNode( labelText, NLIConstants.LABEL_BACKGROUND_OPTIONS );
         labelsLayer.addChild( labelNode );
 
         const numberLinePointListener = () => {
@@ -179,7 +171,6 @@ define( require => {
       const fahrenheitAbsoluteValueLabelsLayer = new Node();
       const onAddedNumberLinePointAbsoluteValue = ( numberLine, absoluteValueLabelsLayer, addedNumberLinePoint ) => {
 
-        /** TODO: Changed textBackground to inverted greyscale of text color */
         const absoluteValueNode = new Rectangle( 0, 0, 1, 1, 0, 0,
           { fill: this.generateBackgroundColor( addedNumberLinePoint.colorProperty.value ) }
         );

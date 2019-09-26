@@ -469,15 +469,7 @@ define( require => {
       } );
 
       // create a background and add the label text to it
-      const labelNode = new BackgroundNode( labelTextNode, {
-        backgroundOptions: {
-          opacity: NLIConstants.LABEL_BACKGROUND_OPACITY,
-          cornerXRadius: 4,
-          cornerYRadius: 4
-        },
-        xMargin: 3,
-        yMargin: 3
-      } );
+      const labelNode = new BackgroundNode( labelTextNode, NLIConstants.LABEL_BACKGROUND_OPTIONS );
 
       // add the label and link a listener for visibility
       labelNode.visible = false;

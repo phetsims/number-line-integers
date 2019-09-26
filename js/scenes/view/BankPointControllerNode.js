@@ -12,6 +12,7 @@ define( require => {
 
   // modules
   const Animation = require( 'TWIXT/Animation' );
+  const BackgroundNode = require( 'SCENERY_PHET/BackgroundNode' );
   const Circle = require( 'SCENERY/nodes/Circle' );
   const Color = require( 'SCENERY/util/Color' );
   const Easing = require( 'TWIXT/Easing' );
@@ -21,7 +22,6 @@ define( require => {
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const PiggyBankNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/PiggyBankNode' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
-  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const Shape = require( 'KITE/Shape' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -80,12 +80,8 @@ define( require => {
 
       // the readout that will display the absolute value in a phrase
       const absoluteValueText = new Text( '', { font: new PhetFont( 14 ) } );
-      const absoluteValueBackground = new Rectangle( 0, 0, 0, 0, 3, 3, {
-        fill: 'white',
-        opacity: NLIConstants.LABEL_BACKGROUND_OPACITY
-      } );
+      const absoluteValueBackground = new BackgroundNode( absoluteValueText, NLIConstants.LABEL_BACKGROUND_OPTIONS );
       this.addChild( absoluteValueBackground );
-      absoluteValueBackground.addChild( absoluteValueText );
 
       // control visibility of the absolute value readout
       pointController.numberLine.showAbsoluteValuesProperty.linkAttribute( absoluteValueBackground, 'visible' );
@@ -141,7 +137,6 @@ define( require => {
           absoluteValueText.fill = MOST_POSITIVE_FILL;
         }
         absoluteValueText.text = StringUtils.fillIn( stringTemplate, { value: Math.abs( value ) } );
-        absoluteValueBackground.setRect( 0, 0, absoluteValueText.width + 5, absoluteValueText.height + 5 );
         if ( decorationType === 'flowers' ) {
           absoluteValueBackground.centerX = controllerNode.centerX - 9; // tweaked a bit to be centered under feet
           absoluteValueBackground.top = controllerNode.bottom + READOUT_DISTANCE_FROM_IMAGE;
@@ -150,7 +145,6 @@ define( require => {
           absoluteValueBackground.centerX = controllerNode.centerX - 2; // tweaked a bit to be centered over coin slot
           absoluteValueBackground.bottom = controllerNode.top - READOUT_DISTANCE_FROM_IMAGE;
         }
-        absoluteValueText.center = absoluteValueBackground.localBounds.center;
       };
       pointController.positionProperty.link( updateController );
 

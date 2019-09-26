@@ -10,6 +10,7 @@ define( require => {
   'use strict';
 
   // modules
+  const BackgroundNode = require( 'SCENERY_PHET/BackgroundNode' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -17,7 +18,6 @@ define( require => {
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const Property = require( 'AXON/Property' );
-  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const Shape = require( 'KITE/Shape' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -64,13 +64,9 @@ define( require => {
       // handling of what the point controller does when the absolute value checkbox is checked
       const absoluteValueLine = new Path( null, { stroke: pointController.color, lineWidth: 2 } );
       const distanceText = new Text( '', { font: new PhetFont( 14 ), fill: pointController.color } );
-      const distanceTextBackgroundRectangle = new Rectangle( 0, 0, 0, 0, 3, 3, {
-        fill: 'white',
-        opacity: NLIConstants.LABEL_BACKGROUND_OPACITY
-      } );
+      const distanceLabel = new BackgroundNode( distanceText, NLIConstants.LABEL_BACKGROUND_OPTIONS );
       this.addChild( absoluteValueLine );
-      this.addChild( distanceTextBackgroundRectangle );
-      this.addChild( distanceText );
+      this.addChild( distanceLabel );
       absoluteValueLine.moveToBack();
 
       Property.multilink( [ pointController.numberLine.showAbsoluteValuesProperty, pointController.positionProperty ], () => {
@@ -86,18 +82,12 @@ define( require => {
           distanceText.text = StringUtils.fillIn( value < 0 ? amountBelowSeaLevelString : amountAboveSeaLevelString, {
             value: Math.abs( value )
           } );
-          distanceTextBackgroundRectangle.visible = true;
-          distanceText.visible = true;
-
-          distanceTextBackgroundRectangle.setRect( 0, 0, distanceText.width + 5, distanceText.height + 5 );
-          distanceTextBackgroundRectangle.leftCenter = compositeImageNode.rightCenter.plus( textOffset );
-          distanceText.center = distanceTextBackgroundRectangle.center;
-
+          distanceLabel.visible = true;
+          distanceLabel.leftCenter = compositeImageNode.rightCenter.plus( textOffset );
         }
         else {
           absoluteValueLine.shape = null;
-          distanceTextBackgroundRectangle.visible = false;
-          distanceText.visible = false;
+          distanceLabel.visible = false;
         }
       } );
     }

@@ -30,8 +30,18 @@ define( require => {
     // of the number line itself.
     GENERIC_SCREEN_DISPLAYED_RANGE_INSET: 40,
 
-    // opacity of the background for most labels
-    LABEL_BACKGROUND_OPACITY: 0.85,
+    // options used for most of not all label backgrounds
+    LABEL_BACKGROUND_OPTIONS: {
+      backgroundOptions: {
+        opacity: 0.85,
+        cornerRadius: 3
+      },
+      xMargin: 3,
+      yMargin: 3
+    },
+
+    // corner radius of the background for most labels
+    LABEL_BACKGROUND_CORNER_RADIUS: 3,
 
     // Comparison Statement Box
     COMPARISON_STATEMENT_ACCORDION_BOX_OPTIONS: {
