@@ -171,25 +171,21 @@ define( require => {
       const fahrenheitAbsoluteValueLabelsLayer = new Node();
       const onAddedNumberLinePointAbsoluteValue = ( numberLine, absoluteValueLabelsLayer, addedNumberLinePoint ) => {
 
-        const absoluteValueNode = new Rectangle( 0, 0, 1, 1, 0, 0,
-          { fill: this.generateBackgroundColor( addedNumberLinePoint.colorProperty.value ) }
-        );
+        // create the text and add it to a background
         const absoluteValueText = new Text( '', { font: new PhetFont( 12 ) } );
-        absoluteValueNode.addChild( absoluteValueText );
+        const absoluteValueNode = new BackgroundNode( absoluteValueText, NLIConstants.LABEL_BACKGROUND_OPTIONS );
         absoluteValueLabelsLayer.addChild( absoluteValueNode );
 
         const numberLinePointListener = value => {
           const template = value < 0 ? negativeTemperatureAmountString : positiveTemperatureAmountString;
           absoluteValueText.text = StringUtils.fillIn( template, { value: Math.abs( value ) } );
-          const textBounds = absoluteValueText.bounds.copy().dilate( 3 );
-          absoluteValueNode.setRectBounds( textBounds );
           absoluteValueNode.leftCenter = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 40, 0 ) );
         };
         addedNumberLinePoint.valueProperty.link( numberLinePointListener );
 
         const numberLineColorListener = color => {
           absoluteValueText.fill = color;
-          absoluteValueNode.fill = this.generateBackgroundColor( color );
+          absoluteValueNode.background.fill = this.generateBackgroundColor( color );
         };
         addedNumberLinePoint.colorProperty.link( numberLineColorListener );
 
