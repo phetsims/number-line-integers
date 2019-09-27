@@ -72,6 +72,7 @@ define( require => {
         }
         updateConnectorLineVisibility();
         this.draggableNode.translation = position;
+        this.moveToFront(); // make sure that the most recently moved point controller is at the front of the z-order
       };
       pointController.positionProperty.link( handlePointControllerPositionChange );
 
