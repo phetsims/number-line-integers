@@ -46,6 +46,7 @@ define( require => {
      */
     constructor( balanceProperty, balanceChangedByButtonEmitter, range, changeAmount, options ) {
 
+      // TODO: no need for this function to be here, pull it into a helper function
       const makeCoinIcon = image => new Node( {
         children: [
           new Image( image, { scale: 0.15 } ),

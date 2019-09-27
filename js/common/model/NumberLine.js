@@ -100,7 +100,7 @@ define( require => {
       this.residentPoints.addItemAddedListener( addedPoint => {
 
         // listener to make sure point lands in a good point when released
-        const pointDragListener = dragging => {
+        const pointIsDraggingListener = dragging => {
 
           // do nothing if dragging or we are the only point here/there are no points here
           if ( dragging || this.getPointsAt( addedPoint.valueProperty.value ).length <= 1 ) {
@@ -114,12 +114,12 @@ define( require => {
           }
           addedPoint.valueProperty.value = this.getNearestUnoccupiedValue( beginningValue );
         };
-        addedPoint.isDraggingProperty.link( pointDragListener );
+        addedPoint.isDraggingProperty.link( pointIsDraggingListener );
 
         // remove the listener when the point is removed from the number line
         this.residentPoints.addItemRemovedListener( removedPoint => {
           if ( removedPoint === addedPoint ) {
-            removedPoint.isDraggingProperty.unlink( pointDragListener );
+            removedPoint.isDraggingProperty.unlink( pointIsDraggingListener );
           }
         } );
       } );
