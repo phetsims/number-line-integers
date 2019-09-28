@@ -124,10 +124,6 @@ define( require => {
             this.sceneModel.fahrenheitNumberLine,
             this
           );
-          this.isDraggingProperty.link( isDragging => {
-            this.celsiusNumberLinePoint.isDraggingProperty.value = isDragging;
-            this.fahrenheitNumberLinePoint.isDraggingProperty.value = isDragging;
-          } );
           this.sceneModel.celsiusNumberLine.addPoint( this.celsiusNumberLinePoint );
           this.sceneModel.fahrenheitNumberLine.addPoint( this.fahrenheitNumberLinePoint );
           this.numberLinePoint = this.celsiusNumberLinePoint;
@@ -137,10 +133,14 @@ define( require => {
           // remove our points from the number line
           this.sceneModel.celsiusNumberLine.removePoint( this.celsiusNumberLinePoint );
           this.sceneModel.fahrenheitNumberLine.removePoint( this.fahrenheitNumberLinePoint );
+
+          // TODO: This is hokey, should be improved. I (jbphet) am going to look at being able to control multiple points instead.
           this.numberLinePoint = this.celsiusNumberLinePoint;
           this.clearNumberLinePoint();
+          this.celsiusNumberLinePoint = null;
           this.numberLinePoint = this.fahrenheitNumberLinePoint;
           this.clearNumberLinePoint();
+          this.fahrenheitNumberLinePoint = null;
         }
       } );
 
@@ -158,6 +158,10 @@ define( require => {
             this.droppedOnMapTimestamp = Date.now();
           }
         }
+
+        // update the dragging state of the number line points if present
+        this.celsiusNumberLinePoint && ( this.celsiusNumberLinePoint.isDraggingProperty.value = isDragging );
+        this.fahrenheitNumberLinePoint && ( this.fahrenheitNumberLinePoint.isDraggingProperty.value = isDragging );
       } );
     }
 
