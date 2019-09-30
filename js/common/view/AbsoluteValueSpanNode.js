@@ -10,8 +10,10 @@ define( require => {
 
   // modules
   const Animation = require( 'TWIXT/Animation' );
+  const BackgroundNode = require( 'SCENERY_PHET/BackgroundNode' );
   const Easing = require( 'TWIXT/Easing' );
   const Path = require( 'SCENERY/nodes/Path' );
+  const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -50,7 +52,8 @@ define( require => {
 
       // add the equation text
       const equationTextNode = new Text( '', { font: new PhetFont( 14 ) } );
-      this.addChild( equationTextNode );
+      const equationTextBackground = new BackgroundNode( equationTextNode, NLIConstants.LABEL_BACKGROUND_OPTIONS );
+      this.addChild( equationTextBackground );
 
       // add the span indicator shape
       const spanIndicatorNode = new Path( null, {
@@ -117,16 +120,16 @@ define( require => {
         const distanceFromNumberLine = this.distanceFromNumberLineProperty.value;
         const pointPosition = numberLinePoint.getPositionInModelSpace();
         if ( numberLine.isHorizontal ) {
-          equationTextNode.centerX = ( numberLine.centerPosition.x + pointPosition.x ) / 2;
-          equationTextNode.bottom = numberLine.centerPosition.y - distanceFromNumberLine - CAP_LENGTH / 2 - 4;
+          equationTextBackground.centerX = ( numberLine.centerPosition.x + pointPosition.x ) / 2;
+          equationTextBackground.bottom = numberLine.centerPosition.y - distanceFromNumberLine - CAP_LENGTH / 2 - 4;
         }
         else {
-          equationTextNode.centerX = pointPosition.x - distanceFromNumberLine;
+          equationTextBackground.centerX = pointPosition.x - distanceFromNumberLine;
           if ( value > 0 ) {
-            equationTextNode.bottom = pointPosition.y - 5;
+            equationTextBackground.bottom = pointPosition.y - 5;
           }
           else {
-            equationTextNode.top = pointPosition.y + 5;
+            equationTextBackground.top = pointPosition.y + 5;
           }
         }
       };
