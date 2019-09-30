@@ -111,14 +111,14 @@ define( require => {
         const pointController = new PointController( this.numberLine, {
           color: addedPoint.colorProperty.value,
           lockToNumberLine: 'always',
-          numberLinePoint: addedPoint
+          numberLinePoints: [ addedPoint ]
         } );
         this.numberLineAttachedPointControllers.push( pointController );
 
         // handle removal of this point from the number line
         const handlePointRemoved = removedPoint => {
           if ( addedPoint === removedPoint ) {
-            pointController.clearNumberLinePoint();
+            pointController.clearNumberLinePoints();
             pointController.dispose();
             this.numberLine.residentPoints.removeItemRemovedListener( handlePointRemoved );
             this.numberLineAttachedPointControllers.remove( pointController );

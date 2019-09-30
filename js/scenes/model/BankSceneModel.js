@@ -108,7 +108,7 @@ define( require => {
       this.primaryAccountPointController = new PointController( this.numberLine, {
         color: this.numberLine.residentPoints.get( 0 ).colorProperty.value,
         lockToNumberLine: 'always',
-        numberLinePoint: this.numberLine.residentPoints.get( 0 ),
+        numberLinePoints: [ this.numberLine.residentPoints.get( 0 ) ],
         offsetFromHorizontalNumberLine: 120
       } );
 
@@ -148,7 +148,7 @@ define( require => {
           // create the controller fo this point
           this.comparisonAccountPointControllerProperty.value = new PointController( this.numberLine, {
             lockToNumberLine: 'always',
-            numberLinePoint: comparisonAccountNumberLinePoint,
+            numberLinePoints: [ comparisonAccountNumberLinePoint ],
             offsetFromHorizontalNumberLine: -120
           } );
         }
@@ -165,7 +165,7 @@ define( require => {
           );
 
           // remove the point controller from the model
-          this.comparisonAccountPointControllerProperty.value.clearNumberLinePoint();
+          this.comparisonAccountPointControllerProperty.value.clearNumberLinePoints();
           this.comparisonAccountPointControllerProperty.value.dispose();
           this.comparisonAccountPointControllerProperty.reset();
 
@@ -183,7 +183,7 @@ define( require => {
     reset() {
 
       // release the point that was being controlled
-      this.primaryAccountPointController.clearNumberLinePoint();
+      this.primaryAccountPointController.clearNumberLinePoints();
       this.showComparisonAccountProperty.reset();
       this.primaryAccount.reset();
       this.comparisonAccount.reset();

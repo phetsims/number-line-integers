@@ -51,15 +51,15 @@ define( require => {
         // are 'always', 'never', and 'whenClose'.
         lockToNumberLine: 'whenClose',
 
-        // {NumberLinePoint|null} - the point on the number line that will be controlled, null if none yet
-        numberLinePoint: null
+        // {NumberLinePoint[]} - the points on the number line that will be controlled
+        numberLinePoints: []
       }, options );
 
       // @private
       this.offsetFromHorizontalNumberLine = options.offsetFromHorizontalNumberLine;
       this.offsetFromVerticalNumberLine = options.offsetFromVerticalNumberLine;
       this.numberLine = numberLine;
-      this.pointValueChangeHandler = null;
+      this.pointValueChangeHandlers = [];
       this.lockToNumberLine = options.lockToNumberLine;
 
       // @public (read-only) {Vector2Property} - position of this point in model space
@@ -80,28 +80,22 @@ define( require => {
       // @public (read-only) {Animation|null} - tracks any animation that is currently in progress
       this.inProgressAnimationProperty = new Property( null );
 
-      // @public (read-only) {NumberLinePoint|null} - point on the number line being controlled, null if none
-      this.numberLinePoint = null;
-      if ( options.numberLinePoint ) {
-        this.associateWithNumberLinePoint( options.numberLinePoint );
-      }
+      // @public (read-only) {NumberLinePoint[]} - points on the number line being controlled
+      this.numberLinePoints = [];
+      options.numberLinePoints.forEach( point => { this.associateWithNumberLinePoint( point ); } );
 
       // &public (read-only) {Color}
       this.color = options.color;
 
       // if the displayed range of the number line changes while controlling a point, the position must be updated
       const handleDisplayedRangeChange = () => {
-        if ( this.numberLinePoint ) {
-          this.setPositionRelativeToPoint( this.numberLinePoint.getPositionInModelSpace() );
-        }
+        this.numberLinePoints.forEach( point => { this.setPositionRelativeToPoint( point.getPositionInModelSpace() ); } );
       };
       numberLine.displayedRangeProperty.lazyLink( handleDisplayedRangeChange );
 
       // set our point to match point controller's dragging state
       this.isDraggingProperty.link( isDragging => {
-        if ( this.numberLinePoint ) {
-          this.numberLinePoint.isDraggingProperty.value = isDragging;
-        }
+        this.numberLinePoints.forEach( point => { point.isDraggingProperty.value = isDragging; } );
       } );
 
       // @private
@@ -119,38 +113,49 @@ define( require => {
     }
 
     /**
+     * gets the first number line point that this point controller controls (null if none)
+     * @returns {NumberLinePoint|null} the first number line point that this point controller controls
+     */
+    getNumberLinePoint() {
+      return ( this.numberLinePoints.length > 0 ) ? this.numberLinePoints[ 0 ] : null;
+    }
+    get numberLinePoint() { return this.getNumberLinePoint(); }
+
+    /**
      * associate this controller with a point on the number line
      * @param {NumberLinePoint} numberLinePoint
      * @public
      */
     associateWithNumberLinePoint( numberLinePoint ) {
-      this.numberLinePoint = numberLinePoint;
-      this.pointValueChangeHandler = () => {
-        const currentPointPosition = this.numberLinePoint.getPositionInModelSpace();
+      this.numberLinePoints.push( numberLinePoint );
+      const handler = () => {
+        const currentPointPosition = numberLinePoint.getPositionInModelSpace();
         this.setPositionRelativeToPoint( currentPointPosition );
       };
-      numberLinePoint.valueProperty.link( this.pointValueChangeHandler );
+      this.pointValueChangeHandlers.push( handler );
+      numberLinePoint.valueProperty.link( handler );
       numberLinePoint.isDraggingProperty.value = this.isDraggingProperty.value;
+
+      assert && assert( this.numberLinePoints.length === this.pointValueChangeHandlers.length );
     }
 
     /**
      * remove the association between this controller and the point on the number line that it was controlling
      * @public
      */
-    clearNumberLinePoint() {
-      if ( this.numberLinePoint ) {
-        this.numberLinePoint.isDraggingProperty.value = false;
-        if ( this.pointValueChangeHandler ) {
-          this.numberLinePoint.valueProperty.unlink( this.pointValueChangeHandler );
-          this.pointValueChangeHandler = null;
-        }
-        this.numberLinePoint = null;
-      }
+    clearNumberLinePoints() {
+      this.numberLinePoints.forEach( ( point, i ) => {
+        point.isDraggingProperty.value = false;
+        point.valueProperty.unlink( this.pointValueChangeHandlers[ i ] );
+      } );
+      this.numberLinePoints = [];
+      this.pointValueChangeHandlers = [];
     }
 
     /**
      * propose a new position to this point controller, may or may not actually update the position depending on whether
      * a point on the number line is being controlled and how that point moves
+     * TODO: update this to work with multiple numberLinePoints
      * @param {Vector2} proposedPosition
      * @public
      */
@@ -185,7 +190,7 @@ define( require => {
           }
           else {
             this.numberLine.removePoint( this.numberLinePoint );
-            this.clearNumberLinePoint();
+            this.clearNumberLinePoints();
           }
         }
       }
@@ -323,7 +328,7 @@ define( require => {
      * @public
      */
     reset() {
-      this.clearNumberLinePoint();
+      this.clearNumberLinePoints();
       this.stopAnimation();
       this.positionProperty.reset();
       this.scaleProperty.reset();

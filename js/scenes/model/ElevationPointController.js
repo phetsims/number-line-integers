@@ -66,7 +66,7 @@ define( require => {
 
           // remove our point from the number line
           this.numberLine.removePoint( this.numberLinePoint );
-          this.clearNumberLinePoint();
+          this.clearNumberLinePoints();
         }
 
       } );

@@ -130,7 +130,7 @@ define( require => {
 
             // the point controlled by this controller is not out of the displayed range, so get rid of it
             this.numberLine.removePoint( pointController.numberLinePoint );
-            pointController.clearNumberLinePoint();
+            pointController.clearNumberLinePoints();
 
             // put the controller away
             this.putPointControllerInBox( pointController );
