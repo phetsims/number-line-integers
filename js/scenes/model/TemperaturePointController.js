@@ -126,7 +126,7 @@ define( require => {
           );
           this.sceneModel.celsiusNumberLine.addPoint( this.celsiusNumberLinePoint );
           this.sceneModel.fahrenheitNumberLine.addPoint( this.fahrenheitNumberLinePoint );
-          this.numberLinePoint = this.celsiusNumberLinePoint;
+          // this.numberLinePoint = this.celsiusNumberLinePoint;
         }
         else if ( !over && this.numberLinePoint ) {
 
