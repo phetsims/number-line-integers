@@ -79,7 +79,7 @@ define( require => {
 
             // the provided position isn't over the map, so no temperature value can be obtained
             this.celsiusTemperatureProperty.value = this.celsiusTemperatureProperty.initialValue;
-            this.fahrenheitTemperatureProperty.value = this.celsiusTemperatureProperty.initialValue;
+            this.fahrenheitTemperatureProperty.value = this.fahrenheitTemperatureProperty.initialValue;
             this.colorProperty.value = options.noTemperatureColor;
             this.isOverMapProperty.value = false;
           }
@@ -170,6 +170,14 @@ define( require => {
     proposePosition( proposedPosition ) {
       this.positionProperty.value = proposedPosition;
     }
+
+    /**
+     * TODO: figure out why this override is necessary after the PointController refactor
+     * @param point
+     * @override - this override just makes the method do nothing
+     * @public
+     */
+    setPositionRelativeToPoint( point ) {}
   }
 
   return numberLineIntegers.register( 'TemperaturePointController', TemperaturePointController );

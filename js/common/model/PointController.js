@@ -129,8 +129,7 @@ define( require => {
     associateWithNumberLinePoint( numberLinePoint ) {
       this.numberLinePoints.push( numberLinePoint );
       const handler = () => {
-        // TODO: this is necessary for all non-temperature scenes to work
-        // this.setPositionRelativeToPoint( numberLinePoint );
+        this.setPositionRelativeToPoint( numberLinePoint );
       };
       this.pointValueChangeHandlers.push( handler );
       numberLinePoint.valueProperty.link( handler );
