@@ -129,14 +129,18 @@ define( require => {
     associateWithNumberLinePoint( numberLinePoint ) {
       this.numberLinePoints.push( numberLinePoint );
       const handler = () => {
-        const currentPointPosition = numberLinePoint.getPositionInModelSpace();
-        this.setPositionRelativeToPoint( currentPointPosition );
+        // TODO: this is necessary for all non-temperature scenes to work
+        // const currentPointPosition = numberLinePoint.getPositionInModelSpace();
+        // this.setPositionRelativeToPoint( currentPointPosition );
       };
       this.pointValueChangeHandlers.push( handler );
       numberLinePoint.valueProperty.link( handler );
       numberLinePoint.isDraggingProperty.value = this.isDraggingProperty.value;
 
       assert && assert( this.numberLinePoints.length === this.pointValueChangeHandlers.length );
+      assert && assert(
+        this.numberLinePoints.length === _.uniq( this.numberLinePoints.map( point => point.numberLine ) ).length
+      );
     }
 
     /**
@@ -155,44 +159,44 @@ define( require => {
     /**
      * propose a new position to this point controller, may or may not actually update the position depending on whether
      * a point on the number line is being controlled and how that point moves
-     * TODO: update this to work with multiple numberLinePoints
      * @param {Vector2} proposedPosition
      * @public
      */
     proposePosition( proposedPosition ) {
 
-      // mapped the proposed position to a value on the number line
-      const proposedNumberLineValue = this.numberLine.modelPositionToValue( proposedPosition );
-
       if ( this.numberLinePoint ) {
+        this.numberLinePoints.forEach( point => {
+          // mapped the proposed position to a value on the number line
+          const proposedNumberLineValue = point.numberLine.modelPositionToValue( proposedPosition );
 
-        if ( this.lockToNumberLine === 'always' ) {
-          this.numberLinePoint.proposeValue( proposedNumberLineValue );
-        }
-        else if ( this.lockToNumberLine === 'never' ) {
+          if ( this.lockToNumberLine === 'always' ) {
+            point.proposeValue( proposedNumberLineValue );
+          }
+          else if ( this.lockToNumberLine === 'never' ) {
 
-          // this will update the number line point and move it in the orientation of the number line
-          this.numberLinePoint.proposeValue( proposedNumberLineValue );
+            // this will update the number line point and move it in the orientation of the number line
+            point.proposeValue( proposedNumberLineValue );
 
-          // move the point controller in the direction perpendicular to the number line
-          if ( this.numberLine.isHorizontal ) {
-            this.positionProperty.value = new Vector2( this.positionProperty.value.x, proposedPosition.y );
+            // move the point controller in the direction perpendicular to the number line
+            if ( point.numberLine.isHorizontal ) {
+              this.positionProperty.value = new Vector2( this.positionProperty.value.x, proposedPosition.y );
+            }
+            else {
+              this.positionProperty.value = new Vector2( proposedPosition.x, this.positionProperty.value.y );
+            }
           }
-          else {
-            this.positionProperty.value = new Vector2( proposedPosition.x, this.positionProperty.value.y );
-          }
-        }
-        else if ( this.lockToNumberLine === 'whenClose' ) {
+          else if ( this.lockToNumberLine === 'whenClose' ) {
 
-          // determine whether to propose a new value for the point or to detach and remove the point
-          if ( this.numberLine.isWithinPointRemovalDistance( proposedPosition ) ) {
-            this.numberLinePoint.proposeValue( proposedNumberLineValue );
+            // determine whether to propose a new value for the point or to detach and remove the point
+            if ( point.numberLine.isWithinPointRemovalDistance( proposedPosition ) ) {
+              point.proposeValue( proposedNumberLineValue );
+            }
+            else {
+              point.numberLine.removePoint( this.numberLinePoint );
+              this.clearNumberLinePoints();
+            }
           }
-          else {
-            this.numberLine.removePoint( this.numberLinePoint );
-            this.clearNumberLinePoints();
-          }
-        }
+        } );
       }
       else {
 
@@ -202,7 +206,7 @@ define( require => {
         );
 
         if ( this.lockToNumberLine === 'whenClose' ) {
-          const constrainedValue = this.numberLine.getConstrainedValue( proposedNumberLineValue );
+          const constrainedValue = this.numberLine.getConstrainedValue( this.numberLine.modelPositionToValue( proposedPosition ) );
 
           // check if a point should be created and added based on the proposed position
           if ( this.numberLine.isWithinPointCreationDistance( proposedPosition ) ) {

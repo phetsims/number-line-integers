@@ -126,7 +126,8 @@ define( require => {
           );
           this.sceneModel.celsiusNumberLine.addPoint( this.celsiusNumberLinePoint );
           this.sceneModel.fahrenheitNumberLine.addPoint( this.fahrenheitNumberLinePoint );
-          // this.numberLinePoint = this.celsiusNumberLinePoint;
+          this.associateWithNumberLinePoint( this.celsiusNumberLinePoint );
+          this.associateWithNumberLinePoint( this.fahrenheitNumberLinePoint );
         }
         else if ( !over && this.numberLinePoint ) {
 
@@ -134,12 +135,8 @@ define( require => {
           this.sceneModel.celsiusNumberLine.removePoint( this.celsiusNumberLinePoint );
           this.sceneModel.fahrenheitNumberLine.removePoint( this.fahrenheitNumberLinePoint );
 
-          // TODO: This is hokey, should be improved. I (jbphet) am going to look at being able to control multiple points instead.
-          this.numberLinePoint = this.celsiusNumberLinePoint;
           this.clearNumberLinePoints();
           this.celsiusNumberLinePoint = null;
-          this.numberLinePoint = this.fahrenheitNumberLinePoint;
-          this.clearNumberLinePoints();
           this.fahrenheitNumberLinePoint = null;
         }
       } );
