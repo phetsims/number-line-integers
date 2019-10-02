@@ -113,10 +113,7 @@ define( require => {
 
           // if the controller is controlling a point on the number line, relocate the point and the controller
           else if ( this.numberLine.residentPoints.indexOf( pointController.numberLinePoint ) >= 0 ) {
-            const pointPosition = this.numberLine.valueToModelPosition(
-              pointController.numberLinePoint.valueProperty.value
-            );
-            pointController.setPositionRelativeToPoint( pointPosition );
+            pointController.setPositionRelativeToPoint( pointController.numberLinePoint );
           }
         } );
       } );

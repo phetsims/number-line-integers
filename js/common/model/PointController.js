@@ -89,7 +89,7 @@ define( require => {
 
       // if the displayed range of the number line changes while controlling a point, the position must be updated
       const handleDisplayedRangeChange = () => {
-        this.numberLinePoints.forEach( point => { this.setPositionRelativeToPoint( point.getPositionInModelSpace() ); } );
+        this.numberLinePoints.forEach( point => { this.setPositionRelativeToPoint( point ); } );
       };
       numberLine.displayedRangeProperty.lazyLink( handleDisplayedRangeChange );
 
@@ -130,8 +130,7 @@ define( require => {
       this.numberLinePoints.push( numberLinePoint );
       const handler = () => {
         // TODO: this is necessary for all non-temperature scenes to work
-        // const currentPointPosition = numberLinePoint.getPositionInModelSpace();
-        // this.setPositionRelativeToPoint( currentPointPosition );
+        // this.setPositionRelativeToPoint( numberLinePoint );
       };
       this.pointValueChangeHandlers.push( handler );
       numberLinePoint.valueProperty.link( handler );
@@ -289,13 +288,14 @@ define( require => {
     /**
      * given a number line point's position in model space, set this point controller to that value, but offset from the
      * number line
-     * @param {Vector2} pointPosition
+     * @param {NumberLinePoint} point
      * @public
      */
-    setPositionRelativeToPoint( pointPosition ) {
+    setPositionRelativeToPoint( point ) {
+      const pointPosition = point.getPositionInModelSpace();
       let x;
       let y;
-      if ( this.numberLine.isHorizontal ) {
+      if ( point.numberLine.isHorizontal ) {
         x = pointPosition.x;
         if ( this.lockToNumberLine === 'always' || this.lockToNumberLine === 'whenClose' ) {
           y = pointPosition.y + this.offsetFromHorizontalNumberLine;
