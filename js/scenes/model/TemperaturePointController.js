@@ -172,7 +172,8 @@ define( require => {
     }
 
     /**
-     * TODO: figure out why this override is necessary after the PointController refactor
+     * overrides setPositionRelativeToPoint because the controlled number line points shouldn't set the position of this
+     *
      * @param point
      * @override - this override just makes the method do nothing
      * @public

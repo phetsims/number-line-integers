@@ -79,7 +79,6 @@ define( require => {
       );
       this.addChild( sceneSelectorRadioButtonGroup );
 
-
       const resetAllButton = new ResetAllButton( {
         listener: () => {
           model.reset();

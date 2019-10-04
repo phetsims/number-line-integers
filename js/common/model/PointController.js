@@ -155,6 +155,8 @@ define( require => {
     }
 
     /**
+     * TODO: this was refactored badly: look into this and redo
+     *
      * propose a new position to this point controller, may or may not actually update the position depending on whether
      * a point on the number line is being controlled and how that point moves
      * @param {Vector2} proposedPosition
