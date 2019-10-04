@@ -164,7 +164,8 @@ define( require => {
 
     /**
      * @param {Vector2} proposedPosition
-     * @override - see base class for more information
+     * @override - necessary because PointController assumes that it is moving parallel to the number line
+     *  which is not true for this class
      * @public
      */
     proposePosition( proposedPosition ) {
