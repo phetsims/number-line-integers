@@ -177,24 +177,24 @@ define( require => {
     }
 
     /**
-     * restore initial state
+     * restore initial state to the scene
+     * @override
      * @public
      */
-    reset() {
+    resetScene() {
 
       // release the point that was being controlled
-      this.primaryAccountPointController.clearNumberLinePoints();
-      this.showComparisonAccountProperty.reset();
       this.primaryAccount.reset();
+      // this.primaryAccountPointController.clearNumberLinePoints();
+      this.showComparisonAccountProperty.reset();
       this.comparisonAccount.reset();
-      super.reset();
 
       // the reset will add back the initial point, so associate the permanent point controller with it
-      this.primaryAccountPointController.associateWithNumberLinePoint( this.numberLine.residentPoints.get( 0 ) );
-
-      this.numberLine.residentPoints.get( 0 ).valueProperty.link( value => {
-        this.primaryAccount.balanceProperty.value = value;
-      } );
+      // this.primaryAccountPointController.associateWithNumberLinePoint( this.numberLine.residentPoints.get( 0 ) );
+      //
+      // this.numberLine.residentPoints.get( 0 ).valueProperty.link( value => {
+      //   this.primaryAccount.balanceProperty.value = value;
+      // } );
     }
   }
 

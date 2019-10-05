@@ -48,11 +48,6 @@ define( require => {
         sceneModel.reset();
       } );
     }
-
-    // @public
-    step( dt ) {
-      //TODO Handle model animation here.
-    }
   }
 
   return numberLineIntegers.register( 'NLIScenesModel', NLIScenesModel );

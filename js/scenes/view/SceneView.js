@@ -12,13 +12,15 @@ define( require => {
   // modules
   const AccordionBox = require( 'SUN/AccordionBox' );
   const Checkbox = require( 'SUN/Checkbox' );
+  const Color = require( 'SCENERY/util/Color' );
   const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementNode' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
-  const Text = require( 'SCENERY/nodes/Text' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const ResetButton = require( 'SCENERY_PHET/buttons/ResetButton' );
+  const Text = require( 'SCENERY/nodes/Text' );
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
@@ -60,10 +62,10 @@ define( require => {
       } );
       this.addChild( this.checkboxGroup );
 
-      // @protected add the comparison statement
+      // @protected - comparison statement
       this.comparisonStatementNode = new ComparisonStatementNode( sceneModel.numberLine );
 
-      // @protected {AccordionBox} - enclose the comparison statement in an accordion box
+      // @protected - enclose the comparison statement in an accordion box
       this.comparisonStatementAccordionBox = new AccordionBox(
         this.comparisonStatementNode,
         NLIConstants.COMPARISON_STATEMENT_ACCORDION_BOX_OPTIONS
@@ -74,6 +76,22 @@ define( require => {
       this.numberLineNode = new NumberLineNode( sceneModel.numberLine, options.numberLineNodeOptions );
       sceneModel.showNumberLineProperty.linkAttribute( this.numberLineNode, 'visible' );
       this.addChild( this.numberLineNode );
+
+      // button that restores the scene to its initial state but doesn't reset all aspects of the scene like the reset
+      // all button does
+      const sceneResetButton = new ResetButton( {
+        listener: function() {
+          sceneModel.resetScene();
+        },
+        baseColor: Color.lightGray,
+        scale: 0.65,
+        touchAreaDilation: 5,
+
+        // position just above the scene selection buttons and left aligned with them
+        right: layoutBounds.maxX - 115,
+        bottom: layoutBounds.maxY - 150
+      } );
+      this.addChild( sceneResetButton );
     }
 
     /**

@@ -155,15 +155,15 @@ define( require => {
     }
 
     /**
-     * restore initial state
+     * restore initial state to the scene
+     * @override
      * @public
      */
-    reset() {
-
-      super.reset();
+    resetScene() {
 
       // put the point controllers back into their starting positions
       this.permanentPointControllers.forEach( pointController => {
+        this.numberLine.removePoint( pointController.numberLinePoint );
         pointController.reset();
         this.putPointControllerInBox( pointController );
       } );

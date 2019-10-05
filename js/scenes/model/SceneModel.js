@@ -39,9 +39,21 @@ define( require => {
       this.numberLine = new NumberLine( options.numberLineZeroPosition, options.numberLineOptions );
     }
 
+    /**
+     * @public
+     */
     reset() {
-      this.numberLine.reset();
+      this.resetScene();
+      this.numberLine.showAbsoluteValuesProperty.reset();
       this.showNumberLineProperty.reset();
+    }
+
+    /**
+     * @protected
+     * do scene-specific reset
+     */
+    resetScene() {
+      // override as needed in descendant classes
     }
   }
 
