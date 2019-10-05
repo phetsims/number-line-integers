@@ -5,6 +5,12 @@
  * too. It can be locked to a number line, or can be set such that it can be dragged away, thus removing the associated
  * number line point from the number line.
  *
+ * TODO: (saurabh) make a distinction between controlled number line points and associated number line points
+ *  Controlled number line points should have their values reflect the point controller, but not actually affect or change
+ *  the point controller directly
+ *  Associated number line points should be able to cause the point controller to move and should always correlate more or
+ *  less exactly with this point controller
+ *
  * @author John Blanco (PhET Interactive Simulations)
  */
 define( require => {
@@ -155,6 +161,8 @@ define( require => {
     }
 
     /**
+     * TODO: this was refactored badly: look into this and redo
+     *
      * propose a new position to this point controller, may or may not actually update the position depending on whether
      * a point on the number line is being controlled and how that point moves
      * @param {Vector2} proposedPosition
