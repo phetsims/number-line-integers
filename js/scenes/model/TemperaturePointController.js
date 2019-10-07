@@ -172,14 +172,6 @@ define( require => {
       this.positionProperty.value = proposedPosition;
     }
 
-    /**
-     * overrides setPositionRelativeToPoint because the controlled number line points shouldn't set the position of this
-     *
-     * @param point
-     * @override - this override just makes the method do nothing
-     * @public
-     */
-    setPositionRelativeToPoint( point ) {}
   }
 
   return numberLineIntegers.register( 'TemperaturePointController', TemperaturePointController );
