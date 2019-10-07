@@ -167,7 +167,7 @@ define( require => {
 
       // put the point controllers back into their starting positions
       this.permanentPointControllers.forEach( pointController => {
-        this.numberLine.removePoint( pointController.associatedNumberLinePoints[ 0 ] );
+        this.numberLine.removePoint( pointController.associatedNumberLinePoint );
         pointController.reset();
         this.putPointControllerInBox( pointController );
       } );

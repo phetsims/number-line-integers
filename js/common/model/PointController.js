@@ -136,12 +136,32 @@ define( require => {
     }
 
     /**
+     * returns the first associated number line point if it exists; null otherwise
+     * @returns {NumberLinePoint|null}
+     * @public
+     */
+    getAssociatedNumberLinePoint() {
+      return ( this.associatedNumberLinePoints.length > 0 )? this.associatedNumberLinePoints[ 0 ] : null;
+    }
+    get associatedNumberLinePoint() { return this.getAssociatedNumberLinePoint(); }
+
+    /**
+     * returns the first controlled number line point if it exists; null otherwise
+     * @returns {NumberLinePoint|null}
+     * @public
+     */
+    getControlledNumberLinePoint() {
+      return ( this.controlledNumberLinePoints.length > 0 )? this.controlledNumberLinePoints[ 0 ] : null;
+    }
+    get controlledNumberLinePoint() { return this.getControlledNumberLinePoint(); }
+
+    /**
      * returns whether this point controller controls a number line point or is even associated with a number line point
      * @returns {boolean}
      * @public
      */
     controlsNumberLinePoint() {
-      return this.associatedNumberLinePoints.length !== 0 || this.controlledNumberLinePoints.length !== 0;
+      return this.associatedNumberLinePoint !== this.controlledNumberLinePoint;
     }
 
     /**

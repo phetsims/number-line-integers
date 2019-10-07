@@ -112,8 +112,8 @@ define( require => {
           }
 
           // if the controller is controlling a point on the number line, relocate the point and the controller
-          else if ( this.numberLine.residentPoints.indexOf( pointController.associatedNumberLinePoints[ 0 ] ) >= 0 ) {
-            pointController.setPositionRelativeToPoint( pointController.associatedNumberLinePoints[ 0 ] );
+          else if ( this.numberLine.residentPoints.indexOf( pointController.associatedNumberLinePoint ) >= 0 ) {
+            pointController.setPositionRelativeToPoint( pointController.associatedNumberLinePoint );
           }
         } );
       } );
@@ -123,10 +123,10 @@ define( require => {
       this.numberLine.displayedRangeProperty.link( displayedRange => {
         this.pointControllers.forEach( pointController => {
           if ( pointController.controlsNumberLinePoint() &&
-               !displayedRange.contains( pointController.associatedNumberLinePoints[ 0 ].valueProperty.value ) ) {
+               !displayedRange.contains( pointController.associatedNumberLinePoint.valueProperty.value ) ) {
 
             // the point controlled by this controller is not out of the displayed range, so get rid of it
-            this.numberLine.removePoint( pointController.associatedNumberLinePoints[ 0 ] );
+            this.numberLine.removePoint( pointController.associatedNumberLinePoint );
             pointController.clearNumberLinePoints();
 
             // put the controller away

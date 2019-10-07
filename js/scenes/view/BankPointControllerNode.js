@@ -92,7 +92,7 @@ define( require => {
       const updateController = () => {
 
         // variables needed to make the updates
-        const numberLinePoint = pointController.associatedNumberLinePoints[ 0 ];
+        const numberLinePoint = pointController.associatedNumberLinePoint;
         const currentBalance = numberLinePoint.valueProperty.value;
 
         // scale the size
@@ -126,7 +126,7 @@ define( require => {
         balanceNode.center = Vector2.ZERO;
 
         // update the absolute value readout
-        const value = pointController.associatedNumberLinePoints[ 0 ].valueProperty.value;
+        const value = pointController.associatedNumberLinePoint.valueProperty.value;
         let stringTemplate;
         if ( value < 0 ) {
           stringTemplate = debtAmountString;

@@ -57,7 +57,7 @@ define( require => {
           const numberLinePoint = new NumberLinePoint(
             Util.roundSymmetric( numberLine.modelPositionToValue( this.positionProperty.value ) ),
             this.color,
-            this.numberLine,
+            numberLine,
             this
           );
           numberLine.addPoint( numberLinePoint );
@@ -67,7 +67,7 @@ define( require => {
         else if ( !over && this.controlsNumberLinePoint() ) {
 
           // remove our point from the number line
-          this.numberLine.removePoint( this.associatedNumberLinePoints[ 0 ] );
+          numberLine.removePoint( this.associatedNumberLinePoint );
           this.clearNumberLinePoints();
         }
 

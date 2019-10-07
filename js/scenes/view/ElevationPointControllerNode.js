@@ -78,7 +78,7 @@ define( require => {
             .moveTo( compositeImageNode.x, compositeImageNode.y )
             .lineTo( compositeImageNode.x, seaLevel );
 
-          const value = pointController.associatedNumberLinePoints[ 0 ].valueProperty.value;
+          const value = pointController.associatedNumberLinePoint.valueProperty.value;
           distanceText.text = StringUtils.fillIn( value < 0 ? amountBelowSeaLevelString : amountAboveSeaLevelString, {
             value: Math.abs( value )
           } );

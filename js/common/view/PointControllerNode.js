@@ -64,10 +64,10 @@ define( require => {
         connectorLine.visible = options.connectorLineVisibleProperty.value && pointController.controlsNumberLinePoint();
       };
 
-      // handle changes to the point controller position
+      // handle changes to the point controller position TODO: consider what to do with multiple associated points
       const handlePointControllerPositionChange = position => {
-        if ( options.connectorLine && pointController.associatedNumberLinePoints.length > 0 ) {
-          const pointPosition = pointController.associatedNumberLinePoints[ 0 ].getPositionInModelSpace();
+        if ( options.connectorLine && pointController.associatedNumberLinePoint ) {
+          const pointPosition = pointController.associatedNumberLinePoint.getPositionInModelSpace();
           connectorLine.setLine( position.x, position.y, pointPosition.x, pointPosition.y );
         }
         updateConnectorLineVisibility();
