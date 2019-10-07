@@ -94,7 +94,7 @@ define( require => {
           // TODO: Once these elevation controllers never control points the test for whether a point is being controlled can be removed.
           if ( !isDragging &&
                !pointController.overElevationAreaProperty.value &&
-               !pointController.numberLinePoint ) {
+               !pointController.controlsNumberLinePoint() ) {
             this.putPointControllerInBox( pointController, true );
           }
         } );
