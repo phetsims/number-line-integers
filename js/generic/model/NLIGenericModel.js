@@ -86,7 +86,7 @@ define( require => {
         pointController.isDraggingProperty.lazyLink( dragging => {
 
           // if the point controller is released and it's not controlling a point on the number line, put it away
-          if ( !dragging && pointController.numberLinePoint === null ) {
+          if ( !dragging && !pointController.controlsNumberLinePoint() ) {
             this.putPointControllerInBox( pointController, true );
           }
         } );
@@ -112,8 +112,8 @@ define( require => {
           }
 
           // if the controller is controlling a point on the number line, relocate the point and the controller
-          else if ( this.numberLine.residentPoints.indexOf( pointController.numberLinePoint ) >= 0 ) {
-            pointController.setPositionRelativeToPoint( pointController.numberLinePoint );
+          else if ( this.numberLine.residentPoints.indexOf( pointController.associatedNumberLinePoints[ 0 ] ) >= 0 ) {
+            pointController.setPositionRelativeToPoint( pointController.associatedNumberLinePoints[ 0 ] );
           }
         } );
       } );
@@ -122,11 +122,11 @@ define( require => {
       // already on the number line to be outside of the displayed range.
       this.numberLine.displayedRangeProperty.link( displayedRange => {
         this.pointControllers.forEach( pointController => {
-          if ( pointController.numberLinePoint &&
-               !displayedRange.contains( pointController.numberLinePoint.valueProperty.value ) ) {
+          if ( pointController.controlsNumberLinePoint() &&
+               !displayedRange.contains( pointController.associatedNumberLinePoints[ 0 ].valueProperty.value ) ) {
 
             // the point controlled by this controller is not out of the displayed range, so get rid of it
-            this.numberLine.removePoint( pointController.numberLinePoint );
+            this.numberLine.removePoint( pointController.associatedNumberLinePoints[ 0 ] );
             pointController.clearNumberLinePoints();
 
             // put the controller away
