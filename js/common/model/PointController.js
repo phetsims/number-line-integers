@@ -62,9 +62,6 @@ define( require => {
         associatedNumberLinePoints: []
       }, options );
 
-      //TODO: below is temoprary
-      assert && assert(options.numberLinePoints === undefined);
-
       // @private
       this.offsetFromHorizontalNumberLine = options.offsetFromHorizontalNumberLine;
       this.offsetFromVerticalNumberLine = options.offsetFromVerticalNumberLine;
@@ -208,8 +205,6 @@ define( require => {
     }
 
     /**
-     * TODO: this was refactored badly: look into this and redo
-     *
      * propose a new position to this point controller, may or may not actually update the position depending on whether
      * a point on the number line is being controlled and how that point moves
      * @param {Vector2} proposedPosition
