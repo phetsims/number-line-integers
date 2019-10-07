@@ -5,13 +5,8 @@
  * too. It can be locked to a number line, or can be set such that it can be dragged away, thus removing the associated
  * number line point from the number line.
  *
- * TODO: (saurabh) make a distinction between controlled number line points and associated number line points
- *  Controlled number line points should have their values reflect the point controller, but not actually affect or change
- *  the point controller directly
- *  Associated number line points should be able to cause the point controller to move and should always correlate more or
- *  less exactly with this point controller
- *
  * @author John Blanco (PhET Interactive Simulations)
+ * @author Saurabh Totey
  */
 define( require => {
   'use strict';
@@ -34,10 +29,10 @@ define( require => {
   class PointController {
 
     /**
-     * @param {NumberLine} numberLine - the number line on which this controller will be moving points
+     * TODO: constructor changed: update all new PointController calls
      * @param {Object} [options]
      */
-    constructor( numberLine, options ) {
+    constructor( options ) {
 
       options = _.extend( {
 
@@ -57,15 +52,24 @@ define( require => {
         // are 'always', 'never', and 'whenClose'.
         lockToNumberLine: 'whenClose',
 
+        // {NumberLine[]}  the number lines on which this controller can add NumberLinePoints
+        numberLines: [],
+
         // {NumberLinePoint[]} - the points on the number line that will be controlled
-        numberLinePoints: []
+        controlledNumberLinePoints: [],
+
+        // {NumberLinePoint[]} - the points on the number line that will be controlled and that can control this
+        associatedNumberLinePoints: []
       }, options );
+
+      //TODO: below is temoprary
+      assert && assert(options.numberLinePoints === undefined);
 
       // @private
       this.offsetFromHorizontalNumberLine = options.offsetFromHorizontalNumberLine;
       this.offsetFromVerticalNumberLine = options.offsetFromVerticalNumberLine;
-      this.numberLine = numberLine;
-      this.pointValueChangeHandlers = [];
+      this.numberLines = options.numberLines;
+      this.pointValueChangeHandlers = []; // only relevant for associated number line points
       this.lockToNumberLine = options.lockToNumberLine;
 
       // @public (read-only) {Vector2Property} - position of this point in model space
@@ -87,26 +91,42 @@ define( require => {
       this.inProgressAnimationProperty = new Property( null );
 
       // @public (read-only) {NumberLinePoint[]} - points on the number line being controlled
-      this.numberLinePoints = [];
-      options.numberLinePoints.forEach( point => { this.associateWithNumberLinePoint( point ); } );
+      this.controlledNumberLinePoints = [];
+
+      // @public (read-only) {NumberLinePoint[]} - points on the number line that this controls and that controls this
+      this.associatedNumberLinePoints = [];
+
+      options.controlledNumberLinePoints.forEach( point => { this.controlNumberLinePoint( point ); } );
+      options.associatedNumberLinePoints.forEach( point => { this.associateWithNumberLinePoint( point ); } );
 
       // &public (read-only) {Color}
       this.color = options.color;
 
       // if the displayed range of the number line changes while controlling a point, the position must be updated
-      const handleDisplayedRangeChange = () => {
-        this.numberLinePoints.forEach( point => { this.setPositionRelativeToPoint( point ); } );
-      };
-      numberLine.displayedRangeProperty.lazyLink( handleDisplayedRangeChange );
+      const displayedRangeChangeHandlers = [];
+      options.numberLines.forEach( numberLine => {
+        const handler = () => {
+          const relevantPoint = _.find( this.associatedNumberLinePoints, point => point.numberLine === numberLine );
+          relevantPoint && this.setPositionRelativeToPoint( relevantPoint );
+        };
+        displayedRangeChangeHandlers.push( handler );
+        numberLine.displayedRangeProperty.lazyLink( handler );
+      } );
+
+      assert && assert( displayedRangeChangeHandlers.length === options.numberLines.length );
 
       // set our point to match point controller's dragging state
       this.isDraggingProperty.link( isDragging => {
-        this.numberLinePoints.forEach( point => { point.isDraggingProperty.value = isDragging; } );
+        this.controlledNumberLinePoints.concat( this.associatedNumberLinePoints ).forEach( point => {
+          point.isDraggingProperty.value = isDragging;
+        } );
       } );
 
       // @private
       this.disposePointController = () => {
-        numberLine.displayedRangeProperty.unlink( handleDisplayedRangeChange );
+        options.numberLines.forEach( ( numberLine, i ) => {
+          numberLine.displayedRangeProperty.unlink( displayedRangeChangeHandlers[ i ] );
+        } );
       };
     }
 
@@ -119,13 +139,28 @@ define( require => {
     }
 
     /**
-     * gets the first number line point that this point controller controls (null if none)
-     * @returns {NumberLinePoint|null} the first number line point that this point controller controls
+     * returns whether this point controller controls a number line point or is even associated with a number line point
+     * @returns {boolean}
+     * @public
      */
-    getNumberLinePoint() {
-      return ( this.numberLinePoints.length > 0 ) ? this.numberLinePoints[ 0 ] : null;
+    controlsNumberLinePoint() {
+      return this.associatedNumberLinePoints.length !== 0 || this.controlledNumberLinePoints.length !== 0;
     }
-    get numberLinePoint() { return this.getNumberLinePoint(); }
+
+    /**
+     * allows the point controller to update and control the given number line point
+     * @param {NumberLinePoint} numberLinePoint
+     * @public
+     */
+    controlNumberLinePoint( numberLinePoint ) {
+      this.controlledNumberLinePoints.push( numberLinePoint );
+      numberLinePoint.isDraggingProperty.value = this.isDraggingProperty.value;
+
+      assert && assert(
+        !_.some( this.controlledNumberLinePoints, point => _.includes( this.associatedNumberLinePoints, point ) ),
+        'A number line point shouldn\'t both be controlled and associated'
+      );
+    }
 
     /**
      * associate this controller with a point on the number line
@@ -133,7 +168,7 @@ define( require => {
      * @public
      */
     associateWithNumberLinePoint( numberLinePoint ) {
-      this.numberLinePoints.push( numberLinePoint );
+      this.associatedNumberLinePoints.push( numberLinePoint );
       const handler = () => {
         this.setPositionRelativeToPoint( numberLinePoint );
       };
@@ -141,9 +176,17 @@ define( require => {
       numberLinePoint.valueProperty.link( handler );
       numberLinePoint.isDraggingProperty.value = this.isDraggingProperty.value;
 
-      assert && assert( this.numberLinePoints.length === this.pointValueChangeHandlers.length );
       assert && assert(
-        this.numberLinePoints.length === _.uniq( this.numberLinePoints.map( point => point.numberLine ) ).length
+        this.associatedNumberLinePoints.length === this.pointValueChangeHandlers.length,
+        'There should be as many associated points as there are pointValueChangeHandlers'
+      );
+      assert && assert(
+        this.associatedNumberLinePoints.length === _.uniq( this.associatedNumberLinePoints.map( point => point.numberLine ) ).length,
+        'There shouldn\'t be more than one associated point from the same number line'
+      );
+      assert && assert(
+        !_.some( this.controlledNumberLinePoints, point => _.includes( this.associatedNumberLinePoints, point ) ),
+        'A number line point shouldn\'t both be controlled and associated'
       );
     }
 
@@ -152,11 +195,15 @@ define( require => {
      * @public
      */
     clearNumberLinePoints() {
-      this.numberLinePoints.forEach( ( point, i ) => {
+      this.controlledNumberLinePoints.forEach( point => {
+        point.isDraggingProperty.value = false;
+      } );
+      this.associatedNumberLinePoints.forEach( ( point, i ) => {
         point.isDraggingProperty.value = false;
         point.valueProperty.unlink( this.pointValueChangeHandlers[ i ] );
       } );
-      this.numberLinePoints = [];
+      this.controlledNumberLinePoints = [];
+      this.associatedNumberLinePoints = [];
       this.pointValueChangeHandlers = [];
     }
 
@@ -170,8 +217,9 @@ define( require => {
      */
     proposePosition( proposedPosition ) {
 
-      if ( this.numberLinePoint ) {
-        this.numberLinePoints.forEach( point => {
+      if ( this.controlsNumberLinePoint() ) {
+        this.controlledNumberLinePoints.concat( this.associatedNumberLinePoints ).forEach( point => {
+
           // mapped the proposed position to a value on the number line
           const proposedNumberLineValue = point.numberLine.modelPositionToValue( proposedPosition );
 
@@ -198,8 +246,8 @@ define( require => {
               point.proposeValue( proposedNumberLineValue );
             }
             else {
-              point.numberLine.removePoint( this.numberLinePoint );
-              this.clearNumberLinePoints();
+              point.numberLine.removePoint( point );
+              this.clearNumberLinePoints(); // TODO: should just remove point, not all points
             }
           }
         } );
@@ -212,13 +260,19 @@ define( require => {
         );
 
         if ( this.lockToNumberLine === 'whenClose' ) {
-          const constrainedValue = this.numberLine.getConstrainedValue( this.numberLine.modelPositionToValue( proposedPosition ) );
 
           // check if a point should be created and added based on the proposed position
-          if ( this.numberLine.isWithinPointCreationDistance( proposedPosition ) ) {
-            const numberLinePoint = new NumberLinePoint( constrainedValue, this.color, this.numberLine, this );
-            this.numberLine.addPoint( numberLinePoint );
-            this.associateWithNumberLinePoint( numberLinePoint );
+          const numberLinesInRange = this.numberLines.filter( numberLine => numberLine.isWithinPointCreationDistance( proposedPosition ) );
+
+          const constrainedValues = numberLinesInRange.map(
+            numberLine => numberLine.getConstrainedValue( numberLine.modelPositionToValue( proposedPosition ) )
+          );
+          if ( numberLinesInRange.length > 0 ) {
+            numberLinesInRange.forEach( ( numberLine, i ) => {
+              const numberLinePoint = new NumberLinePoint( constrainedValues[ i ], this.color, numberLine, this );
+              numberLine.addPoint( numberLinePoint );
+              this.associateWithNumberLinePoint( numberLinePoint );
+            } );
           }
           else {
 

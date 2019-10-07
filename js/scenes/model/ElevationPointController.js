@@ -27,11 +27,13 @@ define( require => {
       options = _.extend( {
 
         // this style of point controller never locks to the number line
-        lockToNumberLine: 'never'
+        lockToNumberLine: 'never',
+
+        numberLines: [ numberLine ]
 
       }, options );
 
-      super( numberLine, options );
+      super( options );
 
       // @private {Bounds2}
       this.elevationsAreaBounds = elevationAreaBounds;
@@ -49,23 +51,23 @@ define( require => {
         if ( over && this.isDraggingProperty.value ) {
 
           // state checking
-          assert && assert( !this.numberLinePoint, 'should not already have a point' );
+          assert && assert( !this.controlsNumberLinePoint(), 'should not already have a point' );
 
           // create a new point on the number line
           const numberLinePoint = new NumberLinePoint(
-            Util.roundSymmetric( this.numberLine.modelPositionToValue( this.positionProperty.value ) ),
+            Util.roundSymmetric( numberLine.modelPositionToValue( this.positionProperty.value ) ),
             this.color,
             this.numberLine,
             this
           );
-          this.numberLine.addPoint( numberLinePoint );
+          numberLine.addPoint( numberLinePoint );
           this.associateWithNumberLinePoint( numberLinePoint );
           numberLinePoint.isDraggingProperty.link( isDragging => { this.isDraggingProperty.value = isDragging; } );
         }
-        else if ( !over && this.numberLinePoint ) {
+        else if ( !over && this.controlsNumberLinePoint() ) {
 
           // remove our point from the number line
-          this.numberLine.removePoint( this.numberLinePoint );
+          this.numberLine.removePoint( this.associatedNumberLinePoints[ 0 ] );
           this.clearNumberLinePoints();
         }
 

@@ -67,9 +67,9 @@ define( require => {
 
       // @public (read-only) - an array of the point controllers available for manipulation by the user
       this.pointControllers = [
-        new PointController( this.numberLine, { color: new Color( 'blue' ) } ),
-        new PointController( this.numberLine, { color: new Color( 'magenta' ) } ),
-        new PointController( this.numberLine, { color: INITIAL_POINT_COLOR } )
+        new PointController( { color: new Color( 'blue' ), numberLines: [ this.numberLine ] } ),
+        new PointController( { color: new Color( 'magenta' ), numberLines: [ this.numberLine ] } ),
+        new PointController( { color: INITIAL_POINT_COLOR, numberLines: [ this.numberLine ] } )
       ];
 
       // put the first two point controllers into the box at the bottom of the screen
@@ -150,7 +150,7 @@ define( require => {
       // error checking
       assert && assert( index >= 0, 'point controller not found on list' );
       assert && assert(
-        pointController.numberLinePoint === null,
+        !pointController.controlsNumberLinePoint(),
         'point controller should not be put away while controlling a point'
       );
 

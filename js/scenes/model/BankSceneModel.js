@@ -105,11 +105,12 @@ define( require => {
       this.showComparisonAccountProperty = new BooleanProperty( false );
 
       // @public {PointController} - the point controller for the primary account
-      this.primaryAccountPointController = new PointController( this.numberLine, {
+      this.primaryAccountPointController = new PointController( {
         color: this.numberLine.residentPoints.get( 0 ).colorProperty.value,
         lockToNumberLine: 'always',
-        numberLinePoints: [ this.numberLine.residentPoints.get( 0 ) ],
-        offsetFromHorizontalNumberLine: 120
+        associatedNumberLinePoints: [ this.numberLine.residentPoints.get( 0 ) ],
+        offsetFromHorizontalNumberLine: 120,
+        numberLines: [ this.numberLine ]
       } );
 
       // the number line point that represents the comparison account value, only exists when enabled
@@ -146,10 +147,11 @@ define( require => {
           } );
 
           // create the controller fo this point
-          this.comparisonAccountPointControllerProperty.value = new PointController( this.numberLine, {
+          this.comparisonAccountPointControllerProperty.value = new PointController( {
             lockToNumberLine: 'always',
-            numberLinePoints: [ comparisonAccountNumberLinePoint ],
-            offsetFromHorizontalNumberLine: -120
+            associatedNumberLinePoints: [ comparisonAccountNumberLinePoint ],
+            offsetFromHorizontalNumberLine: -120,
+            numberLines: [ this.numberLine ]
           } );
         }
         else {

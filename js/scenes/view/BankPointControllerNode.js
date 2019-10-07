@@ -84,15 +84,15 @@ define( require => {
       this.addChild( absoluteValueBackground );
 
       // control visibility of the absolute value readout
-      pointController.numberLine.showAbsoluteValuesProperty.linkAttribute( absoluteValueBackground, 'visible' );
+      pointController.numberLines[ 0 ].showAbsoluteValuesProperty.linkAttribute( absoluteValueBackground, 'visible' );
 
       // update the node's appearance as its position changes
-      const valueRange = pointController.numberLine.displayedRangeProperty.value;
+      const valueRange = pointController.numberLines[ 0 ].displayedRangeProperty.value;
       const unscaledWidth = controllerNode.width;
       const updateController = () => {
 
         // variables needed to make the updates
-        const numberLinePoint = pointController.numberLinePoint;
+        const numberLinePoint = pointController.associatedNumberLinePoints[ 0 ];
         const currentBalance = numberLinePoint.valueProperty.value;
 
         // scale the size
@@ -126,7 +126,7 @@ define( require => {
         balanceNode.center = Vector2.ZERO;
 
         // update the absolute value readout
-        const value = pointController.numberLinePoint.valueProperty.value;
+        const value = pointController.associatedNumberLinePoints[ 0 ].valueProperty.value;
         let stringTemplate;
         if ( value < 0 ) {
           stringTemplate = debtAmountString;

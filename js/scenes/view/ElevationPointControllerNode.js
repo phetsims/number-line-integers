@@ -69,16 +69,16 @@ define( require => {
       this.addChild( distanceLabel );
       absoluteValueLine.moveToBack();
 
-      Property.multilink( [ pointController.numberLine.showAbsoluteValuesProperty, pointController.positionProperty ], () => {
-        if ( pointController.numberLine.showAbsoluteValuesProperty.value
+      Property.multilink( [ pointController.numberLines[ 0 ].showAbsoluteValuesProperty, pointController.positionProperty ], () => {
+        if ( pointController.numberLines[ 0 ].showAbsoluteValuesProperty.value
              && pointController.overElevationAreaProperty.value
-             && pointController.numberLinePoint ) {
+             && pointController.controlsNumberLinePoint() ) {
 
           absoluteValueLine.shape = new Shape()
             .moveTo( compositeImageNode.x, compositeImageNode.y )
             .lineTo( compositeImageNode.x, seaLevel );
 
-          const value = pointController.numberLinePoint.valueProperty.value;
+          const value = pointController.associatedNumberLinePoints[ 0 ].valueProperty.value;
           distanceText.text = StringUtils.fillIn( value < 0 ? amountBelowSeaLevelString : amountAboveSeaLevelString, {
             value: Math.abs( value )
           } );

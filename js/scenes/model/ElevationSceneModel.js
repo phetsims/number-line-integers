@@ -107,11 +107,15 @@ define( require => {
       // watch for points coming and going on the number line and add the additional point controllers for them
       this.numberLine.residentPoints.addItemAddedListener( addedPoint => {
 
+        //TODO: this below should be handled by NumberLine
+        addedPoint.numberLine = this.numberLine;
+
         // add a point controller that will remain attached to the number line that will control this point
-        const pointController = new PointController( this.numberLine, {
+        const pointController = new PointController( {
           color: addedPoint.colorProperty.value,
           lockToNumberLine: 'always',
-          numberLinePoints: [ addedPoint ]
+          associatedNumberLinePoints: [ addedPoint ],
+          numberLines: [ this.numberLine ]
         } );
         this.numberLineAttachedPointControllers.push( pointController );
 
@@ -142,7 +146,7 @@ define( require => {
       // error checking
       assert && assert( index >= 0, 'point controller not found on list' );
       assert && assert(
-        pointController.numberLinePoint === null,
+        !pointController.controlsNumberLinePoint(),
         'point controller should not be put away while controlling a point'
       );
 
@@ -163,7 +167,7 @@ define( require => {
 
       // put the point controllers back into their starting positions
       this.permanentPointControllers.forEach( pointController => {
-        this.numberLine.removePoint( pointController.numberLinePoint );
+        this.numberLine.removePoint( pointController.associatedNumberLinePoints[ 0 ] );
         pointController.reset();
         this.putPointControllerInBox( pointController );
       } );

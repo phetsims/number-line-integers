@@ -61,13 +61,13 @@ define( require => {
 
       // function to update the visibility of the connector line
       const updateConnectorLineVisibility = () => {
-        connectorLine.visible = options.connectorLineVisibleProperty.value && !!pointController.numberLinePoint;
+        connectorLine.visible = options.connectorLineVisibleProperty.value && pointController.controlsNumberLinePoint();
       };
 
       // handle changes to the point controller position
       const handlePointControllerPositionChange = position => {
-        if ( options.connectorLine && pointController.numberLinePoint ) {
-          const pointPosition = pointController.numberLinePoint.getPositionInModelSpace();
+        if ( options.connectorLine && pointController.associatedNumberLinePoints.length > 0 ) {
+          const pointPosition = pointController.associatedNumberLinePoints[ 0 ].getPositionInModelSpace();
           connectorLine.setLine( position.x, position.y, pointPosition.x, pointPosition.y );
         }
         updateConnectorLineVisibility();
