@@ -24,7 +24,7 @@ define( require => {
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
-  const CHECK_BOX_FONT = new PhetFont( 16 );
+  const CHECKBOX_FONT = new PhetFont( 16 );
 
   // strings
   const absoluteValueString = require( 'string!NUMBER_LINE_INTEGERS/absoluteValue' );
@@ -47,11 +47,11 @@ define( require => {
       this.checkboxGroup = new VBox( {
         children: [
           new Checkbox(
-            new Text( absoluteValueString, { font: CHECK_BOX_FONT } ),
+            new Text( absoluteValueString, { font: CHECKBOX_FONT } ),
             sceneModel.numberLine.showAbsoluteValuesProperty
           ),
           new Checkbox(
-            new Text( numberLineString, { font: CHECK_BOX_FONT } ),
+            new Text( numberLineString, { font: CHECKBOX_FONT } ),
             sceneModel.showNumberLineProperty
           )
         ],

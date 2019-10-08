@@ -32,7 +32,7 @@ define( require => {
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
-  const CHECK_BOX_FONT = new PhetFont( 20 );
+  const CHECKBOX_FONT = new PhetFont( 20 );
   const ARROW_ICON_LENGTH = 40;
   const COMBO_BOX_FONT = new PhetFont( 14 );
 
@@ -65,19 +65,19 @@ define( require => {
       this.addChild( new VBox( {
         children: [
           new Checkbox(
-            new Text( labelsString, { font: CHECK_BOX_FONT } ),
+            new Text( labelsString, { font: CHECKBOX_FONT } ),
             model.numberLine.labelsVisibleProperty
           ),
           new Checkbox(
-            new Text( tickMarksString, { font: CHECK_BOX_FONT } ),
+            new Text( tickMarksString, { font: CHECKBOX_FONT } ),
             model.numberLine.tickMarksVisibleProperty
           ),
           new Checkbox(
-            new Text( oppositeString, { font: CHECK_BOX_FONT } ),
+            new Text( oppositeString, { font: CHECKBOX_FONT } ),
             model.numberLine.oppositesVisibleProperty
           ),
           new Checkbox(
-            new Text( absoluteValueString, { font: CHECK_BOX_FONT } ),
+            new Text( absoluteValueString, { font: CHECKBOX_FONT } ),
             model.numberLine.showAbsoluteValuesProperty
           )
         ],
