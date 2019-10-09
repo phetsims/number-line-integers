@@ -32,7 +32,7 @@ define( require => {
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
-  const CHECKBOX_FONT = new PhetFont( 18 );
+  const CHECKBOX_FONT = new PhetFont( 16 );
   const ARROW_ICON_LENGTH = 40;
   const COMBO_BOX_FONT = new PhetFont( 14 );
 
@@ -120,7 +120,12 @@ define( require => {
       } );
 
       // add the number line node
-      this.addChild( new NumberLineNode( model.numberLine, { showAbsoluteValueSpans: true } ) );
+      this.addChild( new NumberLineNode( model.numberLine, {
+        showAbsoluteValueSpans: true,
+        pointNodeOptions: {
+          labelFont: new PhetFont( 18 )
+        }
+      } ) );
 
       let pointControllerBoxNode = null;
       model.pointControllerBoxProperty.link( pointControllerBox => {

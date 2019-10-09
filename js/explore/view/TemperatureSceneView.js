@@ -54,7 +54,9 @@ define( require => {
         numberLineNodeOptions: {
           numberDisplayTemplate: temperatureAmountFahrenheitString,
           tickMarkLabelPositionWhenVertical: 'left',
-          customColorsForLabels: false
+          pointNodeOptions: {
+            customColorsForLabels: false
+          }
         }
       } );
 
@@ -62,8 +64,10 @@ define( require => {
       this.celsiusNumberLineNode = new NumberLineNode( sceneModel.celsiusNumberLine, {
         numberDisplayTemplate: temperatureAmountCelsiusString,
         tickMarkLabelPositionWhenVertical: 'left',
-        customColorsForLabels: false,
-        visible: false
+        visible: false,
+        pointNodeOptions: {
+          customColorsForLabels: false
+        }
       } );
       this.fahrenheitNumberLineNode = this.numberLineNode;
       sceneModel.fahrenheitNumberLine.showAbsoluteValuesProperty.link( showAbsoluteValues => {

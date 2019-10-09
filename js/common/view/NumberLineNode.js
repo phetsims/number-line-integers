@@ -60,7 +60,6 @@ define( require => {
         tickMarkLabelFont: new PhetFont( 16 ),
         tickMarkLabelPositionWhenVertical: 'right', // valid values are 'right' and 'left'
         tickMarkLabelPositionWhenHorizontal: 'below', // valid values are 'above' and 'below'
-        customColorsForLabels: true,
         color: 'black',
         pointRadius: 10,
         numberDisplayTemplate: '{{value}}',
@@ -70,7 +69,14 @@ define( require => {
         showAbsoluteValueSpans: false,
 
         // {number} - the distance between the edge of the display bounds and the ends of the displayed range
-        displayedRangeInset: NLIConstants.GENERIC_SCREEN_DISPLAYED_RANGE_INSET
+        displayedRangeInset: NLIConstants.GENERIC_SCREEN_DISPLAYED_RANGE_INSET,
+
+        // options for the point nodes
+        pointNodeOptions: {
+          labelFont: new PhetFont( 16 ),
+          customColorsForLabels: true
+        }
+
       }, options );
 
       // since the position is set based on the model, don't pass options through to parent class
@@ -79,7 +85,7 @@ define( require => {
       const displayBounds = numberLine.modelProjectionBounds.dilated( options.displayedRangeInset );
 
       // @private {Object} - make options available to methods
-      this.options = options;
+      this.options = _.cloneDeep( options );
 
       // @private {NumberLine} - make the number line model available to methods
       this.numberLine = numberLine;
@@ -257,18 +263,16 @@ define( require => {
       const handlePointAdded = point => {
 
         // add the node that will represent the point on the number line
-        const pointNode = new PointNode( point, numberLine, {
-          numberDisplayTemplate: options.numberDisplayTemplate,
-          customColorsForLabels: options.customColorsForLabels
-        } );
+        const pointNode = new PointNode( point, numberLine, _.extend( {
+          numberDisplayTemplate: options.numberDisplayTemplate
+        }, options.pointNodeOptions ) );
         pointDisplayLayer.addChild( pointNode );
 
         // add the point that will represent the opposite point
-        const oppositePointNode = new PointNode( point, numberLine, {
+        const oppositePointNode = new PointNode( point, numberLine, _.extend( {
           isDoppelganger: true,
-          numberDisplayTemplate: options.numberDisplayTemplate,
-          customColorsForLabels: options.customColorsForLabels
-        } );
+          numberDisplayTemplate: options.numberDisplayTemplate
+        } ) );
         oppositePointDisplayLayer.addChild( oppositePointNode );
 
         // if enabled, add an absolute value "span indicator", which depicts the absolute value at some distance from
@@ -463,18 +467,17 @@ define( require => {
         }
         return stringValue;
       };
-      const labelTextNode = new Text( getLabelText( numberLinePoint.valueProperty.value ), {
-        font: new PhetFont( 16 ),
+      const pointLabelTextNode = new Text( getLabelText( numberLinePoint.valueProperty.value ), {
+        font: options.labelFont,
         fill: options.customColorsForLabels ? numberLinePoint.colorProperty : 'black'
       } );
 
       // create a background and add the label text to it
-      const labelNode = new BackgroundNode( labelTextNode, NLIConstants.LABEL_BACKGROUND_OPTIONS );
+      const pointLabelNode = new BackgroundNode( pointLabelTextNode, NLIConstants.LABEL_BACKGROUND_OPTIONS );
 
       // add the label and link a listener for visibility
-      labelNode.visible = false;
-      this.addChild( labelNode );
-      const labelVisibilityListener = numberLine.labelsVisibleProperty.linkAttribute( labelNode, 'visible' );
+      this.addChild( pointLabelNode );
+      const labelVisibilityListener = numberLine.labelsVisibleProperty.linkAttribute( pointLabelNode, 'visible' );
 
       // move in front of other points when being dragged or when the point value is being changed by other means
       const moveToFrontMultilink = Property.multilink(
@@ -495,15 +498,15 @@ define( require => {
           }
           circle.center = numberLine.valueToModelPosition( value );
 
-          // update the label text and position
-          labelTextNode.text = getLabelText( value );
+          // update the point label text and position
+          pointLabelTextNode.text = getLabelText( value );
           if ( numberLine.isHorizontal ) {
-            labelNode.centerX = circle.centerX;
-            labelNode.bottom = circle.y - 20;
+            pointLabelNode.centerX = circle.centerX;
+            pointLabelNode.bottom = circle.y - 20;
           }
           else {
-            labelNode.right = circle.x - 20;
-            labelNode.centerY = circle.centerY;
+            pointLabelNode.right = circle.x - 20;
+            pointLabelNode.centerY = circle.centerY;
           }
         }
       );
