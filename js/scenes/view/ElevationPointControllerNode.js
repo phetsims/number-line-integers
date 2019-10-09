@@ -69,8 +69,8 @@ define( require => {
       this.addChild( distanceLabel );
       absoluteValueLine.moveToBack();
 
-      Property.multilink( [ pointController.numberLines[ 0 ].showAbsoluteValuesProperty, pointController.positionProperty ], () => {
-        if ( pointController.numberLines[ 0 ].showAbsoluteValuesProperty.value
+      Property.multilink( [ pointController.numberLine.showAbsoluteValuesProperty, pointController.positionProperty ], () => {
+        if ( pointController.numberLine.showAbsoluteValuesProperty.value
              && pointController.overElevationAreaProperty.value
              && pointController.controlsNumberLinePoint() ) {
 

@@ -29,7 +29,6 @@ define( require => {
   class PointController {
 
     /**
-     * TODO: constructor changed: update all new PointController calls
      * @param {Object} [options]
      */
     constructor( options ) {
@@ -154,6 +153,16 @@ define( require => {
       return ( this.controlledNumberLinePoints.length > 0 )? this.controlledNumberLinePoints[ 0 ] : null;
     }
     get controlledNumberLinePoint() { return this.getControlledNumberLinePoint(); }
+
+    /**
+     * gets the first controlled number line if it exists; null if otherwise
+     * @returns {NumberLine|null}
+     * @public
+     */
+    getNumberLine() {
+      return ( this.numberLines.length > 0 )? this.numberLines[ 0 ] : null;
+    }
+    get numberLine() { return this.getNumberLine(); }
 
     /**
      * returns whether this point controller controls a number line point or is even associated with a number line point

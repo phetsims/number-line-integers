@@ -84,10 +84,10 @@ define( require => {
       this.addChild( absoluteValueBackground );
 
       // control visibility of the absolute value readout
-      pointController.numberLines[ 0 ].showAbsoluteValuesProperty.linkAttribute( absoluteValueBackground, 'visible' );
+      pointController.numberLine.showAbsoluteValuesProperty.linkAttribute( absoluteValueBackground, 'visible' );
 
       // update the node's appearance as its position changes
-      const valueRange = pointController.numberLines[ 0 ].displayedRangeProperty.value;
+      const valueRange = pointController.numberLine.displayedRangeProperty.value;
       const unscaledWidth = controllerNode.width;
       const updateController = () => {
 
