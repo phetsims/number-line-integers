@@ -68,8 +68,8 @@
   "range": {
     "value": "{{lowValue}} to {{highValue}}"
   },
-  "scenes": {
-    "value": "Scenes"
+  "explore": {
+    "value": "Explore"
   },
   "temperature": {
     "value": "Temperature"

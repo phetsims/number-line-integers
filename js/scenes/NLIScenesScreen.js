@@ -21,7 +21,7 @@ define( require => {
   const scenesScreenNavIcon = require( 'image!NUMBER_LINE_INTEGERS/scenes-screen-nav.png' );
 
   // strings
-  const scenesString = require( 'string!NUMBER_LINE_INTEGERS/scenes' );
+  const exploreString = require( 'string!NUMBER_LINE_INTEGERS/explore' );
 
   class NLIScenesScreen extends Screen {
 
@@ -31,7 +31,7 @@ define( require => {
     constructor( tandem ) {
 
       const options = {
-        name: scenesString,
+        name: exploreString,
         backgroundColorProperty: new Property( 'rgb( 254, 247, 233 )' ),
         homeScreenIcon: new Image( scenesScreenHomeIcon ),
         navigationBarIcon: new Image( scenesScreenNavIcon ),
