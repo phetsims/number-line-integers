@@ -163,9 +163,9 @@ define( require => {
           deselectedLineWidth: .5,
           deselectedButtonOpacity: 0.25,
           orientation: 'horizontal',
-          spacing: 20,
-          touchAreaXDilation: 9,
-          touchAreaYDilation: 9
+          spacing: 12,
+          touchAreaXDilation: 5,
+          touchAreaYDilation: 8
         } );
       this.addChild( orientationRadioButtonGroup );
 
@@ -196,7 +196,7 @@ define( require => {
           yMargin: 6,
           cornerRadius: 4,
           centerX: orientationRadioButtonGroup.centerX,
-          bottom: orientationRadioButtonGroup.top - 20
+          bottom: orientationRadioButtonGroup.top - 12
         }
       );
       this.addChild( rangeSelectionComboBox );
