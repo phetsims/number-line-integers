@@ -62,7 +62,8 @@ define( require => {
       this.addChild( comparisonStatementAccordionBox );
 
       // add the check boxes that will control the number line's presentation
-      this.addChild( new VBox( {
+
+      const checkboxGroup = new VBox( {
         children: [
           new Checkbox(
             new Text( labelsString, { font: CHECKBOX_FONT } ),
@@ -83,9 +84,10 @@ define( require => {
         ],
         spacing: 15,
         align: 'left',
-        left: this.layoutBounds.maxX - 250,
+        left: this.layoutBounds.maxX - 220,
         top: this.layoutBounds.minY + 10
-      } ) );
+      } );
+      this.addChild( checkboxGroup );
 
       const arrowIconOptions = {
         doubleHead: true,
@@ -161,7 +163,7 @@ define( require => {
         {
           buttonContentXMargin: 5,
           buttonContentYMargin: 5,
-          right: resetAllButton.left - 30,
+          left: checkboxGroup.left,
           bottom: resetAllButton.bottom - 20,
           baseColor: 'white',
           selectedLineWidth: 2,
@@ -200,7 +202,7 @@ define( require => {
           xMargin: 13,
           yMargin: 6,
           cornerRadius: 4,
-          centerX: orientationRadioButtonGroup.centerX,
+          left: orientationRadioButtonGroup.left,
           bottom: orientationRadioButtonGroup.top - 12
         }
       );
