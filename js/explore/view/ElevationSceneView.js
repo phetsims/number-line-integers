@@ -171,7 +171,7 @@ define( require => {
       const attachedPointControllersLayer = new Node();
       this.addChild( attachedPointControllersLayer );
       attachedPointControllersLayer.moveToBack(); // so that they are behind the number line in z-order
-      this.comparisonStatementAccordionBox.moveToFront(); // so that the comparison statement is ahead of everything else
+      this.comparisonStatementAccordionBox.moveToFront(); // so that the comparison statement is above everything else
 
       // the visibility of the attached point controllers should be the same as the number line
       sceneModel.showNumberLineProperty.linkAttribute( attachedPointControllersLayer, 'visible' );

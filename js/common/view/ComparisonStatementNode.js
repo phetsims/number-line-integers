@@ -13,6 +13,7 @@ define( require => {
   // modules
   const Animation = require( 'TWIXT/Animation' );
   const ButtonListener = require( 'SCENERY/input/ButtonListener' );
+  const Color = require( 'SCENERY/util/Color' );
   const Easing = require( 'TWIXT/Easing' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -27,6 +28,8 @@ define( require => {
   // constants
   const COMPARISON_STATEMENT_FONT = new PhetFont( 26 );
   const COMPARISON_STATEMENT_SPACING = 6; // in screen coords
+  const NUMBER_BACKGROUND_DILATION_AMOUNT = 3;
+  const NUMBER_BACKGROUND_LINE_WIDTH = 2;
 
   class ComparisonStatementNode extends Node {
 
@@ -59,6 +62,18 @@ define( require => {
       // keep track of the previous number node array, used to help with sorting
       let previousNumberNodes = [];
 
+      // create a node that indicates a zero, but has a background like the other numbers so that its height is the same
+      const zeroTextNode = new Text( '0', { font: COMPARISON_STATEMENT_FONT } );
+      const zeroNode = new Rectangle(
+        {
+          rectBounds: zeroTextNode.localBounds.dilated( NUMBER_BACKGROUND_DILATION_AMOUNT ),
+          children: [ zeroTextNode ],
+          fill: Color.TRANSPARENT,
+          stroke: Color.TRANSPARENT,
+          lineWidth: NUMBER_BACKGROUND_LINE_WIDTH
+        }
+      );
+
       // define a function to update the comparision statement, including its layout
       const updateComparisonStatement = () => {
 
@@ -78,7 +93,6 @@ define( require => {
         if ( numberNodesLayer.getChildrenCount() === 0 ) {
 
           // if there are no points on the number line, just show a zero
-          const zeroNode = new Text( '0', { font: COMPARISON_STATEMENT_FONT } );
           operatorAndZeroNodesLayer.addChild( zeroNode );
           numberNodes.push( zeroNode );
         }
@@ -86,7 +100,6 @@ define( require => {
 
           // compare the only point value to zero
           const pointValueNode = numberNodesLayer.getChildAt( 0 );
-          const zeroNode = new Text( '0', { font: COMPARISON_STATEMENT_FONT } );
           operatorAndZeroNodesLayer.addChild( zeroNode );
           if ( pointValueNode.point.valueProperty.value < 0 ) {
             numberNodes.push( pointValueNode );
@@ -314,7 +327,7 @@ define( require => {
 
       // background - initial size and coloring is arbitrary, it will be updated in function linked below
       const background = new Rectangle( 0, 0, 1, 1, 2, 2, {
-        lineWidth: 2,
+        lineWidth: NUMBER_BACKGROUND_LINE_WIDTH,
         visible: false // initially invisible, activated (made visible) when user interacts with the point
       } );
       this.addChild( background );
@@ -326,7 +339,7 @@ define( require => {
       // update appearance as the value changes
       const handleValueChange = value => {
         numberText.text = value;
-        background.setRectBounds( numberText.bounds.dilated( 3 ) );
+        background.setRectBounds( numberText.bounds.dilated( NUMBER_BACKGROUND_DILATION_AMOUNT ) );
       };
       point.valueProperty.link( handleValueChange );
       const handleColorChange = color => {
