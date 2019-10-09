@@ -57,7 +57,7 @@ define( require => {
         ],
         spacing: 15,
         align: 'left',
-        left: layoutBounds.maxX - 175,
+        left: layoutBounds.maxX - NLIConstants.EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET,
         top: layoutBounds.minY + 10
       } );
       this.addChild( this.checkboxGroup );
@@ -88,8 +88,8 @@ define( require => {
         touchAreaDilation: 5,
 
         // position just above the scene selection buttons and left aligned with them
-        right: layoutBounds.maxX - 115,
-        bottom: layoutBounds.maxY - 150
+        left: layoutBounds.maxX - NLIConstants.EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET,
+        bottom: layoutBounds.maxY - 165
       } );
       this.addChild( sceneResetButton );
     }

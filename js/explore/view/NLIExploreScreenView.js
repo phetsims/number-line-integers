@@ -9,6 +9,7 @@ define( require => {
   // modules
   const BankSceneView = require( 'NUMBER_LINE_INTEGERS/explore/view/BankSceneView' );
   const ElevationSceneView = require( 'NUMBER_LINE_INTEGERS/explore/view/ElevationSceneView' );
+  const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const NLIScene = require( 'NUMBER_LINE_INTEGERS/explore/model/NLIScene' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
@@ -18,7 +19,7 @@ define( require => {
   const TemperatureSceneView = require( 'NUMBER_LINE_INTEGERS/explore/view/TemperatureSceneView' );
 
   // constants
-  const INSET = 10;
+  const RESET_BUTTON_INSET = 10;
 
   class NLIExploreScreenView extends ScreenView {
 
@@ -67,14 +68,14 @@ define( require => {
         {
           buttonContentXMargin: 5,
           buttonContentYMargin: 5,
-          right: this.layoutBounds.maxX - INSET,
-          bottom: this.layoutBounds.maxY - 100,
+          left: this.layoutBounds.maxX - NLIConstants.EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET,
+          bottom: this.layoutBounds.maxY - 107,
           baseColor: 'white',
           selectedLineWidth: 2,
           deselectedLineWidth: .5,
           deselectedButtonOpacity: 0.25,
           orientation: 'horizontal',
-          spacing: 6
+          spacing: 7
         }
       );
       this.addChild( sceneSelectorRadioButtonGroup );
@@ -86,8 +87,8 @@ define( require => {
           bankScene.reset();
           temperatureScene.reset();
         },
-        right: this.layoutBounds.maxX - INSET,
-        bottom: this.layoutBounds.maxY - INSET
+        right: this.layoutBounds.maxX - RESET_BUTTON_INSET,
+        bottom: this.layoutBounds.maxY - RESET_BUTTON_INSET
       } );
       this.addChild( resetAllButton );
     }

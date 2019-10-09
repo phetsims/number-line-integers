@@ -20,7 +20,7 @@ define( require => {
   const ThermometerNode = require( 'SCENERY_PHET/ThermometerNode' );
 
   // constants
-  const ICON_SIZE = new Dimension2( 30, 30 );
+  const ICON_SIZE = new Dimension2( 38, 38 );
 
   // images
   const birdInAir = require( 'image!NUMBER_LINE_INTEGERS/bird-air.png' );
