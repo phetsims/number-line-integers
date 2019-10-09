@@ -1,8 +1,8 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * A scenery node that is used to control point positions in the temperature scene
- * based on the temperature of the map below this node
+ * A scenery node that is used to control point positions in the temperature scene based on the temperature of the map
+ * below this node
  *
  * @author Arnab Purkayastha
  * @author Saurabh Totey
