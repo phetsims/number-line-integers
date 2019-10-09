@@ -1,7 +1,7 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * base class for the "Elevation" scene
+ * ElevationSceneModel is the model for the "Elevation" scene
  *
  * @author John Blanco (PhET Interactive Simulations)
  */

@@ -17,8 +17,8 @@ define( require => {
   const Screen = require( 'JOIST/Screen' );
 
   // images
-  const scenesScreenHomeIcon = require( 'image!NUMBER_LINE_INTEGERS/scenes-screen-home.png' );
-  const scenesScreenNavIcon = require( 'image!NUMBER_LINE_INTEGERS/scenes-screen-nav.png' );
+  const exploreScreenHomeIcon = require( 'image!NUMBER_LINE_INTEGERS/explore-screen-home.png' );
+  const exploreScreenNavIcon = require( 'image!NUMBER_LINE_INTEGERS/explore-screen-nav.png' );
 
   // strings
   const exploreString = require( 'string!NUMBER_LINE_INTEGERS/explore' );
@@ -33,8 +33,8 @@ define( require => {
       const options = {
         name: exploreString,
         backgroundColorProperty: new Property( 'rgb( 254, 247, 233 )' ),
-        homeScreenIcon: new Image( scenesScreenHomeIcon ),
-        navigationBarIcon: new Image( scenesScreenNavIcon ),
+        homeScreenIcon: new Image( exploreScreenHomeIcon ),
+        navigationBarIcon: new Image( exploreScreenNavIcon ),
         tandem: tandem
       };
 
