@@ -32,7 +32,7 @@ define( require => {
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
-  const CHECKBOX_FONT = new PhetFont( 20 );
+  const CHECKBOX_FONT = new PhetFont( 18 );
   const ARROW_ICON_LENGTH = 40;
   const COMBO_BOX_FONT = new PhetFont( 14 );
 
