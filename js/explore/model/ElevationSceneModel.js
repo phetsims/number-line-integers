@@ -33,8 +33,8 @@ define( require => {
 
       // Define the bounds of the area where the interactive elevation area will be shown, values empirically determined
       // to match the design spec.
-      const elevationAreaWidth = 620;
-      const elevationAreaHeight = 450;
+      const elevationAreaWidth = 600;
+      const elevationAreaHeight = 430;
       const elevationAreaCenter = new Vector2(
         SCENE_BOUNDS.centerX,
         seaLevel - numberLineRange.getCenter() * elevationAreaHeight / numberLineRange.getLength()
