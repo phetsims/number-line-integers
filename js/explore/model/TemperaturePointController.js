@@ -20,7 +20,7 @@ define( require => {
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
-  const TemperatureToColorMapper = require( 'NUMBER_LINE_INTEGERS/scenes/model/TemperatureToColorMapper' );
+  const TemperatureToColorMapper = require( 'NUMBER_LINE_INTEGERS/explore/model/TemperatureToColorMapper' );
   const Util = require( 'DOT/Util' );
 
   // constants

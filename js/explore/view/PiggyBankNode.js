@@ -14,7 +14,7 @@ define( require => {
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Path = require( 'SCENERY/nodes/Path' );
-  const piggyBankShapes = require( 'NUMBER_LINE_INTEGERS/scenes/view/piggyBankShapes' );
+  const piggyBankShapes = require( 'NUMBER_LINE_INTEGERS/explore/view/piggyBankShapes' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // images

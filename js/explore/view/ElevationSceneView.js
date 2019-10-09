@@ -9,13 +9,13 @@ define( require => {
   'use strict';
 
   // modules
-  const ElevationPointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/ElevationPointControllerNode' );
+  const ElevationPointControllerNode = require( 'NUMBER_LINE_INTEGERS/explore/view/ElevationPointControllerNode' );
   const Image = require( 'SCENERY/nodes/Image' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  const SceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/SceneView' );
+  const SceneView = require( 'NUMBER_LINE_INTEGERS/explore/view/SceneView' );
   const Text = require( 'SCENERY/nodes/Text' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Vector2 = require( 'DOT/Vector2' );

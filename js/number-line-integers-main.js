@@ -13,7 +13,7 @@ define( require => {
   const SimLauncher = require( 'JOIST/SimLauncher' );
   const Tandem = require( 'TANDEM/Tandem' );
   const NLIGenericScreen = require( 'NUMBER_LINE_INTEGERS/generic/NLIGenericScreen' );
-  const NLIScenesScreen = require( 'NUMBER_LINE_INTEGERS/scenes/NLIScenesScreen' );
+  const NLIScenesScreen = require( 'NUMBER_LINE_INTEGERS/explore/NLIScenesScreen' );
 
   // strings
   const numberLineIntegersTitleString = require( 'string!NUMBER_LINE_INTEGERS/number-line-integers.title' );

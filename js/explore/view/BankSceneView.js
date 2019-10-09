@@ -11,15 +11,15 @@ define( require => {
 
   // modules
   const ABSwitch = require( 'SUN/ABSwitch' );
-  const AccountBalanceControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/AccountBalanceControllerNode' );
-  const BankPointControllerNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/BankPointControllerNode' );
+  const AccountBalanceControllerNode = require( 'NUMBER_LINE_INTEGERS/explore/view/AccountBalanceControllerNode' );
+  const BankPointControllerNode = require( 'NUMBER_LINE_INTEGERS/explore/view/BankPointControllerNode' );
   const Dimension2 = require( 'DOT/Dimension2' );
   const HBox = require( 'SCENERY/nodes/HBox' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const PiggyBankNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/PiggyBankNode' );
-  const SceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/SceneView' );
+  const PiggyBankNode = require( 'NUMBER_LINE_INTEGERS/explore/view/PiggyBankNode' );
+  const SceneView = require( 'NUMBER_LINE_INTEGERS/explore/view/SceneView' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
 

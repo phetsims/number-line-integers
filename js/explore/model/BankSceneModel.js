@@ -21,7 +21,7 @@ define( require => {
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
-  const SceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/SceneModel' );
+  const SceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/SceneModel' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants

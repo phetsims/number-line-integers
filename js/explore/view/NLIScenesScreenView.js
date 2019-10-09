@@ -7,15 +7,15 @@ define( require => {
   'use strict';
 
   // modules
-  const BankSceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/BankSceneView' );
-  const ElevationSceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/ElevationSceneView' );
-  const NLIScene = require( 'NUMBER_LINE_INTEGERS/scenes/model/NLIScene' );
+  const BankSceneView = require( 'NUMBER_LINE_INTEGERS/explore/view/BankSceneView' );
+  const ElevationSceneView = require( 'NUMBER_LINE_INTEGERS/explore/view/ElevationSceneView' );
+  const NLIScene = require( 'NUMBER_LINE_INTEGERS/explore/model/NLIScene' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  const sceneIconFactory = require( 'NUMBER_LINE_INTEGERS/scenes/view/sceneIconFactory' );
+  const sceneIconFactory = require( 'NUMBER_LINE_INTEGERS/explore/view/sceneIconFactory' );
   const ScreenView = require( 'JOIST/ScreenView' );
-  const TemperatureSceneView = require( 'NUMBER_LINE_INTEGERS/scenes/view/TemperatureSceneView' );
+  const TemperatureSceneView = require( 'NUMBER_LINE_INTEGERS/explore/view/TemperatureSceneView' );
 
   // constants
   const INSET = 10;

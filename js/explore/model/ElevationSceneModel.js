@@ -11,14 +11,14 @@ define( require => {
   // modules
   const Bounds2 = require( 'DOT/Bounds2' );
   const Color = require( 'SCENERY/util/Color' );
-  const ElevationPointController = require( 'NUMBER_LINE_INTEGERS/scenes/model/ElevationPointController' );
+  const ElevationPointController = require( 'NUMBER_LINE_INTEGERS/explore/model/ElevationPointController' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const ObservableArray = require( 'AXON/ObservableArray' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
   const Range = require( 'DOT/Range' );
-  const SceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/SceneModel' );
+  const SceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/SceneModel' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants

@@ -7,12 +7,12 @@ define( require => {
   'use strict';
 
   // modules
-  const BankSceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/BankSceneModel' );
-  const ElevationSceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/ElevationSceneModel' );
-  const NLIScene = require( 'NUMBER_LINE_INTEGERS/scenes/model/NLIScene' );
+  const BankSceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/BankSceneModel' );
+  const ElevationSceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/ElevationSceneModel' );
+  const NLIScene = require( 'NUMBER_LINE_INTEGERS/explore/model/NLIScene' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Property = require( 'AXON/Property' );
-  const TemperatureSceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/TemperatureSceneModel' );
+  const TemperatureSceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/TemperatureSceneModel' );
 
   /**
    * @constructor

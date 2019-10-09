@@ -10,8 +10,8 @@ define( require => {
 
   // modules
   const Image = require( 'SCENERY/nodes/Image' );
-  const NLIScenesModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/NLIScenesModel' );
-  const NLIScenesScreenView = require( 'NUMBER_LINE_INTEGERS/scenes/view/NLIScenesScreenView' );
+  const NLIScenesModel = require( 'NUMBER_LINE_INTEGERS/explore/model/NLIScenesModel' );
+  const NLIScenesScreenView = require( 'NUMBER_LINE_INTEGERS/explore/view/NLIScenesScreenView' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Property = require( 'AXON/Property' );
   const Screen = require( 'JOIST/Screen' );

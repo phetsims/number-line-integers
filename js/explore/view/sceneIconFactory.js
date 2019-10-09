@@ -12,10 +12,10 @@ define( require => {
   // modules
   const Dimension2 = require( 'DOT/Dimension2' );
   const Image = require( 'SCENERY/nodes/Image' );
-  const NLIScene = require( 'NUMBER_LINE_INTEGERS/scenes/model/NLIScene' );
+  const NLIScene = require( 'NUMBER_LINE_INTEGERS/explore/model/NLIScene' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const PiggyBankNode = require( 'NUMBER_LINE_INTEGERS/scenes/view/PiggyBankNode' );
+  const PiggyBankNode = require( 'NUMBER_LINE_INTEGERS/explore/view/PiggyBankNode' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const ThermometerNode = require( 'SCENERY_PHET/ThermometerNode' );
 

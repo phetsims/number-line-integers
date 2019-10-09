@@ -21,10 +21,10 @@ define( require => {
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const Range = require( 'DOT/Range' );
-  const reverseRobinsonProjector = require( 'NUMBER_LINE_INTEGERS/scenes/model/reverseRobinsonProjector' );
-  const SceneModel = require( 'NUMBER_LINE_INTEGERS/scenes/model/SceneModel' );
-  const temperatureDataSet = require( 'NUMBER_LINE_INTEGERS/scenes/model/temperatureDataSet' );
-  const TemperaturePointController = require( 'NUMBER_LINE_INTEGERS/scenes/model/TemperaturePointController' );
+  const reverseRobinsonProjector = require( 'NUMBER_LINE_INTEGERS/explore/model/reverseRobinsonProjector' );
+  const SceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/SceneModel' );
+  const temperatureDataSet = require( 'NUMBER_LINE_INTEGERS/explore/model/temperatureDataSet' );
+  const TemperaturePointController = require( 'NUMBER_LINE_INTEGERS/explore/model/TemperaturePointController' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // strings
