@@ -58,7 +58,13 @@ define( require => {
       minWidth: COMPARISON_STATEMENT_BOX_WIDTH,
       maxWidth: COMPARISON_STATEMENT_BOX_WIDTH,
       buttonXMargin: 8,
-      buttonYMargin: 6
+      buttonYMargin: 6,
+      expandCollapseButtonOptions: {
+        touchAreaXDilation: 15,
+        touchAreaYDilation: 15,
+        mouseAreaXDilation: 5,
+        mouseAreaYDilation: 5
+      }
     }
   };
 

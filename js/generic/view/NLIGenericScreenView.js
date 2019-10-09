@@ -144,8 +144,8 @@ define( require => {
           comparisonStatementNode.reset();
           comparisonStatementAccordionBox.expandedProperty.reset();
         },
-        right: this.layoutBounds.maxX - 10,
-        bottom: this.layoutBounds.maxY - 10
+        right: this.layoutBounds.maxX - 20,
+        bottom: this.layoutBounds.maxY - 20
       } );
       this.addChild( resetAllButton );
 
@@ -156,14 +156,16 @@ define( require => {
         {
           buttonContentXMargin: 5,
           buttonContentYMargin: 5,
-          right: resetAllButton.right,
-          bottom: resetAllButton.top - 10,
+          right: resetAllButton.left - 30,
+          bottom: resetAllButton.bottom - 20,
           baseColor: 'white',
           selectedLineWidth: 2,
           deselectedLineWidth: .5,
           deselectedButtonOpacity: 0.25,
           orientation: 'horizontal',
-          spacing: 10
+          spacing: 20,
+          touchAreaXDilation: 9,
+          touchAreaYDilation: 9
         } );
       this.addChild( orientationRadioButtonGroup );
 
@@ -193,8 +195,8 @@ define( require => {
           xMargin: 13,
           yMargin: 6,
           cornerRadius: 4,
-          right: resetAllButton.right,
-          bottom: orientationRadioButtonGroup.top - 10
+          centerX: orientationRadioButtonGroup.centerX,
+          bottom: orientationRadioButtonGroup.top - 20
         }
       );
       this.addChild( rangeSelectionComboBox );

@@ -82,7 +82,7 @@ define( require => {
      */
     proposePosition( proposedPosition ) {
 
-      if ( this.numberLinePoint && !this.elevationsAreaBounds.containsPoint( proposedPosition ) ) {
+      if ( this.controlsNumberLinePoint() && !this.elevationsAreaBounds.containsPoint( proposedPosition ) ) {
 
         // The user has dragged the controller outside of the elevation bounds, so allow the motion.  Listeners in
         // other places will remove the point from the number line.
