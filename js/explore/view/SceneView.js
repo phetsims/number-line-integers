@@ -1,7 +1,7 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * base class for scene views in the "Scenes" screen, includes check boxes, comparison statement, and some other UI
+ * base class for scene views in the "Explore" screen, includes check boxes, comparison statement, and some other UI
  * elements that are common to all scenes
  *
  * @author John Blanco (PhET Interactive Simulations)

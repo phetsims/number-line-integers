@@ -1,7 +1,7 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * base class for all scenes in the "Scenes" screen
+ * base class for all scenes in the "Explore" screen
  *
  * @author John Blanco (PhET Interactive Simulations)
  */

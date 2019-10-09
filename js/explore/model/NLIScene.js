@@ -1,7 +1,7 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * enum of possible scene values for the Number Line: Integers "Scenes" screen
+ * enum of possible scene values for the Number Line: Integers "Explore" screen
  *
  * @author John Blanco (PhET Interactive Simulations)
  */

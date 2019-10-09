@@ -20,10 +20,10 @@ define( require => {
   // constants
   const INSET = 10;
 
-  class NLIScenesScreenView extends ScreenView {
+  class NLIExploreScreenView extends ScreenView {
 
     /**
-     * @param {NLIScenes} model
+     * @param {NLIExplore} model
      */
     constructor( model ) {
 
@@ -93,5 +93,5 @@ define( require => {
     }
   }
 
-  return numberLineIntegers.register( 'NLIScenesScreenView', NLIScenesScreenView );
+  return numberLineIntegers.register( 'NLIExploreScreenView', NLIExploreScreenView );
 } );

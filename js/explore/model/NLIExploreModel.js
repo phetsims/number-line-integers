@@ -17,7 +17,7 @@ define( require => {
   /**
    * @constructor
    */
-  class NLIScenesModel {
+  class NLIExploreModel {
 
     constructor() {
 
@@ -50,5 +50,5 @@ define( require => {
     }
   }
 
-  return numberLineIntegers.register( 'NLIScenesModel', NLIScenesModel );
+  return numberLineIntegers.register( 'NLIExploreModel', NLIExploreModel );
 } );

@@ -13,7 +13,7 @@ define( require => {
   const SimLauncher = require( 'JOIST/SimLauncher' );
   const Tandem = require( 'TANDEM/Tandem' );
   const NLIGenericScreen = require( 'NUMBER_LINE_INTEGERS/generic/NLIGenericScreen' );
-  const NLIScenesScreen = require( 'NUMBER_LINE_INTEGERS/explore/NLIScenesScreen' );
+  const NLIExploreScreen = require( 'NUMBER_LINE_INTEGERS/explore/NLIExploreScreen' );
 
   // strings
   const numberLineIntegersTitleString = require( 'string!NUMBER_LINE_INTEGERS/number-line-integers.title' );
@@ -35,7 +35,7 @@ define( require => {
   // until the images are fully loaded, see https://github.com/phetsims/coulombs-law/issues/70
   SimLauncher.launch( () => {
     const screens = [
-      new NLIScenesScreen( Tandem.rootTandem.createTandem( 'scenesScreen' ) ),
+      new NLIExploreScreen( Tandem.rootTandem.createTandem( 'scenesScreen' ) ),
       new NLIGenericScreen( Tandem.rootTandem.createTandem( 'genericScreen' ) )
     ];
     const sim = new Sim( numberLineIntegersTitleString, screens, simOptions );
