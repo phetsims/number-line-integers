@@ -28,7 +28,7 @@ define( require => {
 
     // The amount, in model and view coordinates, of space between the end of the number lines display range and the end
     // of the number line itself.
-    GENERIC_SCREEN_DISPLAYED_RANGE_INSET: 40,
+    GENERIC_SCREEN_DISPLAYED_RANGE_INSET: 25,
 
     // options used for most of not all label backgrounds
     LABEL_BACKGROUND_OPTIONS: {
