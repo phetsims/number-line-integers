@@ -12,9 +12,8 @@ define( require => {
   'use strict';
 
   // modules
-  const AccordionBox = require( 'SUN/AccordionBox' );
   const BackgroundNode = require( 'SCENERY_PHET/BackgroundNode' );
-  const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementNode' );
+  const ComparisonStatementAccordionBox = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementAccordionBox' );
   const Panel = require( 'SUN/Panel' );
   const MonthsComboBox = require( 'NUMBER_LINE_INTEGERS/explore/view/MonthsComboBox' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
@@ -60,6 +59,9 @@ define( require => {
         }
       } );
 
+      // TODO: This approach of using the number line node and adding another is hokey, and I (jbphet) should build in
+      // support to the scenes for multiple number lines instead.
+
       // Replace single default numberLineNode with two from celsius and fahrenheit
       this.celsiusNumberLineNode = new NumberLineNode( sceneModel.celsiusNumberLine, {
         numberDisplayTemplate: temperatureAmountCelsiusString,
@@ -80,19 +82,18 @@ define( require => {
       numberLinePanelContent.addChild( this.celsiusNumberLineNode );
 
       // Do the same replacement with ComparisonStatementAccordionBox
-      const celsiusComparisonStatementNode = new ComparisonStatementNode( sceneModel.celsiusNumberLine );
-      this.celsiusComparisonAccordionBox = new AccordionBox(
-        celsiusComparisonStatementNode,
-        NLIConstants.COMPARISON_STATEMENT_ACCORDION_BOX_OPTIONS
-      );
+      // @protected
+      this.celsiusComparisonAccordionBox = new ComparisonStatementAccordionBox( sceneModel.celsiusNumberLine );
       this.fahrenheitComparisonAccordionBox = this.comparisonStatementAccordionBox;
-      celsiusComparisonStatementNode.selectedOperatorProperty.link( selectedOperator => {
-        this.comparisonStatementNode.selectedOperatorProperty.value = selectedOperator;
-      } );
-      this.comparisonStatementNode.selectedOperatorProperty.link( selectedOperator => {
-        celsiusComparisonStatementNode.selectedOperatorProperty.value = selectedOperator;
-      } );
       this.addChild( this.celsiusComparisonAccordionBox );
+
+      // make sure that the same operator is being used in both the celsius and fahrenheit comparison statements
+      this.celsiusComparisonAccordionBox.comparisonStatementNode.selectedOperatorProperty.link( selectedOperator => {
+        this.fahrenheitComparisonAccordionBox.comparisonStatementNode.selectedOperatorProperty.value = selectedOperator;
+      } );
+      this.fahrenheitComparisonAccordionBox.comparisonStatementNode.selectedOperatorProperty.link( selectedOperator => {
+        this.celsiusComparisonAccordionBox.comparisonStatementNode.selectedOperatorProperty.value = selectedOperator;
+      } );
 
       // @private
       this.monthsComboBox = new MonthsComboBox( sceneModel.monthProperty, this, {

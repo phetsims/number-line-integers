@@ -11,15 +11,7 @@ define( require => {
 
   // modules
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const ScreenView = require( 'JOIST/ScreenView' );
-  const Text = require( 'SCENERY/nodes/Text' );
-
-  // strings
-  const comparisonStatementString = require( 'string!NUMBER_LINE_INTEGERS/comparisonStatement' );
-
-  // constants
-  const COMPARISON_STATEMENT_BOX_WIDTH = 340; // empirically determined to look decent
 
   const NLIConstants = {
 
@@ -42,30 +34,6 @@ define( require => {
 
     // corner radius of the background for most if not all labels
     LABEL_BACKGROUND_CORNER_RADIUS: 3,
-
-    // Comparison Statement Box
-    COMPARISON_STATEMENT_ACCORDION_BOX_OPTIONS: {
-      fill: 'white',
-      titleNode: new Text( comparisonStatementString, {
-        font: new PhetFont( 16 ),
-        maxWidth: COMPARISON_STATEMENT_BOX_WIDTH * 0.8
-      } ),
-      showTitleWhenExpanded: false,
-      cornerRadius: 5,
-      contentAlign: 'right',
-      centerX: 512, // taken from default layoutBounds.centerX
-      top: 10,
-      minWidth: COMPARISON_STATEMENT_BOX_WIDTH,
-      maxWidth: COMPARISON_STATEMENT_BOX_WIDTH,
-      buttonXMargin: 8,
-      buttonYMargin: 6,
-      expandCollapseButtonOptions: {
-        touchAreaXDilation: 15,
-        touchAreaYDilation: 15,
-        mouseAreaXDilation: 5,
-        mouseAreaYDilation: 5
-      }
-    },
 
     EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET: 175
   };

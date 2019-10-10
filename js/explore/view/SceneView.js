@@ -10,10 +10,9 @@ define( require => {
   'use strict';
 
   // modules
-  const AccordionBox = require( 'SUN/AccordionBox' );
   const Checkbox = require( 'SUN/Checkbox' );
   const Color = require( 'SCENERY/util/Color' );
-  const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementNode' );
+  const ComparisonStatementAccordionBox = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementAccordionBox' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -62,14 +61,8 @@ define( require => {
       } );
       this.addChild( this.checkboxGroup );
 
-      // @protected - comparison statement
-      this.comparisonStatementNode = new ComparisonStatementNode( sceneModel.numberLine );
-
-      // @protected - enclose the comparison statement in an accordion box
-      this.comparisonStatementAccordionBox = new AccordionBox(
-        this.comparisonStatementNode,
-        NLIConstants.COMPARISON_STATEMENT_ACCORDION_BOX_OPTIONS
-      );
+      // @protected
+      this.comparisonStatementAccordionBox = new ComparisonStatementAccordionBox( sceneModel.numberLine );
       this.addChild( this.comparisonStatementAccordionBox );
 
       // @protected (read-only) {NumberLine} - view of the number line
@@ -98,7 +91,7 @@ define( require => {
      * @public
      */
     reset() {
-      this.comparisonStatementNode.selectedOperatorProperty.reset();
+      this.comparisonStatementAccordionBox.reset();
     }
   }
 

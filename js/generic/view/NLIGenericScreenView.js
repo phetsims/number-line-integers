@@ -9,12 +9,11 @@ define( require => {
   'use strict';
 
   // modules
-  const AccordionBox = require( 'SUN/AccordionBox' );
   const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   const Checkbox = require( 'SUN/Checkbox' );
   const ComboBox = require( 'SUN/ComboBox' );
   const ComboBoxItem = require( 'SUN/ComboBoxItem' );
-  const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementNode' );
+  const ComparisonStatementAccordionBox = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementAccordionBox' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
@@ -53,12 +52,7 @@ define( require => {
       super( { layoutBounds: NLIConstants.NLI_LAYOUT_BOUNDS } );
 
       // add the display of the inequality
-      const comparisonStatementNode = new ComparisonStatementNode( model.numberLine );
-
-      const comparisonStatementAccordionBox = new AccordionBox(
-        comparisonStatementNode,
-        NLIConstants.COMPARISON_STATEMENT_ACCORDION_BOX_OPTIONS
-      );
+      const comparisonStatementAccordionBox = new ComparisonStatementAccordionBox( model.numberLine );
       this.addChild( comparisonStatementAccordionBox );
 
       // add the check boxes that will control the number line's presentation
@@ -148,8 +142,7 @@ define( require => {
       const resetAllButton = new ResetAllButton( {
         listener: () => {
           model.reset();
-          comparisonStatementNode.reset();
-          comparisonStatementAccordionBox.expandedProperty.reset();
+          comparisonStatementAccordionBox.reset();
         },
         right: this.layoutBounds.maxX - 20,
         bottom: this.layoutBounds.maxY - 20
