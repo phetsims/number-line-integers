@@ -95,16 +95,16 @@ define( require => {
       this.addChild( this.celsiusComparisonAccordionBox );
 
       // @private
-      this.monthsComboBox = new MonthsComboBox( sceneModel.monthProperty, this );
+      this.monthsComboBox = new MonthsComboBox( sceneModel.monthProperty, this, {
+        left: this.checkboxGroup.left,
+        top: sceneModel.mapBounds.minY
+      } );
       this.addChild( this.monthsComboBox );
 
       // @private
       this.temperatureMap = new TemperatureMapNode( sceneModel.monthProperty, sceneModel.mapBounds );
       this.temperatureMap.center = sceneModel.mapBounds.center;
       this.addChild( this.temperatureMap );
-
-      this.monthsComboBox.left = this.temperatureMap.right + 50;
-      this.monthsComboBox.top = this.temperatureMap.top;
 
       // add the node that represents the box that will hold the thermometers
       this.addChild( new Rectangle.bounds( sceneModel.thermometerBoxBounds, {
