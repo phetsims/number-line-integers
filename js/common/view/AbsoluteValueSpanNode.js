@@ -12,7 +12,9 @@ define( require => {
   const Animation = require( 'TWIXT/Animation' );
   const BackgroundNode = require( 'SCENERY_PHET/BackgroundNode' );
   const Easing = require( 'TWIXT/Easing' );
+  const Line = require( 'SCENERY/nodes/Line' );
   const Path = require( 'SCENERY/nodes/Path' );
+  const merge = require( 'PHET_CORE/merge' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -20,11 +22,18 @@ define( require => {
   const Property = require( 'AXON/Property' );
   const Text = require( 'SCENERY/nodes/Text' );
   const Shape = require( 'KITE/Shape' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // const
   const CAP_LENGTH = 10;
   const ANIMATION_SPEED = 160; // in screen coords per second
   const MAX_ANIMATION_DURATION = 0.5; // in seconds
+  const EQUATION_NUMBER_FONT = new PhetFont( 14 );
+  const EXAMPLE_EQUATION_NUMBER_NODE = new Text( 8, { font: EQUATION_NUMBER_FONT } );
+  const ABS_VAL_LINE_TOP = new Vector2( 0, EXAMPLE_EQUATION_NUMBER_NODE.top );
+  const ABS_VAL_LINE_BOTTOM = new Vector2( 0, EXAMPLE_EQUATION_NUMBER_NODE.bottom );
+  const ABS_VAL_LINE_SPACING = 1;
+  const EQUALS_SIGN_SPACING = 4;
 
   class AbsoluteValueSpanNode extends Node {
 
@@ -51,9 +60,9 @@ define( require => {
       this.translateAnimation = null;
 
       // add the equation text
-      const equationTextNode = new Text( '', { font: new PhetFont( 14 ) } );
-      const equationTextBackground = new BackgroundNode( equationTextNode, NLIConstants.LABEL_BACKGROUND_OPTIONS );
-      this.addChild( equationTextBackground );
+      const equationNode = new Text( '', { font: new PhetFont( 14 ) } );
+      const equationBackground = new BackgroundNode( equationNode, NLIConstants.LABEL_BACKGROUND_OPTIONS );
+      this.addChild( equationBackground );
 
       // add the span indicator shape
       const spanIndicatorNode = new Path( null, {
@@ -114,22 +123,39 @@ define( require => {
       };
 
       // define a function to update the text label
-      const updateTextLabel = () => {
+      const updateEquation = () => {
         const value = numberLinePoint.valueProperty.value;
-        equationTextNode.setText( '|' + value + '|' + ' = ' + Math.abs( value ) );
+        equationNode.removeAllChildren();
+        equationNode.addChild( new AbsValLine() );
+        equationNode.addChild( new Text( value, {
+          font: EQUATION_NUMBER_FONT,
+          left: equationNode.width + ABS_VAL_LINE_SPACING
+        } ) );
+        equationNode.addChild( new AbsValLine( {
+          left: equationNode.width + ABS_VAL_LINE_SPACING
+        } ) );
+        equationNode.addChild( new Text( '=', {
+          font: EQUATION_NUMBER_FONT,
+          left: equationNode.width + EQUALS_SIGN_SPACING
+        } ) );
+        equationNode.addChild( new Text( Math.abs( value ), {
+          font: EQUATION_NUMBER_FONT,
+          left: equationNode.width + EQUALS_SIGN_SPACING
+        } ) );
+
         const distanceFromNumberLine = this.distanceFromNumberLineProperty.value;
         const pointPosition = numberLinePoint.getPositionInModelSpace();
         if ( numberLine.isHorizontal ) {
-          equationTextBackground.centerX = ( numberLine.centerPosition.x + pointPosition.x ) / 2;
-          equationTextBackground.bottom = numberLine.centerPosition.y - distanceFromNumberLine - CAP_LENGTH / 2 - 4;
+          equationBackground.centerX = ( numberLine.centerPosition.x + pointPosition.x ) / 2;
+          equationBackground.bottom = numberLine.centerPosition.y - distanceFromNumberLine - CAP_LENGTH / 2 - 4;
         }
         else {
-          equationTextBackground.centerX = pointPosition.x - distanceFromNumberLine;
+          equationBackground.centerX = pointPosition.x - distanceFromNumberLine;
           if ( value > 0 ) {
-            equationTextBackground.bottom = pointPosition.y - 5;
+            equationBackground.bottom = pointPosition.y - 5;
           }
           else {
-            equationTextBackground.top = pointPosition.y + 5;
+            equationBackground.top = pointPosition.y + 5;
           }
         }
       };
@@ -137,7 +163,7 @@ define( require => {
       // update when the point value changes
       numberLinePoint.valueProperty.link( () => {
         updateSpanShape();
-        updateTextLabel();
+        updateEquation();
       } );
 
       // update position when the orientation or displayed range of the number line changes
@@ -145,7 +171,7 @@ define( require => {
         [ numberLine.orientationProperty, numberLine.displayedRangeProperty, this.distanceFromNumberLineProperty ],
         () => {
           updateSpanShape();
-          updateTextLabel();
+          updateEquation();
         }
       );
 
@@ -201,6 +227,21 @@ define( require => {
     dispose() {
       this.disposeAbsoluteValueSpanNode();
       super.dispose();
+    }
+  }
+
+  /**
+   * line used to indicate an absolute value indicator
+   * @private
+   */
+  class AbsValLine extends Line {
+
+    /**
+     * @param {Object} [options] - options that will be pass to the constructor of the line node
+     */
+    constructor( options ) {
+      options = merge( { stroke: 'black' }, options );
+      super( ABS_VAL_LINE_TOP, ABS_VAL_LINE_BOTTOM, options );
     }
   }
 
