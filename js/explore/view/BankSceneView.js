@@ -98,6 +98,10 @@ define( require => {
         }
       } );
 
+      // calculate a horizontal position for the account balance controls that is centered between some other controls
+      const accountBalanceControllersCenterX = ( this.comparisonStatementAccordionBox.right +
+                                                 this.checkboxGroup.bounds.minX ) / 2;
+
       // add the controller for the primary account
       this.scenesLayer.addChild( new AccountBalanceControllerNode(
         sceneModel.primaryAccount.balanceProperty,
@@ -106,7 +110,7 @@ define( require => {
         BALANCE_CHANGE_AMOUNT,
         {
           buttonBaseColor: BankSceneModel.PRIMARY_ACCOUNT_POINT_COLOR,
-          centerX: ( this.numberLineNode.bounds.maxX + this.checkboxGroup.bounds.minX ) / 2,
+          centerX: accountBalanceControllersCenterX,
           top: this.numberLineNode.centerY + 70
         }
       ) );
@@ -119,7 +123,7 @@ define( require => {
         BALANCE_CHANGE_AMOUNT,
         {
           buttonBaseColor: BankSceneModel.COMPARISON_ACCOUNT_POINT_COLOR,
-          centerX: ( this.numberLineNode.bounds.maxX + this.checkboxGroup.bounds.minX ) / 2,
+          centerX: accountBalanceControllersCenterX,
           bottom: this.numberLineNode.centerY - 70
         }
       );
