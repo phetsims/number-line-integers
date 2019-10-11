@@ -26,6 +26,7 @@ define( require => {
 
   // constants
   const SCENE_BOUNDS = NLIConstants.NLI_LAYOUT_BOUNDS; // bounds for the scenes match the layout bounds
+  const PRIMARY_ACCOUNT_POINT_COLOR = new Color( '#d25da3' );
   const COMPARISON_ACCOUNT_POINT_COLOR = new Color( '#001fff' );
   const INITIAL_PRIMARY_ACCOUNT_BALANCE = 10;
   const INITIAL_COMPARISON_ACCOUNT_BALANCE = 40;
@@ -48,7 +49,10 @@ define( require => {
           initialDisplayedRange: new Range( -100, 100 ),
           labelsInitiallyVisible: true,
           widthInModelSpace: SCENE_BOUNDS.width * 0.4,
-          initialPointSpecs: [ { initialValue: INITIAL_PRIMARY_ACCOUNT_BALANCE, color: new Color( '#d25da3' ) } ]
+          initialPointSpecs: [ {
+            initialValue: INITIAL_PRIMARY_ACCOUNT_BALANCE,
+            color: new Color( PRIMARY_ACCOUNT_POINT_COLOR )
+          } ]
         }
       } );
 
@@ -184,20 +188,15 @@ define( require => {
      * @public
      */
     resetScene() {
-
-      // release the point that was being controlled
       this.primaryAccount.reset();
-      // this.primaryAccountPointController.clearNumberLinePoints();
       this.showComparisonAccountProperty.reset();
       this.comparisonAccount.reset();
-
-      // the reset will add back the initial point, so associate the permanent point controller with it
-      // this.primaryAccountPointController.associateWithNumberLinePoint( this.numberLine.residentPoints.get( 0 ) );
-      //
-      // this.numberLine.residentPoints.get( 0 ).valueProperty.link( value => {
-      //   this.primaryAccount.balanceProperty.value = value;
-      // } );
     }
+
+    // statics - colors used for primary and comparison account points
+    static get PRIMARY_ACCOUNT_POINT_COLOR() { return PRIMARY_ACCOUNT_POINT_COLOR; }
+
+    static get COMPARISON_ACCOUNT_POINT_COLOR() { return COMPARISON_ACCOUNT_POINT_COLOR; }
   }
 
   class Account {

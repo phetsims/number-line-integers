@@ -13,6 +13,7 @@ define( require => {
   const ABSwitch = require( 'SUN/ABSwitch' );
   const AccountBalanceControllerNode = require( 'NUMBER_LINE_INTEGERS/explore/view/AccountBalanceControllerNode' );
   const BankPointControllerNode = require( 'NUMBER_LINE_INTEGERS/explore/view/BankPointControllerNode' );
+  const BankSceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/BankSceneModel' );
   const Dimension2 = require( 'DOT/Dimension2' );
   const HBox = require( 'SCENERY/nodes/HBox' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -104,6 +105,7 @@ define( require => {
         sceneModel.numberLine.displayedRangeProperty.value,
         BALANCE_CHANGE_AMOUNT,
         {
+          buttonBaseColor: BankSceneModel.PRIMARY_ACCOUNT_POINT_COLOR,
           centerX: ( this.numberLineNode.bounds.maxX + this.checkboxGroup.bounds.minX ) / 2,
           top: this.numberLineNode.centerY + 70
         }
@@ -116,6 +118,7 @@ define( require => {
         sceneModel.numberLine.displayedRangeProperty.value,
         BALANCE_CHANGE_AMOUNT,
         {
+          buttonBaseColor: BankSceneModel.COMPARISON_ACCOUNT_POINT_COLOR,
           centerX: ( this.numberLineNode.bounds.maxX + this.checkboxGroup.bounds.minX ) / 2,
           bottom: this.numberLineNode.centerY - 70
         }

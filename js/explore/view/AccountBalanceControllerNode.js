@@ -9,6 +9,7 @@ define( require => {
   'use strict';
 
   // modules
+  const Color = require( 'SCENERY/util/Color' );
   const Image = require( 'SCENERY/nodes/Image' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -46,6 +47,8 @@ define( require => {
      */
     constructor( balanceProperty, balanceChangedByButtonEmitter, range, changeAmount, options ) {
 
+      options = _.extend( {}, { buttonBaseColor: Color.blue }, options );
+
       // TODO: no need for this function to be here, pull it into a helper function
       const makeCoinIcon = image => new Node( {
         children: [
@@ -65,10 +68,12 @@ define( require => {
       // create the buttons
       const upButton = new RoundPushButton( _.extend( {
         content: makeCoinIcon( depositingCoinsImage ),
+        baseColor: options.buttonBaseColor,
         listener: () => { changeBalanceBy( changeAmount ); }
       }, BUTTON_OPTIONS ) );
       const downButton = new RoundPushButton( _.extend( {
         content: makeCoinIcon( withdrawingCoinsImage ),
+        baseColor: options.buttonBaseColor,
         listener: () => { changeBalanceBy( -changeAmount ); }
       }, BUTTON_OPTIONS ) );
 
