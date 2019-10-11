@@ -57,17 +57,17 @@ define( require => {
         right: this.numberLineNode.left - 4,
         centerY: sceneModel.numberLine.centerPosition.y
       } );
-      this.addChild( numberLineLabel );
+      this.scenesLayer.addChild( numberLineLabel );
       sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
 
       // add the switch that controls whether one or two accounts are shown
-      this.addChild( new AccountVisibilityControlSwitch( sceneModel.showComparisonAccountProperty, {
+      this.scenesLayer.addChild( new AccountVisibilityControlSwitch( sceneModel.showComparisonAccountProperty, {
         right: this.layoutBounds.maxX - INSET,
         centerY: this.numberLineNode.centerY
       } ) );
 
       const pointControllerNodesLayer = new Node();
-      this.addChild( pointControllerNodesLayer );
+      this.scenesLayer.addChild( pointControllerNodesLayer );
       pointControllerNodesLayer.moveToBack();
 
       // add node to represent the point controller that is always visible
@@ -99,7 +99,7 @@ define( require => {
       } );
 
       // add the controller for the primary account
-      this.addChild( new AccountBalanceControllerNode(
+      this.scenesLayer.addChild( new AccountBalanceControllerNode(
         sceneModel.primaryAccount.balanceProperty,
         sceneModel.primaryAccount.balanceChangedByButtonEmitter,
         sceneModel.numberLine.displayedRangeProperty.value,
@@ -124,7 +124,7 @@ define( require => {
         }
       );
       sceneModel.showComparisonAccountProperty.linkAttribute( comparisonAccountBalanceControllerNode, 'visible' );
-      this.addChild( comparisonAccountBalanceControllerNode );
+      this.scenesLayer.addChild( comparisonAccountBalanceControllerNode );
     }
   }
 

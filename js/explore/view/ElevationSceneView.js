@@ -57,10 +57,10 @@ define( require => {
         sceneModel.elevationAreaBounds.height / elevationAreaImage.height
       );
       elevationAreaImage.center = sceneModel.elevationAreaBounds.center;
-      this.addChild( elevationAreaImage );
+      this.scenesLayer.addChild( elevationAreaImage );
 
       // add the node that represents the box that will hold the items that the user can elevate
-      this.addChild( new Rectangle.bounds( sceneModel.elevatableItemsBoxBounds, {
+      this.scenesLayer.addChild( new Rectangle.bounds( sceneModel.elevatableItemsBoxBounds, {
         fill: 'white',
         stroke: 'black',
         cornerRadius: 6
@@ -73,14 +73,14 @@ define( require => {
         bottom: this.numberLineNode.top - 5
       } );
       sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
-      this.addChild( numberLineLabel );
+      this.scenesLayer.addChild( numberLineLabel );
 
       // define a function that will be used to switch images based on its position in the model space
       const selectImageIndex = position => position.y > sceneModel.seaLevel ? 0 : 1;
 
       // add a layer where the elevation point controllers go
       const elevationPointControllersLayer = new Node();
-      this.addChild( elevationPointControllersLayer );
+      this.scenesLayer.addChild( elevationPointControllersLayer );
 
       // add the girl that the user can place in the elevation scene
       elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
@@ -155,7 +155,7 @@ define( require => {
       ) );
 
       // add the water
-      this.addChild( new Rectangle(
+      this.scenesLayer.addChild( new Rectangle(
         0,
         0,
         sceneModel.elevationAreaBounds.width,
@@ -171,7 +171,6 @@ define( require => {
       const attachedPointControllersLayer = new Node();
       this.addChild( attachedPointControllersLayer );
       attachedPointControllersLayer.moveToBack(); // so that they are behind the number line in z-order
-      this.comparisonStatementAccordionBox.moveToFront(); // so that the comparison statement is above everything else
 
       // the visibility of the attached point controllers should be the same as the number line
       sceneModel.showNumberLineProperty.linkAttribute( attachedPointControllersLayer, 'visible' );

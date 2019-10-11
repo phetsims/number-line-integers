@@ -42,6 +42,14 @@ define( require => {
       // @protected (read-only) {Bounds2}
       this.layoutBounds = layoutBounds;
 
+      // @protected (read-only) {Node} - layer where the controls go
+      this.controlsLayer = new Node();
+      this.addChild( this.controlsLayer );
+
+      // @protected (read-only) {Node} - layer where the scene elements go, populated primarily in sub-classes
+      this.scenesLayer = new Node();
+      this.addChild( this.scenesLayer );
+
       // @protected {VBox} - node containing the checkboxes that control common model properties
       this.checkboxGroup = new VBox( {
         children: [
@@ -59,7 +67,7 @@ define( require => {
         left: layoutBounds.maxX - NLIConstants.EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET,
         top: layoutBounds.minY + 10
       } );
-      this.addChild( this.checkboxGroup );
+      this.controlsLayer.addChild( this.checkboxGroup );
 
       // @protected
       this.comparisonStatementAccordionBox = new ComparisonStatementAccordionBox( sceneModel.numberLine );
@@ -84,7 +92,7 @@ define( require => {
         left: layoutBounds.maxX - NLIConstants.EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET,
         bottom: layoutBounds.maxY - 165
       } );
-      this.addChild( sceneResetButton );
+      this.controlsLayer.addChild( sceneResetButton );
     }
 
     /**

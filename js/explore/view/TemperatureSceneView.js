@@ -85,7 +85,7 @@ define( require => {
       // @protected
       this.celsiusComparisonAccordionBox = new ComparisonStatementAccordionBox( sceneModel.celsiusNumberLine );
       this.fahrenheitComparisonAccordionBox = this.comparisonStatementAccordionBox;
-      this.addChild( this.celsiusComparisonAccordionBox );
+      this.scenesLayer.addChild( this.celsiusComparisonAccordionBox );
 
       // make sure that the same operator is being used in both the celsius and fahrenheit comparison statements
       this.celsiusComparisonAccordionBox.comparisonStatementNode.selectedOperatorProperty.link( selectedOperator => {
@@ -100,15 +100,15 @@ define( require => {
         left: this.checkboxGroup.left,
         top: sceneModel.mapBounds.minY
       } );
-      this.addChild( this.monthsComboBox );
+      this.scenesLayer.addChild( this.monthsComboBox );
 
       // @private
       this.temperatureMap = new TemperatureMapNode( sceneModel.monthProperty, sceneModel.mapBounds );
       this.temperatureMap.center = sceneModel.mapBounds.center;
-      this.addChild( this.temperatureMap );
+      this.scenesLayer.addChild( this.temperatureMap );
 
       // add the node that represents the box that will hold the thermometers
-      this.addChild( new Rectangle.bounds( sceneModel.thermometerBoxBounds, {
+      this.scenesLayer.addChild( new Rectangle.bounds( sceneModel.thermometerBoxBounds, {
         fill: 'white',
         stroke: 'black',
         cornerRadius: 6
@@ -238,7 +238,7 @@ define( require => {
           top: this.comparisonStatementAccordionBox.top
         }
       );
-      this.addChild( numberLinePanel );
+      this.scenesLayer.addChild( numberLinePanel );
 
       Property.multilink(
         [ sceneModel.isTemperatureInCelsiusProperty, sceneModel.showNumberLineProperty, sceneModel.numberLine.showAbsoluteValuesProperty ],
@@ -255,7 +255,7 @@ define( require => {
         }
       );
 
-      this.addChild( new Node( {
+      this.scenesLayer.addChild( new Node( {
         children: sceneModel.permanentPointControllers.map(
           pointController => new TemperaturePointControllerNode( pointController )
         )

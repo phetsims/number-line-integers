@@ -11,6 +11,7 @@ define( require => {
   const ElevationSceneView = require( 'NUMBER_LINE_INTEGERS/explore/view/ElevationSceneView' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const NLIScene = require( 'NUMBER_LINE_INTEGERS/explore/model/NLIScene' );
+  const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
@@ -29,6 +30,10 @@ define( require => {
     constructor( model ) {
 
       super();
+
+      // create the layer where the controls go
+      const controlsLayer = new Node();
+      this.addChild( controlsLayer );
 
       // create the root nodes for each of the scenes
       const elevationScene = new ElevationSceneView( model.elevationSceneModel, this.layoutBounds );
@@ -78,7 +83,7 @@ define( require => {
           spacing: 7
         }
       );
-      this.addChild( sceneSelectorRadioButtonGroup );
+      controlsLayer.addChild( sceneSelectorRadioButtonGroup );
 
       const resetAllButton = new ResetAllButton( {
         listener: () => {
@@ -90,7 +95,7 @@ define( require => {
         right: this.layoutBounds.maxX - RESET_BUTTON_INSET,
         bottom: this.layoutBounds.maxY - RESET_BUTTON_INSET
       } );
-      this.addChild( resetAllButton );
+      controlsLayer.addChild( resetAllButton );
     }
   }
 
