@@ -15,13 +15,13 @@ define( require => {
   const ComboBoxItem = require( 'SUN/ComboBoxItem' );
   const ComparisonStatementAccordionBox = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementAccordionBox' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
-  const Node = require( 'SCENERY/nodes/Node' );
   const NLIGenericModel = require( 'NUMBER_LINE_INTEGERS/generic/model/NLIGenericModel' );
+  const Node = require( 'SCENERY/nodes/Node' );
   const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
@@ -51,12 +51,15 @@ define( require => {
 
       super( { layoutBounds: NLIConstants.NLI_LAYOUT_BOUNDS } );
 
+      // layer where controls are added
+      const controlsLayer = new Node();
+      this.addChild( controlsLayer );
+
       // add the display of the inequality
       const comparisonStatementAccordionBox = new ComparisonStatementAccordionBox( model.numberLine );
-      this.addChild( comparisonStatementAccordionBox );
+      controlsLayer.addChild( comparisonStatementAccordionBox );
 
       // add the check boxes that will control the number line's presentation
-
       const checkboxGroup = new VBox( {
         children: [
           new Checkbox(
@@ -81,7 +84,7 @@ define( require => {
         left: this.layoutBounds.maxX - 220,
         top: this.layoutBounds.minY + 10
       } );
-      this.addChild( checkboxGroup );
+      controlsLayer.addChild( checkboxGroup );
 
       const arrowIconOptions = {
         doubleHead: true,
@@ -147,7 +150,7 @@ define( require => {
         right: this.layoutBounds.maxX - 20,
         bottom: this.layoutBounds.maxY - 20
       } );
-      this.addChild( resetAllButton );
+      controlsLayer.addChild( resetAllButton );
 
       // orientation radio buttons
       const orientationRadioButtonGroup = new RadioButtonGroup(
@@ -167,7 +170,7 @@ define( require => {
           touchAreaXDilation: 5,
           touchAreaYDilation: 8
         } );
-      this.addChild( orientationRadioButtonGroup );
+      controlsLayer.addChild( orientationRadioButtonGroup );
 
       // create the selection items for the range selection combo box
       const rangeSelectionComboBoxItems = [];
@@ -199,7 +202,7 @@ define( require => {
           bottom: orientationRadioButtonGroup.top - 12
         }
       );
-      this.addChild( rangeSelectionComboBox );
+      controlsLayer.addChild( rangeSelectionComboBox );
     }
   }
 
