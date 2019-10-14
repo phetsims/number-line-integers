@@ -73,6 +73,8 @@ define( require => {
         {
           buttonContentXMargin: 5,
           buttonContentYMargin: 5,
+          touchAreaXDilation: 3,
+          touchAreaYDilation: 3,
           left: this.layoutBounds.maxX - NLIConstants.EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET,
           bottom: this.layoutBounds.maxY - 107,
           baseColor: 'white',
