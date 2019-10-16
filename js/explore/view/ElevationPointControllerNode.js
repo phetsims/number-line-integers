@@ -25,6 +25,7 @@ define( require => {
   // strings
   const amountAboveSeaLevelString = require( 'string!NUMBER_LINE_INTEGERS/amountAboveSeaLevel' );
   const amountBelowSeaLevelString = require( 'string!NUMBER_LINE_INTEGERS/amountBelowSeaLevel' );
+  const seaLevelString = require( 'string!NUMBER_LINE_INTEGERS/seaLevel' );
 
   class ElevationPointControllerNode extends PointControllerNode {
 
@@ -79,9 +80,14 @@ define( require => {
             .lineTo( compositeImageNode.x, seaLevel );
 
           const value = pointController.associatedNumberLinePoint.valueProperty.value;
-          distanceText.text = StringUtils.fillIn( value < 0 ? amountBelowSeaLevelString : amountAboveSeaLevelString, {
-            value: Math.abs( value )
-          } );
+          let seaLevelText = seaLevelString;
+          if ( value < 0 ) {
+            seaLevelText = StringUtils.fillIn( amountBelowSeaLevelString, { value: Math.abs( value ) } );
+          }
+          else if ( value > 0 ) {
+            seaLevelText = StringUtils.fillIn( amountAboveSeaLevelString, { value: value } );
+          }
+          distanceText.text = seaLevelText;
           distanceLabel.visible = true;
           distanceLabel.leftCenter = compositeImageNode.rightCenter.plus( textOffset );
         }

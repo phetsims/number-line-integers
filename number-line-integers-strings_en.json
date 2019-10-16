@@ -17,6 +17,9 @@
   "labels": {
     "value": "Labels"
   },
+  "seaLevel": {
+    "value": "sea level"
+  },
   "amountBelowSeaLevel": {
     "value": "{{value}} m below sea level"
   },
