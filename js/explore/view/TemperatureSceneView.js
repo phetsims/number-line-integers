@@ -44,6 +44,7 @@ define( require => {
   const temperatureLabelCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureLabelCelsius' );
   const negativeTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/negativeTemperatureAmount' );
   const positiveTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/positiveTemperatureAmount' );
+  const zeroTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/zeroTemperatureAmount' );
 
   class TemperatureSceneView extends SceneView {
 
@@ -182,7 +183,9 @@ define( require => {
         absoluteValueLabelsLayer.addChild( absoluteValueNode );
 
         const numberLinePointListener = value => {
-          const template = value < 0 ? negativeTemperatureAmountString : positiveTemperatureAmountString;
+          const template = value < 0 ? negativeTemperatureAmountString :
+                           value > 0 ? positiveTemperatureAmountString :
+                           zeroTemperatureAmountString;
           absoluteValueText.text = StringUtils.fillIn( template, { value: Math.abs( value ) } );
           absoluteValueNode.leftCenter = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 40, 0 ) );
         };

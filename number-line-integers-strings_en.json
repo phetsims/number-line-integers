@@ -38,6 +38,9 @@
   "positiveTemperatureAmount": {
     "value": "{{value}}° above 0"
   },
+  "zeroTemperatureAmount": {
+    "value": "{{value}}°"
+  },
   "elevationAmount": {
     "value": "{{value}} m"
   },
