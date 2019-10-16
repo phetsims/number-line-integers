@@ -34,7 +34,8 @@ define( require => {
   const LEAST_POSITIVE_FILL = Color.toColor( '#a5e1d4' );
   const MOST_NEGATIVE_FILL = Color.toColor( '#fb1d25' );
   const LEAST_NEGATIVE_FILL = Color.toColor( '#fda5a8' );
-  const EMPTY_FILL = Color.toColor( '#fff' );
+  const EMPTY_FILL = Color.WHITE;
+  const ZERO_FILL = Color.BLACK;
   const READOUT_DISTANCE_FROM_IMAGE = 5;
   const COIN_RADIUS = 10;
   const COIN_COLOR = new Color( 213, 196, 39 );
@@ -134,7 +135,7 @@ define( require => {
         }
         else {
           stringTemplate = balanceAmountString;
-          absoluteValueText.fill = MOST_POSITIVE_FILL;
+          absoluteValueText.fill = value > 0 ? MOST_POSITIVE_FILL : ZERO_FILL;
         }
         absoluteValueText.text = StringUtils.fillIn( stringTemplate, { value: Math.abs( value ) } );
         if ( decorationType === 'flowers' ) {
