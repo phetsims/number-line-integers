@@ -70,9 +70,7 @@ define( require => {
           numberLine.removePoint( this.associatedNumberLinePoint );
           this.clearNumberLinePoints();
         }
-
       } );
-
     }
 
     /**

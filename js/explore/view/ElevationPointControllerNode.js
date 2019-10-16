@@ -53,7 +53,8 @@ define( require => {
 
       // update the visibility of the images as the position changes
       pointController.positionProperty.link( position => {
-        const selectedImageIndex = options.imageSelectionFunction( position );
+        const currentlySelectedImageIndex = _.findIndex( imageList, image => image.visible );
+        const selectedImageIndex = options.imageSelectionFunction( position, currentlySelectedImageIndex );
         imageList.forEach( ( image, index ) => {
           image.visible = selectedImageIndex === index;
         } );

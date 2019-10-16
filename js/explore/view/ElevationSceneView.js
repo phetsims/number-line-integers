@@ -76,7 +76,19 @@ define( require => {
       this.scenesLayer.addChild( numberLineLabel );
 
       // define a function that will be used to switch images based on its position in the model space
-      const selectImageIndex = position => position.y > sceneModel.seaLevel ? 0 : 1;
+      const selectImageIndex = ( position, currentlySelectedImage ) => {
+
+        // This function is intended to have some hysteresis, i.e. the image doesn't change until the point controller
+        // fully transitions from above to below sea level or vice versa.
+        let index = currentlySelectedImage;
+        if ( position.y > sceneModel.seaLevel ) {
+          index = 0;
+        }
+        else if ( position.y < sceneModel.seaLevel ) {
+          index = 1;
+        }
+        return index;
+      };
 
       // add a layer where the elevation point controllers go
       const elevationPointControllersLayer = new Node();
@@ -98,12 +110,15 @@ define( require => {
         ],
         {
           // special highly tweaked function for having the hiker image show up over the cliff
-          imageSelectionFunction: position => {
-            let imageIndex;
+          imageSelectionFunction: ( position, currentlySelectedImage ) => {
+
+            // This function is intended to have some hysteresis, i.e. the image doesn't change until the point controller
+            // fully transitions from above to below sea level or vice versa.
+            let imageIndex = currentlySelectedImage;
             if ( position.y > sceneModel.seaLevel ) {
               imageIndex = 0;
             }
-            else {
+            else if ( position.y < sceneModel.seaLevel ) {
               if ( position.x >
                    ( sceneModel.elevationAreaBounds.centerX + 40 + 0.6 * ( sceneModel.seaLevel - position.y ) ) ) {
                 imageIndex = 2;
