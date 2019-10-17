@@ -11,6 +11,7 @@ define( require => {
 
   // modules
   const Image = require( 'SCENERY/nodes/Image' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Path = require( 'SCENERY/nodes/Path' );
@@ -28,7 +29,7 @@ define( require => {
      */
     constructor( options ) {
 
-      options = _.extend( {
+      options = merge( {
         fill: 'rgba( 0, 0, 0, 0 )', // initially transparent so that it is invisible but has size
         lineWidth: 0,
         decorationType: 'flowers'  // valid values are 'flowers' and 'lightning'

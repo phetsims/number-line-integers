@@ -11,23 +11,24 @@ define( require => {
   // modules
   const ComboBox = require( 'SUN/ComboBox' );
   const ComboBoxItem = require( 'SUN/ComboBoxItem' );
+  const merge = require( 'PHET_CORE/merge' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const Text = require( 'SCENERY/nodes/Text' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Text = require( 'SCENERY/nodes/Text' );
 
   // strings
-  const januaryString = require( 'string!NUMBER_LINE_INTEGERS/january' );
-  const februaryString = require( 'string!NUMBER_LINE_INTEGERS/february' );
-  const marchString = require( 'string!NUMBER_LINE_INTEGERS/march' );
   const aprilString = require( 'string!NUMBER_LINE_INTEGERS/april' );
-  const mayString = require( 'string!NUMBER_LINE_INTEGERS/may' );
-  const juneString = require( 'string!NUMBER_LINE_INTEGERS/june' );
-  const julyString = require( 'string!NUMBER_LINE_INTEGERS/july' );
   const augustString = require( 'string!NUMBER_LINE_INTEGERS/august' );
-  const septemberString = require( 'string!NUMBER_LINE_INTEGERS/september' );
-  const octoberString = require( 'string!NUMBER_LINE_INTEGERS/october' );
-  const novemberString = require( 'string!NUMBER_LINE_INTEGERS/november' );
   const decemberString = require( 'string!NUMBER_LINE_INTEGERS/december' );
+  const februaryString = require( 'string!NUMBER_LINE_INTEGERS/february' );
+  const januaryString = require( 'string!NUMBER_LINE_INTEGERS/january' );
+  const julyString = require( 'string!NUMBER_LINE_INTEGERS/july' );
+  const juneString = require( 'string!NUMBER_LINE_INTEGERS/june' );
+  const marchString = require( 'string!NUMBER_LINE_INTEGERS/march' );
+  const mayString = require( 'string!NUMBER_LINE_INTEGERS/may' );
+  const novemberString = require( 'string!NUMBER_LINE_INTEGERS/november' );
+  const octoberString = require( 'string!NUMBER_LINE_INTEGERS/october' );
+  const septemberString = require( 'string!NUMBER_LINE_INTEGERS/september' );
 
   // constants
   const itemOptions = { font: new PhetFont( 16 ) };
@@ -41,7 +42,7 @@ define( require => {
      */
     constructor( monthProperty, listParent, options ) {
 
-      options = _.extend( {
+      options = merge( {
         xMargin: 13,
         yMargin: 6
       }, options );

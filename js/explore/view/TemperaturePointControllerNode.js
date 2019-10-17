@@ -12,6 +12,7 @@ define( require => {
 
   // modules
   const Color = require( 'SCENERY/util/Color' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -31,7 +32,7 @@ define( require => {
       // create a node that contains thermometer and triangle
       const compositeThermometerNode = new Node();
 
-      options = _.extend( {
+      options = merge( {
         node: compositeThermometerNode,
         connectorLine: false
       }, options );

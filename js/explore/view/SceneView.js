@@ -12,6 +12,7 @@ define( require => {
   // modules
   const Checkbox = require( 'SUN/Checkbox' );
   const ComparisonStatementAccordionBox = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementAccordionBox' );
+  const merge = require( 'PHET_CORE/merge' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -32,7 +33,7 @@ define( require => {
 
     constructor( sceneModel, layoutBounds, options ) {
 
-      options = _.extend( {
+      options = merge( {
         numberLineNodeOptions: {}
       }, options );
 

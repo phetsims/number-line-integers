@@ -12,6 +12,7 @@ define( require => {
   // modules
   const AccordionBox = require( 'SUN/AccordionBox' );
   const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementNode' );
+  const merge = require( 'PHET_CORE/merge' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -52,7 +53,7 @@ define( require => {
       const comparisonStatementNode = new ComparisonStatementNode( numberLine );
 
       // embed the comparison statement in an accordion box
-      super( comparisonStatementNode, _.extend( {}, DEFAULT_OPTIONS, {
+      super( comparisonStatementNode, merge( {}, DEFAULT_OPTIONS, {
         titleNode: new Text( comparisonStatementString, {
           font: TITLE_FONT,
           maxWidth: COMPARISON_STATEMENT_BOX_WIDTH * 0.8

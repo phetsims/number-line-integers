@@ -10,6 +10,7 @@ define( require => {
 
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const merge = require( 'PHET_CORE/merge' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
@@ -24,7 +25,7 @@ define( require => {
      */
     constructor( numberLine, elevationAreaBounds, options ) {
 
-      options = _.extend( {
+      options = merge( {
 
         // this style of point controller never locks to the number line
         lockToNumberLine: 'never',

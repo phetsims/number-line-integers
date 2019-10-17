@@ -14,6 +14,7 @@ define( require => {
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Bounds2 = require( 'DOT/Bounds2' );
+  const merge = require( 'PHET_CORE/merge' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const NLIQueryParameters = require( 'NUMBER_LINE_INTEGERS/common/NLIQueryParameters' );
   const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
@@ -65,13 +66,13 @@ define( require => {
       // the base class has a single number line, so make that one the Fahrenheit version
       super( {
         numberLineZeroPosition: getNumberLineZeroPosition( FAHRENHEIT_NUMBER_LINE_RANGE ),
-        numberLineOptions: _.extend( COMMON_NUMBER_LINE_OPTIONS, { initialDisplayedRange: FAHRENHEIT_NUMBER_LINE_RANGE } )
+        numberLineOptions: merge( COMMON_NUMBER_LINE_OPTIONS, { initialDisplayedRange: FAHRENHEIT_NUMBER_LINE_RANGE } )
       } );
 
       // @public (read-only) {NumberLIne} - the Celsius number line
       this.celsiusNumberLine = new NumberLine(
         getNumberLineZeroPosition( CELSIUS_NUMBER_LINE_RANGE ),
-        _.extend( COMMON_NUMBER_LINE_OPTIONS, { initialDisplayedRange: CELSIUS_NUMBER_LINE_RANGE } )
+        merge( COMMON_NUMBER_LINE_OPTIONS, { initialDisplayedRange: CELSIUS_NUMBER_LINE_RANGE } )
       );
 
       // @public (read-only)  {NumberLIne} - reference for the Fahrenheit number line that is consistent with the Celsius one

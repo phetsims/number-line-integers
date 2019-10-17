@@ -16,6 +16,7 @@ define( require => {
   const BankSceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/BankSceneModel' );
   const Dimension2 = require( 'DOT/Dimension2' );
   const HBox = require( 'SCENERY/nodes/HBox' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -140,7 +141,7 @@ define( require => {
 
     constructor( property, options ) {
 
-      options = _.extend( {
+      options = merge( {
         switchSize: new Dimension2( 50, 15 ),
         setEnabled: () => {}
       }, options );
