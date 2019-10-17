@@ -50,7 +50,7 @@ define( require => {
   );
   const CELSIUS_NUMBER_LINE_RANGE = new Range( -57, 40 );
   const FAHRENHEIT_NUMBER_LINE_RANGE = new Range( -70, 104 );
-  const NUMBER_LINE_HEIGHT = 405;
+  const NUMBER_LINE_HEIGHT = 500; // empirically determined
   const X_MOVE_AMOUNT = 1; // in model/view coords, amount to move a point controller to avoid overlap with another
   const Y_MOVE_AMOUNT = 1; // in model/view coords, amount to move a point controller to avoid overlap with another
   const COMMON_NUMBER_LINE_OPTIONS = {

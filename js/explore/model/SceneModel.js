@@ -20,6 +20,11 @@ define( require => {
   const SCENE_BOUNDS = NLIConstants.NLI_LAYOUT_BOUNDS; // bounds for the scenes match the layout bounds
 
   class SceneModel {
+
+    /**
+     * @param [Object] options
+     * @public
+     */
     constructor( options ) {
 
       options = merge( {

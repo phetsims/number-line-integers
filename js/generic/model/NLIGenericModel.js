@@ -56,8 +56,8 @@ define( require => {
       // @public (read-only){NumberLine} - the number line with which the user will interact
       this.numberLine = new NumberLine( NLIConstants.NLI_LAYOUT_BOUNDS.center.plusXY( 0, NL_Y_OFFSET ), {
         initialDisplayedRange: NUMBER_LINE_RANGES[ 0 ],
-        widthInModelSpace: NLIConstants.NLI_LAYOUT_BOUNDS.width - 200,
-        heightInModelSpace: NLIConstants.NLI_LAYOUT_BOUNDS.height - 200,
+        widthInModelSpace: NLIConstants.NLI_LAYOUT_BOUNDS.width - 100,
+        heightInModelSpace: NLIConstants.NLI_LAYOUT_BOUNDS.height - 160,
         initialPointSpecs: [ { initialValue: 1, color: INITIAL_POINT_COLOR } ]
       } );
 

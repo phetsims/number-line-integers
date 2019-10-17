@@ -40,7 +40,7 @@ define( require => {
 
       // Position the number line on the left portion of the screen and roughly centered vertically.  The details of
       // these values were empirically determined by comparing with the mockups in the design doc.
-      const numberLineZeroPosition = new Vector2( SCENE_BOUNDS.width * 0.4, SCENE_BOUNDS.centerY );
+      const numberLineZeroPosition = new Vector2( SCENE_BOUNDS.width * 0.37, SCENE_BOUNDS.centerY );
 
       super( {
         numberLineZeroPosition: numberLineZeroPosition,
@@ -48,7 +48,7 @@ define( require => {
           initialOrientation: NumberLineOrientation.HORIZONTAL,
           initialDisplayedRange: new Range( -100, 100 ),
           labelsInitiallyVisible: true,
-          widthInModelSpace: SCENE_BOUNDS.width * 0.4,
+          widthInModelSpace: SCENE_BOUNDS.width * 0.475,
           initialPointSpecs: [ {
             initialValue: INITIAL_PRIMARY_ACCOUNT_BALANCE,
             color: new Color( PRIMARY_ACCOUNT_POINT_COLOR )
