@@ -11,7 +11,6 @@ define( require => {
 
   // modules
   const Checkbox = require( 'SUN/Checkbox' );
-  const Color = require( 'SCENERY/util/Color' );
   const ComparisonStatementAccordionBox = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementAccordionBox' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -84,12 +83,12 @@ define( require => {
         listener: function() {
           sceneModel.resetScene();
         },
-        baseColor: Color.lightGray,
+        baseColor: '#f2f2f2',
         scale: 0.65,
         touchAreaDilation: 5,
 
-        // position just above the scene selection buttons and left aligned with them
-        left: layoutBounds.maxX - NLIConstants.EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET,
+        // position centered just above the scene selection buttons
+        centerX: layoutBounds.maxX - 93,
         bottom: layoutBounds.maxY - 165
       } );
       this.controlsLayer.addChild( sceneResetButton );
