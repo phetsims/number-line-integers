@@ -11,6 +11,7 @@ define( require => {
 
   // modules
   const BackgroundNode = require( 'SCENERY_PHET/BackgroundNode' );
+  const merge = require( 'PHET_CORE/merge' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -43,7 +44,7 @@ define( require => {
       // create a node with all the images that will be used to depict this elevatable item
       const compositeImageNode = new Node( { children: imageList } );
 
-      options = _.extend( {
+      options = merge( {
 
         // pass in the parent node that includes all images as the mode that will control the point
         node: compositeImageNode

@@ -11,6 +11,7 @@ define( require => {
   // modules
   const Color = require( 'SCENERY/util/Color' );
   const Image = require( 'SCENERY/nodes/Image' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
@@ -47,7 +48,7 @@ define( require => {
      */
     constructor( balanceProperty, balanceChangedByButtonEmitter, range, changeAmount, options ) {
 
-      options = _.extend( {}, { buttonBaseColor: Color.blue }, options );
+      options = merge( {}, { buttonBaseColor: Color.blue }, options );
 
       // TODO: no need for this function to be here, pull it into a helper function
       const makeCoinIcon = image => new Node( {
@@ -66,12 +67,12 @@ define( require => {
       };
 
       // create the buttons
-      const upButton = new RoundPushButton( _.extend( {
+      const upButton = new RoundPushButton( merge( {
         content: makeCoinIcon( depositingCoinsImage ),
         baseColor: options.buttonBaseColor,
         listener: () => { changeBalanceBy( changeAmount ); }
       }, BUTTON_OPTIONS ) );
-      const downButton = new RoundPushButton( _.extend( {
+      const downButton = new RoundPushButton( merge( {
         content: makeCoinIcon( withdrawingCoinsImage ),
         baseColor: options.buttonBaseColor,
         listener: () => { changeBalanceBy( -changeAmount ); }
@@ -83,7 +84,7 @@ define( require => {
         downButton.enabled = balance > range.min;
       } );
 
-      options = _.extend( {
+      options = merge( {
         children: [
           upButton,
           downButton

@@ -15,6 +15,7 @@ define( require => {
   const Circle = require( 'SCENERY/nodes/Circle' );
   const Line = require( 'SCENERY/nodes/Line' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const merge = require( 'PHET_CORE/merge' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -50,7 +51,7 @@ define( require => {
      */
     constructor( numberLine, options ) {
 
-      options = _.extend( {
+      options = merge( {
 
         numberLineWidth: 1,
         tickMarkLineWidth: 1,
@@ -263,16 +264,16 @@ define( require => {
       const handlePointAdded = point => {
 
         // add the node that will represent the point on the number line
-        const pointNode = new PointNode( point, numberLine, _.extend( {
+        const pointNode = new PointNode( point, numberLine, merge( {
           numberDisplayTemplate: options.numberDisplayTemplate
         }, options.pointNodeOptions ) );
         pointDisplayLayer.addChild( pointNode );
 
         // add the point that will represent the opposite point
-        const oppositePointNode = new PointNode( point, numberLine, _.extend( {
+        const oppositePointNode = new PointNode( point, numberLine, {
           isDoppelganger: true,
           numberDisplayTemplate: options.numberDisplayTemplate
-        } ) );
+        } );
         oppositePointDisplayLayer.addChild( oppositePointNode );
 
         // if enabled, add an absolute value "span indicator", which depicts the absolute value at some distance from
@@ -427,7 +428,7 @@ define( require => {
       parentNode.addChild( tickMark );
       parentNode.addChild( new Text(
         stringValue,
-        _.extend( tickLabelOptions, { font: this.options.tickMarkLabelFont } )
+        merge( tickLabelOptions, { font: this.options.tickMarkLabelFont } )
       ) );
 
     }
@@ -445,7 +446,7 @@ define( require => {
      */
     constructor( numberLinePoint, numberLine, options ) {
 
-      options = _.extend( {
+      options = merge( {
         isDoppelganger: false,
         customColorsForLabels: true,
         numberDisplayTemplate: '{{number}}'

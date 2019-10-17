@@ -15,6 +15,7 @@ define( require => {
   const Animation = require( 'TWIXT/Animation' );
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Easing = require( 'TWIXT/Easing' );
+  const merge = require( 'PHET_CORE/merge' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
   const NumberProperty = require( 'AXON/NumberProperty' );
@@ -33,7 +34,7 @@ define( require => {
      */
     constructor( options ) {
 
-      options = _.extend( {
+      options = merge( {
 
         // color used when represented in the view
         color: 'black',

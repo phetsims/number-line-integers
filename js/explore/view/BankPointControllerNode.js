@@ -16,6 +16,7 @@ define( require => {
   const Circle = require( 'SCENERY/nodes/Circle' );
   const Color = require( 'SCENERY/util/Color' );
   const Easing = require( 'TWIXT/Easing' );
+  const merge = require( 'PHET_CORE/merge' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -75,7 +76,7 @@ define( require => {
       } );
       controllerNode.addChild( balanceNode );
 
-      options = _.extend( { node: controllerNode }, options );
+      options = merge( { node: controllerNode }, options );
 
       super( pointController, options );
 
@@ -203,7 +204,7 @@ define( require => {
 
     constructor( options ) {
 
-      options = _.extend( { stroke: Color.black, fill: COIN_COLOR }, options );
+      options = merge( { stroke: Color.black, fill: COIN_COLOR }, options );
       super( COIN_RADIUS, options );
 
       // add the currency marking

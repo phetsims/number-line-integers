@@ -13,6 +13,7 @@ define( require => {
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Bounds2 = require( 'DOT/Bounds2' );
+  const merge = require( 'PHET_CORE/merge' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
@@ -43,7 +44,7 @@ define( require => {
      */
     constructor( zeroPosition, options ) {
 
-      options = _.extend( {
+      options = merge( {
 
         // {string} - whether the number line is initially oriented in the horizontal or vertical direction
         initialOrientation: NumberLineOrientation.HORIZONTAL,

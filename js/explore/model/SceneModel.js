@@ -10,9 +10,10 @@ define( require => {
 
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
-  const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+  const merge = require( 'PHET_CORE/merge' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
+  const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Range = require( 'DOT/Range' );
 
   // constants
@@ -21,13 +22,13 @@ define( require => {
   class SceneModel {
     constructor( options ) {
 
-      options = _.extend( {
+      options = merge( {
         numberLineZeroPosition: SCENE_BOUNDS.center,
         numberLineOptions: null // {Object|null} - options propagated to the NumberDisplay subcomponent
       }, options );
 
       // default options to be passed in to NumberLine
-      options.numberLineOptions = _.extend( {
+      options.numberLineOptions = merge( {
         initialDisplayedRange: new Range( -100, 100 ),
         initialPointSpecs: []
       }, options.numberLineOptions );

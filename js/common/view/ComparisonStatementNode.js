@@ -16,8 +16,9 @@ define( require => {
   const Color = require( 'SCENERY/util/Color' );
   const Easing = require( 'TWIXT/Easing' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
+  const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Path = require( 'SCENERY/nodes/Path' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -229,7 +230,7 @@ define( require => {
      */
     constructor( selectedOperatorProperty, options ) {
 
-      options = _.extend( {
+      options = merge( {
         selectorWidth: 25,
         selectorHeight: 25,
         font: new PhetFont( 18 ),

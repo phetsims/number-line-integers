@@ -12,8 +12,9 @@ define( require => {
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const DragListener = require( 'SCENERY/listeners/DragListener' );
   const Line = require( 'SCENERY/nodes/Line' );
-  const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
+  const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Property = require( 'AXON/Property' );
   const ShadedSphereNode = require( 'SCENERY_PHET/ShadedSphereNode' );
 
@@ -29,7 +30,7 @@ define( require => {
      */
     constructor( pointController, options ) {
 
-      options = _.extend( {
+      options = merge( {
 
         // The node used for the view representation.  It's X and Y position will be set based on the position of the
         // corresponding point controller, so it should be set up with the appropriate offset bounds.  A shaded sphere

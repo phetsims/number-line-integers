@@ -13,9 +13,10 @@ define( require => {
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Color = require( 'SCENERY/util/Color' );
-  const NumberProperty = require( 'AXON/NumberProperty' );
+  const merge = require( 'PHET_CORE/merge' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
   const PaintColorProperty = require( 'SCENERY/util/PaintColorProperty' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
   const Property = require( 'AXON/Property' );
@@ -42,7 +43,7 @@ define( require => {
      */
     constructor( sceneModel, labelText, options ) {
 
-      options = _.extend( {
+      options = merge( {
         noTemperatureColor: Color.white,
         defaultTemperature: 0, // in Celsius, used when no temperature is available from the model
         lockToNumberLine: 'never'
