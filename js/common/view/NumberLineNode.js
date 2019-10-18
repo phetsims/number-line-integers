@@ -74,7 +74,6 @@ define( require => {
 
         // options for the point nodes
         pointNodeOptions: {
-          labelFont: new PhetFont( 16 ),
           customColorsForLabels: true
         }
 
@@ -449,7 +448,8 @@ define( require => {
       options = merge( {
         isDoppelganger: false,
         customColorsForLabels: true,
-        numberDisplayTemplate: '{{number}}'
+        numberDisplayTemplate: '{{number}}',
+        labelFont: new PhetFont( 16 )
       }, options );
 
       super();
