@@ -40,13 +40,13 @@ define( require => {
   class BankSceneView extends SceneView {
 
     /**
-     * @param {BankSceneModel} sceneModel
+     * @param {BankSceneModel} bankSceneModel
      * @param {Bounds2} layoutBounds
      * @public
      */
-    constructor( sceneModel, layoutBounds ) {
+    constructor( bankSceneModel, layoutBounds ) {
 
-      super( sceneModel, layoutBounds, {
+      super( bankSceneModel, layoutBounds, {
         numberLineNodeOptions: {
           numberDisplayTemplate: StringUtils.fillIn( moneyAmountString, { currencyUnit: currencyUnitsString } )
         }
@@ -56,13 +56,13 @@ define( require => {
       const numberLineLabel = new Text( balanceString, {
         font: NUMBER_LINE_LABEL_FONT,
         right: this.numberLineNode.left - 4,
-        centerY: sceneModel.numberLine.centerPosition.y
+        centerY: bankSceneModel.numberLine.centerPosition.y
       } );
       this.scenesLayer.addChild( numberLineLabel );
-      sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
+      bankSceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
 
       // add the switch that controls whether one or two accounts are shown
-      this.scenesLayer.addChild( new AccountVisibilityControlSwitch( sceneModel.showComparisonAccountProperty, {
+      this.scenesLayer.addChild( new AccountVisibilityControlSwitch( bankSceneModel.showComparisonAccountProperty, {
         right: this.layoutBounds.maxX - INSET,
         centerY: this.numberLineNode.centerY
       } ) );
@@ -73,22 +73,22 @@ define( require => {
 
       // add node to represent the point controller that is always visible
       const permanentPointControllerNode = new BankPointControllerNode(
-        sceneModel.primaryAccountPointController,
-        sceneModel.primaryAccount.balanceChangedByButtonEmitter,
+        bankSceneModel.primaryAccountPointController,
+        bankSceneModel.primaryAccount.balanceChangedByButtonEmitter,
         'flowers',
-        { connectorLineVisibleProperty: sceneModel.showNumberLineProperty }
+        { connectorLineVisibleProperty: bankSceneModel.showNumberLineProperty }
       );
       pointControllerNodesLayer.addChild( permanentPointControllerNode );
 
       // add and remove a node for the comparison account point controller as it comes and goes
       let comparisonAccountPointControllerNode = null;
-      sceneModel.comparisonAccountPointControllerProperty.lazyLink( pointController => {
+      bankSceneModel.comparisonAccountPointControllerProperty.lazyLink( pointController => {
         if ( pointController ) {
           comparisonAccountPointControllerNode = new BankPointControllerNode(
             pointController,
-            sceneModel.comparisonAccount.balanceChangedByButtonEmitter,
+            bankSceneModel.comparisonAccount.balanceChangedByButtonEmitter,
             'lightning',
-            { connectorLineVisibleProperty: sceneModel.showNumberLineProperty }
+            { connectorLineVisibleProperty: bankSceneModel.showNumberLineProperty }
           );
           pointControllerNodesLayer.addChild( comparisonAccountPointControllerNode );
           comparisonAccountPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
@@ -104,23 +104,24 @@ define( require => {
                                                  this.checkboxGroup.bounds.minX ) / 2;
 
       // add the controller for the primary account
-      this.scenesLayer.addChild( new AccountBalanceControllerNode(
-        sceneModel.primaryAccount.balanceProperty,
-        sceneModel.primaryAccount.balanceChangedByButtonEmitter,
-        sceneModel.numberLine.displayedRangeProperty.value,
+      const primaryAccountBalanceControllerNode = new AccountBalanceControllerNode(
+        bankSceneModel.primaryAccount.balanceProperty,
+        bankSceneModel.primaryAccount.balanceChangedByButtonEmitter,
+        bankSceneModel.numberLine.displayedRangeProperty.value,
         BALANCE_CHANGE_AMOUNT,
         {
           buttonBaseColor: BankSceneModel.PRIMARY_ACCOUNT_POINT_COLOR,
           centerX: accountBalanceControllersCenterX,
           top: this.numberLineNode.centerY + 70
         }
-      ) );
+      );
+      this.scenesLayer.addChild( primaryAccountBalanceControllerNode );
 
       // add the controller for the comparison account, and show it only when that account is enabled
       const comparisonAccountBalanceControllerNode = new AccountBalanceControllerNode(
-        sceneModel.comparisonAccount.balanceProperty,
-        sceneModel.comparisonAccount.balanceChangedByButtonEmitter,
-        sceneModel.numberLine.displayedRangeProperty.value,
+        bankSceneModel.comparisonAccount.balanceProperty,
+        bankSceneModel.comparisonAccount.balanceChangedByButtonEmitter,
+        bankSceneModel.numberLine.displayedRangeProperty.value,
         BALANCE_CHANGE_AMOUNT,
         {
           buttonBaseColor: BankSceneModel.COMPARISON_ACCOUNT_POINT_COLOR,
@@ -128,8 +129,26 @@ define( require => {
           bottom: this.numberLineNode.centerY - 70
         }
       );
-      sceneModel.showComparisonAccountProperty.linkAttribute( comparisonAccountBalanceControllerNode, 'visible' );
+      bankSceneModel.showComparisonAccountProperty.linkAttribute( comparisonAccountBalanceControllerNode, 'visible' );
       this.scenesLayer.addChild( comparisonAccountBalanceControllerNode );
+
+      // Monitor the account controllers for when their buttons are released by the user and make sure that the values
+      // of the two accounts are not the same and, if they are, correct the situation.
+      primaryAccountBalanceControllerNode.buttonReleasedEmitter.addListener( () => {
+        if ( bankSceneModel.showComparisonAccountProperty.value &&
+             bankSceneModel.comparisonAccount.balanceProperty.value === bankSceneModel.primaryAccount.balanceProperty.value ) {
+
+          // set the comparison account to the previous value of the primary account, in effect swapping values
+          bankSceneModel.comparisonAccount.balanceProperty.value = bankSceneModel.primaryAccount.previousBalance;
+        }
+      } );
+      comparisonAccountBalanceControllerNode.buttonReleasedEmitter.addListener( () => {
+        if ( bankSceneModel.comparisonAccount.balanceProperty.value === bankSceneModel.primaryAccount.balanceProperty.value ) {
+
+          // set the primary account to the previous value of the comparison account, in effect swapping values
+          bankSceneModel.primaryAccount.balanceProperty.value = bankSceneModel.comparisonAccount.previousBalance;
+        }
+      } );
     }
   }
 

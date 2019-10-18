@@ -60,26 +60,8 @@ define( require => {
       this.primaryAccount = new Account( INITIAL_PRIMARY_ACCOUNT_BALANCE );
 
       // hook the primary account balance up to the first number line point
-      this.primaryAccount.balanceProperty.link( ( balance, previousBalance ) => {
-        const primaryAccountNumberLinePoint = this.numberLine.residentPoints.get( 0 );
-        if ( primaryAccountNumberLinePoint.valueProperty.value !== balance ) {
-
-          // This case is generally hit when the user has changed the account balance through the buttons as opposed
-          // to through dragging the point controllers.  In this case, we need to explicitly prevent the account
-          // balances from overlapping, since that's how we want the sim to behave.
-          if ( this.numberLine.residentPoints.length > 1 ) {
-
-            // This case is generally hit when the user has changed the account balance through the buttons as opposed
-            // to through dragging the point controllers.  In this case, we need to explicitly prevent the account
-            // balances from overlapping, since that's how we want the sim to behave.
-            if ( this.comparisonAccount.balanceProperty.value === balance ) {
-
-              // the balance values are equal, so prevent overlap by swapping the values
-              this.comparisonAccount.balanceProperty.value = previousBalance;
-            }
-          }
-          this.numberLine.residentPoints.get( 0 ).proposeValue( balance );
-        }
+      this.primaryAccount.balanceProperty.link( balance => {
+        this.numberLine.residentPoints.get( 0 ).proposeValue( balance );
       } );
       this.numberLine.residentPoints.get( 0 ).valueProperty.link( value => {
         this.primaryAccount.balanceProperty.value = value;
@@ -89,19 +71,9 @@ define( require => {
       this.comparisonAccount = new Account( INITIAL_COMPARISON_ACCOUNT_BALANCE );
 
       // hook the comparison account balance up to the second number line point
-      this.comparisonAccount.balanceProperty.link( ( balance, previousBalance ) => {
+      this.comparisonAccount.balanceProperty.link( balance => {
         if ( this.numberLine.residentPoints.length > 1 ) {
-          const comparisonAccountNumberLinePoint = this.numberLine.residentPoints.get( 1 );
-          if ( comparisonAccountNumberLinePoint.valueProperty.value !== balance ) {
-
-            // This case is generally hit when the user has changed the account balance through the buttons as opposed
-            // to through dragging the point controllers.  In this case, we need to explicitly prevent the account
-            // balances from overlapping, since that's how we want the sim to behave.
-            if ( balance === this.primaryAccount.balanceProperty.value ) {
-              this.primaryAccount.balanceProperty.value = previousBalance;
-            }
-            this.numberLine.residentPoints.get( 1 ).proposeValue( balance );
-          }
+          this.numberLine.residentPoints.get( 1 ).proposeValue( balance );
         }
       } );
 
@@ -210,6 +182,13 @@ define( require => {
       // and -1 for a decrease.
       this.balanceChangedByButtonEmitter = new Emitter( {
         parameters: [ { phetioType: NumberIO, name: 'balanceChange' } ]
+      } );
+
+      // @public (read-only) {Number|null} - previous balance, null if there is none
+      this.previousBalance = null;
+
+      this.balanceProperty.lazyLink( ( newBalance, oldBalance ) => {
+        this.previousBalance = oldBalance;
       } );
     }
 

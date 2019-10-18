@@ -10,6 +10,7 @@ define( require => {
 
   // modules
   const Color = require( 'SCENERY/util/Color' );
+  const Emitter = require( 'AXON/Emitter' );
   const Image = require( 'SCENERY/nodes/Image' );
   const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -93,6 +94,17 @@ define( require => {
       }, options );
 
       super( options );
+
+      // @public (read-only) - emitter that fires when either button is released
+      this.buttonReleasedEmitter = new Emitter();
+
+      const fireEmitterOnButtonReleased = down => {
+        if ( !down ) {
+          this.buttonReleasedEmitter.emit();
+        }
+      };
+      upButton.buttonModel.downProperty.lazyLink( fireEmitterOnButtonReleased );
+      downButton.buttonModel.downProperty.lazyLink( fireEmitterOnButtonReleased );
     }
   }
 
