@@ -31,6 +31,7 @@ define( require => {
   const COMPARISON_STATEMENT_SPACING = 6; // in screen coords
   const NUMBER_BACKGROUND_DILATION_AMOUNT = 3;
   const NUMBER_BACKGROUND_LINE_WIDTH = 2;
+  const BUTTON_TOUCH_DILATION = 8;
 
   class ComparisonStatementNode extends Node {
 
@@ -257,6 +258,9 @@ define( require => {
         centerY: 0
       } );
       lessThanOperatorSelectorNode.addChild( lessThanText );
+      lessThanOperatorSelectorNode.touchArea = lessThanOperatorSelectorNode.bounds.withOffsets(
+        BUTTON_TOUCH_DILATION, BUTTON_TOUCH_DILATION, 0, BUTTON_TOUCH_DILATION
+      );
       lessThanOperatorSelectorNode.addInputListener( new ButtonListener( {
         fire: () => {
           selectedOperatorProperty.value = '<';
@@ -282,6 +286,9 @@ define( require => {
         centerY: 0
       } );
       greaterThanOperatorSelectorNode.addChild( greaterThanText );
+      greaterThanOperatorSelectorNode.touchArea = greaterThanOperatorSelectorNode.bounds.withOffsets(
+        0, BUTTON_TOUCH_DILATION, BUTTON_TOUCH_DILATION, BUTTON_TOUCH_DILATION
+      );
       greaterThanOperatorSelectorNode.addInputListener( new ButtonListener( {
         fire: () => {
           selectedOperatorProperty.value = '>';
