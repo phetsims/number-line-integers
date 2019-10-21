@@ -55,7 +55,7 @@ define( require => {
       const makeCoinIcon = image => new Node( {
         children: [
           new Image( image, { scale: 0.15 } ),
-          new Text( currencyUnitsString, { center: CURRENCY_TEXT_CENTER, scale: 1.15 } )
+          new Text( currencyUnitsString, { center: CURRENCY_TEXT_CENTER, scale: 1.15, maxWidth: 15 } )
         ]
       } );
 
