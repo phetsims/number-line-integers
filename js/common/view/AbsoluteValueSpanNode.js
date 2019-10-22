@@ -28,7 +28,7 @@ define( require => {
   const CAP_LENGTH = 10;
   const ANIMATION_SPEED = 160; // in screen coords per second
   const MAX_ANIMATION_DURATION = 0.5; // in seconds
-  const EQUATION_NUMBER_FONT = new PhetFont( 14 );
+  const EQUATION_NUMBER_FONT = new PhetFont( 18 );
   const EXAMPLE_EQUATION_NUMBER_NODE = new Text( 8, { font: EQUATION_NUMBER_FONT } );
   const ABS_VAL_LINE_TOP = new Vector2( 0, EXAMPLE_EQUATION_NUMBER_NODE.top );
   const ABS_VAL_LINE_BOTTOM = new Vector2( 0, EXAMPLE_EQUATION_NUMBER_NODE.bottom );
@@ -60,7 +60,7 @@ define( require => {
       this.translateAnimation = null;
 
       // add the equation text
-      const equationNode = new Text( '', { font: new PhetFont( 14 ) } );
+      const equationNode = new Node();
       const equationBackground = new BackgroundNode( equationNode, NLIConstants.LABEL_BACKGROUND_OPTIONS );
       this.addChild( equationBackground );
 
@@ -147,7 +147,7 @@ define( require => {
         const pointPosition = numberLinePoint.getPositionInModelSpace();
         if ( numberLine.isHorizontal ) {
           equationBackground.centerX = ( numberLine.centerPosition.x + pointPosition.x ) / 2;
-          equationBackground.bottom = numberLine.centerPosition.y - distanceFromNumberLine - CAP_LENGTH / 2 - 4;
+          equationBackground.bottom = numberLine.centerPosition.y - distanceFromNumberLine - CAP_LENGTH / 2;
         }
         else {
           equationBackground.centerX = pointPosition.x - distanceFromNumberLine;
