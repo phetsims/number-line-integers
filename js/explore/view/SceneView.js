@@ -24,6 +24,7 @@ define( require => {
 
   // constants
   const CHECKBOX_FONT = new PhetFont( 16 );
+  const CHECKBOX_DILATION = 6;
 
   // strings
   const absoluteValueString = require( 'string!NUMBER_LINE_INTEGERS/absoluteValue' );
@@ -50,24 +51,30 @@ define( require => {
       this.scenesLayer = new Node();
       this.addChild( this.scenesLayer );
 
+      // checkboxes that control common model properties
+      const checkboxes = [
+        new Checkbox(
+          new Text( absoluteValueString, { font: CHECKBOX_FONT } ),
+          sceneModel.numberLine.showAbsoluteValuesProperty
+        ),
+        new Checkbox(
+          new Text( numberLineString, { font: CHECKBOX_FONT } ),
+          sceneModel.showNumberLineProperty
+        )
+      ];
+
       // @protected {VBox} - node containing the checkboxes that control common model properties
       this.checkboxGroup = new VBox( {
-        children: [
-          new Checkbox(
-            new Text( absoluteValueString, { font: CHECKBOX_FONT } ),
-            sceneModel.numberLine.showAbsoluteValuesProperty
-          ),
-          new Checkbox(
-            new Text( numberLineString, { font: CHECKBOX_FONT } ),
-            sceneModel.showNumberLineProperty
-          )
-        ],
+        children: checkboxes,
         spacing: 15,
         align: 'left',
         left: layoutBounds.maxX - NLIConstants.EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET,
         top: layoutBounds.minY + 10
       } );
       this.controlsLayer.addChild( this.checkboxGroup );
+
+      // adds touch dilations to the checkboxes in the checkboxGroup
+      checkboxes.forEach( checkbox => { checkbox.touchArea = checkbox.localBounds.dilated( CHECKBOX_DILATION ); } );
 
       // @protected
       this.comparisonStatementAccordionBox = new ComparisonStatementAccordionBox( sceneModel.numberLine );
