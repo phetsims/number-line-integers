@@ -31,6 +31,7 @@ define( require => {
   // constants
   const MIN_WIDTH = 80; // screen coords, empirically determined
   const MAX_WIDTH = 200; // screen coords, empirically determined
+  const TOUCH_DILATION = 7; // dilates piggy banks enough to not overlap touch areas with account balance buttons
   const MOST_POSITIVE_FILL = Color.toColor( '#1fb493' );
   const LEAST_POSITIVE_FILL = Color.toColor( '#a5e1d4' );
   const MOST_NEGATIVE_FILL = Color.toColor( '#fb1d25' );
@@ -76,6 +77,9 @@ define( require => {
         maxWidth: 65
       } );
       controllerNode.addChild( balanceNode );
+
+      // dilates the touch area for the controllerNode
+      controllerNode.touchArea = controllerNode.bounds.dilated( TOUCH_DILATION );
 
       options = merge( { node: controllerNode }, options );
 

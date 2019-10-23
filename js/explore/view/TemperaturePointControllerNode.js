@@ -21,6 +21,9 @@ define( require => {
   const TemperatureAndColorSensorNode = require( 'SCENERY_PHET/TemperatureAndColorSensorNode' );
   const Text = require( 'SCENERY/nodes/Text' );
 
+  // constants
+  const TOUCH_DILATION = 5;
+
   class TemperaturePointControllerNode extends PointControllerNode {
 
     /**
@@ -60,6 +63,8 @@ define( require => {
         top: temperatureAndColorSensorNode.top + 3 // offset empirically determined
       } );
       compositeThermometerNode.addChild( thermometerLabel );
+
+      compositeThermometerNode.touchArea = compositeThermometerNode.bounds.dilated( TOUCH_DILATION );
 
       super( pointController, options );
     }

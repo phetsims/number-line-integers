@@ -42,6 +42,7 @@ define( require => {
       assert && assert( !options || !options.node, 'options should not include a node for this constructor' );
 
       // create a node with all the images that will be used to depict this elevatable item
+      // TODO: figure out how to handle touch dilation: just dilating the bounds gives the person too large of a touch area
       const compositeImageNode = new Node( { children: imageList } );
 
       options = merge( {
