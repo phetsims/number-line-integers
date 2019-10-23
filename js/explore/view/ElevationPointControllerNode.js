@@ -23,6 +23,9 @@ define( require => {
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
 
+  // constants
+  const IMAGE_DILATION = 20;
+
   // strings
   const amountAboveSeaLevelString = require( 'string!NUMBER_LINE_INTEGERS/amountAboveSeaLevel' );
   const amountBelowSeaLevelString = require( 'string!NUMBER_LINE_INTEGERS/amountBelowSeaLevel' );
@@ -41,8 +44,10 @@ define( require => {
 
       assert && assert( !options || !options.node, 'options should not include a node for this constructor' );
 
+      // dilates each image's touch area
+      imageList.forEach( image => { image.touchArea = image.localBounds.dilated( IMAGE_DILATION ); } );
+
       // create a node with all the images that will be used to depict this elevatable item
-      // TODO: figure out how to handle touch dilation: just dilating the bounds gives the person too large of a touch area
       const compositeImageNode = new Node( { children: imageList } );
 
       options = merge( {
