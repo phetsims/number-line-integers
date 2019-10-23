@@ -32,8 +32,10 @@ define( require => {
 
   // constants
   const CHECKBOX_FONT = new PhetFont( 16 );
+  const CHECKBOX_DILATION = 6;
   const ARROW_ICON_LENGTH = 40;
   const COMBO_BOX_FONT = new PhetFont( 14 );
+  const ORIENTATION_BUTTON_DILATION = 2;
 
   // strings
   const absoluteValueString = require( 'string!NUMBER_LINE_INTEGERS/absoluteValue' );
@@ -60,31 +62,35 @@ define( require => {
       controlsLayer.addChild( comparisonStatementAccordionBox );
 
       // add the check boxes that will control the number line's presentation
+      const checkboxes = [
+        new Checkbox(
+          new Text( labelsString, { font: CHECKBOX_FONT } ),
+          model.numberLine.labelsVisibleProperty
+        ),
+        new Checkbox(
+          new Text( tickMarksString, { font: CHECKBOX_FONT } ),
+          model.numberLine.tickMarksVisibleProperty
+        ),
+        new Checkbox(
+          new Text( oppositeString, { font: CHECKBOX_FONT } ),
+          model.numberLine.oppositesVisibleProperty
+        ),
+        new Checkbox(
+          new Text( absoluteValueString, { font: CHECKBOX_FONT } ),
+          model.numberLine.showAbsoluteValuesProperty
+        )
+      ];
       const checkboxGroup = new VBox( {
-        children: [
-          new Checkbox(
-            new Text( labelsString, { font: CHECKBOX_FONT } ),
-            model.numberLine.labelsVisibleProperty
-          ),
-          new Checkbox(
-            new Text( tickMarksString, { font: CHECKBOX_FONT } ),
-            model.numberLine.tickMarksVisibleProperty
-          ),
-          new Checkbox(
-            new Text( oppositeString, { font: CHECKBOX_FONT } ),
-            model.numberLine.oppositesVisibleProperty
-          ),
-          new Checkbox(
-            new Text( absoluteValueString, { font: CHECKBOX_FONT } ),
-            model.numberLine.showAbsoluteValuesProperty
-          )
-        ],
+        children: checkboxes,
         spacing: 15,
         align: 'left',
         left: this.layoutBounds.maxX - 220,
         top: this.layoutBounds.minY + 10
       } );
       controlsLayer.addChild( checkboxGroup );
+
+      // expands the touch area for the checkboxes
+      checkboxes.forEach( checkbox => { checkbox.touchArea = checkbox.localBounds.dilated( CHECKBOX_DILATION ); } );
 
       const arrowIconOptions = {
         doubleHead: true,
@@ -167,8 +173,8 @@ define( require => {
           deselectedButtonOpacity: 0.25,
           orientation: 'horizontal',
           spacing: 12,
-          touchAreaXDilation: 5,
-          touchAreaYDilation: 8
+          touchAreaXDilation: ORIENTATION_BUTTON_DILATION,
+          touchAreaYDilation: ORIENTATION_BUTTON_DILATION
         } );
       controlsLayer.addChild( orientationRadioButtonGroup );
 
