@@ -20,6 +20,7 @@ define( require => {
 
   // constants
   const SPHERE_RADIUS = 10; // in screen coords, radius of sphere that is used if no controller node is provided
+  const SPHERE_TOUCH_DILATION = 4;
   const ALWAYS_TRUE_PROPERTY = new BooleanProperty( true );
 
   class PointControllerNode extends Node {
@@ -59,6 +60,11 @@ define( require => {
         mainColor: pointController.color
       } );
       this.addChild( this.draggableNode );
+
+      // if our draggable node is the default shaded sphere, give it a default touch dilation
+      if ( !options.node ) {
+        this.draggableNode.touchArea = this.draggableNode.bounds.dilated( SPHERE_TOUCH_DILATION );
+      }
 
       // function to update the visibility of the connector line
       const updateConnectorLineVisibility = () => {
