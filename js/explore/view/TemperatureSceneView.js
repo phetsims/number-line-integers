@@ -22,6 +22,7 @@ define( require => {
   const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
   const Property = require( 'AXON/Property' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const RichText = require( 'SCENERY/nodes/RichText' );
   const SceneView = require( 'NUMBER_LINE_INTEGERS/explore/view/SceneView' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const TemperatureMapNode = require( 'NUMBER_LINE_INTEGERS/explore/view/TemperatureMapNode' );
@@ -37,13 +38,14 @@ define( require => {
   const DARK_COLOR_THRESHOLD = 150;
 
   // strings
-  const temperatureString = require( 'string!NUMBER_LINE_INTEGERS/temperature' );
-  const temperatureAmountCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountCelsius' );
-  const temperatureAmountFahrenheitString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountFahrenheit' );
-  const temperatureLabelFahrenheitString = require( 'string!NUMBER_LINE_INTEGERS/temperatureLabelFahrenheit' );
-  const temperatureLabelCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureLabelCelsius' );
   const negativeTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/negativeTemperatureAmount' );
   const positiveTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/positiveTemperatureAmount' );
+  const temperatureAmountCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountCelsius' );
+  const temperatureAmountFahrenheitString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountFahrenheit' );
+  const temperatureLabelCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureLabelCelsius' );
+  const temperatureLabelFahrenheitString = require( 'string!NUMBER_LINE_INTEGERS/temperatureLabelFahrenheit' );
+  const temperatureMapCaptionString = require( 'string!NUMBER_LINE_INTEGERS/temperatureMapCaption' );
+  const temperatureString = require( 'string!NUMBER_LINE_INTEGERS/temperature' );
   const zeroTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/zeroTemperatureAmount' );
 
   class TemperatureSceneView extends SceneView {
@@ -103,17 +105,28 @@ define( require => {
       } );
       this.scenesLayer.addChild( this.monthsComboBox );
 
-      // @private
+      // @private - map of the world that depicts temperature data
       this.temperatureMap = new TemperatureMapNode( sceneModel.monthProperty, sceneModel.mapBounds );
       this.temperatureMap.center = sceneModel.mapBounds.center;
       this.scenesLayer.addChild( this.temperatureMap );
 
       // add the node that represents the box that will hold the thermometers
-      this.scenesLayer.addChild( new Rectangle.bounds( sceneModel.thermometerBoxBounds, {
+      const thermometerBox = new Rectangle.bounds( sceneModel.thermometerBoxBounds, {
         fill: 'white',
         stroke: 'black',
         cornerRadius: 6
-      } ) );
+      } );
+      this.scenesLayer.addChild( thermometerBox );
+
+      // caption for the temperature map
+      const temperatureMapCaption = new RichText( temperatureMapCaptionString, {
+        align: 'center',
+        centerX: this.temperatureMap.centerX,
+        top: this.temperatureMap.bottom + 7, // a little bit under the map
+        font: new PhetFont( 10 ),
+        fill: '#999999'
+      } );
+      this.scenesLayer.addChild( temperatureMapCaption );
 
       // add label for the number line
       const numberLineLabel = new Text( temperatureString, {
