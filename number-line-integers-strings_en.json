@@ -92,6 +92,9 @@
   "thermometerCLabel": {
     "value": "C"
   },
+  "temperatureMapCaption": {
+    "value": "2018 Monthly Averaged 2m Temperature<br>Generated using Copernicus Climate Change Service Information (2019)"
+  },
   "january": {
     "value": "January"
   },
