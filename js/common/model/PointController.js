@@ -65,9 +65,11 @@ define( require => {
       // @private
       this.offsetFromHorizontalNumberLine = options.offsetFromHorizontalNumberLine;
       this.offsetFromVerticalNumberLine = options.offsetFromVerticalNumberLine;
-      this.numberLines = options.numberLines;
       this.pointValueChangeHandlers = []; // only relevant for associated number line points
       this.lockToNumberLine = options.lockToNumberLine;
+
+      // @public (read-only) {NumberLine[]}
+      this.numberLines = options.numberLines;
 
       // @public (read-only) {Vector2Property} - position of this point in model space
       this.positionProperty = new Vector2Property( Vector2.ZERO, {

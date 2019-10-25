@@ -15,6 +15,7 @@ define( require => {
   const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+  const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const Property = require( 'AXON/Property' );
   const ShadedSphereNode = require( 'SCENERY_PHET/ShadedSphereNode' );
 
@@ -62,8 +63,16 @@ define( require => {
       this.addChild( this.draggableNode );
 
       // if our draggable node is the default shaded sphere, give it a default touch dilation
+      const setTouchDilationBasedOnOrientation = orientation => {
+        this.draggableNode.touchArea = this.draggableNode.localBounds.dilated( SPHERE_TOUCH_DILATION );
+        if ( orientation === NumberLineOrientation.HORIZONTAL ) {
+          this.draggableNode.touchArea.dilateY( SPHERE_TOUCH_DILATION * 2 );
+        } else {
+          this.draggableNode.touchArea.dilateX( SPHERE_TOUCH_DILATION * 2 );
+        }
+      };
       if ( !options.node ) {
-        this.draggableNode.touchArea = this.draggableNode.bounds.dilated( SPHERE_TOUCH_DILATION );
+        pointController.numberLine.orientationProperty.link( setTouchDilationBasedOnOrientation );
       }
 
       // function to update the visibility of the connector line
@@ -142,6 +151,9 @@ define( require => {
         pointController.inProgressAnimationProperty.unlink( inProgressAnimationChangedHandler );
         if ( options.connectorLineVisibleProperty.hasListener( updateConnectorLineVisibility ) ) {
           options.connectorLineVisibleProperty.unlink( updateConnectorLineVisibility );
+        }
+        if ( !options.node ) {
+          pointController.numberLine.unlink( setTouchDilationBasedOnOrientation );
         }
       };
     }
