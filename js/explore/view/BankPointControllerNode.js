@@ -93,6 +93,22 @@ define( require => {
       // control visibility of the absolute value readout
       pointController.numberLine.showAbsoluteValuesProperty.linkAttribute( absoluteValueBackground, 'visible' );
 
+      // update the position of the absolute value readout (i.e. the text node that says things like, "balance of $2"
+      const updateAbsoluteValueReadoutPosition = () => {
+        if ( decorationType === 'flowers' ) {
+          absoluteValueBackground.centerX = controllerNode.centerX - 9; // tweaked a bit to be centered under feet
+          absoluteValueBackground.top = controllerNode.y +
+                                        piggyBankNode.height / 2 * controllerNode.getScaleVector().y +
+                                        READOUT_DISTANCE_FROM_IMAGE;
+        }
+        else {
+          absoluteValueBackground.centerX = controllerNode.centerX - 2; // tweaked a bit to be centered over coin slot
+          absoluteValueBackground.bottom = controllerNode.y -
+                                           piggyBankNode.height / 2 * controllerNode.getScaleVector().y -
+                                           READOUT_DISTANCE_FROM_IMAGE;
+        }
+      };
+
       // update the node's appearance as its position changes
       const valueRange = pointController.numberLine.displayedRangeProperty.value;
       const unscaledWidth = controllerNode.width;
@@ -144,14 +160,7 @@ define( require => {
           absoluteValueText.fill = value > 0 ? MOST_POSITIVE_FILL : ZERO_FILL;
         }
         absoluteValueText.text = StringUtils.fillIn( stringTemplate, { value: Math.abs( value ) } );
-        if ( decorationType === 'flowers' ) {
-          absoluteValueBackground.centerX = controllerNode.centerX - 9; // tweaked a bit to be centered under feet
-          absoluteValueBackground.top = controllerNode.bottom + READOUT_DISTANCE_FROM_IMAGE;
-        }
-        else {
-          absoluteValueBackground.centerX = controllerNode.centerX - 2; // tweaked a bit to be centered over coin slot
-          absoluteValueBackground.bottom = controllerNode.top - READOUT_DISTANCE_FROM_IMAGE;
-        }
+        updateAbsoluteValueReadoutPosition();
       };
       pointController.positionProperty.link( updateController );
 
