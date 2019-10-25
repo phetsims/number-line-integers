@@ -153,7 +153,7 @@ define( require => {
           options.connectorLineVisibleProperty.unlink( updateConnectorLineVisibility );
         }
         if ( !options.node ) {
-          pointController.numberLine.unlink( setTouchDilationBasedOnOrientation );
+          pointController.numberLine.orientationProperty.unlink( setTouchDilationBasedOnOrientation );
         }
       };
     }

@@ -158,6 +158,8 @@ define( require => {
     get controlledNumberLinePoint() { return this.getControlledNumberLinePoint(); }
 
     /**
+     * TODO: This looks like a getter that was left in place after the refactor where the point controller could handle
+     * multiple number lines.  It should be removed and replaced.
      * gets the first controlled number line if it exists; null if otherwise
      * @returns {NumberLine|null}
      * @public
