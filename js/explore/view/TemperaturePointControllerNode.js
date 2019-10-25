@@ -49,6 +49,7 @@ define( require => {
           thermometerNodeOptions: {
             fluidMainColor: new Color( 0, 120, 0 ),
             fluidHighlightColor: new Color( 0, 210, 0 ),
+            backgroundFill: 'rgba( 255, 255, 255, 0.9 )',
             tickSpacingTemperature: 20,
             majorTickLength: 0,
             minorTickLength: 0
