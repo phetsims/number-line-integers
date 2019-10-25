@@ -86,7 +86,7 @@ define( require => {
       super( pointController, options );
 
       // the readout that will display the absolute value in a phrase
-      const absoluteValueText = new Text( '', { font: new PhetFont( 14 ), maxWidth: 150 } );
+      const absoluteValueText = new Text( '', { font: new PhetFont( 18 ), maxWidth: 150 } );
       const absoluteValueBackground = new BackgroundNode( absoluteValueText, NLIConstants.LABEL_BACKGROUND_OPTIONS );
       this.addChild( absoluteValueBackground );
 
@@ -214,7 +214,7 @@ define( require => {
 
       // add the currency marking
       this.addChild( new Text( currencyUnitsString, {
-        font: new PhetFont( 16 ),
+        font: new PhetFont( 18 ),
         center: Vector2.ZERO,
         maxWidth: 15
       } ) );

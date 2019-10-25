@@ -17,13 +17,11 @@ define( require => {
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const ResetButton = require( 'SCENERY_PHET/buttons/ResetButton' );
   const Text = require( 'SCENERY/nodes/Text' );
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
-  const CHECKBOX_FONT = new PhetFont( 16 );
   const CHECKBOX_DILATION = 6;
 
   // strings
@@ -54,11 +52,11 @@ define( require => {
       // checkboxes that control common model properties
       const checkboxes = [
         new Checkbox(
-          new Text( numberLineString, { font: CHECKBOX_FONT } ),
+          new Text( numberLineString, { font: NLIConstants.CHECKBOX_FONT } ),
           sceneModel.showNumberLineProperty
         ),
         new Checkbox(
-          new Text( absoluteValueString, { font: CHECKBOX_FONT } ),
+          new Text( absoluteValueString, { font: NLIConstants.CHECKBOX_FONT } ),
           sceneModel.numberLine.showAbsoluteValuesProperty
         )
       ];

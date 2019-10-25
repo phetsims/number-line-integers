@@ -31,7 +31,6 @@ define( require => {
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
-  const CHECKBOX_FONT = new PhetFont( 16 );
   const CHECKBOX_DILATION = 6;
   const ARROW_ICON_LENGTH = 40;
   const COMBO_BOX_FONT = new PhetFont( 16 );
@@ -64,19 +63,19 @@ define( require => {
       // add the check boxes that will control the number line's presentation
       const checkboxes = [
         new Checkbox(
-          new Text( labelsString, { font: CHECKBOX_FONT } ),
+          new Text( labelsString, { font: NLIConstants.CHECKBOX_FONT } ),
           model.numberLine.labelsVisibleProperty
         ),
         new Checkbox(
-          new Text( tickMarksString, { font: CHECKBOX_FONT } ),
+          new Text( tickMarksString, { font: NLIConstants.CHECKBOX_FONT } ),
           model.numberLine.tickMarksVisibleProperty
         ),
         new Checkbox(
-          new Text( oppositeString, { font: CHECKBOX_FONT } ),
+          new Text( oppositeString, { font: NLIConstants.CHECKBOX_FONT } ),
           model.numberLine.oppositesVisibleProperty
         ),
         new Checkbox(
-          new Text( absoluteValueString, { font: CHECKBOX_FONT } ),
+          new Text( absoluteValueString, { font: NLIConstants.CHECKBOX_FONT } ),
           model.numberLine.showAbsoluteValuesProperty
         )
       ];

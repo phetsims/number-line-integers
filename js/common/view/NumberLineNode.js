@@ -449,7 +449,7 @@ define( require => {
         isDoppelganger: false,
         customColorsForLabels: true,
         numberDisplayTemplate: '{{number}}',
-        labelFont: new PhetFont( 16 )
+        labelFont: new PhetFont( 18 )
       }, options );
 
       super();

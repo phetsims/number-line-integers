@@ -11,6 +11,7 @@ define( require => {
 
   // modules
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const ScreenView = require( 'JOIST/ScreenView' );
 
   const NLIConstants = {
@@ -35,7 +36,9 @@ define( require => {
     // corner radius of the background for most if not all labels
     LABEL_BACKGROUND_CORNER_RADIUS: 3,
 
-    EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET: 175
+    EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET: 175,
+
+    CHECKBOX_FONT: new PhetFont( 16 )
   };
 
   return numberLineIntegers.register( 'NLIConstants', NLIConstants );
