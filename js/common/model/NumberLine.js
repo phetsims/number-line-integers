@@ -32,7 +32,7 @@ define( require => {
   const POINT_CREATION_END_DISTANCE = 20;
 
   // perpendicular distance from number line in model/view coords where points get removed
-  const POINT_REMOVAL_PERPENDICULAR_DISTANCE = 90;
+  const POINT_REMOVAL_PERPENDICULAR_DISTANCE = 130;
 
   // distance from the end of the number line in model/view coords where points get removed
   const POINT_REMOVAL_END_DISTANCE = 25;

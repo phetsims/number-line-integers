@@ -228,7 +228,6 @@ define( require => {
         maxWidth: 15
       } ) );
     }
-
   }
 
   return numberLineIntegers.register( 'BankPointControllerNode', BankPointControllerNode );
