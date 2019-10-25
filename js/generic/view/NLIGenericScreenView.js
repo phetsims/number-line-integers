@@ -34,7 +34,7 @@ define( require => {
   const CHECKBOX_FONT = new PhetFont( 16 );
   const CHECKBOX_DILATION = 6;
   const ARROW_ICON_LENGTH = 40;
-  const COMBO_BOX_FONT = new PhetFont( 14 );
+  const COMBO_BOX_FONT = new PhetFont( 16 );
   const ORIENTATION_BUTTON_DILATION = 2;
 
   // strings

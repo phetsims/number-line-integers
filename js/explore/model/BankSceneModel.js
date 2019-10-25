@@ -164,12 +164,11 @@ define( require => {
       this.showComparisonAccountProperty.reset();
       this.comparisonAccount.reset();
     }
-
-    // statics - colors used for primary and comparison account points
-    static get PRIMARY_ACCOUNT_POINT_COLOR() { return PRIMARY_ACCOUNT_POINT_COLOR; } // eslint-disable-line bad-sim-text
-
-    static get COMPARISON_ACCOUNT_POINT_COLOR() { return COMPARISON_ACCOUNT_POINT_COLOR; } // eslint-disable-line bad-sim-text
   }
+
+  // static properties
+  BankSceneModel.PRIMARY_ACCOUNT_POINT_COLOR = PRIMARY_ACCOUNT_POINT_COLOR;
+  BankSceneModel.COMPARISON_ACCOUNT_POINT_COLOR = COMPARISON_ACCOUNT_POINT_COLOR;
 
   class Account {
     constructor( initialBalance = 0 ) {
