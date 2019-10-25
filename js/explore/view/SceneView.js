@@ -23,6 +23,7 @@ define( require => {
 
   // constants
   const CHECKBOX_DILATION = 6;
+  const CHECKBOX_OPTIONS = { boxWidth: NLIConstants.CHECKBOX_BOX_WIDTH };
 
   // strings
   const absoluteValueString = require( 'string!NUMBER_LINE_INTEGERS/absoluteValue' );
@@ -53,11 +54,13 @@ define( require => {
       const checkboxes = [
         new Checkbox(
           new Text( numberLineString, { font: NLIConstants.CHECKBOX_FONT } ),
-          sceneModel.showNumberLineProperty
+          sceneModel.showNumberLineProperty,
+          CHECKBOX_OPTIONS
         ),
         new Checkbox(
           new Text( absoluteValueString, { font: NLIConstants.CHECKBOX_FONT } ),
-          sceneModel.numberLine.showAbsoluteValuesProperty
+          sceneModel.numberLine.showAbsoluteValuesProperty,
+          CHECKBOX_OPTIONS
         )
       ];
 

@@ -43,6 +43,9 @@ define( require => {
   const oppositeString = require( 'string!NUMBER_LINE_INTEGERS/opposite' );
   const rangeString = require( 'string!NUMBER_LINE_INTEGERS/range' );
 
+  // constants
+  const CHECKBOX_OPTIONS = { boxWidth: NLIConstants.CHECKBOX_BOX_WIDTH };
+
   class NLIGenericScreenView extends ScreenView {
 
     /**
@@ -64,19 +67,23 @@ define( require => {
       const checkboxes = [
         new Checkbox(
           new Text( labelsString, { font: NLIConstants.CHECKBOX_FONT } ),
-          model.numberLine.labelsVisibleProperty
+          model.numberLine.labelsVisibleProperty,
+          CHECKBOX_OPTIONS
         ),
         new Checkbox(
           new Text( tickMarksString, { font: NLIConstants.CHECKBOX_FONT } ),
-          model.numberLine.tickMarksVisibleProperty
+          model.numberLine.tickMarksVisibleProperty,
+          CHECKBOX_OPTIONS
         ),
         new Checkbox(
           new Text( oppositeString, { font: NLIConstants.CHECKBOX_FONT } ),
-          model.numberLine.oppositesVisibleProperty
+          model.numberLine.oppositesVisibleProperty,
+          CHECKBOX_OPTIONS
         ),
         new Checkbox(
           new Text( absoluteValueString, { font: NLIConstants.CHECKBOX_FONT } ),
-          model.numberLine.showAbsoluteValuesProperty
+          model.numberLine.showAbsoluteValuesProperty,
+          CHECKBOX_OPTIONS
         )
       ];
       const checkboxGroup = new VBox( {

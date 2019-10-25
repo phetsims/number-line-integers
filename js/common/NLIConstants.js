@@ -38,6 +38,7 @@ define( require => {
 
     // various shared fonts and layout parameters
     CHECKBOX_FONT: new PhetFont( 16 ),
+    CHECKBOX_BOX_WIDTH: 15,
     EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET: 175,
     RESET_BUTTON_INSET_FROM_EDGE: 20
   };
