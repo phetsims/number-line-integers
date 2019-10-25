@@ -152,8 +152,8 @@ define( require => {
           model.reset();
           comparisonStatementAccordionBox.reset();
         },
-        right: this.layoutBounds.maxX - 20,
-        bottom: this.layoutBounds.maxY - 20
+        right: this.layoutBounds.maxX - NLIConstants.RESET_BUTTON_INSET_FROM_EDGE,
+        bottom: this.layoutBounds.maxY - NLIConstants.RESET_BUTTON_INSET_FROM_EDGE
       } );
       controlsLayer.addChild( resetAllButton );
 

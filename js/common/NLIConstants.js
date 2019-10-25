@@ -36,9 +36,10 @@ define( require => {
     // corner radius of the background for most if not all labels
     LABEL_BACKGROUND_CORNER_RADIUS: 3,
 
+    // various shared fonts and layout parameters
+    CHECKBOX_FONT: new PhetFont( 16 ),
     EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET: 175,
-
-    CHECKBOX_FONT: new PhetFont( 16 )
+    RESET_BUTTON_INSET_FROM_EDGE: 20
   };
 
   return numberLineIntegers.register( 'NLIConstants', NLIConstants );

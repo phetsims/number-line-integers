@@ -19,9 +19,6 @@ define( require => {
   const ScreenView = require( 'JOIST/ScreenView' );
   const TemperatureSceneView = require( 'NUMBER_LINE_INTEGERS/explore/view/TemperatureSceneView' );
 
-  // constants
-  const RESET_BUTTON_INSET = 10;
-
   class NLIExploreScreenView extends ScreenView {
 
     /**
@@ -94,8 +91,8 @@ define( require => {
           bankScene.reset();
           temperatureScene.reset();
         },
-        right: this.layoutBounds.maxX - RESET_BUTTON_INSET,
-        bottom: this.layoutBounds.maxY - RESET_BUTTON_INSET
+        right: this.layoutBounds.maxX - NLIConstants.RESET_BUTTON_INSET_FROM_EDGE,
+        bottom: this.layoutBounds.maxY - NLIConstants.RESET_BUTTON_INSET_FROM_EDGE
       } );
       controlsLayer.addChild( resetAllButton );
     }
