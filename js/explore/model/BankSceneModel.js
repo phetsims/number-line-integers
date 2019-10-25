@@ -166,9 +166,9 @@ define( require => {
     }
 
     // statics - colors used for primary and comparison account points
-    static get PRIMARY_ACCOUNT_POINT_COLOR() { return PRIMARY_ACCOUNT_POINT_COLOR; }
+    static get PRIMARY_ACCOUNT_POINT_COLOR() { return PRIMARY_ACCOUNT_POINT_COLOR; } // eslint-disable-line bad-sim-text
 
-    static get COMPARISON_ACCOUNT_POINT_COLOR() { return COMPARISON_ACCOUNT_POINT_COLOR; }
+    static get COMPARISON_ACCOUNT_POINT_COLOR() { return COMPARISON_ACCOUNT_POINT_COLOR; } // eslint-disable-line bad-sim-text
   }
 
   class Account {
