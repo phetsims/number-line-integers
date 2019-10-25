@@ -126,7 +126,7 @@ define( require => {
         centerX: this.temperatureMap.centerX,
         top: this.temperatureMap.bottom + 7, // a little bit under the map
         font: new PhetFont( 10 ),
-        fill: '#999999'
+        fill: '#707070'
       } );
       this.scenesLayer.addChild( temperatureMapCaption );
 
