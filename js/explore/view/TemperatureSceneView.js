@@ -101,7 +101,9 @@ define( require => {
       // @private
       this.monthsComboBox = new MonthsComboBox( sceneModel.monthProperty, this, {
         left: this.checkboxGroup.left,
-        top: sceneModel.mapBounds.minY
+        top: sceneModel.mapBounds.minY,
+        buttonTouchAreaXDilation: 7,
+        buttonTouchAreaYDilation: 7
       } );
       this.scenesLayer.addChild( this.monthsComboBox );
 

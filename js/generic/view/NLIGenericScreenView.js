@@ -205,7 +205,9 @@ define( require => {
           yMargin: 6,
           cornerRadius: 4,
           left: orientationRadioButtonGroup.left,
-          bottom: orientationRadioButtonGroup.top - 12
+          bottom: orientationRadioButtonGroup.top - 12,
+          buttonTouchAreaXDilation: 7,
+          buttonTouchAreaYDilation: 7
         }
       );
       controlsLayer.addChild( rangeSelectionComboBox );
