@@ -54,12 +54,12 @@ define( require => {
       // checkboxes that control common model properties
       const checkboxes = [
         new Checkbox(
-          new Text( absoluteValueString, { font: CHECKBOX_FONT } ),
-          sceneModel.numberLine.showAbsoluteValuesProperty
-        ),
-        new Checkbox(
           new Text( numberLineString, { font: CHECKBOX_FONT } ),
           sceneModel.showNumberLineProperty
+        ),
+        new Checkbox(
+          new Text( absoluteValueString, { font: CHECKBOX_FONT } ),
+          sceneModel.numberLine.showAbsoluteValuesProperty
         )
       ];
 
