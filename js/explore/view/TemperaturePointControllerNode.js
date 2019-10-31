@@ -85,7 +85,7 @@ define( require => {
       const temperatureReadoutTextNode = new Text( '', { font: new PhetFont( 18 ) } );
       const temperatureReadoutNode = new BackgroundNode(
         temperatureReadoutTextNode,
-        merge( {
+        merge( {}, NLIConstants.LABEL_BACKGROUND_OPTIONS, {
 
           // position empirically determined to be centered to the right of the bulb
           left: temperatureAndColorSensorNode.right + 3,
@@ -93,7 +93,7 @@ define( require => {
           backgroundOptions: {
             opacity: 0.95
           }
-        }, NLIConstants.LABEL_BACKGROUND_OPTIONS )
+        } )
       );
       compositeThermometerNode.addChild( temperatureReadoutNode );
 
