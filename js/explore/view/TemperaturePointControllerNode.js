@@ -16,7 +16,6 @@ define( require => {
   const Color = require( 'SCENERY/util/Color' );
   const merge = require( 'PHET_CORE/merge' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
-  const NLIQueryParameters = require( 'NUMBER_LINE_INTEGERS/common/NLIQueryParameters' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -29,8 +28,6 @@ define( require => {
 
   // constants
   const TOUCH_DILATION = 5;
-  const DARK_BACKGROUND_THRESHOLD = 150;
-  const STATIC_READOUT = !NLIQueryParameters.dynamicColorTemperatureReadout;
 
   // strings
   const negativeTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/negativeTemperatureAmount' );
@@ -82,7 +79,10 @@ define( require => {
       compositeThermometerNode.addChild( thermometerLabel );
 
       // add a textual readout that will describe the temperature verbally, e.g. "20° above 0"
-      const temperatureReadoutTextNode = new Text( '', { font: new PhetFont( 18 ) } );
+      const temperatureReadoutTextNode = new Text( '', {
+        font: new PhetFont( 18 ),
+        fill: Color.BLACK
+      } );
       const temperatureReadoutNode = new BackgroundNode(
         temperatureReadoutTextNode,
         merge( {}, NLIConstants.LABEL_BACKGROUND_OPTIONS, {
@@ -90,8 +90,10 @@ define( require => {
           // position empirically determined to be centered to the right of the bulb
           left: temperatureAndColorSensorNode.right + 3,
           bottom: temperatureAndColorSensorNode.bottom - 3,
+
           backgroundOptions: {
-            opacity: 0.95
+            opacity: 0.95,
+            lineWidth: 2
           }
         } )
       );
@@ -107,15 +109,20 @@ define( require => {
 
       // control the content of the textual label
       Property.multilink(
-        [ pointController.fahrenheitTemperatureProperty, pointController.celsiusTemperatureProperty, temperatureUnitsProperty ],
+        [
+          pointController.fahrenheitTemperatureProperty,
+          pointController.celsiusTemperatureProperty,
+          temperatureUnitsProperty,
+          pointController.isOverMapProperty
+        ],
         ( fahrenheitTemperature, celsiusTemperature, temperatureUnits ) => {
           const value = temperatureUnits === NLIConstants.TEMPERATURE_UNITS.CELSIUS ? celsiusTemperature : fahrenheitTemperature;
           const template = value < 0 ? negativeTemperatureAmountString :
                            value > 0 ? positiveTemperatureAmountString :
                            zeroTemperatureAmountString;
           temperatureReadoutTextNode.text = StringUtils.fillIn( template, { value: Math.abs( value ) } );
-          temperatureReadoutTextNode.fill = STATIC_READOUT ? Color.BLACK : pointController.colorProperty.value;
-          temperatureReadoutNode.background.fill = chooseBackgroundColor( pointController.colorProperty.value );
+          temperatureReadoutNode.background.stroke = pointController.colorProperty.value;
+          temperatureReadoutNode.background.fill = pointController.colorProperty.value.colorUtilsBrighter( 0.75 );
         }
       );
 
@@ -125,28 +132,6 @@ define( require => {
       super( pointController, options );
     }
   }
-
-  /**
-   * calculate inverse greyscale background to use for the temperature readout for a given text color
-   * @param {Color} textColor
-   * @returns {Color}
-   */
-  const chooseBackgroundColor = textColor => {
-
-    if ( STATIC_READOUT ) {
-      return Color.WHITE;
-    }
-    let backgroundColor;
-    const rgbAverage = ( textColor.red + textColor.green + textColor.blue ) / 3;
-
-    if ( rgbAverage > DARK_BACKGROUND_THRESHOLD ) {
-      backgroundColor = Color.BLACK;
-    }
-    else {
-      backgroundColor = Color.WHITE;
-    }
-    return backgroundColor;
-  };
 
   return numberLineIntegers.register( 'TemperaturePointControllerNode', TemperaturePointControllerNode );
 } );
