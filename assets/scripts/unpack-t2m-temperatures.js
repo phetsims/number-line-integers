@@ -9,7 +9,6 @@
  * EXAMPLE USAGE:
  * node ./js/unpack-t2m-temperatures.js
  */
-/* eslint-disable bad-sim-text */
 
 // modules
 const fs = require( 'fs' );
@@ -19304,7 +19303,7 @@ VALUES_TO_BE_ADJUSTED.forEach( ( value, index ) => {
   'use strict';
 
   // adjust the value and add it to the output string
-  output += Math.round( value * SCALE_FACTOR + OFFSET_FACTOR );
+  output += Math.round( value * SCALE_FACTOR + OFFSET_FACTOR ); // eslint-disable-line bad-sim-text
 
   // add a comma unless it's the last item
   if ( index !== VALUES_TO_BE_ADJUSTED.length - 1 ) {
