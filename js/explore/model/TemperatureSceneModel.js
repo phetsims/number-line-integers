@@ -12,7 +12,6 @@ define( require => {
   'use strict';
 
   // modules
-  const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Bounds2 = require( 'DOT/Bounds2' );
   const merge = require( 'PHET_CORE/merge' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
@@ -21,6 +20,7 @@ define( require => {
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const NumberProperty = require( 'AXON/NumberProperty' );
+  const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
   const reverseRobinsonProjector = require( 'NUMBER_LINE_INTEGERS/explore/model/reverseRobinsonProjector' );
   const SceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/SceneModel' );
@@ -85,7 +85,9 @@ define( require => {
       this.monthProperty = new NumberProperty( 1 );
 
       // @public TODO - This shouldn't be a boolean. Make it use an enumeration.
-      this.isTemperatureInCelsiusProperty = new BooleanProperty( NLIQueryParameters.defaultCelsius );
+      this.temperatureUnitsProperty = new Property( NLIQueryParameters.defaultCelsius ?
+                                                    NLIConstants.TEMPERATURE_UNITS.CELSIUS :
+                                                    NLIConstants.TEMPERATURE_UNITS.FAHRENHEIT );
 
       // specify the position of the box that will hold the thermometers
       const boxWidth = MAP_WIDTH * 0.5;
@@ -261,7 +263,7 @@ define( require => {
      */
     resetScene() {
 
-      this.isTemperatureInCelsiusProperty.reset();
+      this.temperatureUnitsProperty.reset();
       this.fahrenheitNumberLine.reset();
       this.celsiusNumberLine.reset();
       this.monthProperty.reset();

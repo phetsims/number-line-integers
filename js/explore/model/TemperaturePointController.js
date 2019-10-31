@@ -67,7 +67,7 @@ define( require => {
       this.celsiusTemperatureProperty = new NumberProperty( options.defaultTemperature );
       this.fahrenheitTemperatureProperty = new NumberProperty( celsiusToFahrenheitInteger( options.defaultTemperature ) );
 
-      // @public color represented by temperature on map
+      // @public - color represented by temperature on map
       this.colorProperty = new PaintColorProperty( options.noTemperatureColor );
 
       // update temperature and other state information when moved or when month changes
@@ -172,7 +172,6 @@ define( require => {
     proposePosition( proposedPosition ) {
       this.positionProperty.value = proposedPosition;
     }
-
   }
 
   return numberLineIntegers.register( 'TemperaturePointController', TemperaturePointController );

@@ -139,14 +139,14 @@ define( require => {
       numberLinePanelContent.addChild( numberLineLabel );
 
       const temperatureUnitPicker = new VerticalAquaRadioButtonGroup(
-        sceneModel.isTemperatureInCelsiusProperty,
+        sceneModel.temperatureUnitsProperty,
         [
           {
-            value: false,
+            value: NLIConstants.TEMPERATURE_UNITS.FAHRENHEIT,
             node: new Text( temperatureLabelFahrenheitString, { font: UNIT_PICKER_LABEL_FONT } )
           },
           {
-            value: true,
+            value: NLIConstants.TEMPERATURE_UNITS.CELSIUS,
             node: new Text( temperatureLabelCelsiusString, { font: UNIT_PICKER_LABEL_FONT } )
           }
         ],
@@ -259,10 +259,10 @@ define( require => {
       this.scenesLayer.addChild( numberLinePanel );
 
       Property.multilink(
-        [ sceneModel.isTemperatureInCelsiusProperty, sceneModel.showNumberLineProperty, sceneModel.numberLine.showAbsoluteValuesProperty ],
-        ( isTemperatureInCelsius, showNumberLine, showAbsoluteValues ) => {
-          this.celsiusNumberLineNode.visible = isTemperatureInCelsius;
-          this.fahrenheitNumberLineNode.visible = !isTemperatureInCelsius;
+        [ sceneModel.temperatureUnitsProperty, sceneModel.showNumberLineProperty, sceneModel.numberLine.showAbsoluteValuesProperty ],
+        ( temperatureUnits, showNumberLine, showAbsoluteValues ) => {
+          this.celsiusNumberLineNode.visible = temperatureUnits === NLIConstants.TEMPERATURE_UNITS.CELSIUS;
+          this.fahrenheitNumberLineNode.visible = temperatureUnits === NLIConstants.TEMPERATURE_UNITS.FAHRENHEIT;
           this.celsiusComparisonAccordionBox.visible = this.celsiusNumberLineNode.visible;
           this.fahrenheitComparisonAccordionBox.visible = this.fahrenheitNumberLineNode.visible;
           celsiusLabelsLayer.visible = this.celsiusNumberLineNode.visible;
@@ -275,7 +275,11 @@ define( require => {
 
       this.scenesLayer.addChild( new Node( {
         children: sceneModel.permanentPointControllers.map(
-          pointController => new TemperaturePointControllerNode( pointController )
+          pointController => new TemperaturePointControllerNode(
+            pointController,
+            sceneModel.numberLine.showAbsoluteValuesProperty,
+            sceneModel.temperatureUnitsProperty
+          )
         )
       } ) );
 

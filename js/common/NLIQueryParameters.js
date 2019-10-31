@@ -14,7 +14,10 @@ define( require => {
   const NLIQueryParameters = QueryStringMachine.getAll( {
 
     // changes default units of temperature to celsius
-    defaultCelsius: { type: 'flag' }
+    defaultCelsius: { type: 'flag' },
+
+    // TODO: temp for demo and review
+    dynamicColorTemperatureReadout: { type: 'flag' }
 
   } );
 

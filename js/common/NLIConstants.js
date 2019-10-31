@@ -10,6 +10,7 @@ define( require => {
   'use strict';
 
   // modules
+  const Enumeration = require( 'PHET_CORE/Enumeration' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const ScreenView = require( 'JOIST/ScreenView' );
@@ -35,6 +36,9 @@ define( require => {
 
     // corner radius of the background for most if not all labels
     LABEL_BACKGROUND_CORNER_RADIUS: 3,
+
+    // possible values for temperature units
+    TEMPERATURE_UNITS: new Enumeration( [ 'KELVIN', 'CELSIUS' ] ),
 
     // various shared fonts and layout parameters
     CHECKBOX_FONT: new PhetFont( 16 ),

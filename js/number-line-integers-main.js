@@ -22,7 +22,7 @@ define( require => {
     credits: {
       //TODO fill in credits, all of these fields are optional, see joist.CreditsNode
       leadDesign: 'Amanda McGarry',
-      softwareDevelopment: 'John Blanco, Chris Klusendorf',
+      softwareDevelopment: 'John Blanco, Chris Klusendorf, Saurabh Totey',
       team: 'Ariel Paul, Kathy Perkins, and in cooperation with the Next-Lab project',
       qualityAssurance: '',
       graphicArts: 'Megan Lai',
