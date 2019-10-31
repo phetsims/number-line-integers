@@ -14,39 +14,38 @@ define( require => {
   // modules
   const BackgroundNode = require( 'SCENERY_PHET/BackgroundNode' );
   const ComparisonStatementAccordionBox = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementAccordionBox' );
-  const Panel = require( 'SUN/Panel' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
   const MonthsComboBox = require( 'NUMBER_LINE_INTEGERS/explore/view/MonthsComboBox' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
+  const Panel = require( 'SUN/Panel' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Property = require( 'AXON/Property' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const RichText = require( 'SCENERY/nodes/RichText' );
   const SceneView = require( 'NUMBER_LINE_INTEGERS/explore/view/SceneView' );
-  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const TemperatureMapNode = require( 'NUMBER_LINE_INTEGERS/explore/view/TemperatureMapNode' );
   const TemperaturePointControllerNode = require( 'NUMBER_LINE_INTEGERS/explore/view/TemperaturePointControllerNode' );
   const Text = require( 'SCENERY/nodes/Text' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Vector2 = require( 'DOT/Vector2' );
   const VerticalAquaRadioButtonGroup = require( 'SUN/VerticalAquaRadioButtonGroup' );
 
   // constants
   const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
   const UNIT_PICKER_LABEL_FONT = new PhetFont( { size: 18 } );
-  const DARK_COLOR_THRESHOLD = 150;
+  const NUMBER_LINE_PANEL_WIDTH = 200; // empirically determined
+  const NUMBER_LINE_PANEL_MARGINS = 10;
+  const TITLE_TO_SELECTOR_SPACING = 10;
 
   // strings
-  const negativeTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/negativeTemperatureAmount' );
-  const positiveTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/positiveTemperatureAmount' );
   const temperatureAmountCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountCelsius' );
   const temperatureAmountFahrenheitString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountFahrenheit' );
   const temperatureLabelCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureLabelCelsius' );
   const temperatureLabelFahrenheitString = require( 'string!NUMBER_LINE_INTEGERS/temperatureLabelFahrenheit' );
   const temperatureMapCaptionString = require( 'string!NUMBER_LINE_INTEGERS/temperatureMapCaption' );
   const temperatureString = require( 'string!NUMBER_LINE_INTEGERS/temperature' );
-  const zeroTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/zeroTemperatureAmount' );
 
   class TemperatureSceneView extends SceneView {
 
@@ -80,9 +79,14 @@ define( require => {
       } );
       this.removeChild( this.numberLineNode );
 
+      // put the number lines on their own layer so that their location can be easily adjusted
+      const numberLineLayer = new Node();
+      numberLineLayer.addChild( this.fahrenheitNumberLineNode );
+      numberLineLayer.addChild( this.celsiusNumberLineNode );
+
+      // node where the contents of the number line panel will be placed
       const numberLinePanelContent = new Node();
-      numberLinePanelContent.addChild( this.fahrenheitNumberLineNode );
-      numberLinePanelContent.addChild( this.celsiusNumberLineNode );
+      numberLinePanelContent.addChild( numberLineLayer );
 
       // Do the same replacement with ComparisonStatementAccordionBox
       // @protected
@@ -130,15 +134,8 @@ define( require => {
       } );
       this.scenesLayer.addChild( temperatureMapCaption );
 
-      // add label for the number line
-      const numberLineLabel = new Text( temperatureString, {
-        font: NUMBER_LINE_LABEL_FONT,
-        centerX: sceneModel.numberLine.centerPosition.x,
-        bottom: this.numberLineNode.top - 5
-      } );
-      numberLinePanelContent.addChild( numberLineLabel );
-
-      const temperatureUnitPicker = new VerticalAquaRadioButtonGroup(
+      // radio button group for selecting the temperature units
+      const temperatureUnitsSelector = new VerticalAquaRadioButtonGroup(
         sceneModel.temperatureUnitsProperty,
         [
           {
@@ -149,12 +146,31 @@ define( require => {
             value: NLIConstants.TEMPERATURE_UNITS.CELSIUS,
             node: new Text( temperatureLabelCelsiusString, { font: UNIT_PICKER_LABEL_FONT } )
           }
-        ],
-        { top: numberLineLabel.top, left: numberLineLabel.right + 10 }
+        ]
       );
-      numberLinePanelContent.addChild( temperatureUnitPicker );
 
-      // manages the label texts for each thermometer
+      // title for the panel where the number line will appear
+      const numberLinePanelTitle = new Text( temperatureString, {
+        font: NUMBER_LINE_LABEL_FONT,
+        centerX: sceneModel.numberLine.centerPosition.x,
+        bottom: this.numberLineNode.top - 5,
+        maxWidth: NUMBER_LINE_PANEL_WIDTH - temperatureUnitsSelector.width - TITLE_TO_SELECTOR_SPACING -
+                  2 * NUMBER_LINE_PANEL_MARGINS
+      } );
+
+      // horizontal box with the title and the units selector that will be at the top of the number line panel
+      const numberLinePanelHeader = new HBox( {
+        children: [ numberLinePanelTitle, temperatureUnitsSelector ],
+        spacing: TITLE_TO_SELECTOR_SPACING,
+        align: 'top'
+      } );
+      numberLinePanelContent.addChild( numberLinePanelHeader );
+
+      // align the number line nodes to be centered vertically under the header
+      numberLineLayer.top = numberLinePanelTitle.bottom + 5;
+      numberLineLayer.left = 15; // empirically determined for desired alignment under the panel header
+
+      // manage the label texts for each thermometer
       const celsiusLabelsLayer = new Node();
       const fahrenheitLabelsLayer = new Node();
       const onAddedNumberLinePoint = ( numberLine, labelsLayer, addedNumberLinePoint ) => {
@@ -187,88 +203,42 @@ define( require => {
         numberLine.residentPoints.addItemRemovedListener( removalListener );
       };
 
-      // manages absolute value texts whenever thermometers go on and off the map
-      const celsiusAbsoluteValueLabelsLayer = new Node();
-      const fahrenheitAbsoluteValueLabelsLayer = new Node();
-      const onAddedNumberLinePointAbsoluteValue = ( numberLine, absoluteValueLabelsLayer, addedNumberLinePoint ) => {
-
-        // create the text and add it to a background
-        const absoluteValueText = new Text( '', { font: new PhetFont( 12 ) } );
-        const absoluteValueNode = new BackgroundNode( absoluteValueText, NLIConstants.LABEL_BACKGROUND_OPTIONS );
-        absoluteValueLabelsLayer.addChild( absoluteValueNode );
-
-        const numberLinePointListener = value => {
-          const template = value < 0 ? negativeTemperatureAmountString :
-                           value > 0 ? positiveTemperatureAmountString :
-                           zeroTemperatureAmountString;
-          absoluteValueText.text = StringUtils.fillIn( template, { value: Math.abs( value ) } );
-          absoluteValueNode.leftCenter = addedNumberLinePoint.getPositionInModelSpace().plus( new Vector2( 40, 0 ) );
-        };
-        addedNumberLinePoint.valueProperty.link( numberLinePointListener );
-
-        const numberLineColorListener = color => {
-          absoluteValueText.fill = color;
-          absoluteValueNode.background.fill = this.generateBackgroundColor( color );
-        };
-        addedNumberLinePoint.colorProperty.link( numberLineColorListener );
-
-        const dragStateChangeHandler = dragging => {
-          if ( dragging ) {
-            absoluteValueNode.moveToFront();
-          }
-        };
-        addedNumberLinePoint.isDraggingProperty.link( dragStateChangeHandler );
-
-        const removalListener = removedNumberLinePoint => {
-          if ( removedNumberLinePoint !== addedNumberLinePoint ) {
-            return;
-          }
-          numberLine.residentPoints.removeItemRemovedListener( removalListener );
-          absoluteValueLabelsLayer.removeChild( absoluteValueNode );
-          addedNumberLinePoint.valueProperty.unlink( numberLinePointListener );
-        };
-        numberLine.residentPoints.addItemRemovedListener( removalListener );
-      };
-
       sceneModel.celsiusNumberLine.residentPoints.addItemAddedListener( addedPoint => {
         onAddedNumberLinePoint( sceneModel.celsiusNumberLine, celsiusLabelsLayer, addedPoint );
-        onAddedNumberLinePointAbsoluteValue( sceneModel.celsiusNumberLine, celsiusAbsoluteValueLabelsLayer, addedPoint );
       } );
       sceneModel.fahrenheitNumberLine.residentPoints.addItemAddedListener( addedPoint => {
         onAddedNumberLinePoint( sceneModel.fahrenheitNumberLine, fahrenheitLabelsLayer, addedPoint );
-        onAddedNumberLinePointAbsoluteValue( sceneModel.fahrenheitNumberLine, fahrenheitAbsoluteValueLabelsLayer, addedPoint );
       } );
 
-      numberLinePanelContent.addChild( celsiusLabelsLayer );
-      numberLinePanelContent.addChild( fahrenheitLabelsLayer );
-      numberLinePanelContent.addChild( celsiusAbsoluteValueLabelsLayer );
-      numberLinePanelContent.addChild( fahrenheitAbsoluteValueLabelsLayer );
+      numberLineLayer.addChild( celsiusLabelsLayer );
+      numberLineLayer.addChild( fahrenheitLabelsLayer );
 
       const numberLinePanel = new Panel(
         numberLinePanelContent,
         {
           fill: 'lightgray',
           stroke: 'transparent',
+          align: 'center',
           resize: false,
-          xMargin: 10,
-          yMargin: 10,
+          xMargin: NUMBER_LINE_PANEL_MARGINS,
+          yMargin: NUMBER_LINE_PANEL_MARGINS,
           centerX: this.temperatureMap.left / 2, // centered between left edge of scene and left edge of map
-          top: this.comparisonStatementAccordionBox.top
+          top: this.comparisonStatementAccordionBox.top,
+          minWidth: NUMBER_LINE_PANEL_WIDTH,
+          maxWidth: NUMBER_LINE_PANEL_WIDTH
         }
       );
       this.scenesLayer.addChild( numberLinePanel );
 
       Property.multilink(
-        [ sceneModel.temperatureUnitsProperty, sceneModel.showNumberLineProperty, sceneModel.numberLine.showAbsoluteValuesProperty ],
-        ( temperatureUnits, showNumberLine, showAbsoluteValues ) => {
+        [ sceneModel.temperatureUnitsProperty, sceneModel.showNumberLineProperty ],
+        ( temperatureUnits, showNumberLine ) => {
           this.celsiusNumberLineNode.visible = temperatureUnits === NLIConstants.TEMPERATURE_UNITS.CELSIUS;
           this.fahrenheitNumberLineNode.visible = temperatureUnits === NLIConstants.TEMPERATURE_UNITS.FAHRENHEIT;
           this.celsiusComparisonAccordionBox.visible = this.celsiusNumberLineNode.visible;
           this.fahrenheitComparisonAccordionBox.visible = this.fahrenheitNumberLineNode.visible;
           celsiusLabelsLayer.visible = this.celsiusNumberLineNode.visible;
           fahrenheitLabelsLayer.visible = this.fahrenheitNumberLineNode.visible;
-          celsiusAbsoluteValueLabelsLayer.visible = this.celsiusNumberLineNode.visible && showAbsoluteValues;
-          fahrenheitAbsoluteValueLabelsLayer.visible = this.fahrenheitNumberLineNode.visible && showAbsoluteValues;
           numberLinePanel.visible = showNumberLine;
         }
       );
@@ -282,24 +252,6 @@ define( require => {
           )
         )
       } ) );
-
-    }
-
-    /**
-     * Calculate inverse greyscale background for a given color
-     * @param {Color} c
-     * @returns {Color}
-     */
-    generateBackgroundColor( c ) {
-      const r = c.red;
-      const g = c.green;
-      const b = c.blue;
-      const all = ( r + g + b ) / 3;
-      if ( all > DARK_COLOR_THRESHOLD ) {
-        return 'black';
-      }
-      //const grey = 255 - ( all * 255 / DARK_COLOR_THRESHOLD );
-      return 'white';
     }
   }
 
