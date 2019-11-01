@@ -157,7 +157,7 @@ define( require => {
         }
         else {
           stringTemplate = balanceAmountString;
-          absoluteValueText.fill = value > 0 ? MOST_POSITIVE_FILL : ZERO_FILL;
+          absoluteValueText.fill = value > 0 ? '#0e977b' : ZERO_FILL;
         }
         absoluteValueText.text = StringUtils.fillIn( stringTemplate, { value: Math.abs( value ) } );
         updateAbsoluteValueReadoutPosition();
