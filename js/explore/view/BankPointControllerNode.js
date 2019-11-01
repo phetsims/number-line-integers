@@ -36,6 +36,8 @@ define( require => {
   const LEAST_POSITIVE_FILL = Color.toColor( '#a5e1d4' );
   const MOST_NEGATIVE_FILL = Color.toColor( '#fb1d25' );
   const LEAST_NEGATIVE_FILL = Color.toColor( '#fda5a8' );
+  const POSITIVE_ABSOLUTE_VALUE_TEXT_COLOR = '#0e977b';
+  const NEGATIVE_ABSOLUTE_VALUE_TEXT_COLOR = MOST_NEGATIVE_FILL;
   const EMPTY_FILL = Color.WHITE;
   const ZERO_FILL = Color.BLACK;
   const READOUT_DISTANCE_FROM_IMAGE = 5;
@@ -153,11 +155,11 @@ define( require => {
         let stringTemplate;
         if ( value < 0 ) {
           stringTemplate = debtAmountString;
-          absoluteValueText.fill = MOST_NEGATIVE_FILL;
+          absoluteValueText.fill = NEGATIVE_ABSOLUTE_VALUE_TEXT_COLOR;
         }
         else {
           stringTemplate = balanceAmountString;
-          absoluteValueText.fill = value > 0 ? '#0e977b' : ZERO_FILL;
+          absoluteValueText.fill = value > 0 ? POSITIVE_ABSOLUTE_VALUE_TEXT_COLOR : ZERO_FILL;
         }
         absoluteValueText.text = StringUtils.fillIn( stringTemplate, { value: Math.abs( value ) } );
         updateAbsoluteValueReadoutPosition();
