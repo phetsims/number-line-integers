@@ -39,7 +39,8 @@ define( require => {
     NLIConstants.NLI_LAYOUT_BOUNDS.minX + INSET + SIDE_BOX_WIDTH,
     NLIConstants.NLI_LAYOUT_BOUNDS.centerY + SIDE_BOX_HEIGHT / 2
   );
-  const INITIAL_POINT_COLOR = new Color( '#ff8a15' );
+  const ORANGISH_POINT_COLOR = new Color( '#ff8a15' );
+  const INITIAL_POINT_COLOR = new Color( 'blue' );
   const NUMBER_LINE_RANGES = [
     new Range( -10, 10 ),
     new Range( -30, 30 ),
@@ -67,8 +68,8 @@ define( require => {
 
       // @public (read-only) - an array of the point controllers available for manipulation by the user
       this.pointControllers = [
-        new PointController( { color: new Color( 'blue' ), numberLines: [ this.numberLine ] } ),
         new PointController( { color: new Color( 'magenta' ), numberLines: [ this.numberLine ] } ),
+        new PointController( { color: ORANGISH_POINT_COLOR, numberLines: [ this.numberLine ] } ),
         new PointController( { color: INITIAL_POINT_COLOR, numberLines: [ this.numberLine ] } )
       ];
 
