@@ -27,6 +27,7 @@ define( require => {
 
   // strings
   const absoluteValueString = require( 'string!NUMBER_LINE_INTEGERS/absoluteValue' );
+  const labelsString = require( 'string!NUMBER_LINE_INTEGERS/labels' );
   const numberLineString = require( 'string!NUMBER_LINE_INTEGERS/numberLine' );
 
   class SceneView extends Node {
@@ -55,6 +56,11 @@ define( require => {
         new Checkbox(
           new Text( numberLineString, { font: NLIConstants.CHECKBOX_FONT } ),
           sceneModel.showNumberLineProperty,
+          CHECKBOX_OPTIONS
+        ),
+        new Checkbox(
+          new Text( labelsString, { font: NLIConstants.CHECKBOX_FONT } ),
+          sceneModel.numberLine.labelsVisibleProperty,
           CHECKBOX_OPTIONS
         ),
         new Checkbox(

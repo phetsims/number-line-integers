@@ -59,7 +59,8 @@ define( require => {
         initialDisplayedRange: NUMBER_LINE_RANGES[ 0 ],
         widthInModelSpace: NLIConstants.NLI_LAYOUT_BOUNDS.width - 100,
         heightInModelSpace: NLIConstants.NLI_LAYOUT_BOUNDS.height - 160,
-        initialPointSpecs: [ { initialValue: 1, color: INITIAL_POINT_COLOR } ]
+        initialPointSpecs: [ { initialValue: 1, color: INITIAL_POINT_COLOR } ],
+        labelsInitiallyVisible: true
       } );
 
       // @public (read-only) {Property<Bounds2>} - the bounds of the box where the point controllers reside when not
