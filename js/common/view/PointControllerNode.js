@@ -21,7 +21,6 @@ define( require => {
 
   // constants
   const SPHERE_RADIUS = 10; // in screen coords, radius of sphere that is used if no controller node is provided
-  const SPHERE_TOUCH_DILATION = 4;
   const ALWAYS_TRUE_PROPERTY = new BooleanProperty( true );
 
   class PointControllerNode extends Node {
@@ -56,24 +55,12 @@ define( require => {
       connectorLine.visible = false;
       this.addChild( connectorLine );
 
-      // set up the node that the user will drag to move the point controller around
+      // Set up the node that the user will drag to move the point controller around.  If a node is not provided by the
+      // client, a default node is created.
       this.draggableNode = options.node || new ShadedSphereNode( SPHERE_RADIUS * 2, {
         mainColor: pointController.color
       } );
       this.addChild( this.draggableNode );
-
-      // if our draggable node is the default shaded sphere, give it a default touch dilation
-      const setTouchDilationBasedOnOrientation = orientation => {
-        this.draggableNode.touchArea = this.draggableNode.localBounds.dilated( SPHERE_TOUCH_DILATION );
-        if ( orientation === NumberLineOrientation.HORIZONTAL ) {
-          this.draggableNode.touchArea.dilateY( SPHERE_TOUCH_DILATION * 2 );
-        } else {
-          this.draggableNode.touchArea.dilateX( SPHERE_TOUCH_DILATION * 2 );
-        }
-      };
-      if ( !options.node ) {
-        pointController.numberLine.orientationProperty.link( setTouchDilationBasedOnOrientation );
-      }
 
       // function to update the visibility of the connector line
       const updateConnectorLineVisibility = () => {
@@ -143,6 +130,27 @@ define( require => {
             pointController.isDraggingProperty.value = false;
           }
         } ) );
+      }
+
+      // If the default point controller node is being used, create and hook up the listener that will update touch
+      // areas as the orientation changes such that the point controllers can be easily grabbed by a user's finger
+      // without covering them up.
+      let setTouchDilationBasedOnOrientation;
+      if ( !options.node ) {
+        setTouchDilationBasedOnOrientation = orientation => {
+          const nominalBounds = this.draggableNode.localBounds;
+          let touchAreaBounds;
+          if ( orientation === NumberLineOrientation.HORIZONTAL ) {
+            const dilatedBounds = nominalBounds.dilateXY( SPHERE_RADIUS / 2, SPHERE_RADIUS * 2 );
+            touchAreaBounds = dilatedBounds.shiftedY( SPHERE_RADIUS * 1.5 );
+          }
+          else {
+            const dilatedBounds = nominalBounds.dilateXY( SPHERE_RADIUS * 2, SPHERE_RADIUS / 2 );
+            touchAreaBounds = dilatedBounds.shiftedX( SPHERE_RADIUS * 1.5 );
+          }
+          this.draggableNode.setTouchArea( touchAreaBounds );
+        };
+        pointController.numberLine.orientationProperty.link( setTouchDilationBasedOnOrientation );
       }
 
       this.disposePointControllerNode = () => {
