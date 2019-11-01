@@ -32,7 +32,7 @@ define( require => {
   const ABS_VAL_LINE_EXPANSION_FACTOR = 3;
   const ABS_VAL_SPAN_NL_DISTANCE_Y = 55;
   const ABS_VAL_SPAN_SPACING_Y = 40;
-  const ABS_VAL_SPAN_NL_DISTANCE_X = 75;
+  const ABS_VAL_SPAN_NL_DISTANCE_X = 105;
   const ABS_VAL_SPAN_SPACING_X = 95;
 
   // convenience function to calculate distance of an absolute value span node from the number line
