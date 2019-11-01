@@ -146,7 +146,12 @@ define( require => {
             value: NLIConstants.TEMPERATURE_UNITS.CELSIUS,
             node: new Text( temperatureLabelCelsiusString, { font: UNIT_PICKER_LABEL_FONT } )
           }
-        ]
+        ],
+        {
+
+          // limit the width to half the panel height to handle long labels from translations and string tests
+          maxWidth: ( NUMBER_LINE_PANEL_WIDTH - 2 * NUMBER_LINE_PANEL_MARGINS ) / 2
+        }
       );
 
       // title for the panel where the number line will appear
