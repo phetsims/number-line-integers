@@ -21,7 +21,7 @@ define( require => {
   const comparisonStatementString = require( 'string!NUMBER_LINE_INTEGERS/comparisonStatement' );
 
   // constants
-  const TITLE_FONT = new PhetFont( 16 );
+  const TITLE_FONT = new PhetFont( 18 );
   const COMPARISON_STATEMENT_BOX_WIDTH = 340; // empirically determined to look decent
   const DEFAULT_OPTIONS = {
     fill: 'white',
