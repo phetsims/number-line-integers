@@ -44,7 +44,8 @@ define( require => {
       super( sceneModel, layoutBounds, {
         numberLineNodeOptions: {
           numberDisplayTemplate: elevationAmountString,
-          tickMarkLabelPositionWhenVertical: 'left'
+          tickMarkLabelPositionWhenVertical: 'left',
+          tickMarkLabelOptions: { maxWidth: layoutBounds.width * 0.06 }
         }
       } );
 
@@ -70,7 +71,8 @@ define( require => {
       const numberLineLabel = new Text( elevationString, {
         font: NUMBER_LINE_LABEL_FONT,
         centerX: sceneModel.numberLine.centerPosition.x,
-        bottom: this.numberLineNode.top - 5
+        bottom: this.numberLineNode.top - 5,
+        maxWidth: this.layoutBounds.width * 0.18
       } );
       sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
       this.scenesLayer.addChild( numberLineLabel );

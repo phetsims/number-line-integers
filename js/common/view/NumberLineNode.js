@@ -58,7 +58,7 @@ define( require => {
         tickMarkLength: 10,
         zeroTickMarkLineWidth: 2,
         zeroTickMarkLength: 16,
-        tickMarkLabelFont: new PhetFont( 16 ),
+        tickMarkLabelOptions: { font: new PhetFont( 16 ) },
         tickMarkLabelPositionWhenVertical: 'right', // valid values are 'right' and 'left'
         tickMarkLabelPositionWhenHorizontal: 'below', // valid values are 'above' and 'below'
         color: 'black',
@@ -427,7 +427,7 @@ define( require => {
       parentNode.addChild( tickMark );
       parentNode.addChild( new Text(
         stringValue,
-        merge( tickLabelOptions, { font: this.options.tickMarkLabelFont } )
+        merge( tickLabelOptions, this.options.tickMarkLabelOptions )
       ) );
 
     }
