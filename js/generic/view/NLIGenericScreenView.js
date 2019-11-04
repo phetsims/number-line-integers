@@ -30,12 +30,6 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
   const VBox = require( 'SCENERY/nodes/VBox' );
 
-  // constants
-  const CHECKBOX_DILATION = 6;
-  const ARROW_ICON_LENGTH = 40;
-  const COMBO_BOX_FONT = new PhetFont( 16 );
-  const ORIENTATION_BUTTON_DILATION = 2;
-
   // strings
   const absoluteValueString = require( 'string!NUMBER_LINE_INTEGERS/absoluteValue' );
   const labelsString = require( 'string!NUMBER_LINE_INTEGERS/labels' );
@@ -44,7 +38,12 @@ define( require => {
   const rangeString = require( 'string!NUMBER_LINE_INTEGERS/range' );
 
   // constants
+  const CHECKBOX_DILATION = 6;
+  const ARROW_ICON_LENGTH = 40;
+  const COMBO_BOX_FONT = new PhetFont( 16 );
+  const ORIENTATION_BUTTON_DILATION = 2;
   const CHECKBOX_OPTIONS = { boxWidth: NLIConstants.CHECKBOX_BOX_WIDTH };
+  const CHECKBOX_TEXT_OPTIONS = { font: NLIConstants.CHECKBOX_FONT, maxWidth: 150 };
 
   class NLIGenericScreenView extends ScreenView {
 
@@ -66,22 +65,22 @@ define( require => {
       // add the check boxes that will control the number line's presentation
       const checkboxes = [
         new Checkbox(
-          new Text( labelsString, { font: NLIConstants.CHECKBOX_FONT } ),
+          new Text( labelsString, CHECKBOX_TEXT_OPTIONS ),
           model.numberLine.labelsVisibleProperty,
           CHECKBOX_OPTIONS
         ),
         new Checkbox(
-          new Text( tickMarksString, { font: NLIConstants.CHECKBOX_FONT } ),
+          new Text( tickMarksString, CHECKBOX_TEXT_OPTIONS ),
           model.numberLine.tickMarksVisibleProperty,
           CHECKBOX_OPTIONS
         ),
         new Checkbox(
-          new Text( oppositeString, { font: NLIConstants.CHECKBOX_FONT } ),
+          new Text( oppositeString, CHECKBOX_TEXT_OPTIONS ),
           model.numberLine.oppositesVisibleProperty,
           CHECKBOX_OPTIONS
         ),
         new Checkbox(
-          new Text( absoluteValueString, { font: NLIConstants.CHECKBOX_FONT } ),
+          new Text( absoluteValueString, CHECKBOX_TEXT_OPTIONS ),
           model.numberLine.showAbsoluteValuesProperty,
           CHECKBOX_OPTIONS
         )
@@ -194,7 +193,7 @@ define( require => {
                 lowValue: range.min,
                 highValue: range.max
               } ),
-              { font: COMBO_BOX_FONT }
+              { font: COMBO_BOX_FONT, maxWidth: this.layoutBounds.width * 0.15 }
             ),
             range
           )
