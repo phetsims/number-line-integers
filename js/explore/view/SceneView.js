@@ -54,17 +54,17 @@ define( require => {
       // checkboxes that control common model properties
       const checkboxes = [
         new Checkbox(
-          new Text( numberLineString, { font: NLIConstants.CHECKBOX_FONT } ),
+          new Text( numberLineString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
           sceneModel.showNumberLineProperty,
           CHECKBOX_OPTIONS
         ),
         new Checkbox(
-          new Text( labelsString, { font: NLIConstants.CHECKBOX_FONT } ),
+          new Text( labelsString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
           sceneModel.numberLine.labelsVisibleProperty,
           CHECKBOX_OPTIONS
         ),
         new Checkbox(
-          new Text( absoluteValueString, { font: NLIConstants.CHECKBOX_FONT } ),
+          new Text( absoluteValueString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
           sceneModel.numberLine.showAbsoluteValuesProperty,
           CHECKBOX_OPTIONS
         )

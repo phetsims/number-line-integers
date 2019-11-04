@@ -43,7 +43,6 @@ define( require => {
   const COMBO_BOX_FONT = new PhetFont( 16 );
   const ORIENTATION_BUTTON_DILATION = 2;
   const CHECKBOX_OPTIONS = { boxWidth: NLIConstants.CHECKBOX_BOX_WIDTH };
-  const CHECKBOX_TEXT_OPTIONS = { font: NLIConstants.CHECKBOX_FONT, maxWidth: 150 };
 
   class NLIGenericScreenView extends ScreenView {
 
@@ -65,22 +64,22 @@ define( require => {
       // add the check boxes that will control the number line's presentation
       const checkboxes = [
         new Checkbox(
-          new Text( labelsString, CHECKBOX_TEXT_OPTIONS ),
+          new Text( labelsString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
           model.numberLine.labelsVisibleProperty,
           CHECKBOX_OPTIONS
         ),
         new Checkbox(
-          new Text( tickMarksString, CHECKBOX_TEXT_OPTIONS ),
+          new Text( tickMarksString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
           model.numberLine.tickMarksVisibleProperty,
           CHECKBOX_OPTIONS
         ),
         new Checkbox(
-          new Text( oppositeString, CHECKBOX_TEXT_OPTIONS ),
+          new Text( oppositeString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
           model.numberLine.oppositesVisibleProperty,
           CHECKBOX_OPTIONS
         ),
         new Checkbox(
-          new Text( absoluteValueString, CHECKBOX_TEXT_OPTIONS ),
+          new Text( absoluteValueString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
           model.numberLine.showAbsoluteValuesProperty,
           CHECKBOX_OPTIONS
         )
