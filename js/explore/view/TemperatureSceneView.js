@@ -181,7 +181,10 @@ define( require => {
       const onAddedNumberLinePoint = ( numberLine, labelsLayer, addedNumberLinePoint ) => {
 
         // create the textual label
-        const labelText = new Text( addedNumberLinePoint.controller.label, { font: new PhetFont( 16 ) } );
+        const labelText = new Text( addedNumberLinePoint.controller.label, {
+          font: new PhetFont( 16 ),
+          maxWidth: layoutBounds.width * 0.03
+        } );
         const labelNode = new BackgroundNode( labelText, NLIConstants.LABEL_BACKGROUND_OPTIONS );
         labelsLayer.addChild( labelNode );
 

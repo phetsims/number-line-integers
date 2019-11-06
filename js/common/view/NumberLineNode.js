@@ -470,7 +470,8 @@ define( require => {
       };
       const pointLabelTextNode = new Text( getLabelText( numberLinePoint.valueProperty.value ), {
         font: options.labelFont,
-        fill: options.customColorsForLabels ? numberLinePoint.colorProperty : 'black'
+        fill: options.customColorsForLabels ? numberLinePoint.colorProperty : 'black',
+        maxWidth: 75 // TODO: this seems a bit hardcoded; fix
       } );
 
       // create a background and add the label text to it
