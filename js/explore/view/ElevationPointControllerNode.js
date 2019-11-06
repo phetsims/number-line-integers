@@ -25,6 +25,7 @@ define( require => {
 
   // constants
   const IMAGE_DILATION = 20;
+  const DISTANCE_TEXT_MAX_WIDTH = 250;
 
   // strings
   const amountAboveSeaLevelString = require( 'string!NUMBER_LINE_INTEGERS/amountAboveSeaLevel' );
@@ -72,7 +73,7 @@ define( require => {
 
       // handling of what the point controller does when the absolute value checkbox is checked
       const absoluteValueLine = new Path( null, { stroke: pointController.color, lineWidth: 2 } );
-      const distanceText = new Text( '', { font: new PhetFont( 18 ), fill: pointController.color } );
+      const distanceText = new Text( '', { font: new PhetFont( 18 ), fill: pointController.color, maxWidth: DISTANCE_TEXT_MAX_WIDTH } );
       const distanceLabel = new BackgroundNode( distanceText, NLIConstants.LABEL_BACKGROUND_OPTIONS );
       this.addChild( absoluteValueLine );
       this.addChild( distanceLabel );

@@ -74,14 +74,16 @@ define( require => {
       const thermometerLabel = new Text( pointController.label, {
         font: new PhetFont( 16 ),
         centerX: temperatureAndColorSensorNode.thermometerBounds.centerX,
-        top: temperatureAndColorSensorNode.top + 3 // offset empirically determined
+        top: temperatureAndColorSensorNode.top + 3, // offset empirically determined,
+        maxWidth: 20
       } );
       compositeThermometerNode.addChild( thermometerLabel );
 
       // add a textual readout that will describe the temperature verbally, e.g. "20° above 0"
       const temperatureReadoutTextNode = new Text( '', {
         font: new PhetFont( 18 ),
-        fill: Color.BLACK
+        fill: Color.BLACK,
+        maxWidth: 250
       } );
       const temperatureReadoutNode = new BackgroundNode(
         temperatureReadoutTextNode,
