@@ -88,7 +88,7 @@ define( require => {
       super( pointController, options );
 
       // the readout that will display the absolute value in a phrase
-      const absoluteValueText = new Text( '', { font: new PhetFont( 18 ), maxWidth: 150 } );
+      const absoluteValueText = new Text( '', { font: new PhetFont( 18 ), maxWidth: 250 } );
       const absoluteValueBackground = new BackgroundNode( absoluteValueText, NLIConstants.LABEL_BACKGROUND_OPTIONS );
       this.addChild( absoluteValueBackground );
 

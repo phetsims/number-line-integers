@@ -58,7 +58,7 @@ define( require => {
         tickMarkLength: 10,
         zeroTickMarkLineWidth: 2,
         zeroTickMarkLength: 16,
-        tickMarkLabelOptions: { font: new PhetFont( 16 ) },
+        tickMarkLabelOptions: { font: new PhetFont( 16 ), maxWidth: 75 },
         tickMarkLabelPositionWhenVertical: 'right', // valid values are 'right' and 'left'
         tickMarkLabelPositionWhenHorizontal: 'below', // valid values are 'above' and 'below'
         color: 'black',
@@ -470,7 +470,8 @@ define( require => {
       };
       const pointLabelTextNode = new Text( getLabelText( numberLinePoint.valueProperty.value ), {
         font: options.labelFont,
-        fill: options.customColorsForLabels ? numberLinePoint.colorProperty : 'black'
+        fill: options.customColorsForLabels ? numberLinePoint.colorProperty : 'black',
+        maxWidth: 75 // TODO: this seems a bit hardcoded; fix
       } );
 
       // create a background and add the label text to it
