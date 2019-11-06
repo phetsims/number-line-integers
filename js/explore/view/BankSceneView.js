@@ -56,7 +56,8 @@ define( require => {
       const numberLineLabel = new Text( balanceString, {
         font: NUMBER_LINE_LABEL_FONT,
         right: this.numberLineNode.left - 4,
-        centerY: bankSceneModel.numberLine.centerPosition.y
+        centerY: bankSceneModel.numberLine.centerPosition.y,
+        maxWidth: layoutBounds.width * 0.08
       } );
       this.scenesLayer.addChild( numberLineLabel );
       bankSceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
