@@ -31,7 +31,7 @@ define( require => {
   const septemberString = require( 'string!NUMBER_LINE_INTEGERS/september' );
 
   // constants
-  const itemOptions = { font: new PhetFont( 16 ) };
+  const itemOptions = { font: new PhetFont( 16 ), maxWidth: 100 };
 
   class MonthsComboBox extends ComboBox {
 

@@ -58,7 +58,7 @@ define( require => {
         tickMarkLength: 10,
         zeroTickMarkLineWidth: 2,
         zeroTickMarkLength: 16,
-        tickMarkLabelOptions: { font: new PhetFont( 16 ) },
+        tickMarkLabelOptions: { font: new PhetFont( 16 ), maxWidth: 75 },
         tickMarkLabelPositionWhenVertical: 'right', // valid values are 'right' and 'left'
         tickMarkLabelPositionWhenHorizontal: 'below', // valid values are 'above' and 'below'
         color: 'black',

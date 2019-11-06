@@ -44,8 +44,7 @@ define( require => {
       super( sceneModel, layoutBounds, {
         numberLineNodeOptions: {
           numberDisplayTemplate: elevationAmountString,
-          tickMarkLabelPositionWhenVertical: 'left',
-          tickMarkLabelOptions: { maxWidth: layoutBounds.width * 0.06 }
+          tickMarkLabelPositionWhenVertical: 'left'
         }
       } );
 
