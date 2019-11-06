@@ -61,7 +61,7 @@ define( require => {
         new Checkbox(
           new Text( labelsString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
           sceneModel.numberLine.labelsVisibleProperty,
-          CHECKBOX_OPTIONS
+          merge( { enabledProperty: sceneModel.showNumberLineProperty }, CHECKBOX_OPTIONS )
         ),
         new Checkbox(
           new Text( absoluteValueString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
