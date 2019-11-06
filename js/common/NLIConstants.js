@@ -45,7 +45,7 @@ define( require => {
       font: new PhetFont( 16 ),
       maxWidth: 125
     },
-    CHECKBOX_BOX_WIDTH: 15,
+    CHECKBOX_BOX_WIDTH: 17,
     EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET: 175,
     RESET_BUTTON_INSET_FROM_EDGE: 20
   };
