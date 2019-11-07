@@ -21,7 +21,7 @@ define( require => {
   const exploreScreenNavIcon = require( 'image!NUMBER_LINE_INTEGERS/explore-screen-nav.png' );
 
   // strings
-  const exploreString = require( 'string!NUMBER_LINE_INTEGERS/explore' );
+  const screenExploreString = require( 'string!NUMBER_LINE_INTEGERS/screen.explore' );
 
   class NLIExploreScreen extends Screen {
 
@@ -31,7 +31,7 @@ define( require => {
     constructor( tandem ) {
 
       const options = {
-        name: exploreString,
+        name: screenExploreString,
         backgroundColorProperty: new Property( 'rgb( 254, 247, 233 )' ),
         homeScreenIcon: new Image( exploreScreenHomeIcon ),
         navigationBarIcon: new Image( exploreScreenNavIcon ),

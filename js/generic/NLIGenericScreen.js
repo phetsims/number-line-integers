@@ -21,7 +21,7 @@ define( require => {
   const genericScreenNavIcon = require( 'image!NUMBER_LINE_INTEGERS/generic-screen-nav.png' );
 
   // strings
-  const genericString = require( 'string!NUMBER_LINE_INTEGERS/generic' );
+  const screenGenericString = require( 'string!NUMBER_LINE_INTEGERS/screen.generic' );
 
   class NLIGenericScreen extends Screen {
 
@@ -31,7 +31,7 @@ define( require => {
     constructor( tandem ) {
 
       const options = {
-        name: genericString,
+        name: screenGenericString,
         backgroundColorProperty: new Property( 'rgb( 245, 255, 254 )' ),
         homeScreenIcon: new Image( genericScreenHomeIcon ),
         navigationBarIcon: new Image( genericScreenNavIcon ),
