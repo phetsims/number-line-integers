@@ -83,16 +83,16 @@ define( require => {
       this.displayedRangeProperty = new Property( options.initialDisplayedRange );
 
       // @public {BooleanProperty} - controls whether point labels are displayed to the user
-      this.labelsVisibleProperty = new BooleanProperty( options.labelsInitiallyVisible );
+      this.showLabelsProperty = new BooleanProperty( options.labelsInitiallyVisible );
 
       // @public {BooleanProperty} - controls whether tick marks should be displayed to the user
-      this.tickMarksVisibleProperty = new BooleanProperty( options.tickMarksInitiallyVisible );
+      this.showTickMarksProperty = new BooleanProperty( options.tickMarksInitiallyVisible );
 
       // @public {BooleanProperty} - controls whether tick marks should be displayed to the user
       this.showAbsoluteValuesProperty = new BooleanProperty( options.absoluteValuesInitiallyVisible );
 
       // @public {BooleanProperty} - controls whether tick marks should be displayed to the user
-      this.oppositesVisibleProperty = new BooleanProperty( false );
+      this.showOppositesProperty = new BooleanProperty( false );
 
       // @public (read-only) {ObservableArray<NumberLinePoint>} - array of points on this number line
       this.residentPoints = new ObservableArray();
@@ -351,9 +351,9 @@ define( require => {
       this.showAbsoluteValuesProperty.reset();
       this.orientationProperty.reset();
       this.displayedRangeProperty.reset();
-      this.labelsVisibleProperty.reset();
-      this.tickMarksVisibleProperty.reset();
-      this.oppositesVisibleProperty.reset();
+      this.showLabelsProperty.reset();
+      this.showTickMarksProperty.reset();
+      this.showOppositesProperty.reset();
       this.addInitialPoints();
     }
   }

@@ -13,13 +13,11 @@ define( require => {
 
   // modules
   const BackgroundNode = require( 'SCENERY_PHET/BackgroundNode' );
-  const ComparisonStatementAccordionBox = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementAccordionBox' );
   const HBox = require( 'SCENERY/nodes/HBox' );
   const MonthsComboBox = require( 'NUMBER_LINE_INTEGERS/explore/view/MonthsComboBox' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
   const Panel = require( 'SUN/Panel' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Property = require( 'AXON/Property' );
@@ -28,6 +26,7 @@ define( require => {
   const SceneView = require( 'NUMBER_LINE_INTEGERS/explore/view/SceneView' );
   const TemperatureMapNode = require( 'NUMBER_LINE_INTEGERS/explore/view/TemperatureMapNode' );
   const TemperaturePointControllerNode = require( 'NUMBER_LINE_INTEGERS/explore/view/TemperaturePointControllerNode' );
+  const TemperatureSceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/TemperatureSceneModel' );
   const Text = require( 'SCENERY/nodes/Text' );
   const Vector2 = require( 'DOT/Vector2' );
   const VerticalAquaRadioButtonGroup = require( 'SUN/VerticalAquaRadioButtonGroup' );
@@ -38,6 +37,8 @@ define( require => {
   const NUMBER_LINE_PANEL_WIDTH = 200; // empirically determined
   const NUMBER_LINE_PANEL_MARGINS = 10;
   const TITLE_TO_SELECTOR_SPACING = 10;
+  const CELSIUS_NUMBER_LINE_INDEX = TemperatureSceneModel.CELSIUS_NUMBER_LINE_INDEX;
+  const FAHRENHEIT_NUMBER_LINE_INDEX = TemperatureSceneModel.FAHRENHEIT_NUMBER_LINE_INDEX;
 
   // strings
   const temperatureAmountCelsiusString = require( 'string!NUMBER_LINE_INTEGERS/temperatureAmountCelsius' );
@@ -52,54 +53,48 @@ define( require => {
     constructor( sceneModel, layoutBounds ) {
 
       super( sceneModel, layoutBounds, {
-        numberLineNodeOptions: {
-          numberDisplayTemplate: temperatureAmountFahrenheitString,
+
+        // options common to both number lines
+        commonNumberLineNodeOptions: {
           tickMarkLabelPositionWhenVertical: 'left',
           pointNodeOptions: {
             customColorsForLabels: false
           }
-        }
-      } );
+        },
 
-      // TODO: This approach of using the number line node and adding another is hokey, and I (jbphet) should build in
-      // support to the scenes for multiple number lines instead.
+        // options unique to the individual number lines, must be in correct order
+        uniqueNumberLineNodeOptionsList: [
+          { numberDisplayTemplate: temperatureAmountFahrenheitString },
+          { numberDisplayTemplate: temperatureAmountCelsiusString }
+        ],
 
-      // Replace single default numberLineNode with two from celsius and fahrenheit
-      this.celsiusNumberLineNode = new NumberLineNode( sceneModel.celsiusNumberLine, {
-        numberDisplayTemplate: temperatureAmountCelsiusString,
-        tickMarkLabelPositionWhenVertical: 'left',
-        visible: false,
-        pointNodeOptions: {
-          customColorsForLabels: false
-        }
+        // don't have the super constructor add the number line nodes - that will be done below
+        automaticallyAddNLNodes: false
       } );
-      this.fahrenheitNumberLineNode = this.numberLineNode;
-      sceneModel.fahrenheitNumberLine.showAbsoluteValuesProperty.link( showAbsoluteValues => {
-        sceneModel.celsiusNumberLine.showAbsoluteValuesProperty.value = showAbsoluteValues;
-      } );
-      this.removeChild( this.numberLineNode );
 
       // put the number lines on their own layer so that their location can be easily adjusted
       const numberLineLayer = new Node();
-      numberLineLayer.addChild( this.fahrenheitNumberLineNode );
-      numberLineLayer.addChild( this.celsiusNumberLineNode );
+      const fahrenheitNumberLineNode = this.numberLineNodes[ FAHRENHEIT_NUMBER_LINE_INDEX ];
+      const celsiusNumberLineNode = this.numberLineNodes[ CELSIUS_NUMBER_LINE_INDEX ];
+      numberLineLayer.addChild( fahrenheitNumberLineNode );
+      numberLineLayer.addChild( celsiusNumberLineNode );
+
+      // get local references to other items needed to manage the two separate number lines
+      const fahrenheitNumberLine = sceneModel.numberLines[ FAHRENHEIT_NUMBER_LINE_INDEX ];
+      const fahrenheitComparisonStatementAccordionBox = this.comparisonStatementAccordionBoxes[ FAHRENHEIT_NUMBER_LINE_INDEX ];
+      const celsiusNumberLine = sceneModel.numberLines[ CELSIUS_NUMBER_LINE_INDEX ];
+      const celsiusComparisonStatementAccordionBox = this.comparisonStatementAccordionBoxes[ CELSIUS_NUMBER_LINE_INDEX ];
 
       // node where the contents of the number line panel will be placed
       const numberLinePanelContent = new Node();
       numberLinePanelContent.addChild( numberLineLayer );
 
-      // Do the same replacement with ComparisonStatementAccordionBox
-      // @protected
-      this.celsiusComparisonAccordionBox = new ComparisonStatementAccordionBox( sceneModel.celsiusNumberLine );
-      this.fahrenheitComparisonAccordionBox = this.comparisonStatementAccordionBox;
-      this.scenesLayer.addChild( this.celsiusComparisonAccordionBox );
-
       // make sure that the same operator is being used in both the celsius and fahrenheit comparison statements
-      this.celsiusComparisonAccordionBox.comparisonStatementNode.selectedOperatorProperty.link( selectedOperator => {
-        this.fahrenheitComparisonAccordionBox.comparisonStatementNode.selectedOperatorProperty.value = selectedOperator;
+      celsiusComparisonStatementAccordionBox.comparisonStatementNode.selectedOperatorProperty.link( selectedOperator => {
+        fahrenheitComparisonStatementAccordionBox.comparisonStatementNode.selectedOperatorProperty.set( selectedOperator );
       } );
-      this.fahrenheitComparisonAccordionBox.comparisonStatementNode.selectedOperatorProperty.link( selectedOperator => {
-        this.celsiusComparisonAccordionBox.comparisonStatementNode.selectedOperatorProperty.value = selectedOperator;
+      fahrenheitComparisonStatementAccordionBox.comparisonStatementNode.selectedOperatorProperty.link( selectedOperator => {
+        celsiusComparisonStatementAccordionBox.comparisonStatementNode.selectedOperatorProperty.set( selectedOperator );
       } );
 
       // @private
@@ -157,8 +152,8 @@ define( require => {
       // title for the panel where the number line will appear
       const numberLinePanelTitle = new Text( temperatureString, {
         font: NUMBER_LINE_LABEL_FONT,
-        centerX: sceneModel.numberLine.centerPosition.x,
-        bottom: this.numberLineNode.top - 5,
+        centerX: celsiusNumberLineNode.centerX,
+        bottom: celsiusNumberLineNode.top - 5,
         maxWidth: NUMBER_LINE_PANEL_WIDTH - temperatureUnitsSelector.width - TITLE_TO_SELECTOR_SPACING -
                   2 * NUMBER_LINE_PANEL_MARGINS
       } );
@@ -211,11 +206,11 @@ define( require => {
         numberLine.residentPoints.addItemRemovedListener( removalListener );
       };
 
-      sceneModel.celsiusNumberLine.residentPoints.addItemAddedListener( addedPoint => {
-        onAddedNumberLinePoint( sceneModel.celsiusNumberLine, celsiusLabelsLayer, addedPoint );
+      celsiusNumberLine.residentPoints.addItemAddedListener( addedPoint => {
+        onAddedNumberLinePoint( celsiusNumberLine, celsiusLabelsLayer, addedPoint );
       } );
-      sceneModel.fahrenheitNumberLine.residentPoints.addItemAddedListener( addedPoint => {
-        onAddedNumberLinePoint( sceneModel.fahrenheitNumberLine, fahrenheitLabelsLayer, addedPoint );
+      fahrenheitNumberLine.residentPoints.addItemAddedListener( addedPoint => {
+        onAddedNumberLinePoint( fahrenheitNumberLine, fahrenheitLabelsLayer, addedPoint );
       } );
 
       numberLineLayer.addChild( celsiusLabelsLayer );
@@ -231,7 +226,7 @@ define( require => {
           xMargin: NUMBER_LINE_PANEL_MARGINS,
           yMargin: NUMBER_LINE_PANEL_MARGINS,
           centerX: this.temperatureMap.left / 2, // centered between left edge of scene and left edge of map
-          top: this.comparisonStatementAccordionBox.top,
+          top: fahrenheitNumberLineNode.top,
           minWidth: NUMBER_LINE_PANEL_WIDTH,
           maxWidth: NUMBER_LINE_PANEL_WIDTH
         }
@@ -241,12 +236,12 @@ define( require => {
       Property.multilink(
         [ sceneModel.temperatureUnitsProperty, sceneModel.showNumberLineProperty ],
         ( temperatureUnits, showNumberLine ) => {
-          this.celsiusNumberLineNode.visible = temperatureUnits === NLIConstants.TEMPERATURE_UNITS.CELSIUS;
-          this.fahrenheitNumberLineNode.visible = temperatureUnits === NLIConstants.TEMPERATURE_UNITS.FAHRENHEIT;
-          this.celsiusComparisonAccordionBox.visible = this.celsiusNumberLineNode.visible;
-          this.fahrenheitComparisonAccordionBox.visible = this.fahrenheitNumberLineNode.visible;
-          celsiusLabelsLayer.visible = this.celsiusNumberLineNode.visible;
-          fahrenheitLabelsLayer.visible = this.fahrenheitNumberLineNode.visible;
+          celsiusNumberLineNode.visible = temperatureUnits === NLIConstants.TEMPERATURE_UNITS.CELSIUS;
+          celsiusComparisonStatementAccordionBox.visible = celsiusNumberLineNode.visible;
+          celsiusLabelsLayer.visible = celsiusNumberLineNode.visible;
+          fahrenheitNumberLineNode.visible = temperatureUnits === NLIConstants.TEMPERATURE_UNITS.FAHRENHEIT;
+          fahrenheitComparisonStatementAccordionBox.visible = fahrenheitNumberLineNode.visible;
+          fahrenheitLabelsLayer.visible = fahrenheitNumberLineNode.visible;
           numberLinePanel.visible = showNumberLine;
         }
       );
@@ -255,7 +250,7 @@ define( require => {
         children: sceneModel.permanentPointControllers.map(
           pointController => new TemperaturePointControllerNode(
             pointController,
-            sceneModel.numberLine.showAbsoluteValuesProperty,
+            sceneModel.numberLineAbsValIndicatorsVisibleProperty,
             sceneModel.temperatureUnitsProperty
           )
         )

@@ -28,21 +28,56 @@ define( require => {
     constructor( options ) {
 
       options = merge( {
-        numberLineZeroPosition: SCENE_BOUNDS.center,
-        numberLineOptions: null // {Object|null} - options propagated to the NumberDisplay subcomponent
+
+        // {number} - the number of number lines to be created and managed in this model
+        numberOfNumberLines: 1,
+
+        // {Object|null} - number line options that are common to all number lines created in this constructor
+        commonNumberLineOptions: {
+          initialDisplayedRange: new Range( -100, 100 ),
+          initialPointSpecs: []
+        },
+
+        // {Vector[]} - zero positions for each of the number lines, length must match number of number lines
+        numberLineZeroPositions: [ SCENE_BOUNDS.center ],
+
+        // {null|Object[]} - options that are unique to the individual number lines being created, null if not needed
+        uniqueNumberLineOptionsList: null
+
       }, options );
 
-      // default options to be passed in to NumberLine
-      options.numberLineOptions = merge( {
-        initialDisplayedRange: new Range( -100, 100 ),
-        initialPointSpecs: []
-      }, options.numberLineOptions );
+      // options checking
+      assert && assert( options.numberOfNumberLines === options.numberLineZeroPositions.length );
+      assert && assert( !options.uniqueNumberLineOptionsList ||
+                        options.uniqueNumberLineOptionsList.length === options.numberOfNumberLines );
 
-      // @public {BooleanProperty}
+      // @public - whether or not the number lines are visible
       this.showNumberLineProperty = new BooleanProperty( true );
 
-      // @public (read-only){NumberLine} - the number line for this scene
-      this.numberLine = new NumberLine( options.numberLineZeroPosition, options.numberLineOptions );
+      // @public (read-only){NumberLine[]} - the number line(s) for this scene
+      this.numberLines = [];
+      _.times( options.numberOfNumberLines, count => {
+        this.numberLines.push( new NumberLine(
+          options.numberLineZeroPositions[ count ],
+          merge(
+            {},
+            options.commonNumberLineOptions,
+            options.uniqueNumberLineOptionsList ? options.uniqueNumberLineOptionsList[ count ] : {}
+          )
+        ) );
+      } );
+
+      // @public - controls whether the labels on the number lines are visible
+      this.numberLineLabelsVisibleProperty = new BooleanProperty( true );
+      this.numberLineLabelsVisibleProperty.link( visible => {
+        this.numberLines.forEach( nl => { nl.showLabelsProperty.set( visible ); } );
+      } );
+
+      // @public - controls whether the absolute value indicators on the number lines are visible
+      this.numberLineAbsValIndicatorsVisibleProperty = new BooleanProperty( false );
+      this.numberLineAbsValIndicatorsVisibleProperty.link( visible => {
+        this.numberLines.forEach( nl => { nl.showAbsoluteValuesProperty.set( visible ); } );
+      } );
     }
 
     /**
@@ -50,8 +85,10 @@ define( require => {
      */
     reset() {
       this.resetScene();
-      this.numberLine.showAbsoluteValuesProperty.reset();
+      this.numberLines.forEach( nl => { nl.reset(); } );
       this.showNumberLineProperty.reset();
+      this.numberLineLabelsVisibleProperty.reset();
+      this.numberLineAbsValIndicatorsVisibleProperty.reset();
     }
 
     /**

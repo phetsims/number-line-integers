@@ -11,3 +11,7 @@ on there being one), probably the best thing to do would be to assume that the n
 line exists in a normalized space of 1x1, and all coordinates are transformed into this
 space based on the number line's orientation and displayed range value.  An MVT in the
 view would then project it into the appropriate place in the view.
+
+Note to self: Write about the number line class hierarchy.  I'm not doing it now because I'm thinking of revising it
+such that there is a purely abstract one.
+

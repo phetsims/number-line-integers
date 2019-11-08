@@ -65,17 +65,17 @@ define( require => {
       const checkboxes = [
         new Checkbox(
           new Text( labelsString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
-          model.numberLine.labelsVisibleProperty,
+          model.numberLine.showLabelsProperty,
           CHECKBOX_OPTIONS
         ),
         new Checkbox(
           new Text( tickMarksString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
-          model.numberLine.tickMarksVisibleProperty,
+          model.numberLine.showTickMarksProperty,
           CHECKBOX_OPTIONS
         ),
         new Checkbox(
           new Text( oppositeString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
-          model.numberLine.oppositesVisibleProperty,
+          model.numberLine.showOppositesProperty,
           CHECKBOX_OPTIONS
         ),
         new Checkbox(

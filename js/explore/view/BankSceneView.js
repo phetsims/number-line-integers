@@ -47,16 +47,19 @@ define( require => {
     constructor( bankSceneModel, layoutBounds ) {
 
       super( bankSceneModel, layoutBounds, {
-        numberLineNodeOptions: {
+        numberLineNodeCommonOptions: {
           numberDisplayTemplate: StringUtils.fillIn( moneyAmountString, { currencyUnit: currencyUnitsString } )
         }
       } );
 
+      // get a reference to the only number line node in this scene
+      const numberLineNode = this.numberLineNodes[ 0 ];
+
       // number line label
       const numberLineLabel = new Text( balanceString, {
         font: NUMBER_LINE_LABEL_FONT,
-        right: this.numberLineNode.left - 4,
-        centerY: bankSceneModel.numberLine.centerPosition.y,
+        right: numberLineNode.left - 4,
+        centerY: bankSceneModel.numberLines[ 0 ].centerPosition.y,
         maxWidth: layoutBounds.width * 0.08
       } );
       this.scenesLayer.addChild( numberLineLabel );
@@ -65,7 +68,7 @@ define( require => {
       // add the switch that controls whether one or two accounts are shown
       this.scenesLayer.addChild( new AccountVisibilityControlSwitch( bankSceneModel.showComparisonAccountProperty, {
         right: this.layoutBounds.maxX - INSET,
-        centerY: this.numberLineNode.centerY
+        centerY: numberLineNode.centerY
       } ) );
 
       const pointControllerNodesLayer = new Node();
@@ -101,19 +104,19 @@ define( require => {
       } );
 
       // calculate a horizontal position for the account balance controls that is centered between some other controls
-      const accountBalanceControllersCenterX = ( this.comparisonStatementAccordionBox.right +
+      const accountBalanceControllersCenterX = ( this.comparisonStatementAccordionBoxes[ 0 ].right +
                                                  this.checkboxGroup.bounds.minX ) / 2;
 
       // add the controller for the primary account
       const primaryAccountBalanceControllerNode = new AccountBalanceControllerNode(
         bankSceneModel.primaryAccount.balanceProperty,
         bankSceneModel.primaryAccount.balanceChangedByButtonEmitter,
-        bankSceneModel.numberLine.displayedRangeProperty.value,
+        bankSceneModel.numberLines[ 0 ].displayedRangeProperty.value,
         BALANCE_CHANGE_AMOUNT,
         {
           buttonBaseColor: BankSceneModel.PRIMARY_ACCOUNT_POINT_COLOR,
           centerX: accountBalanceControllersCenterX,
-          top: this.numberLineNode.centerY + 70
+          top: numberLineNode.centerY + 70
         }
       );
       this.scenesLayer.addChild( primaryAccountBalanceControllerNode );
@@ -122,12 +125,12 @@ define( require => {
       const comparisonAccountBalanceControllerNode = new AccountBalanceControllerNode(
         bankSceneModel.comparisonAccount.balanceProperty,
         bankSceneModel.comparisonAccount.balanceChangedByButtonEmitter,
-        bankSceneModel.numberLine.displayedRangeProperty.value,
+        bankSceneModel.numberLines[ 0 ].displayedRangeProperty.value,
         BALANCE_CHANGE_AMOUNT,
         {
           buttonBaseColor: BankSceneModel.COMPARISON_ACCOUNT_POINT_COLOR,
           centerX: accountBalanceControllersCenterX,
-          bottom: this.numberLineNode.centerY - 70
+          bottom: numberLineNode.centerY - 70
         }
       );
       bankSceneModel.showComparisonAccountProperty.linkAttribute( comparisonAccountBalanceControllerNode, 'visible' );

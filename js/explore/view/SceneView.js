@@ -35,8 +35,23 @@ define( require => {
     constructor( sceneModel, layoutBounds, options ) {
 
       options = merge( {
-        numberLineNodeOptions: {}
+
+        // automatically add number line nodes to the scene graph, set to false if subclasses need more control
+        automaticallyAddNLNodes: true,
+
+        // {Object) - common options for the number line node(s)
+        commonNumberLineNodeOptions: {},
+
+        // {Object[]|null} - unique options for each of the number lines, null if only one or all are the same
+        uniqueNumberLineNodeOptionsList: null
+
       }, options );
+
+      // options checking
+      assert && assert(
+        !options.uniqueNumberLineNodeOptionsList || options.uniqueNumberLineNodeOptionsList.length === sceneModel.numberLines.length,
+        'the number of option objects for number line nodes does not match the number of number lines'
+      );
 
       super();
 
@@ -60,12 +75,12 @@ define( require => {
         ),
         new Checkbox(
           new Text( labelsString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
-          sceneModel.numberLine.labelsVisibleProperty,
+          sceneModel.numberLineLabelsVisibleProperty,
           merge( { enabledProperty: sceneModel.showNumberLineProperty }, CHECKBOX_OPTIONS )
         ),
         new Checkbox(
           new Text( absoluteValueString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
-          sceneModel.numberLine.showAbsoluteValuesProperty,
+          sceneModel.numberLineAbsValIndicatorsVisibleProperty,
           CHECKBOX_OPTIONS
         )
       ];
@@ -84,16 +99,34 @@ define( require => {
       checkboxes.forEach( checkbox => { checkbox.touchArea = checkbox.localBounds.dilated( CHECKBOX_DILATION ); } );
 
       // @protected
-      this.comparisonStatementAccordionBox = new ComparisonStatementAccordionBox( sceneModel.numberLine );
-      this.addChild( this.comparisonStatementAccordionBox );
+      this.comparisonStatementAccordionBoxes = [];
+      sceneModel.numberLines.forEach( numberLine => {
+        const comparisonStatementAccordionBox = new ComparisonStatementAccordionBox( numberLine );
+        this.comparisonStatementAccordionBoxes.push( comparisonStatementAccordionBox );
+        this.addChild( comparisonStatementAccordionBox );
+      } );
 
-      // @protected (read-only) {NumberLine} - view of the number line
-      this.numberLineNode = new NumberLineNode( sceneModel.numberLine, options.numberLineNodeOptions );
-      sceneModel.showNumberLineProperty.linkAttribute( this.numberLineNode, 'visible' );
-      this.addChild( this.numberLineNode );
+      // @protected (read-only) {NumberLine} - views of the number lines
+      this.numberLineNodes = [];
 
-      // button that restores the scene to its initial state but doesn't reset all aspects of the scene like the reset
-      // all button does
+      // create and, if options dictate, add the number line to the view
+      sceneModel.numberLines.forEach( ( numberLine, index ) => {
+        const numberLineNode = new NumberLineNode(
+          numberLine,
+          merge(
+            {},
+            options.commonNumberLineNodeOptions,
+            options.uniqueNumberLineNodeOptionsList ? options.uniqueNumberLineNodeOptionsList[ index ] : {}
+          )
+        );
+        sceneModel.showNumberLineProperty.linkAttribute( numberLineNode, 'visible' );
+        this.numberLineNodes.push( numberLineNode );
+        if ( options.automaticallyAddNLNodes ) {
+          this.addChild( numberLineNode );
+        }
+      } );
+
+      // button that restores the scene to its initial state but doesn't reset the model and view for the whole screen
       const sceneResetButton = new ResetButton( {
         listener: function() {
           sceneModel.resetScene();
@@ -113,7 +146,7 @@ define( require => {
      * @public
      */
     reset() {
-      this.comparisonStatementAccordionBox.reset();
+      this.comparisonStatementAccordionBoxes.forEach( csab => { csab.reset(); } );
     }
   }
 

@@ -150,7 +150,7 @@ define( require => {
 
       // add the root node for the tick marks that exist between the middle and the end
       const middleTickMarksRootNode = new Node();
-      numberLine.tickMarksVisibleProperty.linkAttribute( middleTickMarksRootNode, 'visible' );
+      numberLine.showTickMarksProperty.linkAttribute( middleTickMarksRootNode, 'visible' );
       this.addChild( middleTickMarksRootNode );
 
       // add the layer where the lines the are used to indicate the absolute value of a point will be displayed
@@ -479,7 +479,7 @@ define( require => {
 
       // add the label and link a listener for visibility
       this.addChild( pointLabelNode );
-      const labelVisibilityListener = numberLine.labelsVisibleProperty.linkAttribute( pointLabelNode, 'visible' );
+      const labelVisibilityListener = numberLine.showLabelsProperty.linkAttribute( pointLabelNode, 'visible' );
 
       // move in front of other points when being dragged or when the point value is being changed by other means
       const moveToFrontMultilink = Property.multilink(
@@ -490,7 +490,7 @@ define( require => {
       // update the point representation as it moves
       const updatePointRepresentationMultilink = Property.multilink(
         [ numberLinePoint.valueProperty,
-          numberLine.oppositesVisibleProperty,
+          numberLine.showOppositesProperty,
           numberLine.orientationProperty,
           numberLine.displayedRangeProperty
         ], ( value, oppositesVisible ) => {
@@ -517,7 +517,7 @@ define( require => {
        * @private
        */
       this.disposePointNode = () => {
-        numberLine.labelsVisibleProperty.unlinkAttribute( labelVisibilityListener );
+        numberLine.showLabelsProperty.unlinkAttribute( labelVisibilityListener );
         updatePointRepresentationMultilink.dispose();
         moveToFrontMultilink.dispose();
       };

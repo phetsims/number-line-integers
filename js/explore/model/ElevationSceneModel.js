@@ -47,8 +47,8 @@ define( require => {
       );
 
       super( {
-        numberLineZeroPosition: new Vector2( elevationAreaBounds.minX / 2, seaLevel ),
-        numberLineOptions: {
+        numberLineZeroPositions: [ new Vector2( elevationAreaBounds.minX / 2, seaLevel ) ],
+        commonNumberLineOptions: {
           initialOrientation: NumberLineOrientation.VERTICAL,
           initialDisplayedRange: numberLineRange,
           labelsInitiallyVisible: true,
@@ -75,11 +75,14 @@ define( require => {
         boxCenter.y + boxHeight / 2
       );
 
+      // there is only one number line in this scene - create a local reference to it for convenience
+      const numberLine = this.numberLines[ 0 ];
+
       // @public (read-only) - the point controllers that can be moved into the elevation scene
       this.permanentPointControllers = [
-        new ElevationPointController( this.numberLine, elevationAreaBounds, { color: new Color( '#EE3937' ) } ),
-        new ElevationPointController( this.numberLine, elevationAreaBounds, { color: new Color( 'black' ) } ),
-        new ElevationPointController( this.numberLine, elevationAreaBounds, { color: new Color( ' #446ab7' ) } )
+        new ElevationPointController( numberLine, elevationAreaBounds, { color: new Color( '#EE3937' ) } ),
+        new ElevationPointController( numberLine, elevationAreaBounds, { color: new Color( 'black' ) } ),
+        new ElevationPointController( numberLine, elevationAreaBounds, { color: new Color( ' #446ab7' ) } )
       ];
 
       // put the permanent point controllers in their starting positions
@@ -105,17 +108,17 @@ define( require => {
       this.numberLineAttachedPointControllers = new ObservableArray();
 
       // watch for points coming and going on the number line and add the additional point controllers for them
-      this.numberLine.residentPoints.addItemAddedListener( addedPoint => {
+      numberLine.residentPoints.addItemAddedListener( addedPoint => {
 
         //TODO: this below should be handled by NumberLine
-        addedPoint.numberLine = this.numberLine;
+        addedPoint.numberLine = numberLine;
 
         // add a point controller that will remain attached to the number line that will control this point
         const pointController = new PointController( {
           color: addedPoint.colorProperty.value,
           lockToNumberLine: 'always',
           associatedNumberLinePoints: [ addedPoint ],
-          numberLines: [ this.numberLine ]
+          numberLines: [ numberLine ]
         } );
         this.numberLineAttachedPointControllers.push( pointController );
 
@@ -124,11 +127,11 @@ define( require => {
           if ( addedPoint === removedPoint ) {
             pointController.clearNumberLinePoints();
             pointController.dispose();
-            this.numberLine.residentPoints.removeItemRemovedListener( handlePointRemoved );
+            numberLine.residentPoints.removeItemRemovedListener( handlePointRemoved );
             this.numberLineAttachedPointControllers.remove( pointController );
           }
         };
-        this.numberLine.residentPoints.addItemRemovedListener( handlePointRemoved );
+        numberLine.residentPoints.addItemRemovedListener( handlePointRemoved );
       } );
     }
 
@@ -167,7 +170,7 @@ define( require => {
 
       // put the point controllers back into their starting positions
       this.permanentPointControllers.forEach( pointController => {
-        this.numberLine.removePoint( pointController.associatedNumberLinePoint );
+        this.numberLines[ 0 ].removePoint( pointController.associatedNumberLinePoint );
         pointController.reset();
         this.putPointControllerInBox( pointController );
       } );

@@ -42,7 +42,7 @@ define( require => {
     constructor( sceneModel, layoutBounds ) {
 
       super( sceneModel, layoutBounds, {
-        numberLineNodeOptions: {
+        numberLineNodeCommonOptions: {
           numberDisplayTemplate: elevationAmountString,
           tickMarkLabelPositionWhenVertical: 'left'
         }
@@ -69,8 +69,8 @@ define( require => {
       // add label for the number line
       const numberLineLabel = new Text( elevationString, {
         font: NUMBER_LINE_LABEL_FONT,
-        centerX: sceneModel.numberLine.centerPosition.x,
-        bottom: this.numberLineNode.top - 5,
+        centerX: sceneModel.numberLines[ 0 ].centerPosition.x,
+        bottom: this.numberLineNodes[ 0 ].top - 5,
         maxWidth: this.layoutBounds.width * 0.18
       } );
       sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );

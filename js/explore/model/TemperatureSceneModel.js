@@ -13,10 +13,8 @@ define( require => {
 
   // modules
   const Bounds2 = require( 'DOT/Bounds2' );
-  const merge = require( 'PHET_CORE/merge' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const NLIQueryParameters = require( 'NUMBER_LINE_INTEGERS/common/NLIQueryParameters' );
-  const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const NumberProperty = require( 'AXON/NumberProperty' );
@@ -53,11 +51,8 @@ define( require => {
   const NUMBER_LINE_HEIGHT = 500; // empirically determined
   const X_MOVE_AMOUNT = 1; // in model/view coords, amount to move a point controller to avoid overlap with another
   const Y_MOVE_AMOUNT = 1; // in model/view coords, amount to move a point controller to avoid overlap with another
-  const COMMON_NUMBER_LINE_OPTIONS = {
-    initialOrientation: NumberLineOrientation.VERTICAL,
-    heightInModelSpace: NUMBER_LINE_HEIGHT,
-    labelsInitiallyVisible: true
-  };
+  const FAHRENHEIT_NUMBER_LINE_INDEX = 0;
+  const CELSIUS_NUMBER_LINE_INDEX = 1;
 
   class TemperatureSceneModel extends SceneModel {
 
@@ -65,18 +60,26 @@ define( require => {
 
       // the base class has a single number line, so make that one the Fahrenheit version
       super( {
-        numberLineZeroPosition: getNumberLineZeroPosition( FAHRENHEIT_NUMBER_LINE_RANGE ),
-        numberLineOptions: merge( COMMON_NUMBER_LINE_OPTIONS, { initialDisplayedRange: FAHRENHEIT_NUMBER_LINE_RANGE } )
+
+        // two number lines, one for Fahrenheit and one for Celsius
+        numberOfNumberLines: 2,
+
+        commonNumberLineOptions: {
+          initialOrientation: NumberLineOrientation.VERTICAL,
+          heightInModelSpace: NUMBER_LINE_HEIGHT,
+          labelsInitiallyVisible: true
+        },
+
+        numberLineZeroPositions: [
+          getNumberLineZeroPosition( FAHRENHEIT_NUMBER_LINE_RANGE ),
+          getNumberLineZeroPosition( CELSIUS_NUMBER_LINE_RANGE )
+        ],
+
+        uniqueNumberLineOptionsList: [
+          { initialDisplayedRange: FAHRENHEIT_NUMBER_LINE_RANGE },
+          { initialDisplayedRange: CELSIUS_NUMBER_LINE_RANGE }
+        ]
       } );
-
-      // @public (read-only) {NumberLIne} - the Celsius number line
-      this.celsiusNumberLine = new NumberLine(
-        getNumberLineZeroPosition( CELSIUS_NUMBER_LINE_RANGE ),
-        merge( COMMON_NUMBER_LINE_OPTIONS, { initialDisplayedRange: CELSIUS_NUMBER_LINE_RANGE } )
-      );
-
-      // @public (read-only)  {NumberLIne} - reference for the Fahrenheit number line that is consistent with the Celsius one
-      this.fahrenheitNumberLine = this.numberLine;
 
       // @public (read-only) {Bounds2} - bounds of the map area
       this.mapBounds = MAP_BOUNDS;
@@ -174,11 +177,20 @@ define( require => {
       );
     }
 
+    get celsiusNumberLine() {
+      return this.numberLines[ CELSIUS_NUMBER_LINE_INDEX ];
+    }
+
+    get fahrenheitNumberLine() {
+      return this.numberLines[ FAHRENHEIT_NUMBER_LINE_INDEX ];
+    }
+
     /**
      * place the provided point controller into the holding box, generally done on init, reset, and when the user "puts
      * it away"
      * @param {TemperaturePointController} pointController
      * @param {boolean} [animate] - controls whether to animate the return to the box or do it instantly
+     * @private
      */
     putPointControllerInBox( pointController, animate = false ) {
       const index = this.permanentPointControllers.indexOf( pointController );
@@ -264,9 +276,8 @@ define( require => {
     resetScene() {
 
       this.temperatureUnitsProperty.reset();
-      this.fahrenheitNumberLine.reset();
-      this.celsiusNumberLine.reset();
       this.monthProperty.reset();
+      this.numberLines.forEach( nl => { nl.reset(); } );
 
       // put the point controllers back into their starting positions
       this.permanentPointControllers.forEach( pointController => {
@@ -274,8 +285,11 @@ define( require => {
         this.putPointControllerInBox( pointController );
       } );
     }
-
   }
+
+  // static fields
+  TemperatureSceneModel.CELSIUS_NUMBER_LINE_INDEX = CELSIUS_NUMBER_LINE_INDEX;
+  TemperatureSceneModel.FAHRENHEIT_NUMBER_LINE_INDEX = FAHRENHEIT_NUMBER_LINE_INDEX;
 
   /**
    * helper function to avoid code duplication

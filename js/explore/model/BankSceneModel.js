@@ -43,8 +43,8 @@ define( require => {
       const numberLineZeroPosition = new Vector2( SCENE_BOUNDS.width * 0.37, SCENE_BOUNDS.centerY );
 
       super( {
-        numberLineZeroPosition: numberLineZeroPosition,
-        numberLineOptions: {
+        numberLineZeroPositions: [ numberLineZeroPosition ],
+        commonNumberLineOptions: {
           initialOrientation: NumberLineOrientation.HORIZONTAL,
           initialDisplayedRange: new Range( -100, 100 ),
           labelsInitiallyVisible: true,
@@ -59,11 +59,15 @@ define( require => {
       // @public - bank account that is always shown in the view
       this.primaryAccount = new Account( INITIAL_PRIMARY_ACCOUNT_BALANCE );
 
+      // there is only one number line in this scene - get a local reference to it for convenience
+      assert && assert( this.numberLines.length === 1 );
+      const numberLine = this.numberLines[ 0 ];
+
       // hook the primary account balance up to the first number line point
       this.primaryAccount.balanceProperty.link( balance => {
-        this.numberLine.residentPoints.get( 0 ).proposeValue( balance );
+        numberLine.residentPoints.get( 0 ).proposeValue( balance );
       } );
-      this.numberLine.residentPoints.get( 0 ).valueProperty.link( value => {
+      numberLine.residentPoints.get( 0 ).valueProperty.link( value => {
         this.primaryAccount.balanceProperty.value = value;
       } );
 
@@ -72,8 +76,8 @@ define( require => {
 
       // hook the comparison account balance up to the second number line point
       this.comparisonAccount.balanceProperty.link( balance => {
-        if ( this.numberLine.residentPoints.length > 1 ) {
-          this.numberLine.residentPoints.get( 1 ).proposeValue( balance );
+        if ( numberLine.residentPoints.length > 1 ) {
+          numberLine.residentPoints.get( 1 ).proposeValue( balance );
         }
       } );
 
@@ -82,11 +86,11 @@ define( require => {
 
       // @public {PointController} - the point controller for the primary account
       this.primaryAccountPointController = new PointController( {
-        color: this.numberLine.residentPoints.get( 0 ).colorProperty.value,
+        color: numberLine.residentPoints.get( 0 ).colorProperty.value,
         lockToNumberLine: 'always',
-        associatedNumberLinePoints: [ this.numberLine.residentPoints.get( 0 ) ],
+        associatedNumberLinePoints: [ numberLine.residentPoints.get( 0 ) ],
         offsetFromHorizontalNumberLine: 120,
-        numberLines: [ this.numberLine ]
+        numberLines: [ numberLine ]
       } );
 
       // the number line point that represents the comparison account value, only exists when enabled
@@ -114,9 +118,9 @@ define( require => {
           comparisonAccountNumberLinePoint = new NumberLinePoint(
             this.comparisonAccount.balanceProperty.value,
             COMPARISON_ACCOUNT_POINT_COLOR,
-            this.numberLine
+            numberLine
           );
-          this.numberLine.addPoint( comparisonAccountNumberLinePoint );
+          numberLine.addPoint( comparisonAccountNumberLinePoint );
 
           comparisonAccountNumberLinePoint.valueProperty.link( value => {
             this.comparisonAccount.balanceProperty.value = value;
@@ -127,7 +131,7 @@ define( require => {
             lockToNumberLine: 'always',
             associatedNumberLinePoints: [ comparisonAccountNumberLinePoint ],
             offsetFromHorizontalNumberLine: -120,
-            numberLines: [ this.numberLine ]
+            numberLines: [ numberLine ]
           } );
         }
         else {
@@ -148,7 +152,7 @@ define( require => {
           this.comparisonAccountPointControllerProperty.reset();
 
           // remove the point from the number line
-          this.numberLine.removePoint( comparisonAccountNumberLinePoint );
+          numberLine.removePoint( comparisonAccountNumberLinePoint );
           comparisonAccountNumberLinePoint = null;
         }
       } );
