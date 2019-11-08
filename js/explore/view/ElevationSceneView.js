@@ -42,8 +42,8 @@ define( require => {
     constructor( sceneModel, layoutBounds ) {
 
       super( sceneModel, layoutBounds, {
-        numberLineNodeCommonOptions: {
-          numberDisplayTemplate: elevationAmountString,
+        commonNumberLineNodeOptions: {
+          numericalLabelTemplate: elevationAmountString,
           tickMarkLabelPositionWhenVertical: 'left'
         }
       } );

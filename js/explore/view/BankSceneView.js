@@ -47,8 +47,8 @@ define( require => {
     constructor( bankSceneModel, layoutBounds ) {
 
       super( bankSceneModel, layoutBounds, {
-        numberLineNodeCommonOptions: {
-          numberDisplayTemplate: StringUtils.fillIn( moneyAmountString, { currencyUnit: currencyUnitsString } )
+        commonNumberLineNodeOptions: {
+          numericalLabelTemplate: StringUtils.fillIn( moneyAmountString, { currencyUnit: currencyUnitsString } )
         }
       } );
 

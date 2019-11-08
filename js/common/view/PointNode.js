@@ -35,10 +35,13 @@ define( require => {
     constructor( numberLinePoint, numberLine, options ) {
 
       options = merge( {
-        isDoppelganger: false,
+
         customColorsForLabels: true,
-        numberDisplayTemplate: '{{number}}',
-        labelFont: new PhetFont( 18 )
+        labelTemplate: '{{number}}',
+        labelFont: new PhetFont( 18 ),
+
+        // true if this point is the opposite of another number line point
+        isDoppelganger: false
       }, options );
 
       super();
@@ -51,7 +54,7 @@ define( require => {
       this.addChild( circle );
 
       const getLabelText = value => {
-        let stringValue = StringUtils.fillIn( options.numberDisplayTemplate, { value: Math.abs( value ) } );
+        let stringValue = StringUtils.fillIn( options.labelTemplate, { value: Math.abs( value ) } );
         if ( value < 0 ) {
           stringValue = MathSymbols.UNARY_MINUS + stringValue;
         }

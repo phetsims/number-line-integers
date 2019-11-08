@@ -64,8 +64,8 @@ define( require => {
 
         // options unique to the individual number lines, must be in correct order
         uniqueNumberLineNodeOptionsList: [
-          { numberDisplayTemplate: temperatureAmountFahrenheitString },
-          { numberDisplayTemplate: temperatureAmountCelsiusString }
+          { numericalLabelTemplate: temperatureAmountFahrenheitString },
+          { numericalLabelTemplate: temperatureAmountCelsiusString }
         ],
 
         // don't have the super constructor add the number line nodes - that will be done below

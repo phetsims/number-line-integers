@@ -61,7 +61,7 @@ define( require => {
         tickMarkLabelPositionWhenHorizontal: 'below', // valid values are 'above' and 'below'
         color: 'black',
         pointRadius: 10,
-        numberDisplayTemplate: '{{value}}',
+        numericalLabelTemplate: '{{value}}',
 
         // {boolean} - controls whether the absolute value span indicators, which are a little ways away from the number
         // line itself, are portrayed
@@ -262,14 +262,14 @@ define( require => {
 
         // add the node that will represent the point on the number line
         const pointNode = new PointNode( point, numberLine, merge( {
-          numberDisplayTemplate: options.numberDisplayTemplate
+          labelTemplate: options.numericalLabelTemplate
         }, options.pointNodeOptions ) );
         pointDisplayLayer.addChild( pointNode );
 
         // add the point that will represent the opposite point
         const oppositePointNode = new PointNode( point, numberLine, {
           isDoppelganger: true,
-          numberDisplayTemplate: options.numberDisplayTemplate
+          labelTemplate: options.numericalLabelTemplate
         } );
         oppositePointDisplayLayer.addChild( oppositePointNode );
 
@@ -366,7 +366,8 @@ define( require => {
     }
 
     /**
-     * method to add a tick mark to the provided parent node for the provided value
+     * method to add a tick mark, which consists of a short line and a numerical label, to the provided parent node for
+     * the provided value
      * @param {Node} parentNode
      * @param {number} value
      * @private
@@ -384,8 +385,8 @@ define( require => {
       // get the center position of the tick mark
       const tmCenter = this.numberLine.valueToModelPosition( value );
 
-      //When this issue is worked on, be sure to update also in PointNode constructor
-      let stringValue = StringUtils.fillIn( this.options.numberDisplayTemplate, { value: Math.abs( value ) } );
+      // create label
+      let stringValue = StringUtils.fillIn( this.options.numericalLabelTemplate, { value: Math.abs( value ) } );
       if ( value < 0 ) {
         stringValue = MathSymbols.UNARY_MINUS + stringValue;
       }
@@ -427,7 +428,6 @@ define( require => {
         stringValue,
         merge( tickLabelOptions, this.options.tickMarkLabelOptions )
       ) );
-
     }
   }
 
