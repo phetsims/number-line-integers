@@ -16,8 +16,8 @@ define( require => {
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const NLIQueryParameters = require( 'NUMBER_LINE_INTEGERS/common/NLIQueryParameters' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const NumberProperty = require( 'AXON/NumberProperty' );
+  const Orientation = require( 'PHET_CORE/Orientation' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
   const reverseRobinsonProjector = require( 'NUMBER_LINE_INTEGERS/explore/model/reverseRobinsonProjector' );
@@ -65,7 +65,7 @@ define( require => {
         numberOfNumberLines: 2,
 
         commonNumberLineOptions: {
-          initialOrientation: NumberLineOrientation.VERTICAL,
+          initialOrientation: Orientation.VERTICAL,
           heightInModelSpace: NUMBER_LINE_HEIGHT,
           labelsInitiallyVisible: true
         },

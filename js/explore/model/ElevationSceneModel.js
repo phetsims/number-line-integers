@@ -14,8 +14,8 @@ define( require => {
   const ElevationPointController = require( 'NUMBER_LINE_INTEGERS/explore/model/ElevationPointController' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const ObservableArray = require( 'AXON/ObservableArray' );
+  const Orientation = require( 'PHET_CORE/Orientation' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
   const Range = require( 'DOT/Range' );
   const SceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/SceneModel' );
@@ -49,7 +49,7 @@ define( require => {
       super( {
         numberLineZeroPositions: [ new Vector2( elevationAreaBounds.minX / 2, seaLevel ) ],
         commonNumberLineOptions: {
-          initialOrientation: NumberLineOrientation.VERTICAL,
+          initialOrientation: Orientation.VERTICAL,
           initialDisplayedRange: numberLineRange,
           labelsInitiallyVisible: true,
           heightInModelSpace: elevationAreaHeight

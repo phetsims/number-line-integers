@@ -19,7 +19,7 @@ define( require => {
   const NLIGenericModel = require( 'NUMBER_LINE_INTEGERS/generic/model/NLIGenericModel' );
   const Node = require( 'SCENERY/nodes/Node' );
   const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
-  const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
+  const Orientation = require( 'PHET_CORE/Orientation' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
@@ -108,11 +108,11 @@ define( require => {
       // map the orientation icons to their enum values
       const orientationButtonsContent = [
         {
-          value: NumberLineOrientation.HORIZONTAL,
+          value: Orientation.HORIZONTAL,
           node: horizontalIcon
         },
         {
-          value: NumberLineOrientation.VERTICAL,
+          value: Orientation.VERTICAL,
           node: verticalIcon
         }
       ];

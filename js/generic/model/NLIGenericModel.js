@@ -14,7 +14,7 @@ define( require => {
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
+  const Orientation = require( 'PHET_CORE/Orientation' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
@@ -96,8 +96,8 @@ define( require => {
 
       // handle changes to the number line's orientation
       this.numberLine.orientationProperty.link( orientation => {
-        const previousBoxBounds = orientation === NumberLineOrientation.HORIZONTAL ? SIDE_BOX_BOUNDS : BOTTOM_BOX_BOUNDS;
-        const newBoxBounds = orientation === NumberLineOrientation.HORIZONTAL ? BOTTOM_BOX_BOUNDS : SIDE_BOX_BOUNDS;
+        const previousBoxBounds = orientation === Orientation.HORIZONTAL ? SIDE_BOX_BOUNDS : BOTTOM_BOX_BOUNDS;
+        const newBoxBounds = orientation === Orientation.HORIZONTAL ? BOTTOM_BOX_BOUNDS : SIDE_BOX_BOUNDS;
         this.pointControllerBoxProperty.value = newBoxBounds;
         this.pointControllers.forEach( pointController => {
 
@@ -159,7 +159,7 @@ define( require => {
       let destination;
 
       // decide which box and at which position the point controller should be placed
-      if ( this.numberLine.orientationProperty.value === NumberLineOrientation.HORIZONTAL ) {
+      if ( this.numberLine.orientationProperty.value === Orientation.HORIZONTAL ) {
 
         // put point in box at bottom of screen
         const spacing = BOTTOM_BOX_BOUNDS.width / numPositions;

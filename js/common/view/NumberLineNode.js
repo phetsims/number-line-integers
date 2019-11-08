@@ -19,7 +19,7 @@ define( require => {
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
+  const Orientation = require( 'PHET_CORE/Orientation' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Property = require( 'AXON/Property' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
@@ -107,14 +107,14 @@ define( require => {
       numberLine.orientationProperty.link( orientation => {
 
         assert && assert(
-          orientation === NumberLineOrientation.HORIZONTAL || orientation === NumberLineOrientation.VERTICAL,
+          orientation === Orientation.HORIZONTAL || orientation === Orientation.VERTICAL,
           `Invalid orientation: ${orientation}`
         );
 
         // remove the previous representation
         numberLineNode.removeAllChildren();
 
-        if ( orientation === NumberLineOrientation.HORIZONTAL ) {
+        if ( orientation === Orientation.HORIZONTAL ) {
 
           // add the arrow node that represents the number line
           numberLineNode.addChild( new ArrowNode(
@@ -321,7 +321,7 @@ define( require => {
         ( displayedRange, orientation ) => {
 
           assert && assert(
-            orientation === NumberLineOrientation.HORIZONTAL || orientation === NumberLineOrientation.VERTICAL,
+            orientation === Orientation.HORIZONTAL || orientation === Orientation.VERTICAL,
             `Invalid orientation: ${orientation}`
           );
 

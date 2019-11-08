@@ -15,7 +15,7 @@ define( require => {
   const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
+  const Orientation = require( 'PHET_CORE/Orientation' );
   const Property = require( 'AXON/Property' );
   const ShadedSphereNode = require( 'SCENERY_PHET/ShadedSphereNode' );
 
@@ -140,7 +140,7 @@ define( require => {
         setTouchDilationBasedOnOrientation = orientation => {
           const nominalBounds = this.draggableNode.localBounds;
           let touchAreaBounds;
-          if ( orientation === NumberLineOrientation.HORIZONTAL ) {
+          if ( orientation === Orientation.HORIZONTAL ) {
             const dilatedBounds = nominalBounds.dilateXY( SPHERE_RADIUS / 2, SPHERE_RADIUS * 2 );
             touchAreaBounds = dilatedBounds.shiftedY( SPHERE_RADIUS * 1.5 );
           }

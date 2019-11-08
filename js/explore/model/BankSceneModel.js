@@ -14,10 +14,10 @@ define( require => {
   const Emitter = require( 'AXON/Emitter' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
   const NumberIO = require( 'TANDEM/types/NumberIO' );
   const NumberProperty = require( 'AXON/NumberProperty' );
+  const Orientation = require( 'PHET_CORE/Orientation' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
@@ -45,7 +45,7 @@ define( require => {
       super( {
         numberLineZeroPositions: [ numberLineZeroPosition ],
         commonNumberLineOptions: {
-          initialOrientation: NumberLineOrientation.HORIZONTAL,
+          initialOrientation: Orientation.HORIZONTAL,
           initialDisplayedRange: new Range( -100, 100 ),
           labelsInitiallyVisible: true,
           widthInModelSpace: SCENE_BOUNDS.width * 0.475,

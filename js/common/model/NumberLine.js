@@ -15,8 +15,8 @@ define( require => {
   const Bounds2 = require( 'DOT/Bounds2' );
   const merge = require( 'PHET_CORE/merge' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const NumberLineOrientation = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLineOrientation' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
+  const Orientation = require( 'PHET_CORE/Orientation' );
   const ObservableArray = require( 'AXON/ObservableArray' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
@@ -47,7 +47,7 @@ define( require => {
       options = merge( {
 
         // {string} - whether the number line is initially oriented in the horizontal or vertical direction
-        initialOrientation: NumberLineOrientation.HORIZONTAL,
+        initialOrientation: Orientation.HORIZONTAL,
 
         // {Range} - range of values to be displayed
         initialDisplayedRange: new Range( -10, 10 ),
@@ -157,7 +157,7 @@ define( require => {
      * @public
      */
     get isHorizontal() {
-      return this.orientationProperty.value === NumberLineOrientation.HORIZONTAL;
+      return this.orientationProperty.value === Orientation.HORIZONTAL;
     }
 
     /**
@@ -166,7 +166,7 @@ define( require => {
      * @public
      */
     get isVertical() {
-      return this.orientationProperty.value === NumberLineOrientation.VERTICAL;
+      return this.orientationProperty.value === Orientation.VERTICAL;
     }
 
     /**
