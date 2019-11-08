@@ -11,8 +11,6 @@ define( require => {
   // modules
   const AbsoluteValueSpanNode = require( 'NUMBER_LINE_INTEGERS/common/view/AbsoluteValueSpanNode' );
   const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  const BackgroundNode = require( 'SCENERY_PHET/BackgroundNode' );
-  const Circle = require( 'SCENERY/nodes/Circle' );
   const Line = require( 'SCENERY/nodes/Line' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   const merge = require( 'PHET_CORE/merge' );
@@ -21,13 +19,13 @@ define( require => {
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Orientation = require( 'PHET_CORE/Orientation' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const PointNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointNode' );
   const Property = require( 'AXON/Property' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
 
   // constants
   const TICK_MARK_LABEL_DISTANCE = 5;
-  const POINT_NODE_RADIUS = 4.5;
   const ABS_VAL_MIN_LINE_WIDTH = 2;
   const ABS_VAL_LINE_EXPANSION_FACTOR = 3;
   const ABS_VAL_SPAN_NL_DISTANCE_Y = 55;
@@ -430,103 +428,6 @@ define( require => {
         merge( tickLabelOptions, this.options.tickMarkLabelOptions )
       ) );
 
-    }
-  }
-
-  /**
-   * inner class for the point nodes that appear on the number line
-   */
-  class PointNode extends Node {
-
-    /**
-     * @param {NumberLinePoint} numberLinePoint
-     * @param {NumberLine} numberLine
-     * @param {Object} [options]
-     */
-    constructor( numberLinePoint, numberLine, options ) {
-
-      options = merge( {
-        isDoppelganger: false,
-        customColorsForLabels: true,
-        numberDisplayTemplate: '{{number}}',
-        labelFont: new PhetFont( 18 )
-      }, options );
-
-      super();
-
-      // add the dot
-      const circle = new Circle( POINT_NODE_RADIUS, {
-        fill: numberLinePoint.colorProperty,
-        stroke: options.isDoppelganger ? 'gray' : numberLinePoint.colorProperty
-      } );
-      this.addChild( circle );
-
-      const getLabelText = value => {
-        let stringValue = StringUtils.fillIn( options.numberDisplayTemplate, { value: Math.abs( value ) } );
-        if ( value < 0 ) {
-          stringValue = MathSymbols.UNARY_MINUS + stringValue;
-        }
-        return stringValue;
-      };
-      const pointLabelTextNode = new Text( getLabelText( numberLinePoint.valueProperty.value ), {
-        font: options.labelFont,
-        fill: options.customColorsForLabels ? numberLinePoint.colorProperty : 'black',
-        maxWidth: 75 // TODO: this seems a bit hardcoded; fix
-      } );
-
-      // create a background and add the label text to it
-      const pointLabelNode = new BackgroundNode( pointLabelTextNode, NLIConstants.LABEL_BACKGROUND_OPTIONS );
-
-      // add the label and link a listener for visibility
-      this.addChild( pointLabelNode );
-      const labelVisibilityListener = numberLine.showLabelsProperty.linkAttribute( pointLabelNode, 'visible' );
-
-      // move in front of other points when being dragged or when the point value is being changed by other means
-      const moveToFrontMultilink = Property.multilink(
-        [ numberLinePoint.isDraggingProperty, numberLinePoint.valueProperty ],
-        () => { this.moveToFront(); }
-      );
-
-      // update the point representation as it moves
-      const updatePointRepresentationMultilink = Property.multilink(
-        [ numberLinePoint.valueProperty,
-          numberLine.showOppositesProperty,
-          numberLine.orientationProperty,
-          numberLine.displayedRangeProperty
-        ], ( value, oppositesVisible ) => {
-          if ( options.isDoppelganger ) {
-            value = -value;
-            this.visible = oppositesVisible;
-          }
-          circle.center = numberLine.valueToModelPosition( value );
-
-          // update the point label text and position
-          pointLabelTextNode.text = getLabelText( value );
-          if ( numberLine.isHorizontal ) {
-            pointLabelNode.centerX = circle.centerX;
-            pointLabelNode.bottom = circle.y - 20;
-          }
-          else {
-            pointLabelNode.right = circle.x - 20;
-            pointLabelNode.centerY = circle.centerY;
-          }
-        }
-      );
-
-      /**
-       * @private
-       */
-      this.disposePointNode = () => {
-        numberLine.showLabelsProperty.unlinkAttribute( labelVisibilityListener );
-        updatePointRepresentationMultilink.dispose();
-        moveToFrontMultilink.dispose();
-      };
-    }
-
-    // @public
-    dispose() {
-      this.disposePointNode();
-      super.dispose();
     }
   }
 
