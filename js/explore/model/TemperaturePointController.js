@@ -1,8 +1,8 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * TemperaturePointController looks like a thermometer with a little triangle that pinpoints the location where the
- * temperature and color are sensed, and it also controls points on a number line.
+ * TemperaturePointController is a Scenery node that looks like a thermometer with a little triangle that pinpoints the
+ * location where the temperature and color are sensed, and it also controls points on a number line.
  *
  * @author John Blanco (PhET Interactive Simulations)
  * @author Saurabh Totey
