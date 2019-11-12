@@ -2,7 +2,6 @@
 
 /**
  * TemperatureSceneModel is the model for the "Temperature" scene in the "Explore" screen
- * TODO: investigate reducing code duplication between this and ElevationSceneModel
  *
  * @author John Blanco (PhET Interactive Simulations)
  * @author Saurabh Totey
@@ -87,7 +86,7 @@ define( require => {
       // @public
       this.monthProperty = new NumberProperty( 1 );
 
-      // @public TODO - This shouldn't be a boolean. Make it use an enumeration.
+      // @public TODO - should this be an EnumerationProperty?
       this.temperatureUnitsProperty = new Property( NLIQueryParameters.defaultCelsius ?
                                                     NLIConstants.TEMPERATURE_UNITS.CELSIUS :
                                                     NLIConstants.TEMPERATURE_UNITS.FAHRENHEIT );

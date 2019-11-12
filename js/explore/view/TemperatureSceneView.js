@@ -2,7 +2,6 @@
 
 /**
  * view for the "Temperature" scene
- * TODO: investigate reducing code duplication between this and ElevationSceneView
  *
  * @author John Blanco (PhET Interactive Simulations)
  * @author Saurabh Totey
