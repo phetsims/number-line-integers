@@ -40,7 +40,7 @@ define( require => {
            ABS_VAL_SPAN_NL_DISTANCE_X + count * ABS_VAL_SPAN_SPACING_X;
   };
 
-  class NumberLineNode extends Node {
+  class SpatializedNumberLineNode extends Node {
 
     /**
      * {NumberLine} numberLine - model of a number line
@@ -431,5 +431,5 @@ define( require => {
     }
   }
 
-  return numberLineIntegers.register( 'NumberLineNode', NumberLineNode );
+  return numberLineIntegers.register( 'SpatializedNumberLineNode', SpatializedNumberLineNode );
 } );

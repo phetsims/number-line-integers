@@ -18,7 +18,7 @@ define( require => {
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const NLIGenericModel = require( 'NUMBER_LINE_INTEGERS/generic/model/NLIGenericModel' );
   const Node = require( 'SCENERY/nodes/Node' );
-  const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
+  const SpatializedNumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/SpatializedNumberLineNode' );
   const Orientation = require( 'PHET_CORE/Orientation' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
@@ -129,7 +129,7 @@ define( require => {
       } );
 
       // add the number line node
-      this.addChild( new NumberLineNode( model.numberLine, {
+      this.addChild( new SpatializedNumberLineNode( model.numberLine, {
         showAbsoluteValueSpans: true,
         pointNodeOptions: {
           labelFont: new PhetFont( 18 )

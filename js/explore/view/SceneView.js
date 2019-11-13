@@ -16,7 +16,7 @@ define( require => {
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const NumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/NumberLineNode' );
+  const SpatializedNumberLineNode = require( 'NUMBER_LINE_INTEGERS/common/view/SpatializedNumberLineNode' );
   const ResetButton = require( 'SCENERY_PHET/buttons/ResetButton' );
   const Text = require( 'SCENERY/nodes/Text' );
   const VBox = require( 'SCENERY/nodes/VBox' );
@@ -111,7 +111,7 @@ define( require => {
 
       // create and, if options dictate, add the number line to the view
       sceneModel.numberLines.forEach( ( numberLine, index ) => {
-        const numberLineNode = new NumberLineNode(
+        const numberLineNode = new SpatializedNumberLineNode(
           numberLine,
           merge(
             {},

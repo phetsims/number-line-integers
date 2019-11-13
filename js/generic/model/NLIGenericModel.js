@@ -12,7 +12,7 @@ define( require => {
   const Bounds2 = require( 'DOT/Bounds2' );
   const Color = require( 'SCENERY/util/Color' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
-  const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
+  const SpatializedNumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/SpatializedNumberLine' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Orientation = require( 'PHET_CORE/Orientation' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
@@ -54,8 +54,8 @@ define( require => {
 
     constructor() {
 
-      // @public (read-only){NumberLine} - the number line with which the user will interact
-      this.numberLine = new NumberLine( NLIConstants.NLI_LAYOUT_BOUNDS.center.plusXY( 0, NL_Y_OFFSET ), {
+      // @public (read-only){SpatializedNumberLine} - the number line with which the user will interact
+      this.numberLine = new SpatializedNumberLine( NLIConstants.NLI_LAYOUT_BOUNDS.center.plusXY( 0, NL_Y_OFFSET ), {
         initialDisplayedRange: NUMBER_LINE_RANGES[ 0 ],
         widthInModelSpace: NLIConstants.NLI_LAYOUT_BOUNDS.width - 100,
         heightInModelSpace: NLIConstants.NLI_LAYOUT_BOUNDS.height - 160,

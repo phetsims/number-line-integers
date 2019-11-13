@@ -12,7 +12,7 @@ define( require => {
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const merge = require( 'PHET_CORE/merge' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
-  const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
+  const SpatializedNumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/SpatializedNumberLine' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Range = require( 'DOT/Range' );
 
@@ -57,7 +57,7 @@ define( require => {
       // @public (read-only){NumberLine[]} - the number line(s) for this scene
       this.numberLines = [];
       _.times( options.numberOfNumberLines, count => {
-        this.numberLines.push( new NumberLine(
+        this.numberLines.push( new SpatializedNumberLine(
           options.numberLineZeroPositions[ count ],
           merge(
             {},
