@@ -89,7 +89,7 @@ define( require => {
       this.numberLine = numberLine;
 
       // assemble the options that control the appearance of the main number into one place
-      const numberLineOptions = {
+      const numberLineNodeOptions = {
         doubleHead: true,
         lineWidth: options.numberLineWidth,
         tailWidth: options.numberLineWidth,
@@ -120,7 +120,7 @@ define( require => {
             numberLine.centerPosition.y,
             displayBounds.maxX,
             numberLine.centerPosition.y,
-            numberLineOptions
+            numberLineNodeOptions
           ) );
 
           // add the tick mark for the 0 position, which is always visible
@@ -134,7 +134,7 @@ define( require => {
             displayBounds.minY,
             numberLine.centerPosition.x,
             displayBounds.maxY,
-            numberLineOptions
+            numberLineNodeOptions
           ) );
 
           // add the tick mark for the 0 position, which is always visible
