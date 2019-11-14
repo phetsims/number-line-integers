@@ -225,7 +225,7 @@ define( require => {
           xMargin: NUMBER_LINE_PANEL_MARGINS,
           yMargin: NUMBER_LINE_PANEL_MARGINS,
           centerX: this.temperatureMap.left / 2, // centered between left edge of scene and left edge of map
-          top: fahrenheitNumberLineNode.top,
+          centerY: this.layoutBounds.minY + this.layoutBounds.maxY / 2, // centered vertically in the layout bounds
           minWidth: NUMBER_LINE_PANEL_WIDTH,
           maxWidth: NUMBER_LINE_PANEL_WIDTH
         }
