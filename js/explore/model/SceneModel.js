@@ -85,7 +85,6 @@ define( require => {
      */
     reset() {
       this.resetScene();
-      this.numberLines.forEach( nl => { nl.reset(); } );
       this.showNumberLineProperty.reset();
       this.numberLineLabelsVisibleProperty.reset();
       this.numberLineAbsValIndicatorsVisibleProperty.reset();
