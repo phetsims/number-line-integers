@@ -9,14 +9,12 @@ define( require => {
   'use strict';
 
   // modules
+  const BankAccount = require( 'NUMBER_LINE_INTEGERS/explore/model/BankAccount' );
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Color = require( 'SCENERY/util/Color' );
-  const Emitter = require( 'AXON/Emitter' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
-  const NumberIO = require( 'TANDEM/types/NumberIO' );
-  const NumberProperty = require( 'AXON/NumberProperty' );
   const Orientation = require( 'PHET_CORE/Orientation' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
   const Property = require( 'AXON/Property' );
@@ -57,7 +55,7 @@ define( require => {
       } );
 
       // @public - bank account that is always shown in the view
-      this.primaryAccount = new Account( INITIAL_PRIMARY_ACCOUNT_BALANCE );
+      this.primaryAccount = new BankAccount( INITIAL_PRIMARY_ACCOUNT_BALANCE );
 
       // there is only one number line in this scene - get a local reference to it for convenience
       assert && assert( this.numberLines.length === 1 );
@@ -71,8 +69,8 @@ define( require => {
         this.primaryAccount.balanceProperty.value = value;
       } );
 
-      // @public {Account} - bank account that is shown when the user wants to compare two accounts
-      this.comparisonAccount = new Account( INITIAL_COMPARISON_ACCOUNT_BALANCE );
+      // @public {BankAccount} - bank account that is shown when the user wants to compare two accounts
+      this.comparisonAccount = new BankAccount( INITIAL_COMPARISON_ACCOUNT_BALANCE );
 
       // hook the comparison account balance up to the second number line point
       this.comparisonAccount.balanceProperty.link( balance => {
@@ -173,36 +171,6 @@ define( require => {
   // static properties
   BankSceneModel.PRIMARY_ACCOUNT_POINT_COLOR = PRIMARY_ACCOUNT_POINT_COLOR;
   BankSceneModel.COMPARISON_ACCOUNT_POINT_COLOR = COMPARISON_ACCOUNT_POINT_COLOR;
-
-  class Account {
-    constructor( initialBalance = 0 ) {
-
-      // @public
-      this.balanceProperty = new NumberProperty( initialBalance );
-
-      // @public - An emitter that should be triggered to signal that the balance was changed due to interaction with
-      // the add/remove buttons rather than by dragging, reset, or other means.  The value should be +1 for an increase
-      // and -1 for a decrease.
-      this.balanceChangedByButtonEmitter = new Emitter( {
-        parameters: [ { phetioType: NumberIO, name: 'balanceChange' } ]
-      } );
-
-      // @public (read-only) {Number|null} - previous balance, null if there is none
-      this.previousBalance = null;
-
-      this.balanceProperty.lazyLink( ( newBalance, oldBalance ) => {
-        this.previousBalance = oldBalance;
-      } );
-    }
-
-    /**
-     * restore initial state
-     * @public
-     */
-    reset() {
-      this.balanceProperty.reset();
-    }
-  }
 
   return numberLineIntegers.register( 'BankSceneModel', BankSceneModel );
 } );
