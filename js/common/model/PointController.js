@@ -144,6 +144,7 @@ define( require => {
      * returns the first associated number line point if it exists; null otherwise
      * @returns {NumberLinePoint|null}
      * @public
+     * TODO: Horrible built-in assumptions here, I (jbphet) need to fix.
      */
     getAssociatedNumberLinePoint() {
       return ( this.associatedNumberLinePoints.length > 0 )? this.associatedNumberLinePoints[ 0 ] : null;
@@ -252,7 +253,7 @@ define( require => {
       if ( this.controlsNumberLinePoint() ) {
         this.controlledNumberLinePoints.concat( this.associatedNumberLinePoints ).forEach( point => {
 
-          // mapped the proposed position to a value on the number line
+          // map the proposed position to a value on the number line
           const proposedNumberLineValue = point.numberLine.modelPositionToValue( proposedPosition );
 
           if ( this.lockToNumberLine === 'always' ) {

@@ -62,7 +62,7 @@ define( require => {
 
       assert && assert( !options || !options.node, 'options should not include a node for this constructor' );
 
-      // TODO: Why does this create a separate controller node and not just use the parent? (noted by jbphet 9/16/2019)
+      // TODO: Why does this create a separate controller root node and not just use the parent? (noted by jbphet 9/16/2019)
 
       const controllerNode = new Node();
 
@@ -116,53 +116,56 @@ define( require => {
       const unscaledWidth = controllerNode.width;
       const updateController = () => {
 
-        // variables needed to make the updates
-        const numberLinePoint = pointController.associatedNumberLinePoint;
-        const currentBalance = numberLinePoint.valueProperty.value;
+        if ( pointController.associatedNumberLinePoints.length > 0 ) {
 
-        // scale the size
-        const desiredWidth = MIN_WIDTH + ( Math.abs( currentBalance ) / valueRange.max ) * ( MAX_WIDTH - MIN_WIDTH );
-        controllerNode.setScaleMagnitude( desiredWidth / unscaledWidth );
+          // variables needed to make the updates
+          const numberLinePoint = pointController.associatedNumberLinePoint;
+          const currentBalance = numberLinePoint.valueProperty.value;
 
-        // update the color of the point and the node's fill
-        let fill = EMPTY_FILL;
-        if ( currentBalance < 0 ) {
-          fill = Color.interpolateRGBA(
-            LEAST_NEGATIVE_FILL,
-            MOST_NEGATIVE_FILL,
-            currentBalance / valueRange.min
-          );
-        }
-        else if ( currentBalance > 0 ) {
-          fill = Color.interpolateRGBA(
-            LEAST_POSITIVE_FILL,
-            MOST_POSITIVE_FILL,
-            currentBalance / valueRange.max
-          );
-        }
-        piggyBankNode.fill = fill;
+          // scale the size
+          const desiredWidth = MIN_WIDTH + ( Math.abs( currentBalance ) / valueRange.max ) * ( MAX_WIDTH - MIN_WIDTH );
+          controllerNode.setScaleMagnitude( desiredWidth / unscaledWidth );
 
-        // update the balance indicator text
-        const signIndicator = currentBalance < 0 ? '-' : '';
-        balanceNode.text = signIndicator + StringUtils.fillIn( moneyAmountString, {
-          currencyUnit: currencyUnitsString,
-          value: Math.abs( currentBalance )
-        } );
-        balanceNode.center = Vector2.ZERO;
+          // update the color of the point and the node's fill
+          let fill = EMPTY_FILL;
+          if ( currentBalance < 0 ) {
+            fill = Color.interpolateRGBA(
+              LEAST_NEGATIVE_FILL,
+              MOST_NEGATIVE_FILL,
+              currentBalance / valueRange.min
+            );
+          }
+          else if ( currentBalance > 0 ) {
+            fill = Color.interpolateRGBA(
+              LEAST_POSITIVE_FILL,
+              MOST_POSITIVE_FILL,
+              currentBalance / valueRange.max
+            );
+          }
+          piggyBankNode.fill = fill;
 
-        // update the absolute value readout
-        const value = pointController.associatedNumberLinePoint.valueProperty.value;
-        let stringTemplate;
-        if ( value < 0 ) {
-          stringTemplate = debtAmountString;
-          absoluteValueText.fill = NEGATIVE_ABSOLUTE_VALUE_TEXT_COLOR;
+          // update the balance indicator text
+          const signIndicator = currentBalance < 0 ? '-' : '';
+          balanceNode.text = signIndicator + StringUtils.fillIn( moneyAmountString, {
+            currencyUnit: currencyUnitsString,
+            value: Math.abs( currentBalance )
+          } );
+          balanceNode.center = Vector2.ZERO;
+
+          // update the absolute value readout
+          const value = pointController.associatedNumberLinePoint.valueProperty.value;
+          let stringTemplate;
+          if ( value < 0 ) {
+            stringTemplate = debtAmountString;
+            absoluteValueText.fill = NEGATIVE_ABSOLUTE_VALUE_TEXT_COLOR;
+          }
+          else {
+            stringTemplate = balanceAmountString;
+            absoluteValueText.fill = value > 0 ? POSITIVE_ABSOLUTE_VALUE_TEXT_COLOR : ZERO_FILL;
+          }
+          absoluteValueText.text = StringUtils.fillIn( stringTemplate, { value: Math.abs( value ) } );
+          updateAbsoluteValueReadoutPosition();
         }
-        else {
-          stringTemplate = balanceAmountString;
-          absoluteValueText.fill = value > 0 ? POSITIVE_ABSOLUTE_VALUE_TEXT_COLOR : ZERO_FILL;
-        }
-        absoluteValueText.text = StringUtils.fillIn( stringTemplate, { value: Math.abs( value ) } );
-        updateAbsoluteValueReadoutPosition();
       };
       pointController.positionProperty.link( updateController );
 

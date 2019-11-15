@@ -75,32 +75,29 @@ define( require => {
       this.scenesLayer.addChild( pointControllerNodesLayer );
       pointControllerNodesLayer.moveToBack();
 
-      // add node to represent the point controller that is always visible
-      const permanentPointControllerNode = new BankPointControllerNode(
+      // add node to represent the primary account point controller, which is always visible
+      const primaryAccountPointControllerNode = new BankPointControllerNode(
         bankSceneModel.primaryAccountPointController,
         bankSceneModel.primaryAccount.balanceChangedByButtonEmitter,
         'flowers',
         { connectorLineVisibleProperty: bankSceneModel.showNumberLineProperty }
       );
-      pointControllerNodesLayer.addChild( permanentPointControllerNode );
+      pointControllerNodesLayer.addChild( primaryAccountPointControllerNode );
 
-      // add and remove a node for the comparison account point controller as it comes and goes
-      let comparisonAccountPointControllerNode = null;
-      bankSceneModel.comparisonAccountPointControllerProperty.lazyLink( pointController => {
-        if ( pointController ) {
-          comparisonAccountPointControllerNode = new BankPointControllerNode(
-            pointController,
-            bankSceneModel.comparisonAccount.balanceChangedByButtonEmitter,
-            'lightning',
-            { connectorLineVisibleProperty: bankSceneModel.showNumberLineProperty }
-          );
-          pointControllerNodesLayer.addChild( comparisonAccountPointControllerNode );
-          comparisonAccountPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
-        }
-        else {
-          pointControllerNodesLayer.removeChild( comparisonAccountPointControllerNode );
-          comparisonAccountPointControllerNode.dispose();
-        }
+      // add node to represent the comparison account point controller, which is only visible when enabled
+      const comparisonAccountPointControllerNode = new BankPointControllerNode(
+        bankSceneModel.comparisonAccountPointController,
+        bankSceneModel.comparisonAccount.balanceChangedByButtonEmitter,
+        'lightning',
+        { connectorLineVisibleProperty: bankSceneModel.showNumberLineProperty }
+      );
+      pointControllerNodesLayer.addChild( comparisonAccountPointControllerNode );
+      comparisonAccountPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
+
+      bankSceneModel.numberLines[ 0 ].residentPoints.lengthProperty.link( numPoints => {
+
+        // show the second controller if the second point is present
+        comparisonAccountPointControllerNode.visible = numPoints > 1;
       } );
 
       // calculate a horizontal position for the account balance controls that is centered between some other controls

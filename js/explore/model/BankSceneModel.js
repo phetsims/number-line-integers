@@ -17,7 +17,6 @@ define( require => {
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
   const Orientation = require( 'PHET_CORE/Orientation' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
-  const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
   const SceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/SceneModel' );
   const Vector2 = require( 'DOT/Vector2' );
@@ -91,12 +90,14 @@ define( require => {
         numberLines: [ numberLine ]
       } );
 
+      this.comparisonAccountPointController = new PointController( {
+        lockToNumberLine: 'always',
+        offsetFromHorizontalNumberLine: -120,
+        numberLines: [ numberLine ]
+      } );
+
       // the number line point that represents the comparison account value, only exists when enabled
       let comparisonAccountNumberLinePoint = null;
-
-      // @public {Property.<PointController|null>} - the point controller for the comparison account, only exists when
-      // enabled, and is thus wrapped in a property so that the view can see it come and go
-      this.comparisonAccountPointControllerProperty = new Property( null );
 
       // add/remove the point and point controller for the comparison account when enabled
       this.showComparisonAccountProperty.lazyLink( showComparisonAccount => {
@@ -108,8 +109,8 @@ define( require => {
             'shouldn\'t have number line point for comparison account yet'
           );
           assert && assert(
-            this.comparisonAccountPointControllerProperty.value === null,
-            'shouldn\'t have number point controller for comparison account yet'
+            this.comparisonAccountPointController.associatedNumberLinePoints.length === 0,
+            'shouldn\'t have number line point for comparison account controller yet'
           );
 
           // create the point and add it to the number line
@@ -124,13 +125,8 @@ define( require => {
             this.comparisonAccount.balanceProperty.value = value;
           } );
 
-          // create the controller fo this point
-          this.comparisonAccountPointControllerProperty.value = new PointController( {
-            lockToNumberLine: 'always',
-            associatedNumberLinePoints: [ comparisonAccountNumberLinePoint ],
-            offsetFromHorizontalNumberLine: -120,
-            numberLines: [ numberLine ]
-          } );
+          // associate the controller with this point
+          this.comparisonAccountPointController.associateWithNumberLinePoint( comparisonAccountNumberLinePoint );
         }
         else {
 
@@ -140,16 +136,12 @@ define( require => {
             'should have number line point for comparison account'
           );
           assert && assert(
-            this.comparisonAccountPointControllerProperty.value !== null,
-            'should have point controller for comparison account'
+            this.comparisonAccountPointController.associatedNumberLinePoints.length === 1,
+            'should be controlling a point'
           );
 
-          // remove the point controller from the model
-          this.comparisonAccountPointControllerProperty.value.clearNumberLinePoints();
-          this.comparisonAccountPointControllerProperty.value.dispose();
-          this.comparisonAccountPointControllerProperty.reset();
-
-          // remove the point from the number line
+          // remove the point for the comparison account from the number line
+          this.comparisonAccountPointController.clearNumberLinePoints();
           numberLine.removePoint( comparisonAccountNumberLinePoint );
           comparisonAccountNumberLinePoint = null;
         }
