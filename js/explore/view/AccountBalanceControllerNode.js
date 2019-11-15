@@ -1,7 +1,8 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * a Scenery node that is used to add and remove money from a property that represents a bank account balance
+ * AccountBalanceControllerNode is a Scenery node that is used to add and remove money from a property that represents
+ * a bank account balance.
  *
  * @author John Blanco (PhET Interactive Simulations)
  */
@@ -51,14 +52,6 @@ define( require => {
 
       options = merge( {}, { buttonBaseColor: Color.blue }, options );
 
-      // TODO: no need for this function to be here, pull it into a helper function
-      const makeCoinIcon = image => new Node( {
-        children: [
-          new Image( image, { scale: 0.15 } ),
-          new Text( currencyUnitsString, { center: CURRENCY_TEXT_CENTER, scale: 1.15, maxWidth: 15 } )
-        ]
-      } );
-
       const changeBalanceBy = balanceChangeAmount => {
         if ( ( balanceChangeAmount > 0 && balanceProperty.value < range.max ) ||
              ( balanceChangeAmount < 0 && balanceProperty.value > range.min ) ) {
@@ -98,15 +91,47 @@ define( require => {
       // @public (read-only) - emitter that fires when either button is released
       this.buttonReleasedEmitter = new Emitter();
 
-      const fireEmitterOnButtonReleased = down => {
-        if ( !down ) {
-          this.buttonReleasedEmitter.emit();
+      // monitor the downProperty for each button, locking out the other button and performing emits when released
+      upButton.buttonModel.downProperty.lazyLink( down => {
+        if ( down ) {
+
+          // to prevent multi-touch issues, don't let the other button be pushed while this one is down
+          downButton.pickable = false;
         }
-      };
-      upButton.buttonModel.downProperty.lazyLink( fireEmitterOnButtonReleased );
-      downButton.buttonModel.downProperty.lazyLink( fireEmitterOnButtonReleased );
+        else {
+
+          // the button has been released, trigger the emitter
+          this.buttonReleasedEmitter.emit();
+
+          // restore pickability of peer button
+          downButton.pickable = true;
+        }
+      } );
+      downButton.buttonModel.downProperty.lazyLink( down => {
+        if ( down ) {
+
+          // to prevent multi-touch issues, don't let the other button be pushed while this one is down
+          upButton.pickable = false;
+        }
+        else {
+
+          // the button has been released, trigger the emitter
+          this.buttonReleasedEmitter.emit();
+
+          // restore pickability of peer button
+          upButton.pickable = true;
+        }
+      } );
     }
   }
+
+  // helper function to make coin nodes
+  const makeCoinIcon = image => new Node( {
+    children: [
+      new Image( image, { scale: 0.15 } ),
+      new Text( currencyUnitsString, { center: CURRENCY_TEXT_CENTER, scale: 1.15, maxWidth: 15 } )
+    ]
+  } );
 
   return numberLineIntegers.register( 'AccountBalanceControllerNode', AccountBalanceControllerNode );
 } );
