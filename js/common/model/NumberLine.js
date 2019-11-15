@@ -26,7 +26,6 @@ define( require => {
      */
     constructor( options ) {
 
-
       options = merge( {
 
         // {Object{initialValue, color}[]} - array of point specifications that describe what points should exist on
@@ -62,16 +61,17 @@ define( require => {
         addedPoint.isDraggingProperty.link( pointIsDraggingListener );
 
         // remove the listener when the point is removed from the number line
-        this.residentPoints.addItemRemovedListener( removedPoint => {
+        const pointRemovalListener = removedPoint => {
           if ( removedPoint === addedPoint ) {
             removedPoint.isDraggingProperty.unlink( pointIsDraggingListener );
+            this.residentPoints.removeItemRemovedListener( pointRemovalListener );
           }
-        } );
+        };
+        this.residentPoints.addItemRemovedListener( pointRemovalListener );
       } );
 
       // add the initial points
       this.addInitialPoints();
-
     }
 
     /**
