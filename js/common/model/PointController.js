@@ -325,6 +325,7 @@ define( require => {
      * go to the specified position, either immediately or via an animation
      * @param {Vector2} position
      * @param {boolean} [animate]
+     * @public
      */
     goToPosition( position, animate = false ) {
 

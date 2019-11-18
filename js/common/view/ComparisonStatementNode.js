@@ -217,6 +217,9 @@ define( require => {
       this.selectedOperatorProperty.link( updateComparisonStatement );
     }
 
+    /**
+     * @public
+     */
     reset() {
       this.selectedOperatorProperty.reset();
     }

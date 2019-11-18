@@ -201,6 +201,7 @@ define( require => {
      * @param {number} perpendicularDistance
      * @param {number} endDistance
      * @returns {boolean}
+     * @public
      */
     isWithinDistance( pointControllerPosition, perpendicularDistance, endDistance ) {
       let testBounds;

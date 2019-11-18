@@ -46,6 +46,7 @@ define( require => {
      * those used to create the maps used in the simulation for things to work out correctly.
      * @param {number} temperature
      * @returns {Color}
+     * @public
      */
     mapTemperatureToColor( temperature ) {
 

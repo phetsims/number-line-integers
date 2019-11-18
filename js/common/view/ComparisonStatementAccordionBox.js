@@ -64,6 +64,9 @@ define( require => {
       this.comparisonStatementNode = comparisonStatementNode;
     }
 
+    /**
+     * @public
+     */
     reset() {
       this.comparisonStatementNode.selectedOperatorProperty.reset();
       this.expandedProperty.reset();

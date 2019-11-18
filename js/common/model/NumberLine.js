@@ -137,6 +137,7 @@ define( require => {
     /**
      * get the closest valid value that isn't already occupied by a point
      * @param {number} value
+     * @public
      */
     getNearestUnoccupiedValue( value ) {
       const roundedValue = Util.roundSymmetric( value );

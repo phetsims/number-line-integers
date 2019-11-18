@@ -176,10 +176,16 @@ define( require => {
       );
     }
 
+    /**
+     * @public
+     */
     get celsiusNumberLine() {
       return this.numberLines[ CELSIUS_NUMBER_LINE_INDEX ];
     }
 
+    /**
+     * @public
+     */
     get fahrenheitNumberLine() {
       return this.numberLines[ FAHRENHEIT_NUMBER_LINE_INDEX ];
     }

@@ -78,6 +78,7 @@ define( require => {
      * do essentially what the base class does, but then allow any X direction motion
      * @param {Vector2} proposedPosition
      * @override - see base class for more information
+     * @public
      */
     proposePosition( proposedPosition ) {
 
