@@ -82,7 +82,7 @@ define( require => {
       this.permanentPointControllers = [
         new ElevationPointController( numberLine, elevationAreaBounds, { color: new Color( '#EE3937' ) } ),
         new ElevationPointController( numberLine, elevationAreaBounds, { color: new Color( 'black' ) } ),
-        new ElevationPointController( numberLine, elevationAreaBounds, { color: new Color( ' #446ab7' ) } )
+        new ElevationPointController( numberLine, elevationAreaBounds, { color: new Color( '#446ab7' ) } )
       ];
 
       // put the permanent point controllers in their starting positions
