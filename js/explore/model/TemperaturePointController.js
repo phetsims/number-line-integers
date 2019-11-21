@@ -46,7 +46,8 @@ define( require => {
       options = merge( {
         noTemperatureColor: Color.white,
         defaultTemperature: 0, // in Celsius, used when no temperature is available from the model
-        lockToNumberLine: 'never'
+        lockToNumberLine: 'never',
+        bidirectionalAssociation: false
       }, options );
 
       super( options );
@@ -127,8 +128,8 @@ define( require => {
           );
           this.sceneModel.celsiusNumberLine.addPoint( this.celsiusNumberLinePoint );
           this.sceneModel.fahrenheitNumberLine.addPoint( this.fahrenheitNumberLinePoint );
-          this.controlNumberLinePoint( this.celsiusNumberLinePoint );
-          this.controlNumberLinePoint( this.fahrenheitNumberLinePoint );
+          this.associateWithNumberLinePoint( this.celsiusNumberLinePoint );
+          this.associateWithNumberLinePoint( this.fahrenheitNumberLinePoint );
         }
         else if ( !over && this.controlsNumberLinePoint() ) {
 

@@ -116,7 +116,7 @@ define( require => {
       const unscaledWidth = controllerNode.width;
       const updateController = () => {
 
-        if ( pointController.associatedNumberLinePoints.length > 0 ) {
+        if ( pointController.numberLinePoints.length > 0 ) {
 
           // variables needed to make the updates
           const numberLinePoint = pointController.associatedNumberLinePoint;

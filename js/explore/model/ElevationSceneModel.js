@@ -93,8 +93,6 @@ define( require => {
       // if the point controllers are released outside of the elevation areas, send them home.
       this.permanentPointControllers.forEach( pointController => {
         pointController.isDraggingProperty.lazyLink( isDragging => {
-
-          // TODO: Once these elevation controllers never control points the test for whether a point is being controlled can be removed.
           if ( !isDragging &&
                !pointController.overElevationAreaProperty.value &&
                !pointController.controlsNumberLinePoint() ) {
@@ -117,7 +115,7 @@ define( require => {
         const pointController = new PointController( {
           color: addedPoint.colorProperty.value,
           lockToNumberLine: 'always',
-          associatedNumberLinePoints: [ addedPoint ],
+          numberLinePoints: [ addedPoint ],
           numberLines: [ numberLine ]
         } );
         this.numberLineAttachedPointControllers.push( pointController );

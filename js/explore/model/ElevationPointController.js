@@ -42,7 +42,7 @@ define( require => {
       // @public (read-only) property that tracks whether this point controller is in the area where it should be controlling a point
       this.overElevationAreaProperty = new BooleanProperty( false );
 
-      // as of this writing, these point controllers are never disposed, so no unlinking is needed
+      // these point controllers are never disposed, so no unlinking is needed
       this.positionProperty.link( position => {
         this.overElevationAreaProperty.value = elevationAreaBounds.containsPoint( position );
       } );

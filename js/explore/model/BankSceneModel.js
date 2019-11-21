@@ -85,7 +85,7 @@ define( require => {
       this.primaryAccountPointController = new PointController( {
         color: numberLine.residentPoints.get( 0 ).colorProperty.value,
         lockToNumberLine: 'always',
-        associatedNumberLinePoints: [ numberLine.residentPoints.get( 0 ) ],
+        numberLinePoints: [ numberLine.residentPoints.get( 0 ) ],
         offsetFromHorizontalNumberLine: 120,
         numberLines: [ numberLine ]
       } );
@@ -109,7 +109,7 @@ define( require => {
             'shouldn\'t have number line point for comparison account yet'
           );
           assert && assert(
-            this.comparisonAccountPointController.associatedNumberLinePoints.length === 0,
+            this.comparisonAccountPointController.numberLinePoints.length === 0,
             'shouldn\'t have number line point for comparison account controller yet'
           );
 
@@ -136,7 +136,7 @@ define( require => {
             'should have number line point for comparison account'
           );
           assert && assert(
-            this.comparisonAccountPointController.associatedNumberLinePoints.length === 1,
+            this.comparisonAccountPointController.numberLinePoints.length === 1,
             'should be controlling a point'
           );
 
