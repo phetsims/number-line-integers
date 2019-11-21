@@ -135,6 +135,7 @@ define( require => {
       // If the default point controller node is being used, create and hook up the listener that will update touch
       // areas as the orientation changes such that the point controllers can be easily grabbed by a user's finger
       // without covering them up.
+      const numberLine = pointController.numberLines[ 0 ];
       let setTouchDilationBasedOnOrientation;
       if ( !options.node ) {
         setTouchDilationBasedOnOrientation = orientation => {
@@ -150,7 +151,7 @@ define( require => {
           }
           this.draggableNode.setTouchArea( touchAreaBounds );
         };
-        pointController.numberLine.orientationProperty.link( setTouchDilationBasedOnOrientation );
+        numberLine.orientationProperty.link( setTouchDilationBasedOnOrientation );
       }
 
       this.disposePointControllerNode = () => {
@@ -161,7 +162,7 @@ define( require => {
           options.connectorLineVisibleProperty.unlink( updateConnectorLineVisibility );
         }
         if ( !options.node ) {
-          pointController.numberLine.orientationProperty.unlink( setTouchDilationBasedOnOrientation );
+          numberLine.orientationProperty.unlink( setTouchDilationBasedOnOrientation );
         }
       };
     }

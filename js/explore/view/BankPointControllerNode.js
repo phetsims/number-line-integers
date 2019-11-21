@@ -92,8 +92,11 @@ define( require => {
       const absoluteValueBackground = new BackgroundNode( absoluteValueText, NLIConstants.LABEL_BACKGROUND_OPTIONS );
       this.addChild( absoluteValueBackground );
 
+      // get a reference to the number line (there is only one for this scene)
+      const numberLine = pointController.numberLines[ 0 ];
+
       // control visibility of the absolute value readout
-      pointController.numberLine.showAbsoluteValuesProperty.linkAttribute( absoluteValueBackground, 'visible' );
+      numberLine.showAbsoluteValuesProperty.linkAttribute( absoluteValueBackground, 'visible' );
 
       // update the position of the absolute value readout (i.e. the text node that says things like, "balance of $2"
       const updateAbsoluteValueReadoutPosition = () => {
@@ -112,7 +115,7 @@ define( require => {
       };
 
       // update the node's appearance as its position changes
-      const valueRange = pointController.numberLine.displayedRangeProperty.value;
+      const valueRange = numberLine.displayedRangeProperty.value;
       const unscaledWidth = controllerNode.width;
       const updateController = () => {
 
