@@ -108,7 +108,6 @@ define( require => {
       // watch for points coming and going on the number line and add the additional point controllers for them
       numberLine.residentPoints.addItemAddedListener( addedPoint => {
 
-        //TODO: this below should be handled by NumberLine
         addedPoint.numberLine = numberLine;
 
         // add a point controller that will remain attached to the number line that will control this point

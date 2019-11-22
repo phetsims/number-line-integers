@@ -12,12 +12,12 @@ define( require => {
 
   // modules
   const Bounds2 = require( 'DOT/Bounds2' );
+  const EnumerationProperty = require( 'AXON/EnumerationProperty' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const NLIQueryParameters = require( 'NUMBER_LINE_INTEGERS/common/NLIQueryParameters' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const Orientation = require( 'PHET_CORE/Orientation' );
-  const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
   const reverseRobinsonProjector = require( 'NUMBER_LINE_INTEGERS/explore/model/reverseRobinsonProjector' );
   const SceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/SceneModel' );
@@ -86,10 +86,11 @@ define( require => {
       // @public
       this.monthProperty = new NumberProperty( 1 );
 
-      // @public TODO - should this be an EnumerationProperty?
-      this.temperatureUnitsProperty = new Property( NLIQueryParameters.defaultCelsius ?
-                                                    NLIConstants.TEMPERATURE_UNITS.CELSIUS :
-                                                    NLIConstants.TEMPERATURE_UNITS.FAHRENHEIT );
+      // @public
+      this.temperatureUnitsProperty = new EnumerationProperty(
+        NLIConstants.TEMPERATURE_UNITS,
+        NLIQueryParameters.defaultCelsius ? NLIConstants.TEMPERATURE_UNITS.CELSIUS : NLIConstants.TEMPERATURE_UNITS.FAHRENHEIT
+      );
 
       // specify the position of the box that will hold the thermometers
       const boxWidth = MAP_WIDTH * 0.5;
