@@ -90,7 +90,7 @@ define( require => {
         this.putPointControllerInBox( pointController );
       } );
 
-      // if the point controllers are released outside of the elevation areas, send them home.
+      // If the point controllers are released outside of the elevation areas, send them home.
       this.permanentPointControllers.forEach( pointController => {
         pointController.isDraggingProperty.lazyLink( isDragging => {
           if ( !isDragging &&
@@ -101,8 +101,8 @@ define( require => {
         } );
       } );
 
-      // @publc (read-only) - the point controllers that are attached to the number line when a corresponding elevatable
-      // controller is over the scene
+      // @public (read-only) - array of point controllers that are attached to the number line when a corresponding
+      // elevatable controller is over the elevation area
       this.numberLineAttachedPointControllers = new ObservableArray();
 
       // watch for points coming and going on the number line and add the additional point controllers for them

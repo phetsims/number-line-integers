@@ -63,7 +63,6 @@ define( require => {
           );
           numberLine.addPoint( numberLinePoint );
           this.associateWithNumberLinePoint( numberLinePoint );
-          numberLinePoint.isDraggingProperty.link( isDragging => { this.isDraggingProperty.value = isDragging; } );
         }
         else if ( !over && this.isControllingNumberLinePoint() ) {
 
