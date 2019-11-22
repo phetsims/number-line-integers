@@ -88,7 +88,7 @@ define( require => {
         pointController.isDraggingProperty.lazyLink( dragging => {
 
           // if the point controller is released and it's not controlling a point on the number line, put it away
-          if ( !dragging && !pointController.controlsNumberLinePoint() ) {
+          if ( !dragging && !pointController.isControllingNumberLinePoint() ) {
             this.putPointControllerInBox( pointController, true );
           }
         } );
@@ -114,8 +114,11 @@ define( require => {
           }
 
           // if the controller is controlling a point on the number line, relocate the point and the controller
-          else if ( this.numberLine.residentPoints.indexOf( pointController.associatedNumberLinePoint ) >= 0 ) {
-            pointController.setPositionRelativeToPoint( pointController.associatedNumberLinePoint );
+          else if ( pointController.isControllingNumberLinePoint() ) {
+
+            // there should only be one controlled point
+            assert && assert( pointController.numberLinePoints.length === 1 );
+            pointController.setPositionRelativeToPoint( pointController.numberLinePoints[ 0 ] );
           }
         } );
       } );
@@ -124,15 +127,26 @@ define( require => {
       // already on the number line to be outside of the displayed range.
       this.numberLine.displayedRangeProperty.link( displayedRange => {
         this.pointControllers.forEach( pointController => {
-          if ( pointController.controlsNumberLinePoint() &&
-               !displayedRange.contains( pointController.associatedNumberLinePoint.valueProperty.value ) ) {
+          if ( pointController.isControllingNumberLinePoint() ) {
 
-            // the point controlled by this controller is not out of the displayed range, so get rid of it
-            this.numberLine.removePoint( pointController.associatedNumberLinePoint );
-            pointController.clearNumberLinePoints();
+            // state checking
+            assert && assert(
+              pointController.numberLinePoints.length === 1,
+              'point controllers on the "Generic" screen should never control multiple points'
+            );
 
-            // put the controller away
-            this.putPointControllerInBox( pointController );
+            // get the point on the number line that is currently controlled by this point controller
+            const numberLinePoint = pointController.numberLinePoints[ 0 ];
+
+            if ( !displayedRange.contains( numberLinePoint.valueProperty.value ) ) {
+
+              // the point controlled by this controller is out of the displayed range, so get rid of it
+              pointController.dissociateFromNumberLinePoint( numberLinePoint );
+              this.numberLine.removePoint( numberLinePoint );
+
+              // put the controller away
+              this.putPointControllerInBox( pointController );
+            }
           }
         } );
       } );
@@ -153,7 +167,7 @@ define( require => {
       // error checking
       assert && assert( index >= 0, 'point controller not found on list' );
       assert && assert(
-        !pointController.controlsNumberLinePoint(),
+        !pointController.isControllingNumberLinePoint(),
         'point controller should not be put away while controlling a point'
       );
 

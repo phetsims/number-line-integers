@@ -71,7 +71,7 @@ define( require => {
       // @private
       this.offsetFromHorizontalNumberLine = options.offsetFromHorizontalNumberLine;
       this.offsetFromVerticalNumberLine = options.offsetFromVerticalNumberLine;
-      this.pointValueChangeHandlers = []; // only relevant for associated number line points
+      this.pointToValueChangeHandlerMap = new Map();
       this.lockToNumberLine = options.lockToNumberLine;
       this.bidirectionalAssociation = options.bidirectionalAssociation;
 
@@ -142,23 +142,11 @@ define( require => {
     }
 
     /**
-     * returns the first associated number line point if it exists; null otherwise
-     * @returns {NumberLinePoint|null}
-     * @public
-     * TODO: Horrible built-in assumptions here, I (jbphet) need to fix.
-     */
-    getAssociatedNumberLinePoint() {
-      return ( this.numberLinePoints.length > 0 ) ? this.numberLinePoints[ 0 ] : null;
-    }
-
-    get associatedNumberLinePoint() { return this.getAssociatedNumberLinePoint(); }
-
-    /**
      * returns whether this point controller is controlling one or more number line points
      * @returns {boolean}
      * @public
      */
-    controlsNumberLinePoint() {
+    isControllingNumberLinePoint() {
       return this.numberLinePoints.length > 0;
     }
 
@@ -174,7 +162,7 @@ define( require => {
         const positionUpdater = () => {
           this.setPositionRelativeToPoint( numberLinePoint );
         };
-        this.pointValueChangeHandlers.push( positionUpdater );
+        this.pointToValueChangeHandlerMap.set( numberLinePoint, positionUpdater );
         numberLinePoint.valueProperty.link( positionUpdater );
       }
 
@@ -182,8 +170,8 @@ define( require => {
       numberLinePoint.isDraggingProperty.value = this.isDraggingProperty.value;
 
       assert && assert(
-        !this.bidirectionalAssociation || this.numberLinePoints.length === this.pointValueChangeHandlers.length,
-        'There should be as many associated points as there are pointValueChangeHandlers'
+        !this.bidirectionalAssociation || this.numberLinePoints.length === this.pointToValueChangeHandlerMap.size,
+        'There should be as many associated points as there are pointToValueChangeHandlerMap entries'
       );
       assert && assert(
         this.numberLinePoints.length === _.uniq( this.numberLinePoints.map( point => point.numberLine ) ).length,
@@ -192,20 +180,53 @@ define( require => {
     }
 
     /**
-     * remove the association between this controller and the point on the number line that it was controlling
+     * Remove the association between this point controller and a number line point.  This does not remove the point
+     * from the number line.
+     * @param {NumberLinePoint} numberLinePoint
+     * @public
+     */
+    dissociateFromNumberLinePoint( numberLinePoint ) {
+
+      // verify that the point is being controlled
+      assert && assert(
+        this.numberLinePoints.indexOf( numberLinePoint ) >= 0,
+        'point is not controlled by this point controller'
+      );
+
+      // since the point will no longer be controlled, it can't be dragging
+      numberLinePoint.isDraggingProperty.value = false;
+
+      // unhook any listeners that were added
+      if ( this.bidirectionalAssociation ) {
+        const valueChangeHandler = this.pointToValueChangeHandlerMap.get( numberLinePoint );
+        assert && assert( valueChangeHandler );
+        numberLinePoint.valueProperty.unlink( valueChangeHandler );
+        this.pointToValueChangeHandlerMap.delete( numberLinePoint );
+      }
+
+      // remove the point from the list of controlled points
+      this.numberLinePoints = _.without( this.numberLinePoints, numberLinePoint );
+    }
+
+    /**
+     * Remove the association between this controller and number line points that it was controlling.  Note that this
+     * does NOT remove the points from the number line(s) - there is a different method for that.
      * @public
      */
     clearNumberLinePoints() {
       this.numberLinePoints.forEach( point => {
-        point.isDraggingProperty.value = false;
-        this.pointValueChangeHandlers.forEach( pointValueChangeHandler => {
-          if ( point.valueProperty.hasListener( pointValueChangeHandler ) ) {
-            point.valueProperty.unlink( pointValueChangeHandler );
-          }
-        } );
+        this.dissociateFromNumberLinePoint( point );
       } );
-      this.numberLinePoints.length = 0;
-      this.pointValueChangeHandlers = [];
+    }
+
+    /**
+     * remove all controlled points from the number line on which each one resides
+     * @public
+     */
+    removePointsFromNumberLines() {
+      this.numberLinePoints.forEach( numberLinePoint => {
+        numberLinePoint.numberLine.removePoint( numberLinePoint );
+      } );
     }
 
     /**
@@ -216,7 +237,7 @@ define( require => {
      */
     proposePosition( proposedPosition ) {
 
-      if ( this.controlsNumberLinePoint() ) {
+      if ( this.isControllingNumberLinePoint() ) {
         this.numberLinePoints.forEach( point => {
 
           // map the proposed position to a value on the number line
@@ -246,7 +267,7 @@ define( require => {
             }
             else {
               point.numberLine.removePoint( point );
-              this.clearNumberLinePoints(); // TODO: should just remove point, not all points
+              this.dissociateFromNumberLinePoint( point );
             }
           }
         } );
@@ -294,12 +315,6 @@ define( require => {
      * @public
      */
     goToPosition( position, animate = false ) {
-
-      // TODO: I (jbphet) want to know if the position is ever being set when an animation is in progress, because the
-      // design intent is that it shouldn't happen, so this logs a warning.  This should be removed before  publication.
-      if ( this.inProgressAnimationProperty.value ) {
-        console.warn( 'cancelling in-progress animation for point controller' );
-      }
 
       // if there is an active animation, stop it
       this.stopAnimation();

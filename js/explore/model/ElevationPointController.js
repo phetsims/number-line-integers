@@ -52,7 +52,7 @@ define( require => {
         if ( over && this.isDraggingProperty.value ) {
 
           // state checking
-          assert && assert( !this.controlsNumberLinePoint(), 'should not already have a point' );
+          assert && assert( !this.isControllingNumberLinePoint(), 'should not already have a point' );
 
           // create a new point on the number line
           const numberLinePoint = new NumberLinePoint(
@@ -65,10 +65,10 @@ define( require => {
           this.associateWithNumberLinePoint( numberLinePoint );
           numberLinePoint.isDraggingProperty.link( isDragging => { this.isDraggingProperty.value = isDragging; } );
         }
-        else if ( !over && this.controlsNumberLinePoint() ) {
+        else if ( !over && this.isControllingNumberLinePoint() ) {
 
-          // remove our point from the number line
-          numberLine.removePoint( this.associatedNumberLinePoint );
+          // remove our point(s) from the number line and disassociate from them
+          this.removePointsFromNumberLines();
           this.clearNumberLinePoints();
         }
       } );
@@ -82,7 +82,7 @@ define( require => {
      */
     proposePosition( proposedPosition ) {
 
-      if ( this.controlsNumberLinePoint() && !this.elevationsAreaBounds.containsPoint( proposedPosition ) ) {
+      if ( this.isControllingNumberLinePoint() && !this.elevationsAreaBounds.containsPoint( proposedPosition ) ) {
 
         // The user has dragged the controller outside of the elevation bounds, so allow the motion.  Listeners in
         // other places will remove the point from the number line.

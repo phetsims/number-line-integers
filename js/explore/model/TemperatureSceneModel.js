@@ -204,7 +204,7 @@ define( require => {
       // error checking
       assert && assert( index >= 0, 'point controller not found on list' );
       assert && assert(
-        !pointController.controlsNumberLinePoint(),
+        !pointController.isControllingNumberLinePoint(),
         'point controller should not be put away while controlling a point'
       );
 

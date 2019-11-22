@@ -121,8 +121,14 @@ define( require => {
 
         if ( pointController.numberLinePoints.length > 0 ) {
 
+          // state checking
+          assert && assert(
+            pointController.numberLinePoints.length === 1,
+            'point controllers in the bank scene should never control multiple points'
+          );
+
           // variables needed to make the updates
-          const numberLinePoint = pointController.associatedNumberLinePoint;
+          const numberLinePoint = pointController.numberLinePoints[ 0 ];
           const currentBalance = numberLinePoint.valueProperty.value;
 
           // scale the size
@@ -156,7 +162,7 @@ define( require => {
           balanceNode.center = Vector2.ZERO;
 
           // update the absolute value readout
-          const value = pointController.associatedNumberLinePoint.valueProperty.value;
+          const value = numberLinePoint.valueProperty.value;
           let stringTemplate;
           if ( value < 0 ) {
             stringTemplate = debtAmountString;

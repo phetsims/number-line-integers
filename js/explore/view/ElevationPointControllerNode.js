@@ -83,13 +83,13 @@ define( require => {
       Property.multilink( [ numberLine.showAbsoluteValuesProperty, pointController.positionProperty ], () => {
         if ( numberLine.showAbsoluteValuesProperty.value
              && pointController.overElevationAreaProperty.value
-             && pointController.controlsNumberLinePoint() ) {
+             && pointController.isControllingNumberLinePoint() ) {
 
           absoluteValueLine.shape = new Shape()
             .moveTo( compositeImageNode.x, compositeImageNode.y )
             .lineTo( compositeImageNode.x, seaLevel );
 
-          const value = pointController.associatedNumberLinePoint.valueProperty.value;
+          const value = pointController.numberLinePoints[ 0 ].valueProperty.value;
           let seaLevelText = seaLevelString;
           if ( value < 0 ) {
             seaLevelText = StringUtils.fillIn( amountBelowSeaLevelString, { value: Math.abs( value ) } );

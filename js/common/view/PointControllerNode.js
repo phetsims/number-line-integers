@@ -64,20 +64,27 @@ define( require => {
 
       // function to update the visibility of the connector line
       const updateConnectorLineVisibility = () => {
-        connectorLine.visible = options.connectorLineVisibleProperty.value && pointController.controlsNumberLinePoint();
+        connectorLine.visible = options.connectorLineVisibleProperty.value && pointController.isControllingNumberLinePoint();
       };
 
-      // handle changes to the point controller position TODO: consider what to do with multiple associated points
-      const handlePointControllerPositionChange = position => {
-        if ( options.connectorLine && pointController.associatedNumberLinePoint ) {
-          const pointPosition = pointController.associatedNumberLinePoint.getPositionInModelSpace();
+      // handle changes to the point controller position
+      const updateAppearanceOnPositionChange = position => {
+        if ( options.connectorLine && pointController.isControllingNumberLinePoint() ) {
+
+          // As of this writing (Nov 2019), PointControllerNode only handles drawing connector lines to a single point.
+          // It would be possible to handle multiple points, but this has not been needed thus far and is therefor not
+          // handled. If you need it, please add it.
+          assert && assert( pointController.numberLinePoints.length === 1, 'incorrect number of points controlled' );
+
+          // update the connector line
+          const pointPosition = pointController.numberLinePoints[ 0 ].getPositionInModelSpace();
           connectorLine.setLine( position.x, position.y, pointPosition.x, pointPosition.y );
         }
         updateConnectorLineVisibility();
         this.draggableNode.translation = position;
         this.moveToFront(); // make sure that the most recently moved point controller is at the front of the z-order
       };
-      pointController.positionProperty.link( handlePointControllerPositionChange );
+      pointController.positionProperty.link( updateAppearanceOnPositionChange );
 
       if ( options.connectorLineVisibleProperty !== ALWAYS_TRUE_PROPERTY ) {
         assert && assert( options.connectorLine, 'must have connector line turned on for the viz property to make sense' );
@@ -155,7 +162,7 @@ define( require => {
       }
 
       this.disposePointControllerNode = () => {
-        pointController.positionProperty.unlink( handlePointControllerPositionChange );
+        pointController.positionProperty.unlink( updateAppearanceOnPositionChange );
         pointController.isDraggingProperty.unlink( dragStateChangeHandler );
         pointController.inProgressAnimationProperty.unlink( inProgressAnimationChangedHandler );
         if ( options.connectorLineVisibleProperty.hasListener( updateConnectorLineVisibility ) ) {

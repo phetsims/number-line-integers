@@ -141,7 +141,7 @@ define( require => {
           );
 
           // remove the point for the comparison account from the number line
-          this.comparisonAccountPointController.clearNumberLinePoints();
+          this.comparisonAccountPointController.dissociateFromNumberLinePoint( comparisonAccountNumberLinePoint );
           numberLine.removePoint( comparisonAccountNumberLinePoint );
           comparisonAccountNumberLinePoint = null;
         }

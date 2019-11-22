@@ -96,7 +96,7 @@ define( require => {
             this.isOverMapProperty.value = true;
 
             // if there are points on the number line being controlled, update them
-            if ( this.controlsNumberLinePoint() ) {
+            if ( this.isControllingNumberLinePoint() ) {
               this.celsiusNumberLinePoint.valueProperty.value = this.celsiusTemperatureProperty.value;
               this.celsiusNumberLinePoint.colorProperty.value = this.colorProperty.value;
               this.fahrenheitNumberLinePoint.valueProperty.value = this.fahrenheitTemperatureProperty.value;
@@ -111,7 +111,7 @@ define( require => {
         if ( over && this.isDraggingProperty.value ) {
 
           // state checking
-          assert && assert( !this.controlsNumberLinePoint(), 'should not already have a point' );
+          assert && assert( !this.isControllingNumberLinePoint(), 'should not already have a point' );
 
           // create new points on each number line
           this.celsiusNumberLinePoint = new NumberLinePoint(
@@ -131,12 +131,10 @@ define( require => {
           this.associateWithNumberLinePoint( this.celsiusNumberLinePoint );
           this.associateWithNumberLinePoint( this.fahrenheitNumberLinePoint );
         }
-        else if ( !over && this.controlsNumberLinePoint() ) {
+        else if ( !over && this.isControllingNumberLinePoint() ) {
 
-          // remove our points from the number line
-          this.sceneModel.celsiusNumberLine.removePoint( this.celsiusNumberLinePoint );
-          this.sceneModel.fahrenheitNumberLine.removePoint( this.fahrenheitNumberLinePoint );
-
+          // remove our points from the number lines
+          this.removePointsFromNumberLines();
           this.clearNumberLinePoints();
           this.celsiusNumberLinePoint = null;
           this.fahrenheitNumberLinePoint = null;

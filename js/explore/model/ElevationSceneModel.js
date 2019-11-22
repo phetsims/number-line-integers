@@ -95,7 +95,7 @@ define( require => {
         pointController.isDraggingProperty.lazyLink( isDragging => {
           if ( !isDragging &&
                !pointController.overElevationAreaProperty.value &&
-               !pointController.controlsNumberLinePoint() ) {
+               !pointController.isControllingNumberLinePoint() ) {
             this.putPointControllerInBox( pointController, true );
           }
         } );
@@ -147,7 +147,7 @@ define( require => {
       // error checking
       assert && assert( index >= 0, 'point controller not found on list' );
       assert && assert(
-        !pointController.controlsNumberLinePoint(),
+        !pointController.isControllingNumberLinePoint(),
         'point controller should not be put away while controlling a point'
       );
 
@@ -168,8 +168,8 @@ define( require => {
 
       // put the point controllers back into their starting positions
       this.permanentPointControllers.forEach( pointController => {
-        this.numberLines[ 0 ].removePoint( pointController.associatedNumberLinePoint );
-        pointController.reset();
+        pointController.removePointsFromNumberLines();
+        pointController.clearNumberLinePoints();
         this.putPointControllerInBox( pointController );
       } );
     }
