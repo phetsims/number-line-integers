@@ -28,6 +28,7 @@ define( require => {
 
   // constants
   const TOUCH_DILATION = 5;
+  const TEMPERATURE_RANGE = new Range( -85, 104 ); // determined based on the temperature data that was used
 
   // strings
   const negativeTemperatureAmountString = require( 'string!NUMBER_LINE_INTEGERS/negativeTemperatureAmount' );
@@ -52,9 +53,8 @@ define( require => {
         connectorLine: false
       }, options );
 
-      // TODO: min/max Temp values will need to be put into constants file
       const temperatureAndColorSensorNode = new TemperatureAndColorSensorNode(
-        new Range( -85, 104 ),
+        TEMPERATURE_RANGE,
         pointController.fahrenheitTemperatureProperty,
         pointController.colorProperty,
         {

@@ -159,43 +159,59 @@ define( require => {
    */
   class AccountVisibilityControlSwitch extends ABSwitch {
 
-    constructor( property, options ) {
+    /**
+     * @param {BooleanProperty} comparisonAccountVisible
+     * @param {Object} [options]
+     * @public
+     */
+    constructor( comparisonAccountVisible, options ) {
 
       options = merge( {
         switchSize: new Dimension2( 50, 15 ),
-        setEnabled: () => {}
+        setEnabled: () => {} // turn off default behavior where opacity is used for non-selected nodes
       }, options );
 
-      // TODO: these are not named well: single means on the left side to allow user to control single piggy bank
-      //  double means that user can control 2 piggy banks
-      const singleFlowersPiggyBankNode = new PiggyBankNode( { decorationType: 'flowers' } );
-      const doubleFlowersPiggyBankNode = new PiggyBankNode( { decorationType: 'flowers' } );
-      const doubleLightningPiggyBankNode = new PiggyBankNode( { decorationType: 'lightning' } );
+      // The node for selecting that the comparison account is hidden is a single piggy bank that matches the style of
+      // the visible account controller.
+      const comparisonAccountHiddenNode = new PiggyBankNode( {
+        decorationType: 'flowers',
+        maxWidth: 40
+      } );
 
-      singleFlowersPiggyBankNode.maxWidth = 40;
-      doubleFlowersPiggyBankNode.maxWidth = 30;
-      doubleLightningPiggyBankNode.maxWidth = 40;
+      // The node for the selection where the comparison account is visible it two smaller piggy banks side by side.
+      const comparisonAccountVisibleLeftPiggyBankNode = new PiggyBankNode( {
+        decorationType: 'flowers',
+        maxWidth: 30
+      } );
+      const comparisonAccountVisibleRightPiggyBankNode = new PiggyBankNode( {
+        decorationType: 'lightning',
+        maxWidth: 40
+      } );
+      const comparisonAccountVisibleNode = new HBox( {
+        children: [
+          comparisonAccountVisibleLeftPiggyBankNode,
+          comparisonAccountVisibleRightPiggyBankNode
+        ],
+        spacing: 10
+      } );
 
       const inactiveColor = 'rgb( 210, 210, 210 )';
       const activeColor = 'rgb( 0, 180, 147 )';
 
-      property.link( isDoublePiggyBank => {
-        const singleFill = isDoublePiggyBank ? inactiveColor : activeColor;
-        const doubleFill = isDoublePiggyBank ? activeColor : inactiveColor;
-        singleFlowersPiggyBankNode.fill = singleFill;
-        doubleFlowersPiggyBankNode.fill = doubleFill;
-        doubleLightningPiggyBankNode.fill = doubleFill;
+      comparisonAccountVisible.link( isComparisonAccountVisible => {
+        const singleFill = isComparisonAccountVisible ? inactiveColor : activeColor;
+        const doubleFill = isComparisonAccountVisible ? activeColor : inactiveColor;
+        comparisonAccountHiddenNode.fill = singleFill;
+        comparisonAccountVisibleLeftPiggyBankNode.fill = doubleFill;
+        comparisonAccountVisibleRightPiggyBankNode.fill = doubleFill;
       } );
 
       super(
-        property,
+        comparisonAccountVisible,
         false,
-        singleFlowersPiggyBankNode,
+        comparisonAccountHiddenNode,
         true,
-        new HBox( {
-          children: [ doubleFlowersPiggyBankNode, doubleLightningPiggyBankNode ],
-          spacing: 10
-        } ),
+        comparisonAccountVisibleNode,
         options
       );
     }

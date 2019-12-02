@@ -43,6 +43,7 @@ define( require => {
   const READOUT_DISTANCE_FROM_IMAGE = 5;
   const COIN_RADIUS = 10;
   const COIN_COLOR = new Color( 213, 196, 39 );
+  const COIN_ANIMATION_DURATION = 0.5; // seconds
 
   // strings
   const balanceAmountString = require( 'string!NUMBER_LINE_INTEGERS/balanceAmount' );
@@ -62,8 +63,7 @@ define( require => {
 
       assert && assert( !options || !options.node, 'options should not include a node for this constructor' );
 
-      // TODO: Why does this create a separate controller root node and not just use the parent? (noted by jbphet 9/16/2019)
-
+      // root node for draggable controller portion, separate for absolute value display and coin animation
       const controllerNode = new Node();
 
       // choose the overlay image source, which is artwork that must exactly match the shape of the outline
@@ -212,7 +212,7 @@ define( require => {
           coinNode.moveToBack();
         }
         const coinMotionAnimation = new Animation( {
-          duration: 0.5, // TODO - make this a constant
+          duration: COIN_ANIMATION_DURATION,
           easing: Easing.CUBIC_IN_OUT,
           setValue: value => { coinNode.centerY = value; },
           from: startY,
