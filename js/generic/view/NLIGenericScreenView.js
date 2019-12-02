@@ -48,6 +48,7 @@ define( require => {
 
     /**
      * @param {NumberLineIntegersModel} model
+     * @public
      */
     constructor( model ) {
 

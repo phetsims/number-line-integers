@@ -37,6 +37,7 @@ define( require => {
     /**
      * @param {NumberProperty} monthProperty
      * @param {Bounds2} mapBounds
+     * @public
      */
     constructor( monthProperty, mapBounds ) {
       super();

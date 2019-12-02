@@ -55,6 +55,9 @@ define( require => {
 
   class TemperatureSceneModel extends SceneModel {
 
+    /**
+     * @public
+     */
     constructor() {
 
       // the base class has a single number line, so make that one the Fahrenheit version

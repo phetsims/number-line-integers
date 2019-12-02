@@ -21,6 +21,7 @@ define( require => {
      * {Color} color - the color that should be used to portray this point in the view
      * {NumberLine} numberLine - the number line on which this point exists
      * {PointController} [controller] - the controller that will move this point
+     * @public
      */
     constructor( initialValue, color, numberLine, controller = null ) {
 

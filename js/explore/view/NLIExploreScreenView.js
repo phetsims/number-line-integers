@@ -23,6 +23,7 @@ define( require => {
 
     /**
      * @param {NLIExplore} model
+     * @public
      */
     constructor( model ) {
 

@@ -40,6 +40,7 @@ define( require => {
     /**
      * {Vector2} zeroPosition - the location in model space of the zero point on the number line
      * {Object} [options]
+     * @public
      */
     constructor( zeroPosition, options ) {
 

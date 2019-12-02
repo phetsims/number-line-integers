@@ -58,6 +58,7 @@ define( require => {
      * @param {Emitter} balanceChangedByButtonEmitter
      * @param {String} decorationType - indicates artwork on bank, either 'flowers' or 'lightning'
      * @param {Object} [options]
+     * @public
      */
     constructor( pointController, balanceChangedByButtonEmitter, decorationType, options ) {
 
@@ -230,6 +231,10 @@ define( require => {
 
   class CoinNode extends Circle {
 
+    /**
+     * @param {Object} [options]
+     * @public
+     */
     constructor( options ) {
 
       options = merge( { stroke: Color.black, fill: COIN_COLOR }, options );

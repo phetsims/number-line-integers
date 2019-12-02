@@ -47,6 +47,7 @@ define( require => {
      * @param {Range} range
      * @param {number} changeAmount
      * @param {Object} [options]
+     * @public
      */
     constructor( balanceProperty, balanceChangedByButtonEmitter, range, changeAmount, options ) {
 

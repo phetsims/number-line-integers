@@ -33,6 +33,9 @@ define( require => {
    */
   class BankSceneModel extends SceneModel {
 
+    /**
+     * @public
+     */
     constructor() {
 
       // Position the number line on the left portion of the screen and roughly centered vertically.  The details of

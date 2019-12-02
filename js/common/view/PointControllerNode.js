@@ -28,6 +28,7 @@ define( require => {
     /**
      * @param {PointController} pointController
      * @param {Object} [options]
+     * @public
      */
     constructor( pointController, options ) {
 

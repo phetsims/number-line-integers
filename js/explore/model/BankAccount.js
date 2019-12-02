@@ -17,7 +17,7 @@ define( require => {
   class BankAccount {
 
     /**
-     * @param {number} initialBalance
+     * @param {number} [initialBalance]
      * @public
      */
     constructor( initialBalance = 0 ) {

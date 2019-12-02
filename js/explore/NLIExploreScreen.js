@@ -27,6 +27,7 @@ define( require => {
 
     /**
      * @param {Tandem} tandem
+     * @public
      */
     constructor( tandem ) {
 

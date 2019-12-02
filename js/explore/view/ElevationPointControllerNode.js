@@ -40,6 +40,7 @@ define( require => {
      * @param {number} seaLevel - the y value in view coordinates of the sea level
      * @param {Vector2[]} textOffsets - the offsets for the centerLeft positions of the absolute value texts relative to the image rightCenter
      * @param {Object} [options]
+     * @public
      */
     constructor( pointController, imageList, seaLevel, textOffsets, options ) {
 

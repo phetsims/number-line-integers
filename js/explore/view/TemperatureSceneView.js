@@ -49,6 +49,11 @@ define( require => {
 
   class TemperatureSceneView extends SceneView {
 
+    /**
+     * @param {TemperatureSceneModel} sceneModel
+     * @param {Bounds2} layoutBounds
+     * @public
+     */
     constructor( sceneModel, layoutBounds ) {
 
       super( sceneModel, layoutBounds, {

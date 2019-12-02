@@ -38,6 +38,9 @@ define( require => {
 
   class PiggyBankShapes {
 
+    /**
+     * @public
+     */
     constructor() {
 
       // scale the shape to be reasonably sized

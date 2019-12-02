@@ -14,11 +14,11 @@ define( require => {
   const Property = require( 'AXON/Property' );
   const TemperatureSceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/TemperatureSceneModel' );
 
-  /**
-   * @constructor
-   */
   class NLIExploreModel {
 
+    /**
+     * @public
+     */
     constructor() {
 
       // @public {Property<NLIScene>} - currently selected scene

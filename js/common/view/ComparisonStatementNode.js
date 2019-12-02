@@ -37,6 +37,7 @@ define( require => {
 
     /**
      * @param {NumberLine} numberLine - the number line whose point values are being depicted
+     * @public
      */
     constructor( numberLine ) {
 
@@ -231,6 +232,7 @@ define( require => {
     /**
      * @param {StringProperty} selectedOperatorProperty - property controlled by this selector node
      * @param {Object} [options]
+     * @public
      */
     constructor( selectedOperatorProperty, options ) {
 
@@ -328,6 +330,7 @@ define( require => {
 
     /**
      * @param {NumberLinePoint} point
+     * @public
      */
     constructor( point ) {
 

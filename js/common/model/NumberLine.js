@@ -23,6 +23,7 @@ define( require => {
 
     /**
      * {Object} [options]
+     * @public
      */
     constructor( options ) {
 

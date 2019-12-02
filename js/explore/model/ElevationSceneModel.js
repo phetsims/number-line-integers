@@ -26,6 +26,9 @@ define( require => {
 
   class ElevationSceneModel extends SceneModel {
 
+    /**
+     * @public
+     */
     constructor() {
 
       const seaLevel = SCENE_BOUNDS.centerY + 10; // sea level in model coordinates

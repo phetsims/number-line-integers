@@ -34,6 +34,7 @@ define( require => {
 
     /**
      * @param {Object} [options]
+     * @public
      */
     constructor( options ) {
 

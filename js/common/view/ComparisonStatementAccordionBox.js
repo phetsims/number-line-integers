@@ -46,6 +46,7 @@ define( require => {
 
     /**
      * @param {NumberLine} numberLine - the number line whose point values are being depicted
+     * @public
      */
     constructor( numberLine ) {
 

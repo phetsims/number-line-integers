@@ -33,7 +33,8 @@ define( require => {
   class TemperatureToColorMapper {
 
     /**
-     * @param {Range} temperatureRange - the temperature range that will be mapped, units don't really matter
+     * @param {Range} temperatureRange - the temperature range that will be mapped, units don't matter
+     * @public
      */
     constructor( temperatureRange ) {
 

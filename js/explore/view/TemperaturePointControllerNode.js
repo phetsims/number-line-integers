@@ -42,6 +42,7 @@ define( require => {
      * @param {BooleanProperty} showAbsoluteValuesProperty
      * @param {Property} temperatureUnitsProperty - whether temperature is being shown in Celsius or Fahrenheit
      * @param {Object} [options]
+     * @public
      */
     constructor( pointController, showAbsoluteValuesProperty, temperatureUnitsProperty, options ) {
 

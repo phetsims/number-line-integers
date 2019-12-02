@@ -32,6 +32,12 @@ define( require => {
 
   class SceneView extends Node {
 
+    /**
+     * @param {SceneModel} sceneModel
+     * @param layoutBounds
+     * @param options
+     * @public
+     */
     constructor( sceneModel, layoutBounds, options ) {
 
       options = merge( {

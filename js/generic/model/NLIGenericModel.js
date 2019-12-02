@@ -47,11 +47,11 @@ define( require => {
     new Range( -100, 100 )
   ];
 
-  /**
-   * @constructor
-   */
   class NLIGenericModel {
 
+    /**
+     * @public
+     */
     constructor() {
 
       // @public (read-only){SpatializedNumberLine} - the number line with which the user will interact

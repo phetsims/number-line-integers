@@ -22,6 +22,7 @@ define( require => {
      * @param {NumberLine} numberLine - the number line on which this controller will be moving points
      * @param {Bounds2} elevationAreaBounds
      * @param {Object} [options]
+     * @public
      */
     constructor( numberLine, elevationAreaBounds, options ) {
 

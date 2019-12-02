@@ -41,6 +41,7 @@ define( require => {
      * @param {NumberLine} numberLine - the number line for which this will be displayed
      * @param {NumberLinePoint} numberLinePoint
      * @param {number} initialDistanceFromNumberLine
+     * @public
      */
     constructor( numberLine, numberLinePoint, initialDistanceFromNumberLine ) {
 
@@ -238,6 +239,7 @@ define( require => {
 
     /**
      * @param {Object} [options] - options that will be pass to the constructor of the line node
+     * @public
      */
     constructor( options ) {
       options = merge( { stroke: 'black' }, options );

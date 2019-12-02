@@ -44,8 +44,8 @@ define( require => {
 
     /**
      * {NumberLine} numberLine - model of a number line
-     * {Bounds2} displayBounds - the bounds in which the number line should be displayed
      * {Object} [options] - options that control the appearance of the number line
+     * @public
      */
     constructor( numberLine, options ) {
 

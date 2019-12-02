@@ -39,6 +39,11 @@ define( require => {
 
   class ElevationSceneView extends SceneView {
 
+    /**
+     * @param {ElevationSceneModel} sceneModel
+     * @param {Bounds2} layoutBounds
+     * @public
+     */
     constructor( sceneModel, layoutBounds ) {
 
       super( sceneModel, layoutBounds, {
