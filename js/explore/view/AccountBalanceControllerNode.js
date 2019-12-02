@@ -53,7 +53,8 @@ define( require => {
 
       options = merge( {}, { buttonBaseColor: Color.blue }, options );
 
-      const changeBalanceBy = balanceChangeAmount => {
+      // closure for making changes to the balance
+      const changeBalance = balanceChangeAmount => {
         if ( ( balanceChangeAmount > 0 && balanceProperty.value < range.max ) ||
              ( balanceChangeAmount < 0 && balanceProperty.value > range.min ) ) {
           balanceProperty.value += balanceChangeAmount;
@@ -61,16 +62,16 @@ define( require => {
         }
       };
 
-      // create the buttons
+      // create the buttons that the user can use to add and remove money
       const upButton = new RoundPushButton( merge( {
         content: makeCoinIcon( depositingCoinsImage ),
         baseColor: options.buttonBaseColor,
-        listener: () => { changeBalanceBy( changeAmount ); }
+        listener: () => { changeBalance( changeAmount ); }
       }, BUTTON_OPTIONS ) );
       const downButton = new RoundPushButton( merge( {
         content: makeCoinIcon( withdrawingCoinsImage ),
         baseColor: options.buttonBaseColor,
-        listener: () => { changeBalanceBy( -changeAmount ); }
+        listener: () => { changeBalance( -changeAmount ); }
       }, BUTTON_OPTIONS ) );
 
       // control the enabled states of the buttons
