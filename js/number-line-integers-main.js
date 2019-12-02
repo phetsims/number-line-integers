@@ -20,11 +20,10 @@ define( require => {
 
   const simOptions = {
     credits: {
-      //TODO fill in credits, all of these fields are optional, see joist.CreditsNode
       leadDesign: 'Amanda McGarry',
       softwareDevelopment: 'John Blanco, Chris Klusendorf, Saurabh Totey',
       team: 'Ariel Paul, Kathy Perkins, and in cooperation with the Next-Lab project',
-      qualityAssurance: '',
+      qualityAssurance: 'Kathryn Woessner',
       graphicArts: 'Megan Lai',
       soundDesign: '',
       thanks: ''

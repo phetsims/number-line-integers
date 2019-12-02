@@ -212,7 +212,7 @@ define( require => {
       const spacing = this.thermometerBoxBounds.width / numPositions;
       const destination = new Vector2(
         this.thermometerBoxBounds.minX + spacing / 2 + spacing * index,
-        this.thermometerBoxBounds.centerY + 25 // TODO: empirically determined value, should be handled in view instead
+        this.thermometerBoxBounds.centerY + 25 // empirically determined so that thermometers are vertically centered
       );
       pointController.goToPosition( destination, animate );
     }
