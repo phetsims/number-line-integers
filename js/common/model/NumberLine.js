@@ -32,6 +32,7 @@ define( require => {
         // {Object{initialValue, color}[]} - array of point specifications that describe what points should exist on
         // the number line when constructed and after a reset
         initialPointSpecs: []
+
       }, options );
 
       // @private {Object{ initialValue, color}[]} - array of point specifications that describe what points should

@@ -3,7 +3,7 @@
 /**
  * A PointController is a model element that is used to control points on a number line, but can exist independently
  * too. In some use cases, it will create a point on a number line when it gets within a certain distance of it.  In
- * other use cases, it is permanently locked to a number line and a point that it is controlling there.
+ * other use cases, it is permanently locked to a number line and a point that it is controlling.
  *
  * One implication of the fact that point controllers can attach to and detach from number lines is that sometimes,
  * despite the name, an instance can be in a state where it isn't controlling any points.

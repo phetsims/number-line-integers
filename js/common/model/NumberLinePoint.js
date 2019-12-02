@@ -1,7 +1,7 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * a point on a number line in the "Number Line" suite of sims
+ * NumberLinePoint defines points on a number line in the "Number Line" suite of sims
  *
  * @author John Blanco (PhET Interactive Simulations)
  */
