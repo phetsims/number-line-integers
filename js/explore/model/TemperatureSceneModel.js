@@ -148,6 +148,7 @@ define( require => {
      * get the temperature at the specified location
      * @param {Vector2} location - model coordinates for where to get the temperature
      * @returns {number|null} - the temperature in degrees Kelvin if the location is over the map, null otherwise
+     * @public
      */
     getTemperatureAtLocation( location ) {
 

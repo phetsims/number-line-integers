@@ -225,6 +225,9 @@ define( require => {
       }
     }
 
+    /**
+     * @public
+     */
     dispose() {
       this.disposeAbsoluteValueSpanNode();
       super.dispose();

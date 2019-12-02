@@ -41,7 +41,10 @@ define( require => {
       ];
     }
 
-    // @public resets the model
+    /**
+     * restore initial state
+     * @public
+     */
     reset() {
       this.selectedSceneProperty.reset();
       this.sceneModels.forEach( sceneModel => {

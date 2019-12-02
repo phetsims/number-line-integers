@@ -55,8 +55,8 @@ define( require => {
     }
 
     /**
-     * @public
      * @returns {ColorDef} the color of this piggy bank's fill
+     * @public
      */
     getFill() {
       return this.outline.fill;
@@ -65,8 +65,8 @@ define( require => {
     get fill() { return this.getFill(); }
 
     /**
-     * @public
      * @param {ColorDef} fill
+     * @public
      */
     setFill( fill ) {
       this.outline.fill = fill;

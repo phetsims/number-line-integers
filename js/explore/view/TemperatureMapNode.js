@@ -49,7 +49,10 @@ define( require => {
 
       const images = _.map( TEMPERATURE_IMAGES_MONTHS, png => {
         const image = new Image( png, { visible: false } );
-        this.scaleImage( image );
+        image.scale(
+          this.mapBounds.width / image.width,
+          this.mapBounds.height / image.height
+        );
         this.addChild( image );
         return image;
       } );
@@ -60,18 +63,6 @@ define( require => {
         lastMonth = month;
       } );
     }
-
-    /**
-     * Rescales new images to fit in map bounds
-     * @private
-     */
-    scaleImage( image ) {
-      image.scale(
-        this.mapBounds.width / image.width,
-        this.mapBounds.height / image.height
-      );
-    }
-
   }
 
   return numberLineIntegers.register( 'TemperatureMapNode', TemperatureMapNode );

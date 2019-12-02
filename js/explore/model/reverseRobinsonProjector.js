@@ -25,6 +25,7 @@ define( require => {
      * @param {number} x
      * @param {number} y
      * @returns {{latitude: {number}, longitude: {number}}}
+     * @public
      */
     xyToLatLong( x, y ) {
 

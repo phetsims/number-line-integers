@@ -91,8 +91,8 @@ define( require => {
     }
 
     /**
-     * @protected
      * do scene-specific reset
+     * @protected
      */
     resetScene() {
       // override as needed in descendant classes

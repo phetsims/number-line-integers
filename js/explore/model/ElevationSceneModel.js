@@ -140,6 +140,7 @@ define( require => {
      * it away"
      * @param {ElevationPointController} pointController
      * @param {boolean} [animate] - controls whether to animate the return to the box or do it instantly
+     * @private
      */
     putPointControllerInBox( pointController, animate = false ) {
 
