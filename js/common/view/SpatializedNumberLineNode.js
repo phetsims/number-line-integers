@@ -1,7 +1,7 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * a Scenery node that presents a number line to the user
+ * SpatializedNumberLineNode is a Scenery node that presents a number line that is mapped into 2D space.
  *
  * @author John Blanco (PhET Interactive Simulations)
  */

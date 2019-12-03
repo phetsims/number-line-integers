@@ -1,6 +1,8 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
+ * main view screen for the "Explore" screen
+ *
  * @author John Blanco (PhET Interactive Simulations)
  */
 define( require => {

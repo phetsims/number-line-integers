@@ -1,7 +1,8 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * a Scenery node that is used to add, remove, and control points on a number line
+ * PointControllerNode is a Scenery node that represents the view manification of a point controller.  Interactions with
+ * point controllers enable the user to add, remove, and control points on a number line.
  *
  * @author John Blanco (PhET Interactive Simulations)
  */
@@ -34,15 +35,16 @@ define( require => {
 
       options = merge( {
 
-        // The node used for the view representation.  It's X and Y position will be set based on the position of the
-        // corresponding point controller, so it should be set up with the appropriate offset bounds.  A shaded sphere
-        // is created if no node is provided.
+        // {node} - The node used for the view representation.  It's X and Y position will be set based on the position
+        // of the corresponding point controller, so it should be set up with the appropriate offset bounds.  A shaded
+        // sphere is created if no node is provided.
         node: null,
 
-        // controls whether there is a line drawn from this controller to the number line
+        // {boolean} - controls whether there is a line drawn from this controller to the number line
         connectorLine: true,
 
-        // if the connector line is present, a property can optionally be provided to control its visibility
+        // {BooleanProperty} - if the connector line is present, this boolean property can optionally be provided to
+        // control its visibility
         connectorLineVisibleProperty: ALWAYS_TRUE_PROPERTY,
 
         cursor: 'pointer'
@@ -56,8 +58,8 @@ define( require => {
       connectorLine.visible = false;
       this.addChild( connectorLine );
 
-      // Set up the node that the user will drag to move the point controller around.  If a node is not provided by the
-      // client, a default node is created.
+      // @private {Node} - the node that the user will drag to move the point controller around.  If a node is not
+      // provided by the client, a default node is created.
       this.draggableNode = options.node || new ShadedSphereNode( SPHERE_RADIUS * 2, {
         mainColor: pointController.color
       } );
@@ -74,7 +76,7 @@ define( require => {
 
           // As of this writing (Nov 2019), PointControllerNode only handles drawing connector lines to a single point.
           // It would be possible to handle multiple points, but this has not been needed thus far and is therefor not
-          // handled. If you need it, please add it.
+          // handled. If you need it, feel free to add it.
           assert && assert( pointController.numberLinePoints.length === 1, 'incorrect number of points controlled' );
 
           // update the connector line
@@ -105,7 +107,7 @@ define( require => {
       };
       pointController.isDraggingProperty.link( dragStateChangeHandler );
 
-      // don't allow the point controller node to be grabbed if the point controller is animating somewhere
+      // don't allow the point controller node to be grabbed if it is animating somewhere
       const inProgressAnimationChangedHandler = inProgressAnimation => {
         this.pickable = inProgressAnimation === null;
       };
@@ -125,7 +127,7 @@ define( require => {
               .minus( relativePoint ); // if node has a scale, find offset of node after it is set to 1.0 scale
             pointController.scaleProperty.value = 1.0;
             pointController.proposePosition(
-              this.draggableNode.translation.minus( startingOffset ) // if node had scale, move node back to where pointer clicked
+              this.draggableNode.translation.minus( startingOffset ) // if node had scale, move it to where pointer clicked
             );
             pointOffset = point.minus( this.draggableNode );
           },
@@ -141,8 +143,8 @@ define( require => {
       }
 
       // If the default point controller node is being used, create and hook up the listener that will update touch
-      // areas as the orientation changes such that the point controllers can be easily grabbed by a user's finger
-      // without covering them up.
+      // areas as the orientation changes so that the point controllers can be easily grabbed by a user's finger without
+      // covering them up.
       const numberLine = pointController.numberLines[ 0 ];
       let setTouchDilationBasedOnOrientation;
       if ( !options.node ) {

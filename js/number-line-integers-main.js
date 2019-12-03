@@ -34,7 +34,7 @@ define( require => {
   // until the images are fully loaded, see https://github.com/phetsims/coulombs-law/issues/70
   SimLauncher.launch( () => {
     const screens = [
-      new NLIExploreScreen( Tandem.rootTandem.createTandem( 'scenesScreen' ) ),
+      new NLIExploreScreen( Tandem.rootTandem.createTandem( 'exploreScreen' ) ),
       new NLIGenericScreen( Tandem.rootTandem.createTandem( 'genericScreen' ) )
     ];
     const sim = new Sim( numberLineIntegersTitleString, screens, simOptions );
