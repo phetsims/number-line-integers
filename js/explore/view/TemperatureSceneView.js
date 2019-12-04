@@ -171,7 +171,7 @@ define( require => {
       numberLinePanelContent.addChild( numberLinePanelHeader );
 
       // align the number line nodes to be centered vertically under the header
-      numberLineLayer.top = numberLinePanelTitle.bottom + 5;
+      numberLineLayer.top = numberLinePanelHeader.bottom + 5;
       numberLineLayer.left = 15; // empirically determined for desired alignment under the panel header
 
       // manage the label texts for each thermometer
