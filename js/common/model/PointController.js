@@ -86,6 +86,7 @@ define( require => {
         reentrant: true
       } );
 
+      // REVIEW: missing visibility annotation
       this.scaleInBox = options.scaleInBox;
 
       // @public (read-only) {NumberProperty} - scale of this point
@@ -103,7 +104,7 @@ define( require => {
       // add the initial number line points
       options.numberLinePoints.forEach( point => { this.associateWithNumberLinePoint( point ); } );
 
-      // &public (read-only) {Color}
+      // @public (read-only) {Color}
       this.color = options.color;
 
       // if the displayed range of the number line changes while controlling a point, the position must be updated
