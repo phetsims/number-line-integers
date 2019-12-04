@@ -13,6 +13,7 @@ define( require => {
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Color = require( 'SCENERY/util/Color' );
+  const LockToNumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/LockToNumberLine' );
   const merge = require( 'PHET_CORE/merge' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
@@ -46,7 +47,7 @@ define( require => {
       options = merge( {
         noTemperatureColor: Color.white,
         defaultTemperature: 0, // in Celsius, used when no temperature is available from the model
-        lockToNumberLine: 'never',
+        lockToNumberLine: LockToNumberLine.NEVER,
         bidirectionalAssociation: false
       }, options );
 

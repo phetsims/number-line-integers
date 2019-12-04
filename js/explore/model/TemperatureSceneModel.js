@@ -13,6 +13,7 @@ define( require => {
   // modules
   const Bounds2 = require( 'DOT/Bounds2' );
   const EnumerationProperty = require( 'AXON/EnumerationProperty' );
+  const LockToNumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/LockToNumberLine' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const NLIQueryParameters = require( 'NUMBER_LINE_INTEGERS/common/NLIQueryParameters' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -112,7 +113,7 @@ define( require => {
       this.permanentPointControllers = _.times( 3, i => new TemperaturePointController(
         this,
         THERMOMETER_LABELS[ i ],
-        { lockToNumberLine: 'never', scaleInBox: 0.5 }
+        { lockToNumberLine: LockToNumberLine.NEVER, scaleInBox: 0.5 }
       ) );
 
       // put the permanent point controllers in their starting positions

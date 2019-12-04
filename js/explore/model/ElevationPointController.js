@@ -11,6 +11,7 @@ define( require => {
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const merge = require( 'PHET_CORE/merge' );
+  const LockToNumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/LockToNumberLine' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
@@ -29,7 +30,7 @@ define( require => {
       options = merge( {
 
         // this style of point controller never locks to the number line
-        lockToNumberLine: 'never',
+        lockToNumberLine: LockToNumberLine.NEVER,
 
         numberLines: [ numberLine ]
 

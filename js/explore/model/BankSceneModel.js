@@ -12,6 +12,7 @@ define( require => {
   const BankAccount = require( 'NUMBER_LINE_INTEGERS/explore/model/BankAccount' );
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Color = require( 'SCENERY/util/Color' );
+  const LockToNumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/LockToNumberLine' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
@@ -87,14 +88,14 @@ define( require => {
       // @public {PointController} - the point controller for the primary account
       this.primaryAccountPointController = new PointController( {
         color: numberLine.residentPoints.get( 0 ).colorProperty.value,
-        lockToNumberLine: 'always',
+        lockToNumberLine: LockToNumberLine.ALWAYS,
         numberLinePoints: [ numberLine.residentPoints.get( 0 ) ],
         offsetFromHorizontalNumberLine: 120,
         numberLines: [ numberLine ]
       } );
 
       this.comparisonAccountPointController = new PointController( {
-        lockToNumberLine: 'always',
+        lockToNumberLine: LockToNumberLine.ALWAYS,
         offsetFromHorizontalNumberLine: -120,
         numberLines: [ numberLine ]
       } );

@@ -18,6 +18,7 @@ define( require => {
   const Animation = require( 'TWIXT/Animation' );
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Easing = require( 'TWIXT/Easing' );
+  const LockToNumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/LockToNumberLine' );
   const merge = require( 'PHET_CORE/merge' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
@@ -52,9 +53,8 @@ define( require => {
         // {number} - scale of controller node when animated back into box
         scaleInBox: 1.0,
 
-        // {string} - Controls whether this point controller is, or can, lock to the number line.  Valid values
-        // are 'always', 'never', and 'whenClose'.
-        lockToNumberLine: 'whenClose',
+        // {LockToNumberLine} - Controls whether this point controller is, or can, lock to the number line.
+        lockToNumberLine: LockToNumberLine.WHEN_CLOSE,
 
         // {NumberLine[]} - the number lines on which this controller can add points, can be empty if this controller
         // never adds or removes points from the number line
@@ -245,10 +245,10 @@ define( require => {
           // map the proposed position to a value on the number line
           const proposedNumberLineValue = point.numberLine.modelPositionToValue( proposedPosition );
 
-          if ( this.lockToNumberLine === 'always' ) {
+          if ( this.lockToNumberLine === LockToNumberLine.ALWAYS ) {
             point.proposeValue( proposedNumberLineValue );
           }
-          else if ( this.lockToNumberLine === 'never' ) {
+          else if ( this.lockToNumberLine === LockToNumberLine.NEVER ) {
 
             // this will update the number line point and move it in the orientation of the number line
             point.proposeValue( proposedNumberLineValue );
@@ -261,7 +261,7 @@ define( require => {
               this.positionProperty.value = new Vector2( proposedPosition.x, this.positionProperty.value.y );
             }
           }
-          else if ( this.lockToNumberLine === 'whenClose' ) {
+          else if ( this.lockToNumberLine === LockToNumberLine.WHEN_CLOSE ) {
 
             // determine whether to propose a new value for the point or to detach and remove the point
             if ( point.numberLine.isWithinPointRemovalDistance( proposedPosition ) ) {
@@ -277,11 +277,11 @@ define( require => {
       else {
 
         assert && assert(
-          this.lockToNumberLine !== 'always',
+          this.lockToNumberLine !== LockToNumberLine.ALWAYS,
           'should not be in this situation if controller is always locked to a point'
         );
 
-        if ( this.lockToNumberLine === 'whenClose' ) {
+        if ( this.lockToNumberLine === LockToNumberLine.WHEN_CLOSE ) {
 
           // check if a point should be created and added based on the proposed position
           const numberLinesInRange = this.numberLines.filter( numberLine => numberLine.isWithinPointCreationDistance( proposedPosition ) );
@@ -375,7 +375,7 @@ define( require => {
       let y;
       if ( point.numberLine.isHorizontal ) {
         x = pointPosition.x;
-        if ( this.lockToNumberLine === 'always' || this.lockToNumberLine === 'whenClose' ) {
+        if ( this.lockToNumberLine === LockToNumberLine.ALWAYS || this.lockToNumberLine === LockToNumberLine.WHEN_CLOSE ) {
           y = pointPosition.y + this.offsetFromHorizontalNumberLine;
         }
         else {
@@ -384,7 +384,7 @@ define( require => {
       }
       else {
         y = pointPosition.y;
-        if ( this.lockToNumberLine === 'always' || this.lockToNumberLine === 'whenClose' ) {
+        if ( this.lockToNumberLine === LockToNumberLine.ALWAYS || this.lockToNumberLine === LockToNumberLine.WHEN_CLOSE ) {
           x = pointPosition.x + this.offsetFromVerticalNumberLine;
         }
         else {

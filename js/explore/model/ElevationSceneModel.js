@@ -12,6 +12,7 @@ define( require => {
   const Bounds2 = require( 'DOT/Bounds2' );
   const Color = require( 'SCENERY/util/Color' );
   const ElevationPointController = require( 'NUMBER_LINE_INTEGERS/explore/model/ElevationPointController' );
+  const LockToNumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/LockToNumberLine' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const ObservableArray = require( 'AXON/ObservableArray' );
@@ -116,7 +117,7 @@ define( require => {
         // add a point controller that will remain attached to the number line that will control this point
         const pointController = new PointController( {
           color: addedPoint.colorProperty.value,
-          lockToNumberLine: 'always',
+          lockToNumberLine: LockToNumberLine.ALWAYS,
           numberLinePoints: [ addedPoint ],
           numberLines: [ numberLine ]
         } );
