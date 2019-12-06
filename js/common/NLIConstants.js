@@ -38,7 +38,7 @@ define( require => {
     LABEL_BACKGROUND_CORNER_RADIUS: 3,
 
     // possible values for temperature units
-    TEMPERATURE_UNITS: new Enumeration( [ 'FAHRENHEIT', 'CELSIUS' ] ),
+    TEMPERATURE_UNITS: Enumeration.byKeys( [ 'FAHRENHEIT', 'CELSIUS' ] ),
 
     // various shared fonts and layout parameters
     CHECKBOX_TEXT_OPTIONS: {

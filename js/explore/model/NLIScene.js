@@ -12,5 +12,5 @@ define( require => {
   const Enumeration = require( 'PHET_CORE/Enumeration' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
 
-  return numberLineIntegers.register( 'NLIScene', new Enumeration( [ 'ELEVATION', 'BANK', 'TEMPERATURE' ] ) );
+  return numberLineIntegers.register( 'NLIScene', Enumeration.byKeys( [ 'ELEVATION', 'BANK', 'TEMPERATURE' ] ) );
 } );

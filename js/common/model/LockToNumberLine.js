@@ -14,7 +14,7 @@ define( require => {
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
 
   // @public
-  const LockToNumberLine = new Enumeration( [ 'ALWAYS', 'NEVER', 'WHEN_CLOSE' ] );
+  const LockToNumberLine = Enumeration.byKeys( [ 'ALWAYS', 'NEVER', 'WHEN_CLOSE' ] );
 
   return numberLineIntegers.register( 'LockToNumberLine', LockToNumberLine );
 } );
