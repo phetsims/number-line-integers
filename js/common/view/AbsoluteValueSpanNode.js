@@ -24,12 +24,14 @@ define( require => {
   const Shape = require( 'KITE/Shape' );
   const Vector2 = require( 'DOT/Vector2' );
 
-  // const
-  const CAP_LENGTH = 10;
+  // constants
+  const CAP_LENGTH = 10; // REVIEW: doc and units
   const ANIMATION_SPEED = 160; // in screen coords per second
   const MAX_ANIMATION_DURATION = 0.5; // in seconds
   const EQUATION_NUMBER_FONT = new PhetFont( 18 );
   const EXAMPLE_EQUATION_NUMBER_NODE = new Text( 8, { font: EQUATION_NUMBER_FONT } );
+  // REVIEW: I (@chrisklus) don't see a need for 'abs' or 'val' abbreviations in this file. Expanding usages won't push
+  // lines past the character limit.
   const ABS_VAL_LINE_TOP = new Vector2( 0, EXAMPLE_EQUATION_NUMBER_NODE.top );
   const ABS_VAL_LINE_BOTTOM = new Vector2( 0, EXAMPLE_EQUATION_NUMBER_NODE.bottom );
   const ABS_VAL_LINE_SPACING = 1;
@@ -238,6 +240,7 @@ define( require => {
    * line used to indicate an absolute value indicator
    * @private
    */
+    // REVIEW: Unnessary abbreviation, see review comment above.
   class AbsValLine extends Line {
 
     /**
