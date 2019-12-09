@@ -25,6 +25,7 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
 
   // constants
+  // REVIEW, naming considerations, see https://github.com/phetsims/number-line-integers/issues/68
   const TICK_MARK_LABEL_DISTANCE = 5;
   const ABS_VAL_MIN_LINE_WIDTH = 2;
   const ABS_VAL_LINE_EXPANSION_FACTOR = 3;

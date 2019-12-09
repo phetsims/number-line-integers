@@ -31,7 +31,7 @@ define( require => {
   const EQUATION_NUMBER_FONT = new PhetFont( 18 );
   const EXAMPLE_EQUATION_NUMBER_NODE = new Text( 8, { font: EQUATION_NUMBER_FONT } );
   // REVIEW: I (@chrisklus) don't see a need for 'abs' or 'val' abbreviations in this file. Expanding usages won't push
-  // lines past the character limit.
+  // lines past the character limit. EDIT: see https://github.com/phetsims/number-line-integers/issues/68
   const ABS_VAL_LINE_TOP = new Vector2( 0, EXAMPLE_EQUATION_NUMBER_NODE.top );
   const ABS_VAL_LINE_BOTTOM = new Vector2( 0, EXAMPLE_EQUATION_NUMBER_NODE.bottom );
   const ABS_VAL_LINE_SPACING = 1;
@@ -240,7 +240,7 @@ define( require => {
    * line used to indicate an absolute value indicator
    * @private
    */
-    // REVIEW: Unnessary abbreviation, see review comment above.
+    // REVIEW: Unnessary abbreviation, see review comment above. EDIT: see https://github.com/phetsims/number-line-integers/issues/68
   class AbsValLine extends Line {
 
     /**
