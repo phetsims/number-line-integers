@@ -22,7 +22,7 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
 
   // constants
-  const POINT_NODE_RADIUS = 4.5;
+  const POINT_NODE_RADIUS = 4.5; // REVIEW: add units
 
   class PointNode extends Node {
 
@@ -36,8 +36,8 @@ define( require => {
 
       options = merge( {
 
-        customColorsForLabels: true,
-        labelTemplate: '{{number}}',
+        customColorsForLabels: true, // REVIEW: add doc
+        labelTemplate: '{{number}}', // REVIEW: add doc
         labelFont: new PhetFont( 18 ),
 
         // true if this point is the opposite of another number line point
