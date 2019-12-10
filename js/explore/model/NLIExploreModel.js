@@ -22,6 +22,7 @@ define( require => {
     constructor() {
 
       // @public {Property<NLIScene>} - currently selected scene
+      // REVIEW: Use EnumerationProperty for improved validation
       this.selectedSceneProperty = new Property( NLIScene.ELEVATION );
 
       // @public (read-only) {ElevationSceneModel} - model instance for the "Elevation" scene
