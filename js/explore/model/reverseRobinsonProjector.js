@@ -27,6 +27,7 @@ define( require => {
      * @returns {{latitude: {number}, longitude: {number}}}
      * @public
      */
+    // REVIEW: document various magic numbers used in this computation
     xyToLatLong( x, y ) {
 
       const relativeX = Math.abs( x );
