@@ -153,6 +153,7 @@ define( require => {
      * @public
      */
     reset() {
+      // REVIEW: maybe 'accordionBox' would be a better parameter name
       this.comparisonStatementAccordionBoxes.forEach( csab => { csab.reset(); } );
     }
   }
