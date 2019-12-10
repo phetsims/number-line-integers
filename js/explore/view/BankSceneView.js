@@ -59,6 +59,7 @@ define( require => {
       const numberLineLabel = new Text( balanceString, {
         font: NUMBER_LINE_LABEL_FONT,
         right: numberLineNode.left - 4,
+        // REVIEW: bankSceneModel.numberLines[ 0 ] is repeated in this file, consider factoring out
         centerY: bankSceneModel.numberLines[ 0 ].centerPosition.y,
         maxWidth: layoutBounds.width * 0.08
       } );
