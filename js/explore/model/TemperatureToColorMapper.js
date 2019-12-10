@@ -52,6 +52,7 @@ define( require => {
     mapTemperatureToColor( temperature ) {
 
       // calculate a normalized temperature value
+      // REVIEW: getNormalizedValue was just added to Range, perhaps use that instead
       const normalizedTemperature = ( temperature - this.temperatureRange.min ) / this.temperatureRange.getLength();
 
       // Clamp the value.  While it would be possible to create and use a linear function for out-of-bounds values, but
@@ -74,6 +75,7 @@ define( require => {
       let green = 0;
       let blue = 0;
 
+      // REVIEW: numberOfColors, according to CRC
       const numColors = RdYlBu_data.length;
       const scaledValue = value * ( numColors - 1 );
       const lowerEntryIndex = Math.floor( scaledValue );
