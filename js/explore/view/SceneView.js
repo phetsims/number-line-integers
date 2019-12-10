@@ -22,6 +22,7 @@ define( require => {
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
+  // REVIEW: Both duplicated in NLIGenericScreenView.js, consider factoring out to NLIConstants
   const CHECKBOX_DILATION = 6;
   const CHECKBOX_OPTIONS = { boxWidth: NLIConstants.CHECKBOX_BOX_WIDTH };
 

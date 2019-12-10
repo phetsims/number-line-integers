@@ -54,9 +54,10 @@ define( require => {
      */
     constructor() {
 
-      // @public (read-only){SpatializedNumberLine} - the number line with which the user will interact
+      // @public (read-only) {SpatializedNumberLine} - the number line with which the user will interact
       this.numberLine = new SpatializedNumberLine( NLIConstants.NLI_LAYOUT_BOUNDS.center.plusXY( 0, NL_Y_OFFSET ), {
         initialDisplayedRange: NUMBER_LINE_RANGES[ 0 ],
+        // REVIEW: Document magic numbers
         widthInModelSpace: NLIConstants.NLI_LAYOUT_BOUNDS.width - 100,
         heightInModelSpace: NLIConstants.NLI_LAYOUT_BOUNDS.height - 160,
         initialPointSpecs: [ { initialValue: 1, color: INITIAL_POINT_COLOR } ],
@@ -162,6 +163,7 @@ define( require => {
     putPointControllerInBox( pointController, animate = false ) {
 
       const index = this.pointControllers.indexOf( pointController );
+      // REVIEW: rename to numberOfPositions
       const numPositions = this.pointControllers.length;
 
       // error checking

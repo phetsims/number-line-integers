@@ -38,6 +38,7 @@ define( require => {
   const rangeString = require( 'string!NUMBER_LINE_INTEGERS/range' );
 
   // constants
+  // REVIEW: Both CHECKBOX_DILATION and CHECKBOX_OPTIONS are duplicated in SceneView.js, consider factoring out to NLIConstants
   const CHECKBOX_DILATION = 6;
   const ARROW_ICON_LENGTH = 40;
   const COMBO_BOX_FONT = new PhetFont( 16 );
@@ -89,6 +90,7 @@ define( require => {
         children: checkboxes,
         spacing: 15,
         align: 'left',
+        // REVIEW: document magic numbers
         left: this.layoutBounds.maxX - 220,
         top: this.layoutBounds.minY + 10
       } );
