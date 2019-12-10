@@ -54,7 +54,7 @@ define( require => {
       // @public - whether or not the number lines are visible
       this.showNumberLineProperty = new BooleanProperty( true );
 
-      // @public (read-only){NumberLine[]} - the number line(s) for this scene
+      // @public (read-only) {NumberLine[]} - the number line(s) for this scene
       this.numberLines = [];
       _.times( options.numberOfNumberLines, count => {
         this.numberLines.push( new SpatializedNumberLine(

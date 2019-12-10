@@ -47,7 +47,7 @@ define( require => {
         numberLineZeroPositions: [ numberLineZeroPosition ],
         commonNumberLineOptions: {
           initialOrientation: Orientation.HORIZONTAL,
-          initialDisplayedRange: new Range( -100, 100 ),
+          initialDisplayedRange: new Range( -100, 100 ), // REVIEW: duplicate value of base class
           labelsInitiallyVisible: true,
           widthInModelSpace: SCENE_BOUNDS.width * 0.475,
           initialPointSpecs: [ {
@@ -94,6 +94,7 @@ define( require => {
         numberLines: [ numberLine ]
       } );
 
+      // REVIEW: missing doc
       this.comparisonAccountPointController = new PointController( {
         lockToNumberLine: LockToNumberLine.ALWAYS,
         offsetFromHorizontalNumberLine: -120,
