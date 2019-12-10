@@ -33,7 +33,7 @@ define( require => {
     constructor() {
 
       const seaLevel = SCENE_BOUNDS.centerY + 10; // sea level in model coordinates
-      const numberLineRange = new Range( -80, 100 );
+      const numberLineRange = new Range( -80, 100 ); // REVIEW: doc and/or units
 
       // Define the bounds of the area where the interactive elevation area will be shown, values empirically determined
       // to match the design spec.
