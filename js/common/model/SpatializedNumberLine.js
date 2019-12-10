@@ -75,7 +75,7 @@ define( require => {
       // @public (read-only) {Vector2} - center in model space where this number line exists
       this.centerPosition = zeroPosition;
 
-      // REVIEW: Use EnumerationProperty
+      // REVIEW: Use EnumerationProperty, and then remove redundant asserts that validate its value (like the link in SpatializedNumberLineNode)
       // @public {Property} - the value used to scale from model coordinates to number line distance
       this.orientationProperty = new Property( options.initialOrientation );
 
