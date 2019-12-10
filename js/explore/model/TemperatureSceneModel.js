@@ -34,6 +34,7 @@ define( require => {
   // constants
   const SCENE_BOUNDS = NLIConstants.NLI_LAYOUT_BOUNDS; // bounds for the scenes match the layout bounds
   const THERMOMETER_LABELS = [ thermometerALabelString, thermometerBLabelString, thermometerCLabelString ];
+  // REVIEW: add units
   const MAP_WIDTH = 550;
   const MAP_HEIGHT = 280;
   const MAP_CENTER = new Vector2(
