@@ -58,6 +58,7 @@ define( require => {
         zeroTickMarkLineWidth: 2,
         zeroTickMarkLength: 16,
         tickMarkLabelOptions: { font: new PhetFont( 16 ), maxWidth: 75 },
+        // REVIEW: Enumeration might be preferable, but these values aren't duplicated much
         tickMarkLabelPositionWhenVertical: 'right', // valid values are 'right' and 'left'
         tickMarkLabelPositionWhenHorizontal: 'below', // valid values are 'above' and 'below'
         color: 'black',

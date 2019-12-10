@@ -13,6 +13,7 @@ define( require => {
 
   const NLIQueryParameters = QueryStringMachine.getAll( {
 
+    // REVIEW: Annotate if public facing or private to phet
     // changes default units of temperature to celsius
     defaultCelsius: { type: 'flag' }
 
