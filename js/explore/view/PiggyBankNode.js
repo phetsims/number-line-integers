@@ -33,6 +33,7 @@ define( require => {
       options = merge( {
         fill: 'rgba( 0, 0, 0, 0 )', // initially transparent so that it is invisible but has size
         lineWidth: 0,
+        // REVIEW: These strings are duplicated a few times each and used across 4 files, so an Enumeration would be preferable
         decorationType: 'flowers'  // valid values are 'flowers' and 'lightning'
       }, options );
 
