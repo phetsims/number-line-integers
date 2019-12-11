@@ -37,6 +37,7 @@ define( require => {
   class MonthsComboBox extends ComboBox {
 
     /**
+     * // REVIEW: I (@chrisklus) think monthProperty is a NumberProperty
      * @param {EnumerationProperty} monthProperty
      * @param {Node} listParent - node which the ComboBoxListBox will be added
      * @param {object} options
