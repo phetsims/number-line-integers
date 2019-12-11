@@ -31,6 +31,7 @@ define( require => {
   const septemberString = require( 'string!NUMBER_LINE_INTEGERS/september' );
 
   // constants
+  // REVIEW: move to constructor or rename as ITEM_OPTIONS
   const itemOptions = { font: new PhetFont( 16 ), maxWidth: 100 };
 
   class MonthsComboBox extends ComboBox {
@@ -48,6 +49,8 @@ define( require => {
         yMargin: 6
       }, options );
 
+      // REVIEW: did you consider putting all of the strings in an array and then iterating over that to create items?
+      // it would eliminate the hard-coded index values
       const items = [
         new ComboBoxItem( new Text( januaryString, itemOptions ), 1 ),
         new ComboBoxItem( new Text( februaryString, itemOptions ), 2 ),
