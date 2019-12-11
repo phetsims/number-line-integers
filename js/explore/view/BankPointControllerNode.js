@@ -206,6 +206,7 @@ define( require => {
         assert && assert( Math.abs( balanceChange ) === 1, 'balance changes from the button should always be 1 or -1' );
         const isDeposit = balanceChange > 0;
         const coinNode = new CoinNode( { centerX: -3 } );
+        // REVIEW: Document or factor out magic numbers
         const startY = isDeposit ? -60 : 30;
         const endY = isDeposit ? 0 : 60;
         coinAnimationLayer.addChild( coinNode );
