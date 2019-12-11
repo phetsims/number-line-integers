@@ -54,6 +54,7 @@ define( require => {
       numberLine.showAbsoluteValuesProperty.link( visibilityUpdater );
 
       // @public {number} - the distance in model/view coordinates of the line portion of the span from the number line
+      // REVIEW: Use NumberProperty
       this.distanceFromNumberLineProperty = new Property( initialDistanceFromNumberLine );
 
       // @public (read-only) {NumberLinePoint} - point whose absolute value is being displayed by this span
