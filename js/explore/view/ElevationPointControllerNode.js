@@ -63,6 +63,7 @@ define( require => {
       // update the visibility of the images as the position changes
       pointController.positionProperty.link( position => {
         const currentlySelectedImageIndex = _.findIndex( imageList, image => image.visible );
+        // REVIEW: imageSelectionFunction has no default value, so appears to be required, not optional
         const selectedImageIndex = options.imageSelectionFunction( position, currentlySelectedImageIndex );
         imageList.forEach( ( image, index ) => {
           image.visible = selectedImageIndex === index;

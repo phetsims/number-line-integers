@@ -72,6 +72,7 @@ define( require => {
       controllerNode.addChild( piggyBankNode );
 
       // add the balance indicator node
+      // REVIEW: Is there a reason this is defaulted to 'X' instead of ''?
       const balanceNode = new Text( 'X', {
         font: new PhetFont( 30 ),
         fill: 'white',
