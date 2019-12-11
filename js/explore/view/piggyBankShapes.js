@@ -1,10 +1,10 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
+ * // REVIEW: incorrect doc
  * Shared constants for the Number Line: Integers simulation
  *
  * @author John Blanco (PhET Interactive Simulations)
- * @author Chris Klusendorf (PhET Interactive Simulations)
  */
 
 define( require => {
