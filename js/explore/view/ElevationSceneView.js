@@ -126,6 +126,8 @@ define( require => {
             }
             else if ( position.y < sceneModel.seaLevel ) {
               if ( position.x >
+                   // REVIEW: This looks somewhat brittle - can those number be factored out from the place that determines
+                   // them? Or appropriately documented if not
                    ( sceneModel.elevationAreaBounds.centerX + 40 + 0.6 * ( sceneModel.seaLevel - position.y ) ) ) {
                 imageIndex = 2;
               }

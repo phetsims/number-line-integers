@@ -47,6 +47,8 @@ define( require => {
 
       let lastMonth = 1;
 
+      // REVIEW: It looks like the images are .jpg, so the parameter name should be updated. My (@chrisklus) personal
+      // preference would be to rename the parameter as "image" and name all Image instances as "imageNode(s)"
       const images = _.map( TEMPERATURE_IMAGES_MONTHS, png => {
         const image = new Image( png, { visible: false } );
         image.scale(
