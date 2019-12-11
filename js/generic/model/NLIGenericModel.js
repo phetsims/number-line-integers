@@ -66,6 +66,7 @@ define( require => {
 
       // @public (read-only) {Property<Bounds2>} - the bounds of the box where the point controllers reside when not
       // being used, changes its location when the orientation of the number line changes
+      // REVIEW: use valueType option for validation
       this.pointControllerBoxProperty = new Property( BOTTOM_BOX_BOUNDS );
 
       // @public (read-only) - an array of the point controllers available for manipulation by the user

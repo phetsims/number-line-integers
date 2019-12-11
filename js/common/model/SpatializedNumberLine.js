@@ -80,6 +80,7 @@ define( require => {
       this.orientationProperty = new Property( options.initialOrientation );
 
       // @public {Property<Range>} - the range of values that should be displayed to the user
+      // REVIEW: use valueType option for validation
       this.displayedRangeProperty = new Property( options.initialDisplayedRange );
 
       // @public {BooleanProperty} - controls whether point labels are displayed to the user
