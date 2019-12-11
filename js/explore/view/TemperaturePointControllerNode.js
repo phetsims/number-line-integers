@@ -102,6 +102,7 @@ define( require => {
       );
       compositeThermometerNode.addChild( temperatureReadoutNode );
 
+      // REVIEW: doc why unlink is not needed
       // control the visibility of the textual label
       Property.multilink(
         [ showAbsoluteValuesProperty, pointController.isOverMapProperty ],

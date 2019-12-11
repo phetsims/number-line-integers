@@ -82,6 +82,7 @@ define( require => {
       absoluteValueLine.moveToBack();
       const numberLine = pointController.numberLines[ 0 ];
 
+      // REVIEW: doc why unlink is not needed
       Property.multilink( [ numberLine.showAbsoluteValuesProperty, pointController.positionProperty ], () => {
         if ( numberLine.showAbsoluteValuesProperty.value
              && pointController.overElevationAreaProperty.value
