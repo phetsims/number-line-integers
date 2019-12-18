@@ -82,11 +82,11 @@ define( require => {
       this.scenesLayer.addChild( numberLineLabel );
 
       // define a function that will be used to switch images based on its position in the model space
-      const selectImageIndex = ( position, currentlySelectedImage ) => {
+      const selectImageIndex = ( position, currentlySelectedImageIndex ) => {
 
         // This function is intended to have some hysteresis, i.e. the image doesn't change until the point controller
         // fully transitions from above to below sea level or vice versa.
-        let index = currentlySelectedImage;
+        let index = currentlySelectedImageIndex;
         if ( position.y > sceneModel.seaLevel ) {
           index = 0;
         }
@@ -116,22 +116,30 @@ define( require => {
         ],
         {
           // special highly tweaked function for having the hiker image show up over the cliff
-          imageSelectionFunction: ( position, currentlySelectedImage ) => {
+          imageSelectionFunction: ( position, currentlySelectedImageIndex ) => {
 
-            // This function is intended to have some hysteresis, i.e. the image doesn't change until the point controller
-            // fully transitions from above to below sea level or vice versa.
-            let imageIndex = currentlySelectedImage;
+            // This function is intended to have some hysteresis, i.e. the image doesn't change until the point
+            // controller fully transitions from above to below sea level or vice versa.
+            let imageIndex = currentlySelectedImageIndex;
             if ( position.y > sceneModel.seaLevel ) {
+
+              // image for underwater
               imageIndex = 0;
             }
             else if ( position.y < sceneModel.seaLevel ) {
+
+              // The position is above sea level.  Decide whether to use the hiker or paraglider image.  This function
+              // was empirically determined to match the background image and will have to be updated if the background
+              // image for the scene changes.
               if ( position.x >
-                   // REVIEW: This looks somewhat brittle - can those number be factored out from the place that determines
-                   // them? Or appropriately documented if not
                    ( sceneModel.elevationAreaBounds.centerX + 40 + 0.6 * ( sceneModel.seaLevel - position.y ) ) ) {
+
+                // hiker
                 imageIndex = 2;
               }
               else {
+
+                // paraglider
                 imageIndex = 1;
               }
             }

@@ -55,7 +55,15 @@ define( require => {
       options = merge( {
 
         // pass in the parent node that includes all images as the mode that will control the point
-        node: compositeImageNode
+        node: compositeImageNode,
+
+        // {function} - A function that takes a position and a currently selected image index and returns the index
+        // of the image that should be visible.  This enabled fairly complex appearance changes to the point controller
+        // node.
+        imageSelectionFunction: ( position, currentlySelectedImageIndex ) => {
+          return currentlySelectedImageIndex;
+        }
+
       }, options );
 
       let textOffset;
@@ -63,7 +71,6 @@ define( require => {
       // update the visibility of the images as the position changes
       pointController.positionProperty.link( position => {
         const currentlySelectedImageIndex = _.findIndex( imageList, image => image.visible );
-        // REVIEW: imageSelectionFunction has no default value, so appears to be required, not optional
         const selectedImageIndex = options.imageSelectionFunction( position, currentlySelectedImageIndex );
         imageList.forEach( ( image, index ) => {
           image.visible = selectedImageIndex === index;
@@ -75,16 +82,23 @@ define( require => {
 
       // handling of what the point controller does when the absolute value checkbox is checked
       const absoluteValueLine = new Path( null, { stroke: pointController.color, lineWidth: 2 } );
-      const distanceText = new Text( '', { font: new PhetFont( 18 ), fill: pointController.color, maxWidth: DISTANCE_TEXT_MAX_WIDTH } );
+      const distanceText = new Text( '', {
+        font: new PhetFont( 18 ),
+        fill: pointController.color,
+        maxWidth: DISTANCE_TEXT_MAX_WIDTH
+      } );
       const distanceLabel = new BackgroundNode( distanceText, NLIConstants.LABEL_BACKGROUND_OPTIONS );
       this.addChild( absoluteValueLine );
       this.addChild( distanceLabel );
       absoluteValueLine.moveToBack();
       const numberLine = pointController.numberLines[ 0 ];
 
-      // REVIEW: doc why unlink is not needed
-      Property.multilink( [ numberLine.showAbsoluteValuesProperty, pointController.positionProperty ], () => {
-        if ( numberLine.showAbsoluteValuesProperty.value
+      // Update the absolute value representation and associated text. There is no need to unlink this since the
+      // elevation point controllers don't come and go.
+      Property.multilink(
+        [ numberLine.showAbsoluteValuesProperty, pointController.positionProperty ],
+        showAbsoluteValues => {
+          if ( showAbsoluteValues
              && pointController.overElevationAreaProperty.value
              && pointController.isControllingNumberLinePoint() ) {
 

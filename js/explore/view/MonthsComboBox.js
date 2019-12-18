@@ -17,28 +17,30 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
 
   // strings
-  const aprilString = require( 'string!NUMBER_LINE_INTEGERS/april' );
-  const augustString = require( 'string!NUMBER_LINE_INTEGERS/august' );
-  const decemberString = require( 'string!NUMBER_LINE_INTEGERS/december' );
-  const februaryString = require( 'string!NUMBER_LINE_INTEGERS/february' );
-  const januaryString = require( 'string!NUMBER_LINE_INTEGERS/january' );
-  const julyString = require( 'string!NUMBER_LINE_INTEGERS/july' );
-  const juneString = require( 'string!NUMBER_LINE_INTEGERS/june' );
-  const marchString = require( 'string!NUMBER_LINE_INTEGERS/march' );
-  const mayString = require( 'string!NUMBER_LINE_INTEGERS/may' );
-  const novemberString = require( 'string!NUMBER_LINE_INTEGERS/november' );
-  const octoberString = require( 'string!NUMBER_LINE_INTEGERS/october' );
-  const septemberString = require( 'string!NUMBER_LINE_INTEGERS/september' );
+  const MONTH_STRINGS = [
+
+    // these muse be in order of occurrence, not sorted alphabetically
+    require( 'string!NUMBER_LINE_INTEGERS/january' ),
+    require( 'string!NUMBER_LINE_INTEGERS/february' ),
+    require( 'string!NUMBER_LINE_INTEGERS/march' ),
+    require( 'string!NUMBER_LINE_INTEGERS/april' ),
+    require( 'string!NUMBER_LINE_INTEGERS/may' ),
+    require( 'string!NUMBER_LINE_INTEGERS/june' ),
+    require( 'string!NUMBER_LINE_INTEGERS/july' ),
+    require( 'string!NUMBER_LINE_INTEGERS/august' ),
+    require( 'string!NUMBER_LINE_INTEGERS/september' ),
+    require( 'string!NUMBER_LINE_INTEGERS/october' ),
+    require( 'string!NUMBER_LINE_INTEGERS/november' ),
+    require( 'string!NUMBER_LINE_INTEGERS/december' )
+  ];
 
   // constants
-  // REVIEW: move to constructor or rename as ITEM_OPTIONS
-  const itemOptions = { font: new PhetFont( 16 ), maxWidth: 100 };
+  const COMBO_BOX_ITEM_OPTIONS = { font: new PhetFont( 16 ), maxWidth: 100 };
 
   class MonthsComboBox extends ComboBox {
 
     /**
-     * // REVIEW: I (@chrisklus) think monthProperty is a NumberProperty
-     * @param {EnumerationProperty} monthProperty
+     * @param {NumberProperty} monthProperty
      * @param {Node} listParent - node which the ComboBoxListBox will be added
      * @param {object} options
      * @public
@@ -50,27 +52,14 @@ define( require => {
         yMargin: 6
       }, options );
 
-      // REVIEW: did you consider putting all of the strings in an array and then iterating over that to create items?
-      // it would eliminate the hard-coded index values
-      const items = [
-        new ComboBoxItem( new Text( januaryString, itemOptions ), 1 ),
-        new ComboBoxItem( new Text( februaryString, itemOptions ), 2 ),
-        new ComboBoxItem( new Text( marchString, itemOptions ), 3 ),
-        new ComboBoxItem( new Text( aprilString, itemOptions ), 4 ),
-        new ComboBoxItem( new Text( mayString, itemOptions ), 5 ),
-        new ComboBoxItem( new Text( juneString, itemOptions ), 6 ),
-        new ComboBoxItem( new Text( julyString, itemOptions ), 7 ),
-        new ComboBoxItem( new Text( augustString, itemOptions ), 8 ),
-        new ComboBoxItem( new Text( septemberString, itemOptions ), 9 ),
-        new ComboBoxItem( new Text( octoberString, itemOptions ), 10 ),
-        new ComboBoxItem( new Text( novemberString, itemOptions ), 11 ),
-        new ComboBoxItem( new Text( decemberString, itemOptions ), 12 )
-      ];
+      const comboBoxItems = [];
+      MONTH_STRINGS.forEach( ( monthString, index ) => {
+        comboBoxItems.push( new ComboBoxItem( new Text( monthString, COMBO_BOX_ITEM_OPTIONS ), index + 1 ) );
+      } );
 
-      super( items, monthProperty, listParent, options );
+      super( comboBoxItems, monthProperty, listParent, options );
     }
   }
 
   return numberLineIntegers.register( 'MonthsComboBox', MonthsComboBox );
-
 } );
