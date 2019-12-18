@@ -25,20 +25,19 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
 
   // constants
-  // REVIEW: naming considerations, see https://github.com/phetsims/number-line-integers/issues/68
   const TICK_MARK_LABEL_DISTANCE = 5;
-  const ABS_VAL_MIN_LINE_WIDTH = 2;
-  const ABS_VAL_LINE_EXPANSION_FACTOR = 3;
-  const ABS_VAL_SPAN_NL_DISTANCE_Y = 55;
-  const ABS_VAL_SPAN_SPACING_Y = 40;
-  const ABS_VAL_SPAN_NL_DISTANCE_X = 105;
-  const ABS_VAL_SPAN_SPACING_X = 95;
+  const ABSOLUTE_VALUE_MIN_LINE_WIDTH = 2;
+  const ABSOLUTE_VALUE_LINE_EXPANSION_FACTOR = 3;
+  const ABSOLUTE_VALUE_SPAN_NL_DISTANCE_Y = 55;
+  const ABSOLUTE_VALUE_SPAN_SPACING_Y = 40;
+  const ABSOLUTE_VALUE_SPAN_NL_DISTANCE_X = 105;
+  const ABSOLUTE_VALUE_SPAN_SPACING_X = 95;
 
   // convenience function to calculate distance of an absolute value span node from the number line
   const getIndicatorDistanceFromNL = ( numberLine, count ) => {
     return numberLine.isHorizontal ?
-           ABS_VAL_SPAN_NL_DISTANCE_Y + count * ABS_VAL_SPAN_SPACING_Y :
-           ABS_VAL_SPAN_NL_DISTANCE_X + count * ABS_VAL_SPAN_SPACING_X;
+           ABSOLUTE_VALUE_SPAN_NL_DISTANCE_Y + count * ABSOLUTE_VALUE_SPAN_SPACING_Y :
+           ABSOLUTE_VALUE_SPAN_NL_DISTANCE_X + count * ABSOLUTE_VALUE_SPAN_SPACING_X;
   };
 
   class SpatializedNumberLineNode extends Node {
@@ -58,7 +57,6 @@ define( require => {
         zeroTickMarkLineWidth: 2,
         zeroTickMarkLength: 16,
         tickMarkLabelOptions: { font: new PhetFont( 16 ), maxWidth: 75 },
-        // REVIEW: Enumeration might be preferable, but these values aren't duplicated much
         tickMarkLabelPositionWhenVertical: 'right', // valid values are 'right' and 'left'
         tickMarkLabelPositionWhenHorizontal: 'below', // valid values are 'above' and 'below'
         color: 'black',
@@ -74,7 +72,7 @@ define( require => {
 
         // options for the point nodes
         pointNodeOptions: {
-          customColorsForLabels: true
+          usePointColorForLabel: true
         }
 
       }, options );
@@ -207,23 +205,25 @@ define( require => {
             lineOnNumberLine.setLine( zeroPosition.x, zeroPosition.y, pointPosition.x, pointPosition.y );
             if ( pointValue > 0 ) {
               pointsAboveZeroCount++;
-              lineOnNumberLine.lineWidth = ABS_VAL_MIN_LINE_WIDTH + pointsAboveZeroCount * ABS_VAL_LINE_EXPANSION_FACTOR;
+              lineOnNumberLine.lineWidth = ABSOLUTE_VALUE_MIN_LINE_WIDTH + pointsAboveZeroCount *
+                                           ABSOLUTE_VALUE_LINE_EXPANSION_FACTOR;
             }
             else {
               pointsBelowZeroCount++;
-              lineOnNumberLine.lineWidth = ABS_VAL_MIN_LINE_WIDTH + pointsBelowZeroCount * ABS_VAL_LINE_EXPANSION_FACTOR;
+              lineOnNumberLine.lineWidth = ABSOLUTE_VALUE_MIN_LINE_WIDTH + pointsBelowZeroCount *
+                                           ABSOLUTE_VALUE_LINE_EXPANSION_FACTOR;
             }
           }
         } );
 
         // create a list of the absolute value span indicators sorted by their distance from the number line
-        const sortedAbsValSpanNodes = _.sortBy( absoluteValueSpanNodes, absValSpanNode => {
+        const sortedAbsoluteValueSpanNodes = _.sortBy( absoluteValueSpanNodes, absValSpanNode => {
           return absValSpanNode.distanceFromNumberLineProperty.value;
         } );
 
         // Make sure the absolute value span indicators are at the correct distances - this is mostly done to handle
         // changes in the number line orientation.
-        sortedAbsValSpanNodes.forEach( ( absValSpanNode, index ) => {
+        sortedAbsoluteValueSpanNodes.forEach( ( absValSpanNode, index ) => {
           absValSpanNode.setDistanceFromNumberLine(
             getIndicatorDistanceFromNL( numberLine, index ),
             doAnimation

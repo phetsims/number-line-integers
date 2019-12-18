@@ -87,7 +87,7 @@ define( require => {
         ),
         new Checkbox(
           new Text( absoluteValueString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
-          sceneModel.numberLineAbsValIndicatorsVisibleProperty,
+          sceneModel.numberLineAbsoluteValueIndicatorsVisibleProperty,
           CHECKBOX_OPTIONS
         )
       ];

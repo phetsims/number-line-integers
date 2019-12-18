@@ -62,7 +62,7 @@ define( require => {
         commonNumberLineNodeOptions: {
           tickMarkLabelPositionWhenVertical: 'left',
           pointNodeOptions: {
-            customColorsForLabels: false
+            usePointColorForLabel: false
           }
         },
 
@@ -259,7 +259,7 @@ define( require => {
         children: sceneModel.permanentPointControllers.map(
           pointController => new TemperaturePointControllerNode(
             pointController,
-            sceneModel.numberLineAbsValIndicatorsVisibleProperty,
+            sceneModel.numberLineAbsoluteValueIndicatorsVisibleProperty,
             sceneModel.temperatureUnitsProperty
           )
         )

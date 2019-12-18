@@ -164,7 +164,7 @@ define( require => {
         numberLine.orientationProperty.link( setTouchDilationBasedOnOrientation );
       }
 
-      // REVIEW: Missing visibility annotation
+      // @private
       this.disposePointControllerNode = () => {
         pointController.positionProperty.unlink( updateAppearanceOnPositionChange );
         pointController.isDraggingProperty.unlink( dragStateChangeHandler );

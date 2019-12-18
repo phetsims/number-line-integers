@@ -18,7 +18,6 @@ define( require => {
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
   const Orientation = require( 'PHET_CORE/Orientation' );
   const PointController = require( 'NUMBER_LINE_INTEGERS/common/model/PointController' );
-  const Range = require( 'DOT/Range' );
   const SceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/SceneModel' );
   const Vector2 = require( 'DOT/Vector2' );
 
@@ -47,7 +46,6 @@ define( require => {
         numberLineZeroPositions: [ numberLineZeroPosition ],
         commonNumberLineOptions: {
           initialOrientation: Orientation.HORIZONTAL,
-          initialDisplayedRange: new Range( -100, 100 ), // REVIEW: duplicate value of base class
           labelsInitiallyVisible: true,
           widthInModelSpace: SCENE_BOUNDS.width * 0.475,
           initialPointSpecs: [ {
@@ -94,7 +92,7 @@ define( require => {
         numberLines: [ numberLine ]
       } );
 
-      // REVIEW: missing doc
+      // @public {PointController} - the point controller for the comparison account
       this.comparisonAccountPointController = new PointController( {
         lockToNumberLine: LockToNumberLine.ALWAYS,
         offsetFromHorizontalNumberLine: -120,

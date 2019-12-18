@@ -9,9 +9,9 @@ define( require => {
   // modules
   const BankSceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/BankSceneModel' );
   const ElevationSceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/ElevationSceneModel' );
+  const EnumerationProperty = require( 'AXON/EnumerationProperty' );
   const NLIScene = require( 'NUMBER_LINE_INTEGERS/explore/model/NLIScene' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const Property = require( 'AXON/Property' );
   const TemperatureSceneModel = require( 'NUMBER_LINE_INTEGERS/explore/model/TemperatureSceneModel' );
 
   class NLIExploreModel {
@@ -22,8 +22,7 @@ define( require => {
     constructor() {
 
       // @public {Property<NLIScene>} - currently selected scene
-      // REVIEW: Use EnumerationProperty for improved validation
-      this.selectedSceneProperty = new Property( NLIScene.ELEVATION );
+      this.selectedSceneProperty = new EnumerationProperty( NLIScene, NLIScene.ELEVATION );
 
       // @public (read-only) {ElevationSceneModel} - model instance for the "Elevation" scene
       this.elevationSceneModel = new ElevationSceneModel();

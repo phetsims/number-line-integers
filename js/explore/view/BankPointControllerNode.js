@@ -51,6 +51,12 @@ define( require => {
   const debtAmountString = require( 'string!NUMBER_LINE_INTEGERS/debtAmount' );
   const moneyAmountString = require( 'string!NUMBER_LINE_INTEGERS/moneyAmount' );
 
+  // constants
+  const COIN_DEPOSIT_ANIMATION_START_Y = -60; // above the piggy bank, in screen coordinates, empirically determined
+  const COIN_DEPOSIT_ANIMATION_END_Y = 0; // inside the piggy bank, in screen coordinates, empirically determined
+  const COIN_WITHDRAWAL_ANIMATION_START_Y = 30; // inside the piggy bank, in screen coordinates, empirically determined
+  const COIN_WITHDRAWAL_ANIMATION_END_Y = 60; // below the piggy bank, in screen coordinates, empirically determined
+
   class BankPointControllerNode extends PointControllerNode {
 
     /**
@@ -72,8 +78,7 @@ define( require => {
       controllerNode.addChild( piggyBankNode );
 
       // add the balance indicator node
-      // REVIEW: Is there a reason this is defaulted to 'X' instead of ''?
-      const balanceNode = new Text( 'X', {
+      const balanceNode = new Text( '', {
         font: new PhetFont( 30 ),
         fill: 'white',
         stroke: 'black',
@@ -207,9 +212,8 @@ define( require => {
         assert && assert( Math.abs( balanceChange ) === 1, 'balance changes from the button should always be 1 or -1' );
         const isDeposit = balanceChange > 0;
         const coinNode = new CoinNode( { centerX: -3 } );
-        // REVIEW: Document or factor out magic numbers
-        const startY = isDeposit ? -60 : 30;
-        const endY = isDeposit ? 0 : 60;
+        const startY = isDeposit ? COIN_DEPOSIT_ANIMATION_START_Y : COIN_WITHDRAWAL_ANIMATION_START_Y;
+        const endY = isDeposit ? COIN_DEPOSIT_ANIMATION_END_Y : COIN_WITHDRAWAL_ANIMATION_END_Y;
         coinAnimationLayer.addChild( coinNode );
         if ( isDeposit ) {
           coinNode.moveToBack();

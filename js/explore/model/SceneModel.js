@@ -74,8 +74,8 @@ define( require => {
       } );
 
       // @public - controls whether the absolute value indicators on the number lines are visible
-      this.numberLineAbsValIndicatorsVisibleProperty = new BooleanProperty( false );
-      this.numberLineAbsValIndicatorsVisibleProperty.link( visible => {
+      this.numberLineAbsoluteValueIndicatorsVisibleProperty = new BooleanProperty( false );
+      this.numberLineAbsoluteValueIndicatorsVisibleProperty.link( visible => {
         this.numberLines.forEach( nl => { nl.showAbsoluteValuesProperty.set( visible ); } );
       } );
     }
@@ -87,7 +87,7 @@ define( require => {
       this.resetScene();
       this.showNumberLineProperty.reset();
       this.numberLineLabelsVisibleProperty.reset();
-      this.numberLineAbsValIndicatorsVisibleProperty.reset();
+      this.numberLineAbsoluteValueIndicatorsVisibleProperty.reset();
     }
 
     /**

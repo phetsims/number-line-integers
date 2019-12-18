@@ -27,8 +27,11 @@ define( require => {
      * @returns {{latitude: {number}, longitude: {number}}}
      * @public
      */
-    // REVIEW: document various magic numbers used in this computation
     xyToLatLong( x, y ) {
+
+      // NOTE to future maintainers: There are a lot of "magic numbers" in this method, meaning numbers whose values are
+      // used without any explanation.  These values are all taken from the example and paper referenced in the JSDoc
+      // header comment for this method.
 
       const relativeX = Math.abs( x );
       const relativeY = Math.abs( 0.5072 * y );

@@ -128,12 +128,12 @@ define( require => {
       const updateEquation = () => {
         const value = numberLinePoint.valueProperty.value;
         equationNode.removeAllChildren();
-        equationNode.addChild( new AbsValLine() );
+        equationNode.addChild( new AbsoluteValueLine() );
         equationNode.addChild( new Text( value, {
           font: EQUATION_NUMBER_FONT,
           left: equationNode.width + ABSOLUTE_VALUE_LINE_SPACING
         } ) );
-        equationNode.addChild( new AbsValLine( {
+        equationNode.addChild( new AbsoluteValueLine( {
           left: equationNode.width + ABSOLUTE_VALUE_LINE_SPACING
         } ) );
         equationNode.addChild( new Text( '=', {
@@ -239,8 +239,7 @@ define( require => {
    * line used to indicate an absolute value indicator
    * @private
    */
-    // REVIEW: Unnessary abbreviation, see review comment above. EDIT: see https://github.com/phetsims/number-line-integers/issues/68
-  class AbsValLine extends Line {
+  class AbsoluteValueLine extends Line {
 
     /**
      * @param {Object} [options] - options that will be pass to the constructor of the line node

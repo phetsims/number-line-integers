@@ -22,7 +22,7 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
 
   // constants
-  const POINT_NODE_RADIUS = 4.5; // REVIEW: add units
+  const POINT_NODE_RADIUS = 4.5; // in screen coordinates
 
   class PointNode extends Node {
 
@@ -36,8 +36,13 @@ define( require => {
 
       options = merge( {
 
-        customColorsForLabels: true, // REVIEW: add doc
-        labelTemplate: '{{number}}', // REVIEW: add doc
+        // {boolean} - if true, the label text will match the color of the point, if false the label text will be black
+        usePointColorForLabel: true,
+
+        // {string} - template to be used when displaying the label
+        labelTemplate: '{{number}}',
+
+        // {Font}
         labelFont: new PhetFont( 18 ),
 
         // true if this point is the opposite of another number line point
@@ -62,7 +67,7 @@ define( require => {
       };
       const pointLabelTextNode = new Text( getLabelText( numberLinePoint.valueProperty.value ), {
         font: options.labelFont,
-        fill: options.customColorsForLabels ? numberLinePoint.colorProperty : 'black',
+        fill: options.usePointColorForLabel ? numberLinePoint.colorProperty : 'black',
         maxWidth: 75
       } );
 

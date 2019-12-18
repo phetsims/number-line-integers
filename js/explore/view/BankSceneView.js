@@ -52,15 +52,15 @@ define( require => {
         }
       } );
 
-      // get a reference to the only number line node in this scene
+      // get references to the only number line and number line node in this scene
+      const numberLine = bankSceneModel.numberLines[ 0 ];
       const numberLineNode = this.numberLineNodes[ 0 ];
 
       // number line label
       const numberLineLabel = new Text( balanceString, {
         font: NUMBER_LINE_LABEL_FONT,
         right: numberLineNode.left - 4,
-        // REVIEW: bankSceneModel.numberLines[ 0 ] is repeated in this file, consider factoring out
-        centerY: bankSceneModel.numberLines[ 0 ].centerPosition.y,
+        centerY: numberLine.centerPosition.y,
         maxWidth: layoutBounds.width * 0.08
       } );
       this.scenesLayer.addChild( numberLineLabel );
@@ -95,7 +95,7 @@ define( require => {
       pointControllerNodesLayer.addChild( comparisonAccountPointControllerNode );
       comparisonAccountPointControllerNode.moveToBack(); // make sure this is behind the number line point that it controls
 
-      bankSceneModel.numberLines[ 0 ].residentPoints.lengthProperty.link( numPoints => {
+      numberLine.residentPoints.lengthProperty.link( numPoints => {
 
         // show the second controller if the second point is present
         comparisonAccountPointControllerNode.visible = numPoints > 1;
@@ -109,7 +109,7 @@ define( require => {
       const primaryAccountBalanceControllerNode = new AccountBalanceControllerNode(
         bankSceneModel.primaryAccount.balanceProperty,
         bankSceneModel.primaryAccount.balanceChangedByButtonEmitter,
-        bankSceneModel.numberLines[ 0 ].displayedRangeProperty.value,
+        numberLine.displayedRangeProperty.value,
         BALANCE_CHANGE_AMOUNT,
         {
           buttonBaseColor: BankSceneModel.PRIMARY_ACCOUNT_POINT_COLOR,
@@ -123,7 +123,7 @@ define( require => {
       const comparisonAccountBalanceControllerNode = new AccountBalanceControllerNode(
         bankSceneModel.comparisonAccount.balanceProperty,
         bankSceneModel.comparisonAccount.balanceChangedByButtonEmitter,
-        bankSceneModel.numberLines[ 0 ].displayedRangeProperty.value,
+        numberLine.displayedRangeProperty.value,
         BALANCE_CHANGE_AMOUNT,
         {
           buttonBaseColor: BankSceneModel.COMPARISON_ACCOUNT_POINT_COLOR,
