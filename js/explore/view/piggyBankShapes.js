@@ -1,8 +1,7 @@
 // Copyright 2019, University of Colorado Boulder
 
 /**
- * // REVIEW: incorrect doc
- * Shared constants for the Number Line: Integers simulation
+ * singleton that provides the shape of a piggy bank, suitable for providing to a Scenery Path node
  *
  * @author John Blanco (PhET Interactive Simulations)
  */

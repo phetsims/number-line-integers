@@ -13,8 +13,11 @@ define( require => {
 
   const NLIQueryParameters = QueryStringMachine.getAll( {
 
-    // REVIEW: Annotate if public facing or private to phet
-    // changes default units of temperature to celsius
+    /**
+     * Query parameter that can be used to make the sim default to Celsius instead of Fahrenheit at startup, added
+     * because it has been requested by users in the past (see https://github.com/phetsims/states-of-matter/issues/216)
+     * This is public facing.
+     */
     defaultCelsius: { type: 'flag' }
 
   } );

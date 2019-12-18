@@ -106,11 +106,6 @@ define( require => {
       this.addChild( numberLineNode );
       numberLine.orientationProperty.link( orientation => {
 
-        assert && assert(
-          orientation === Orientation.HORIZONTAL || orientation === Orientation.VERTICAL,
-          `Invalid orientation: ${orientation}`
-        );
-
         // remove the previous representation
         numberLineNode.removeAllChildren();
 

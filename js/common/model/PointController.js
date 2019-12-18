@@ -86,7 +86,7 @@ define( require => {
         reentrant: true
       } );
 
-      // REVIEW: missing visibility annotation
+      // @private - the scale of this point controller when stored away
       this.scaleInBox = options.scaleInBox;
 
       // @public (read-only) {NumberProperty} - scale of this point

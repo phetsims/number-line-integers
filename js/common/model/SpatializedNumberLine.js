@@ -13,6 +13,7 @@ define( require => {
   // modules
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Bounds2 = require( 'DOT/Bounds2' );
+  const EnumerationProperty = require( 'AXON/EnumerationProperty' );
   const merge = require( 'PHET_CORE/merge' );
   const NumberLine = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLine' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
@@ -75,13 +76,11 @@ define( require => {
       // @public (read-only) {Vector2} - center in model space where this number line exists
       this.centerPosition = zeroPosition;
 
-      // REVIEW: Use EnumerationProperty, and then remove redundant asserts that validate its value (like the link in SpatializedNumberLineNode)
       // @public {Property} - the value used to scale from model coordinates to number line distance
-      this.orientationProperty = new Property( options.initialOrientation );
+      this.orientationProperty = new EnumerationProperty( Orientation, options.initialOrientation );
 
       // @public {Property<Range>} - the range of values that should be displayed to the user
-      // REVIEW: use valueType option for validation
-      this.displayedRangeProperty = new Property( options.initialDisplayedRange );
+      this.displayedRangeProperty = new Property( options.initialDisplayedRange, { valueType: Range } );
 
       // @public {BooleanProperty} - controls whether point labels are displayed to the user
       this.showLabelsProperty = new BooleanProperty( options.labelsInitiallyVisible );

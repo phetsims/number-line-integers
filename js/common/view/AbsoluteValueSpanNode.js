@@ -18,6 +18,7 @@ define( require => {
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Node = require( 'SCENERY/nodes/Node' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Property = require( 'AXON/Property' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -25,16 +26,14 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  const CAP_LENGTH = 10; // REVIEW: doc and units
+  const CAP_LENGTH = 10; // the "cap" is the end portion of the span, value is in screen coords
   const ANIMATION_SPEED = 160; // in screen coords per second
   const MAX_ANIMATION_DURATION = 0.5; // in seconds
   const EQUATION_NUMBER_FONT = new PhetFont( 18 );
   const EXAMPLE_EQUATION_NUMBER_NODE = new Text( 8, { font: EQUATION_NUMBER_FONT } );
-  // REVIEW: I (@chrisklus) don't see a need for 'abs' or 'val' abbreviations in this file. Expanding usages won't push
-  // lines past the character limit. EDIT: see https://github.com/phetsims/number-line-integers/issues/68
-  const ABS_VAL_LINE_TOP = new Vector2( 0, EXAMPLE_EQUATION_NUMBER_NODE.top );
-  const ABS_VAL_LINE_BOTTOM = new Vector2( 0, EXAMPLE_EQUATION_NUMBER_NODE.bottom );
-  const ABS_VAL_LINE_SPACING = 1;
+  const ABSOLUTE_VALUE_LINE_TOP = new Vector2( 0, EXAMPLE_EQUATION_NUMBER_NODE.top );
+  const ABSOLUTE_VALUE_LINE_BOTTOM = new Vector2( 0, EXAMPLE_EQUATION_NUMBER_NODE.bottom );
+  const ABSOLUTE_VALUE_LINE_SPACING = 1;
   const EQUALS_SIGN_SPACING = 4;
 
   class AbsoluteValueSpanNode extends Node {
@@ -54,8 +53,7 @@ define( require => {
       numberLine.showAbsoluteValuesProperty.link( visibilityUpdater );
 
       // @public {number} - the distance in model/view coordinates of the line portion of the span from the number line
-      // REVIEW: Use NumberProperty
-      this.distanceFromNumberLineProperty = new Property( initialDistanceFromNumberLine );
+      this.distanceFromNumberLineProperty = new NumberProperty( initialDistanceFromNumberLine );
 
       // @public (read-only) {NumberLinePoint} - point whose absolute value is being displayed by this span
       this.numberLinePoint = numberLinePoint;
@@ -133,10 +131,10 @@ define( require => {
         equationNode.addChild( new AbsValLine() );
         equationNode.addChild( new Text( value, {
           font: EQUATION_NUMBER_FONT,
-          left: equationNode.width + ABS_VAL_LINE_SPACING
+          left: equationNode.width + ABSOLUTE_VALUE_LINE_SPACING
         } ) );
         equationNode.addChild( new AbsValLine( {
-          left: equationNode.width + ABS_VAL_LINE_SPACING
+          left: equationNode.width + ABSOLUTE_VALUE_LINE_SPACING
         } ) );
         equationNode.addChild( new Text( '=', {
           font: EQUATION_NUMBER_FONT,
@@ -250,7 +248,7 @@ define( require => {
      */
     constructor( options ) {
       options = merge( { stroke: 'black' }, options );
-      super( ABS_VAL_LINE_TOP, ABS_VAL_LINE_BOTTOM, options );
+      super( ABSOLUTE_VALUE_LINE_TOP, ABSOLUTE_VALUE_LINE_BOTTOM, options );
     }
   }
 
