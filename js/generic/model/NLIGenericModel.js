@@ -57,17 +57,17 @@ define( require => {
       // @public (read-only) {SpatializedNumberLine} - the number line with which the user will interact
       this.numberLine = new SpatializedNumberLine( NLIConstants.NLI_LAYOUT_BOUNDS.center.plusXY( 0, NL_Y_OFFSET ), {
         initialDisplayedRange: NUMBER_LINE_RANGES[ 0 ],
-        // REVIEW: Document magic numbers
-        widthInModelSpace: NLIConstants.NLI_LAYOUT_BOUNDS.width - 100,
-        heightInModelSpace: NLIConstants.NLI_LAYOUT_BOUNDS.height - 160,
         initialPointSpecs: [ { initialValue: 1, color: INITIAL_POINT_COLOR } ],
-        labelsInitiallyVisible: true
+        labelsInitiallyVisible: true,
+
+        // size of the number line in both orientations, number empirically determined to make it look good
+        widthInModelSpace: NLIConstants.NLI_LAYOUT_BOUNDS.width - 100,
+        heightInModelSpace: NLIConstants.NLI_LAYOUT_BOUNDS.height - 160
       } );
 
       // @public (read-only) {Property<Bounds2>} - the bounds of the box where the point controllers reside when not
       // being used, changes its location when the orientation of the number line changes
-      // REVIEW: use valueType option for validation
-      this.pointControllerBoxProperty = new Property( BOTTOM_BOX_BOUNDS );
+      this.pointControllerBoxProperty = new Property( BOTTOM_BOX_BOUNDS, { valueType: Bounds2 } );
 
       // @public (read-only) - an array of the point controllers available for manipulation by the user
       this.pointControllers = [
@@ -164,8 +164,7 @@ define( require => {
     putPointControllerInBox( pointController, animate = false ) {
 
       const index = this.pointControllers.indexOf( pointController );
-      // REVIEW: rename to numberOfPositions
-      const numPositions = this.pointControllers.length;
+      const numberOfPositions = this.pointControllers.length;
 
       // error checking
       assert && assert( index >= 0, 'point controller not found on list' );
@@ -180,13 +179,13 @@ define( require => {
       if ( this.numberLine.orientationProperty.value === Orientation.HORIZONTAL ) {
 
         // put point in box at bottom of screen
-        const spacing = BOTTOM_BOX_BOUNDS.width / numPositions;
+        const spacing = BOTTOM_BOX_BOUNDS.width / numberOfPositions;
         destination = new Vector2( BOTTOM_BOX_BOUNDS.minX + spacing / 2 + spacing * index, BOTTOM_BOX_BOUNDS.centerY );
       }
       else {
 
         // put point in box at side of screen
-        const spacing = SIDE_BOX_BOUNDS.height / numPositions;
+        const spacing = SIDE_BOX_BOUNDS.height / numberOfPositions;
         destination = new Vector2( SIDE_BOX_BOUNDS.centerX, SIDE_BOX_BOUNDS.minY + spacing / 2 + spacing * index );
       }
 

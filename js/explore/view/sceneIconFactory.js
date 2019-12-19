@@ -15,6 +15,7 @@ define( require => {
   const NLIScene = require( 'NUMBER_LINE_INTEGERS/explore/model/NLIScene' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+  const PiggyBankDecoration = require( 'NUMBER_LINE_INTEGERS/explore/model/PiggyBankDecoration' );
   const PiggyBankNode = require( 'NUMBER_LINE_INTEGERS/explore/view/PiggyBankNode' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const ThermometerNode = require( 'SCENERY_PHET/ThermometerNode' );
@@ -49,7 +50,7 @@ define( require => {
           sceneIdToIconsMap.set( NLIScene.ELEVATION, elevationSceneIconNode );
         }
         else if ( sceneIdentifier === NLIScene.BANK ) {
-          const piggyBankNode = new PiggyBankNode( { decorationType: 'lightning' } );
+          const piggyBankNode = new PiggyBankNode( { decorationType: PiggyBankDecoration.LIGHTNING } );
           piggyBankNode.fill = '#1fb493';
           piggyBankNode.setScaleMagnitude( ICON_SIZE.width / piggyBankNode.width );
           sceneIdToIconsMap.set( NLIScene.BANK, piggyBankNode );

@@ -38,12 +38,9 @@ define( require => {
   const rangeString = require( 'string!NUMBER_LINE_INTEGERS/range' );
 
   // constants
-  // REVIEW: Both CHECKBOX_DILATION and CHECKBOX_OPTIONS are duplicated in SceneView.js, consider factoring out to NLIConstants
-  const CHECKBOX_DILATION = 6;
   const ARROW_ICON_LENGTH = 40;
   const COMBO_BOX_FONT = new PhetFont( 16 );
   const ORIENTATION_BUTTON_DILATION = 2;
-  const CHECKBOX_OPTIONS = { boxWidth: NLIConstants.CHECKBOX_BOX_WIDTH };
 
   class NLIGenericScreenView extends ScreenView {
 
@@ -68,36 +65,39 @@ define( require => {
         new Checkbox(
           new Text( labelsString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
           model.numberLine.showLabelsProperty,
-          CHECKBOX_OPTIONS
+          NLIConstants.CHECKBOX_OPTIONS
         ),
         new Checkbox(
           new Text( tickMarksString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
           model.numberLine.showTickMarksProperty,
-          CHECKBOX_OPTIONS
+          NLIConstants.CHECKBOX_OPTIONS
         ),
         new Checkbox(
           new Text( oppositeString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
           model.numberLine.showOppositesProperty,
-          CHECKBOX_OPTIONS
+          NLIConstants.CHECKBOX_OPTIONS
         ),
         new Checkbox(
           new Text( absoluteValueString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
           model.numberLine.showAbsoluteValuesProperty,
-          CHECKBOX_OPTIONS
+          NLIConstants.CHECKBOX_OPTIONS
         )
       ];
       const checkboxGroup = new VBox( {
         children: checkboxes,
         spacing: 15,
         align: 'left',
-        // REVIEW: document magic numbers
+
+        // position - empirically determined to look decent
         left: this.layoutBounds.maxX - 220,
         top: this.layoutBounds.minY + 10
       } );
       controlsLayer.addChild( checkboxGroup );
 
       // expands the touch area for the checkboxes
-      checkboxes.forEach( checkbox => { checkbox.touchArea = checkbox.localBounds.dilated( CHECKBOX_DILATION ); } );
+      checkboxes.forEach( checkbox => {
+        checkbox.touchArea = checkbox.localBounds.dilated( NLIConstants.CHECKBOX_DILATION );
+      } );
 
       const arrowIconOptions = {
         doubleHead: true,

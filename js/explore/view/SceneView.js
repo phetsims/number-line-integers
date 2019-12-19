@@ -21,11 +21,6 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
   const VBox = require( 'SCENERY/nodes/VBox' );
 
-  // constants
-  // REVIEW: Both duplicated in NLIGenericScreenView.js, consider factoring out to NLIConstants
-  const CHECKBOX_DILATION = 6;
-  const CHECKBOX_OPTIONS = { boxWidth: NLIConstants.CHECKBOX_BOX_WIDTH };
-
   // strings
   const absoluteValueString = require( 'string!NUMBER_LINE_INTEGERS/absoluteValue' );
   const labelsString = require( 'string!NUMBER_LINE_INTEGERS/labels' );
@@ -78,17 +73,17 @@ define( require => {
         new Checkbox(
           new Text( numberLineString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
           sceneModel.showNumberLineProperty,
-          CHECKBOX_OPTIONS
+          NLIConstants.CHECKBOX_OPTIONS
         ),
         new Checkbox(
           new Text( labelsString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
           sceneModel.numberLineLabelsVisibleProperty,
-          merge( { enabledProperty: sceneModel.showNumberLineProperty }, CHECKBOX_OPTIONS )
+          merge( { enabledProperty: sceneModel.showNumberLineProperty }, NLIConstants.CHECKBOX_OPTIONS )
         ),
         new Checkbox(
           new Text( absoluteValueString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
           sceneModel.numberLineAbsoluteValueIndicatorsVisibleProperty,
-          CHECKBOX_OPTIONS
+          NLIConstants.CHECKBOX_OPTIONS
         )
       ];
 
@@ -103,7 +98,9 @@ define( require => {
       this.controlsLayer.addChild( this.checkboxGroup );
 
       // adds touch dilations to the checkboxes in the checkboxGroup
-      checkboxes.forEach( checkbox => { checkbox.touchArea = checkbox.localBounds.dilated( CHECKBOX_DILATION ); } );
+      checkboxes.forEach( checkbox => {
+        checkbox.touchArea = checkbox.localBounds.dilated( NLIConstants.CHECKBOX_DILATION );
+      } );
 
       // @protected
       this.comparisonStatementAccordionBoxes = [];
@@ -153,8 +150,7 @@ define( require => {
      * @public
      */
     reset() {
-      // REVIEW: maybe 'accordionBox' would be a better parameter name
-      this.comparisonStatementAccordionBoxes.forEach( csab => { csab.reset(); } );
+      this.comparisonStatementAccordionBoxes.forEach( accordionBox => { accordionBox.reset(); } );
     }
   }
 

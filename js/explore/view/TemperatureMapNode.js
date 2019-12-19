@@ -47,16 +47,14 @@ define( require => {
 
       let lastMonth = 1;
 
-      // REVIEW: It looks like the images are .jpg, so the parameter name should be updated. My (@chrisklus) personal
-      // preference would be to rename the parameter as "image" and name all Image instances as "imageNode(s)"
-      const images = _.map( TEMPERATURE_IMAGES_MONTHS, png => {
-        const image = new Image( png, { visible: false } );
-        image.scale(
-          this.mapBounds.width / image.width,
-          this.mapBounds.height / image.height
+      const images = _.map( TEMPERATURE_IMAGES_MONTHS, image => {
+        const imageNode = new Image( image, { visible: false } );
+        imageNode.scale(
+          this.mapBounds.width / imageNode.width,
+          this.mapBounds.height / imageNode.height
         );
-        this.addChild( image );
-        return image;
+        this.addChild( imageNode );
+        return imageNode;
       } );
 
       monthProperty.link( month => {

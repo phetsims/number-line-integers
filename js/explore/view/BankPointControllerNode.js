@@ -21,6 +21,7 @@ define( require => {
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const PiggyBankDecoration = require( 'NUMBER_LINE_INTEGERS/explore/model/PiggyBankDecoration' );
   const PiggyBankNode = require( 'NUMBER_LINE_INTEGERS/explore/view/PiggyBankNode' );
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const Shape = require( 'KITE/Shape' );
@@ -62,7 +63,7 @@ define( require => {
     /**
      * @param {PointController} pointController
      * @param {Emitter} balanceChangedByButtonEmitter
-     * @param {String} decorationType - indicates artwork on bank, either 'flowers' or 'lightning'
+     * @param {PiggyBankDecoration} decorationType - indicates artwork on bank
      * @param {Object} [options]
      * @public
      */
@@ -107,7 +108,7 @@ define( require => {
 
       // update the position of the absolute value readout (i.e. the text node that says things like, "balance of $2"
       const updateAbsoluteValueReadoutPosition = () => {
-        if ( decorationType === 'flowers' ) {
+        if ( decorationType === PiggyBankDecoration.FLOWERS ) {
           absoluteValueBackground.centerX = controllerNode.centerX - 9; // tweaked a bit to be centered under feet
           absoluteValueBackground.top = controllerNode.y +
                                         piggyBankNode.height / 2 * controllerNode.getScaleVector().y +

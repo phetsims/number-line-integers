@@ -21,6 +21,7 @@ define( require => {
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const PiggyBankNode = require( 'NUMBER_LINE_INTEGERS/explore/view/PiggyBankNode' );
+  const PiggyBankDecoration = require( 'NUMBER_LINE_INTEGERS/explore/model/PiggyBankDecoration' );
   const SceneView = require( 'NUMBER_LINE_INTEGERS/explore/view/SceneView' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -80,7 +81,7 @@ define( require => {
       const primaryAccountPointControllerNode = new BankPointControllerNode(
         bankSceneModel.primaryAccountPointController,
         bankSceneModel.primaryAccount.balanceChangedByButtonEmitter,
-        'flowers',
+        PiggyBankDecoration.FLOWERS,
         { connectorLineVisibleProperty: bankSceneModel.showNumberLineProperty }
       );
       pointControllerNodesLayer.addChild( primaryAccountPointControllerNode );
@@ -89,7 +90,7 @@ define( require => {
       const comparisonAccountPointControllerNode = new BankPointControllerNode(
         bankSceneModel.comparisonAccountPointController,
         bankSceneModel.comparisonAccount.balanceChangedByButtonEmitter,
-        'lightning',
+        PiggyBankDecoration.LIGHTNING,
         { connectorLineVisibleProperty: bankSceneModel.showNumberLineProperty }
       );
       pointControllerNodesLayer.addChild( comparisonAccountPointControllerNode );
@@ -175,17 +176,17 @@ define( require => {
       // The node for selecting that the comparison account is hidden is a single piggy bank that matches the style of
       // the visible account controller.
       const comparisonAccountHiddenNode = new PiggyBankNode( {
-        decorationType: 'flowers',
+        decorationType: PiggyBankDecoration.FLOWERS,
         maxWidth: 40
       } );
 
       // The node for the selection where the comparison account is visible it two smaller piggy banks side by side.
       const comparisonAccountVisibleLeftPiggyBankNode = new PiggyBankNode( {
-        decorationType: 'flowers',
+        decorationType: PiggyBankDecoration.FLOWERS,
         maxWidth: 30
       } );
       const comparisonAccountVisibleRightPiggyBankNode = new PiggyBankNode( {
-        decorationType: 'lightning',
+        decorationType: PiggyBankDecoration.LIGHTNING,
         maxWidth: 40
       } );
       const comparisonAccountVisibleNode = new HBox( {

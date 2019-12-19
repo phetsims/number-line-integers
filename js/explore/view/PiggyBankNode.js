@@ -15,6 +15,7 @@ define( require => {
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const Path = require( 'SCENERY/nodes/Path' );
+  const PiggyBankDecoration = require( 'NUMBER_LINE_INTEGERS/explore/model/PiggyBankDecoration' );
   const piggyBankShapes = require( 'NUMBER_LINE_INTEGERS/explore/view/piggyBankShapes' );
   const Vector2 = require( 'DOT/Vector2' );
 
@@ -33,8 +34,7 @@ define( require => {
       options = merge( {
         fill: 'rgba( 0, 0, 0, 0 )', // initially transparent so that it is invisible but has size
         lineWidth: 0,
-        // REVIEW: These strings are duplicated a few times each and used across 4 files, so an Enumeration would be preferable
-        decorationType: 'flowers'  // valid values are 'flowers' and 'lightning'
+        decorationType: PiggyBankDecoration.FLOWERS
       }, options );
 
       const piggyBankOutlineNode = new Path( piggyBankShapes.MEDIUM_PIGGY_BANK_SHAPE, {
@@ -43,7 +43,7 @@ define( require => {
         center: Vector2.ZERO
       } );
       const overlayImage = new Image(
-        options.decorationType === 'flowers' ? piggyBankWithFlowers : piggyBankWithLightning,
+        options.decorationType === PiggyBankDecoration.FLOWERS ? piggyBankWithFlowers : piggyBankWithLightning,
         { opacity: 0.8 }
       );
       overlayImage.setScaleMagnitude( piggyBankOutlineNode.width / overlayImage.width );

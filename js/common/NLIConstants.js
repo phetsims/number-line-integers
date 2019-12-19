@@ -15,6 +15,9 @@ define( require => {
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const ScreenView = require( 'JOIST/ScreenView' );
 
+  // constants
+  const CHECKBOX_BOX_WIDTH = 17;
+
   const NLIConstants = {
 
     // layout bounds used for all screens
@@ -40,12 +43,16 @@ define( require => {
     // possible values for temperature units
     TEMPERATURE_UNITS: Enumeration.byKeys( [ 'FAHRENHEIT', 'CELSIUS' ] ),
 
-    // various shared fonts and layout parameters
+    // checkbox
+    CHECKBOX_OPTIONS: { boxWidth: CHECKBOX_BOX_WIDTH },
     CHECKBOX_TEXT_OPTIONS: {
       font: new PhetFont( 16 ),
       maxWidth: 125
     },
-    CHECKBOX_BOX_WIDTH: 17,
+    CHECKBOX_BOX_WIDTH: CHECKBOX_BOX_WIDTH,
+    CHECKBOX_DILATION: 6,
+
+    // various shared fonts and layout parameters
     EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET: 175,
     RESET_BUTTON_INSET_FROM_EDGE: 20
   };
