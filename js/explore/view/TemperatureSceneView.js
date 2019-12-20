@@ -172,12 +172,7 @@ define( require => {
 
       // align the number line nodes to be centered vertically under the header
       numberLineLayer.top = numberLinePanelTitle.bottom + 5;
-      numberLineLayer.left = 15; // empirically determined for desired alignment under the panel header
-
-      // move the number line layer down if it overlaps with the temperatureUnitsSelector
-      if ( numberLineLayer.right >= temperatureUnitsSelector.left ) {
-        numberLineLayer.top = numberLinePanelHeader.bottom + 5;
-      }
+      numberLineLayer.right = 90; // align using the right side, since there is no variable-length text there
 
       // manage the label texts for each thermometer
       const celsiusLabelsLayer = new Node();
