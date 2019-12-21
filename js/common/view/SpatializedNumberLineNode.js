@@ -217,14 +217,14 @@ define( require => {
         } );
 
         // create a list of the absolute value span indicators sorted by their distance from the number line
-        const sortedAbsoluteValueSpanNodes = _.sortBy( absoluteValueSpanNodes, absValSpanNode => {
-          return absValSpanNode.distanceFromNumberLineProperty.value;
+        const sortedAbsoluteValueSpanNodes = _.sortBy( absoluteValueSpanNodes, absoluteValueSpanNode => {
+          return absoluteValueSpanNode.distanceFromNumberLineProperty.value;
         } );
 
         // Make sure the absolute value span indicators are at the correct distances - this is mostly done to handle
         // changes in the number line orientation.
-        sortedAbsoluteValueSpanNodes.forEach( ( absValSpanNode, index ) => {
-          absValSpanNode.setDistanceFromNumberLine(
+        sortedAbsoluteValueSpanNodes.forEach( ( absoluteValueSpanNode, index ) => {
+          absoluteValueSpanNode.setDistanceFromNumberLine(
             getIndicatorDistanceFromNL( numberLine, index ),
             doAnimation
           );
@@ -272,12 +272,12 @@ define( require => {
 
         // if enabled, add an absolute value "span indicator", which depicts the absolute value at some distance from
         // the number line
-        let absValSpanNode = null;
+        let absoluteValueSpanNode = null;
         if ( options.showAbsoluteValueSpans ) {
-          const absValSpanNodeDistance = getIndicatorDistanceFromNL( numberLine, absoluteValueSpanNodes.length );
-          absValSpanNode = new AbsoluteValueSpanNode( numberLine, point, absValSpanNodeDistance );
-          absoluteValueSpanNodes.push( absValSpanNode );
-          this.addChild( absValSpanNode );
+          const absoluteValueSpanNodeDistance = getIndicatorDistanceFromNL( numberLine, absoluteValueSpanNodes.length );
+          absoluteValueSpanNode = new AbsoluteValueSpanNode( numberLine, point, absoluteValueSpanNodeDistance );
+          absoluteValueSpanNodes.push( absoluteValueSpanNode );
+          this.addChild( absoluteValueSpanNode );
         }
 
         // add a listeners that will update the absolute value indicators
@@ -291,10 +291,10 @@ define( require => {
             pointNode.dispose();
             oppositePointDisplayLayer.removeChild( oppositePointNode );
             oppositePointNode.dispose();
-            if ( absValSpanNode ) {
-              this.removeChild( absValSpanNode );
-              absValSpanNode.dispose();
-              absoluteValueSpanNodes = _.without( absoluteValueSpanNodes, absValSpanNode );
+            if ( absoluteValueSpanNode ) {
+              this.removeChild( absoluteValueSpanNode );
+              absoluteValueSpanNode.dispose();
+              absoluteValueSpanNodes = _.without( absoluteValueSpanNodes, absoluteValueSpanNode );
             }
             updateAbsoluteValueIndicators( true );
             point.valueProperty.unlink( updateAbsoluteValueIndicators );
