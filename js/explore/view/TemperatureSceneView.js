@@ -12,7 +12,6 @@ define( require => {
 
   // modules
   const BackgroundNode = require( 'SCENERY_PHET/BackgroundNode' );
-  const HBox = require( 'SCENERY/nodes/HBox' );
   const MonthsComboBox = require( 'NUMBER_LINE_INTEGERS/explore/view/MonthsComboBox' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -35,6 +34,7 @@ define( require => {
   const UNIT_PICKER_LABEL_FONT = new PhetFont( { size: 18 } );
   const NUMBER_LINE_PANEL_WIDTH = 200; // empirically determined
   const NUMBER_LINE_PANEL_MARGINS = 10;
+  const NUMBER_LINE_CONTENT_WIDTH = NUMBER_LINE_PANEL_WIDTH - 2 * NUMBER_LINE_PANEL_MARGINS;
   const TITLE_TO_SELECTOR_SPACING = 10;
   const CELSIUS_NUMBER_LINE_INDEX = TemperatureSceneModel.CELSIUS_NUMBER_LINE_INDEX;
   const FAHRENHEIT_NUMBER_LINE_INDEX = TemperatureSceneModel.FAHRENHEIT_NUMBER_LINE_INDEX;
@@ -149,30 +149,28 @@ define( require => {
         {
 
           // limit the width to half the panel height to handle long labels from translations and string tests
-          maxWidth: ( NUMBER_LINE_PANEL_WIDTH - 2 * NUMBER_LINE_PANEL_MARGINS ) / 2
+          maxWidth: ( NUMBER_LINE_PANEL_WIDTH - 2 * NUMBER_LINE_PANEL_MARGINS ) / 2,
+
+          // this should appear in the upper left of the panel
+          right: NUMBER_LINE_CONTENT_WIDTH,
+          top: 0
         }
       );
+      numberLinePanelContent.addChild( temperatureUnitsSelector );
 
       // title for the panel where the number line will appear
       const numberLinePanelTitle = new Text( temperatureString, {
         font: NUMBER_LINE_LABEL_FONT,
-        centerX: celsiusNumberLineNode.centerX,
-        bottom: celsiusNumberLineNode.top - 5,
         maxWidth: NUMBER_LINE_PANEL_WIDTH - temperatureUnitsSelector.width - TITLE_TO_SELECTOR_SPACING -
-                  2 * NUMBER_LINE_PANEL_MARGINS
-      } );
+                  2 * NUMBER_LINE_PANEL_MARGINS,
 
-      // horizontal box with the title and the units selector that will be at the top of the number line panel
-      const numberLinePanelHeader = new HBox( {
-        children: [ numberLinePanelTitle, temperatureUnitsSelector ],
-        spacing: TITLE_TO_SELECTOR_SPACING,
-        align: 'top'
+        // this should be at the top of the node, centered between the left edge and the units selector
+        // centerX: ( NUMBER_LINE_PANEL_WIDTH - temperatureUnitsSelector.width ) / 2,
+        // left: 0,
+        centerX: ( NUMBER_LINE_CONTENT_WIDTH - temperatureUnitsSelector.width ) / 2,
+        top: 0
       } );
-      numberLinePanelContent.addChild( numberLinePanelHeader );
-
-      // align the number line nodes to be centered vertically under the header
-      numberLineLayer.top = numberLinePanelTitle.bottom + 5;
-      numberLineLayer.right = 90; // align using the right side, since there is no variable-length text there
+      numberLinePanelContent.addChild( numberLinePanelTitle );
 
       // manage the label texts for each thermometer
       const celsiusLabelsLayer = new Node();
@@ -219,6 +217,14 @@ define( require => {
 
       numberLineLayer.addChild( celsiusLabelsLayer );
       numberLineLayer.addChild( fahrenheitLabelsLayer );
+
+      // Set the number line position to be fixed, roughly horizontally centered in the panel, and just below the header
+      // label.  It's important that these be absolute numbers so that the layout of the panel doesn't change
+      // dramatically as the string sizes change (e.g. in translations and string tests).  The right side of the number
+      // line is used to set the X position because there is no text there, so the position won't change if different
+      // size labels are present.
+      numberLineLayer.top = 25;
+      numberLineLayer.right = 110;
 
       const numberLinePanel = new Panel(
         numberLinePanelContent,
