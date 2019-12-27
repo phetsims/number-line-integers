@@ -32,6 +32,8 @@ define( require => {
   const NUMBER_BACKGROUND_DILATION_AMOUNT = 3;
   const NUMBER_BACKGROUND_LINE_WIDTH = 2;
   const BUTTON_TOUCH_DILATION = 8;
+  const GREATER_THAN_STRING = '>';
+  const LESS_THAN_STRING = '<';
 
   class ComparisonStatementNode extends Node {
 
@@ -44,7 +46,9 @@ define( require => {
       super();
 
       // @public - controls what comparison operator is used
-      this.selectedOperatorProperty = new StringProperty( '<' );
+      this.selectedOperatorProperty = new StringProperty( LESS_THAN_STRING, {
+        validValues: [ GREATER_THAN_STRING, LESS_THAN_STRING ]
+      } );
 
       // comparison statement root node
       const comparisonStatementRoot = new Node();
@@ -160,7 +164,7 @@ define( require => {
         previousNumberNodes = numberNodes.slice();
 
         // above, the nodes are sorted in ascending order, so they need to be reversed if using the > operator
-        if ( comparisonOperator === '>' ) {
+        if ( comparisonOperator === GREATER_THAN_STRING ) {
           numberNodes.reverse();
         }
 
@@ -177,7 +181,7 @@ define( require => {
             if ( currentNodeValue === nextNodeValue ) {
 
               // the values are equal, so we need to use less-than-or-equal or greater-than-or-equal comparison operator
-              comparisonCharacter = comparisonOperator === '<' ?
+              comparisonCharacter = comparisonOperator === LESS_THAN_STRING ?
                                     MathSymbols.LESS_THAN_OR_EQUAL :
                                     MathSymbols.GREATER_THAN_OR_EQUAL;
             }
@@ -257,7 +261,7 @@ define( require => {
         stroke: 'black',
         cursor: 'pointer'
       } );
-      const lessThanText = new Text( '<', {
+      const lessThanText = new Text( LESS_THAN_STRING, {
         font: options.font,
         centerX: lessThanOperatorSelectorNode.centerX,
         centerY: 0
@@ -268,7 +272,7 @@ define( require => {
       );
       lessThanOperatorSelectorNode.addInputListener( new ButtonListener( {
         fire: () => {
-          selectedOperatorProperty.value = '<';
+          selectedOperatorProperty.value = LESS_THAN_STRING;
         }
       } ) );
       this.addChild( lessThanOperatorSelectorNode );
@@ -285,7 +289,7 @@ define( require => {
         stroke: 'black',
         cursor: 'pointer'
       } );
-      const greaterThanText = new Text( '>', {
+      const greaterThanText = new Text( GREATER_THAN_STRING, {
         font: options.font,
         centerX: greaterThanOperatorSelectorNode.centerX,
         centerY: 0
@@ -296,14 +300,14 @@ define( require => {
       );
       greaterThanOperatorSelectorNode.addInputListener( new ButtonListener( {
         fire: () => {
-          selectedOperatorProperty.value = '>';
+          selectedOperatorProperty.value = GREATER_THAN_STRING;
         }
       } ) );
       this.addChild( greaterThanOperatorSelectorNode );
 
       // control the appearance of each selector based on the current selection state
       selectedOperatorProperty.link( selection => {
-        if ( selection === '<' ) {
+        if ( selection === LESS_THAN_STRING ) {
           lessThanOperatorSelectorNode.fill = 'lightgray';
           lessThanOperatorSelectorNode.stroke = 'gray';
           lessThanText.stroke = 'gray';
