@@ -31,7 +31,11 @@ define( require => {
 
   // constants
   const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
-  const UNIT_PICKER_LABEL_FONT = new PhetFont( { size: 18 } );
+  const UNITS_SELECTOR_LABEL_FONT = new PhetFont( { size: 18 } );
+  const UNITS_SELECTOR_TEXT_OPTIONS = {
+    font: UNITS_SELECTOR_LABEL_FONT,
+    maxWidth: 40 // empirically determined to work with other aspects of the layout
+  };
   const NUMBER_LINE_PANEL_WIDTH = 200; // empirically determined
   const NUMBER_LINE_PANEL_MARGINS = 10;
   const NUMBER_LINE_CONTENT_WIDTH = NUMBER_LINE_PANEL_WIDTH - 2 * NUMBER_LINE_PANEL_MARGINS;
@@ -139,11 +143,11 @@ define( require => {
         [
           {
             value: NLIConstants.TEMPERATURE_UNITS.FAHRENHEIT,
-            node: new Text( temperatureLabelFahrenheitString, { font: UNIT_PICKER_LABEL_FONT } )
+            node: new Text( temperatureLabelFahrenheitString, UNITS_SELECTOR_TEXT_OPTIONS )
           },
           {
             value: NLIConstants.TEMPERATURE_UNITS.CELSIUS,
-            node: new Text( temperatureLabelCelsiusString, { font: UNIT_PICKER_LABEL_FONT } )
+            node: new Text( temperatureLabelCelsiusString, UNITS_SELECTOR_TEXT_OPTIONS )
           }
         ],
         {
