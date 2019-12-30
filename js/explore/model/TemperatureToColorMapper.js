@@ -10,7 +10,7 @@ define( require => {
 
   // modules
   const Color = require( 'SCENERY/util/Color' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
 
   // constants
@@ -56,7 +56,7 @@ define( require => {
 
       // Clamp the value.  While it would be possible to create and use a linear function for out-of-bounds values, but
       // so far this has not been necessary, so it doesn't seem worth it.  Add it if you need it.
-      const clampedNormalizedTemperature = Util.clamp( normalizedTemperature, 0, 1 );
+      const clampedNormalizedTemperature = Utils.clamp( normalizedTemperature, 0, 1 );
 
       // return the mapped color
       return this.redYellowBlueReverse( clampedNormalizedTemperature );
@@ -99,9 +99,9 @@ define( require => {
       }
 
       return new Color(
-        Util.roundSymmetric( red * 255 ),
-        Util.roundSymmetric( green * 255 ),
-        Util.roundSymmetric( blue * 255 )
+        Utils.roundSymmetric( red * 255 ),
+        Utils.roundSymmetric( green * 255 ),
+        Utils.roundSymmetric( blue * 255 )
       );
     }
 

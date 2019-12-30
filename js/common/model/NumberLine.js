@@ -17,7 +17,7 @@ define( require => {
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const NumberLinePoint = require( 'NUMBER_LINE_INTEGERS/common/model/NumberLinePoint' );
   const ObservableArray = require( 'AXON/ObservableArray' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   class NumberLine {
 
@@ -113,7 +113,7 @@ define( require => {
      */
     getConstrainedValue( proposedValue ) {
       const displayedRange = this.displayedRangeProperty.value;
-      return Util.clamp( Util.roundSymmetric( proposedValue ), displayedRange.min, displayedRange.max );
+      return Utils.clamp( Utils.roundSymmetric( proposedValue ), displayedRange.min, displayedRange.max );
     }
 
     /**
@@ -142,7 +142,7 @@ define( require => {
      * @public
      */
     getNearestUnoccupiedValue( value ) {
-      const roundedValue = Util.roundSymmetric( value );
+      const roundedValue = Utils.roundSymmetric( value );
       let currentDistance = 0;
       const getValidValuesAtDistance = distance => {
         return [ roundedValue - distance, roundedValue + distance ]
