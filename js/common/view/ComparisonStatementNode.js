@@ -80,6 +80,19 @@ define( require => {
           lineWidth: NUMBER_BACKGROUND_LINE_WIDTH
         }
       );
+      operatorAndZeroNodesLayer.addChild( zeroNode );
+
+      // create and add the nodes that will be used to depict the comparison operators
+      const comparisonOperatorNodes = [];
+      _.times( 2, () => {
+
+        // give these an arbitrary value to start with, they will be updated later
+        const comparisonOperatorNode = new Text( '>', {
+          font: COMPARISON_STATEMENT_FONT
+        } );
+        operatorAndZeroNodesLayer.addChild( comparisonOperatorNode );
+        comparisonOperatorNodes.push( comparisonOperatorNode );
+      } );
 
       // define a function to update the comparision statement, including its layout
       const updateComparisonStatement = () => {
@@ -91,23 +104,30 @@ define( require => {
 
         const comparisonOperator = this.selectedOperatorProperty.value;
 
-        // clear out the operators layer
-        operatorAndZeroNodesLayer.removeAllChildren();
+        // hide operators and zeros for now, will be made visible as needed by the code below
+        zeroNode.visible = false;
+        comparisonOperatorNodes.forEach( comparisonOperatorNode => { comparisonOperatorNode.visible = false; } );
 
-        // list of all nodes that will depict numbers except for zero values that don't correspond to a point
+        // list of all nodes that will depict numbers, including zero nodes that don't correspond to a point
         const numberNodes = [];
+
+        // NOTE: In order for the code below to make sense, it's important to understand that the numberNodesLayer is
+        // populated with number nodes elsewhere in this file whenever points are added to or removed from the
+        // corresponding number line.
 
         if ( numberNodesLayer.getChildrenCount() === 0 ) {
 
           // if there are no points on the number line, just show a zero
-          operatorAndZeroNodesLayer.addChild( zeroNode );
+          zeroNode.visible = false;
           numberNodes.push( zeroNode );
         }
         else if ( numberNodesLayer.getChildrenCount() === 1 ) {
 
-          // compare the only point value to zero
+          // there is only one number node, so show it compared to zero
           const pointValueNode = numberNodesLayer.getChildAt( 0 );
-          operatorAndZeroNodesLayer.addChild( zeroNode );
+          zeroNode.visible = true;
+
+          // add nodes to the list in ascending order
           if ( pointValueNode.point.valueProperty.value < 0 ) {
             numberNodes.push( pointValueNode );
             numberNodes.push( zeroNode );
@@ -132,8 +152,8 @@ define( require => {
         }
         else {
 
-          // Get a list of number nodes and sort them based on their value.  If the values are equal, use the previous
-          // position in the order array.
+          // There are two or more number values being displayed.  Get a list of number nodes and sort them based on
+          // their values.  If the values are equal, use the previous position in the order array.
           const orderedNumberNodes = numberNodesLayer.getChildren().sort( ( p1node, p2node ) => {
             let result;
             if ( p1node.point.valueProperty.value !== p2node.point.valueProperty.value ) {
@@ -168,12 +188,15 @@ define( require => {
           numberNodes.reverse();
         }
 
-        // at this point, we should have an ordered list of number nodes, so their position just needs to be set
+        // at this point we should have an ordered list of number nodes, so set their positions
         let currentXPos = 0;
         for ( let i = 0; i < numberNodes.length; i++ ) {
+
           const currentNode = numberNodes[ i ];
           currentNode.left = currentXPos;
           currentXPos = currentNode.right + COMPARISON_STATEMENT_SPACING;
+
+          // if this isn't the last number node a comparison operator will be needed
           if ( i < numberNodes.length - 1 ) {
             let comparisonCharacter = comparisonOperator;
             const currentNodeValue = currentNode.point ? currentNode.point.valueProperty.value : 0;
@@ -185,11 +208,14 @@ define( require => {
                                     MathSymbols.LESS_THAN_OR_EQUAL :
                                     MathSymbols.GREATER_THAN_OR_EQUAL;
             }
-            const comparisonOperatorNode = new Text( comparisonCharacter, {
-              font: COMPARISON_STATEMENT_FONT,
-              x: currentXPos
-            } );
-            operatorAndZeroNodesLayer.addChild( comparisonOperatorNode );
+            const comparisonOperatorNode = comparisonOperatorNodes[ i ];
+            comparisonOperatorNode.visible = true;
+            if ( comparisonOperatorNode.text !== comparisonCharacter ) {
+
+              // optimization - only set the text if it's not correct, saves time reevaluating bounds
+              comparisonOperatorNode.text = comparisonCharacter;
+            }
+            comparisonOperatorNode.x = currentXPos;
             currentXPos = comparisonOperatorNode.right + COMPARISON_STATEMENT_SPACING;
           }
         }
@@ -198,7 +224,7 @@ define( require => {
         operatorSelectionNode.left = 120; // empirically determined
       };
 
-      // update the comparison statement as points appear, move, and disappear
+      // add or remove number nodes and otherwise update the comparison statement as points appear, move, and disappear
       numberLine.residentPoints.forEach( point => {
         numberNodesLayer.addChild( new PointValueNode( point ) );
         point.valueProperty.lazyLink( updateComparisonStatement );
