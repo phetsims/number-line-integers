@@ -50,9 +50,6 @@ define( require => {
       overlayImage.center = Vector2.ZERO;
       options.children = [ piggyBankOutlineNode, overlayImage ];
       super( options );
-      this.on( 'bounds', () => {
-        console.log( 'this.bounds.width = ' + this.bounds.width );
-      } );
 
       // @private
       this.outline = piggyBankOutlineNode;
