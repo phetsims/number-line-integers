@@ -53,6 +53,8 @@ define( require => {
         }
       } );
 
+      phet.jbDebug = true;
+
       // Create and add the background image for the area where the user will be able to place things and change their
       // elevation.  This is scaled to match the bounds defined in the model, so the resolution and aspect ratio of the
       // image needs to be close to what is shown or this won't look good.
@@ -219,6 +221,7 @@ define( require => {
         };
         sceneModel.numberLineAttachedPointControllers.addItemRemovedListener( handlePointControllerRemoved );
       } );
+      phet.jbDebug = false;
     }
   }
 

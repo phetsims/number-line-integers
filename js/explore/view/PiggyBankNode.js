@@ -44,12 +44,15 @@ define( require => {
       } );
       const overlayImage = new Image(
         options.decorationType === PiggyBankDecoration.FLOWERS ? piggyBankWithFlowers : piggyBankWithLightning,
-        { opacity: 0.8 }
+        { opacity: 0.9 }
       );
       overlayImage.setScaleMagnitude( piggyBankOutlineNode.width / overlayImage.width );
       overlayImage.center = Vector2.ZERO;
       options.children = [ piggyBankOutlineNode, overlayImage ];
       super( options );
+      this.on( 'bounds', () => {
+        console.log( 'this.bounds.width = ' + this.bounds.width );
+      } );
 
       // @private
       this.outline = piggyBankOutlineNode;

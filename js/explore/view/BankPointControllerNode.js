@@ -94,6 +94,9 @@ define( require => {
       options = merge( { node: controllerNode }, options );
 
       super( pointController, options );
+      this.on( 'bounds', () => {
+        console.log( 'this.bounds.width = ' + this.bounds.width );
+      } );
 
       // the readout that will display the absolute value in a phrase
       const absoluteValueText = new Text( '', { font: new PhetFont( 18 ), maxWidth: 250 } );
