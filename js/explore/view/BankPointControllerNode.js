@@ -57,6 +57,8 @@ define( require => {
   const COIN_DEPOSIT_ANIMATION_END_Y = 0; // inside the piggy bank, in screen coordinates, empirically determined
   const COIN_WITHDRAWAL_ANIMATION_START_Y = 30; // inside the piggy bank, in screen coordinates, empirically determined
   const COIN_WITHDRAWAL_ANIMATION_END_Y = 60; // below the piggy bank, in screen coordinates, empirically determined
+  const NUMBER_OF_COINS_TO_PRE_CREATE = 20; // number of coins to create for animation, empirically determined
+  const COIN_NODE_X_POSITION = -3;
 
   class BankPointControllerNode extends PointControllerNode {
 
@@ -193,6 +195,11 @@ define( require => {
       const coinAnimationLayer = new Node();
       controllerNode.addChild( coinAnimationLayer );
 
+      // add the coins now so that they don't have to be added on the fly during the animation
+      _.times( NUMBER_OF_COINS_TO_PRE_CREATE, () => {
+        coinAnimationLayer.addChild( new CoinNode( { centerX: COIN_NODE_X_POSITION, visible: false } ) );
+      } );
+
       // Add a clipping area so that the coins look like they are going in and out.  This must be manually updated if
       // the artwork for the piggy bank changes.  Since the clipping area is intended to make the coins visible when
       // they are outside the bank but invisible inside, this must be drawn as a set of two shapes, one inside the
@@ -212,13 +219,28 @@ define( require => {
       balanceChangedByButtonEmitter.addListener( balanceChange => {
         assert && assert( Math.abs( balanceChange ) === 1, 'balance changes from the button should always be 1 or -1' );
         const isDeposit = balanceChange > 0;
-        const coinNode = new CoinNode( { centerX: -3 } );
+
+        // Look for a non-visible coin node on the animation layer and only create one if nothing is available.  This
+        // way of caching the previously created coin nodes helps to improve performance, see
+        // https://github.com/phetsims/number-line-integers/issues/69.
+        const coinNodes = coinAnimationLayer.getChildren();
+        let coinNode = coinNodes.find( testCoinNode => !testCoinNode.visible );
+        if ( !coinNode ) {
+
+          // there aren't any invisible, previously created coin nodes available, so add a new one
+          coinNode = new CoinNode( { centerX: COIN_NODE_X_POSITION, visible: false } );
+          coinAnimationLayer.addChild( coinNode );
+        }
+
         const startY = isDeposit ? COIN_DEPOSIT_ANIMATION_START_Y : COIN_WITHDRAWAL_ANIMATION_START_Y;
         const endY = isDeposit ? COIN_DEPOSIT_ANIMATION_END_Y : COIN_WITHDRAWAL_ANIMATION_END_Y;
-        coinAnimationLayer.addChild( coinNode );
         if ( isDeposit ) {
           coinNode.moveToBack();
         }
+        else {
+          coinNode.moveToFront();
+        }
+        coinNode.visible = true;
         const coinMotionAnimation = new Animation( {
           duration: COIN_ANIMATION_DURATION,
           easing: Easing.CUBIC_IN_OUT,
@@ -227,8 +249,10 @@ define( require => {
           to: endY
         } );
         coinMotionAnimation.endedEmitter.addListener( () => {
-          coinAnimationLayer.removeChild( coinNode );
           activeAnimations = _.without( activeAnimations, coinMotionAnimation );
+
+          // just hide the coin node so that we can reuse it later if needed
+          coinNode.visible = false;
         } );
         activeAnimations.push( coinMotionAnimation );
         coinMotionAnimation.start();
