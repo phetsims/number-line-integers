@@ -38,7 +38,7 @@ define( require => {
   const MAP_HEIGHT = 280; // in screen coordinates
   const MAP_CENTER = new Vector2(
     SCENE_BOUNDS.centerX,
-    SCENE_BOUNDS.centerY * 0.85
+    SCENE_BOUNDS.height * 0.45
   );
   const MAP_BOUNDS = new Bounds2(
     MAP_CENTER.x - MAP_WIDTH / 2,
@@ -99,7 +99,7 @@ define( require => {
       // specify the position of the box that will hold the thermometers
       const boxWidth = MAP_WIDTH * 0.5;
       const boxHeight = ( SCENE_BOUNDS.maxY - MAP_BOUNDS.maxY ) * 0.4;
-      const boxCenter = new Vector2( MAP_CENTER.x, ( SCENE_BOUNDS.maxY + MAP_BOUNDS.maxY ) / 2 );
+      const boxCenter = new Vector2( MAP_CENTER.x, SCENE_BOUNDS.maxY - boxHeight );
 
       // @public (read-only) {Bounds2} - holding area for the thermometers
       this.thermometerBoxBounds = new Bounds2(
