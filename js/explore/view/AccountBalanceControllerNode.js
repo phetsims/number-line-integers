@@ -16,6 +16,7 @@ define( require => {
   const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   const Text = require( 'SCENERY/nodes/Text' );
   const VBox = require( 'SCENERY/nodes/VBox' );
@@ -30,14 +31,16 @@ define( require => {
     fireOnHoldDelay: 400,
     fireOnHoldInterval: 30
   };
-  const CURRENCY_TEXT_CENTER = new Vector2( 24, 17 );
+  const CURRENCY_SYMBOL_FONT = new PhetFont( 12 );
+  const CURRENCY_SYMBOL_MAX_WIDTH = 10;
+  const BUTTON_ICON_WIDTH = 38;
 
   // strings
   const currencyUnitsString = require( 'string!NUMBER_LINE_INTEGERS/currencyUnits' );
 
   // images
-  const depositingCoinsImage = require( 'image!NUMBER_LINE_INTEGERS/coin_icons-01.png' );
-  const withdrawingCoinsImage = require( 'image!NUMBER_LINE_INTEGERS/coin_icons-02.png' );
+  const depositingCoinsImage = require( 'image!NUMBER_LINE_INTEGERS/coin-in-slot.png' );
+  const withdrawingCoinsImage = require( 'image!NUMBER_LINE_INTEGERS/coin-in-hand.png' );
 
   class AccountBalanceControllerNode extends VBox {
 
@@ -62,14 +65,36 @@ define( require => {
         }
       };
 
+      // Create the icons that will be used in the buttons.  Sizes and positions were empirically determined.
+      const depositIcon = new Node( {
+        children: [
+          new Image( depositingCoinsImage, { maxWidth: BUTTON_ICON_WIDTH, centerY: -10 } ),
+          new Text( currencyUnitsString, {
+            center: new Vector2( 21, -9 ),
+            font: CURRENCY_SYMBOL_FONT,
+            maxWidth: CURRENCY_SYMBOL_MAX_WIDTH
+          } )
+        ]
+      } );
+      const withdrawIcon = new Node( {
+        children: [
+          new Image( withdrawingCoinsImage, { maxWidth: BUTTON_ICON_WIDTH } ),
+          new Text( currencyUnitsString, {
+            center: new Vector2( 22, 9 ),
+            font: CURRENCY_SYMBOL_FONT,
+            maxWidth: CURRENCY_SYMBOL_MAX_WIDTH
+          } )
+        ]
+      } );
+
       // create the buttons that the user can use to add and remove money
       const upButton = new RoundPushButton( merge( {
-        content: makeCoinIcon( depositingCoinsImage ),
+        content: depositIcon,
         baseColor: options.buttonBaseColor,
         listener: () => { changeBalance( changeAmount ); }
       }, BUTTON_OPTIONS ) );
       const downButton = new RoundPushButton( merge( {
-        content: makeCoinIcon( withdrawingCoinsImage ),
+        content: withdrawIcon,
         baseColor: options.buttonBaseColor,
         listener: () => { changeBalance( -changeAmount ); }
       }, BUTTON_OPTIONS ) );
@@ -126,14 +151,6 @@ define( require => {
       } );
     }
   }
-
-  // helper function to make coin nodes
-  const makeCoinIcon = image => new Node( {
-    children: [
-      new Image( image, { scale: 0.15 } ),
-      new Text( currencyUnitsString, { center: CURRENCY_TEXT_CENTER, scale: 1.15, maxWidth: 15 } )
-    ]
-  } );
 
   return numberLineIntegers.register( 'AccountBalanceControllerNode', AccountBalanceControllerNode );
 } );
