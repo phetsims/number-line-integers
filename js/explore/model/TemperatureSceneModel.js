@@ -38,7 +38,7 @@ define( require => {
   const MAP_HEIGHT = 280; // in screen coordinates
   const MAP_CENTER = new Vector2(
     SCENE_BOUNDS.centerX,
-    SCENE_BOUNDS.height * 0.45
+    SCENE_BOUNDS.height * 0.465
   );
   const MAP_BOUNDS = new Bounds2(
     MAP_CENTER.x - MAP_WIDTH / 2,
@@ -48,7 +48,7 @@ define( require => {
   );
   const CELSIUS_NUMBER_LINE_RANGE = new Range( -57, 40 );
   const FAHRENHEIT_NUMBER_LINE_RANGE = new Range( -70, 104 );
-  const NUMBER_LINE_HEIGHT = 500; // empirically determined
+  const NUMBER_LINE_HEIGHT = 490; // empirically determined by visual appearance
   const X_MOVE_AMOUNT = 1; // in model/view coords, amount to move a point controller to avoid overlap with another
   const Y_MOVE_AMOUNT = 1; // in model/view coords, amount to move a point controller to avoid overlap with another
   const FAHRENHEIT_NUMBER_LINE_INDEX = 0;
@@ -99,14 +99,15 @@ define( require => {
       // specify the position of the box that will hold the thermometers
       const boxWidth = MAP_WIDTH * 0.5;
       const boxHeight = ( SCENE_BOUNDS.maxY - MAP_BOUNDS.maxY ) * 0.4;
-      const boxCenter = new Vector2( MAP_CENTER.x, SCENE_BOUNDS.maxY - boxHeight );
+      const boxCenterX = MAP_CENTER.x;
+      const boxBottom = SCENE_BOUNDS.maxY - 16; // empirically determined to match up with other scenes
 
       // @public (read-only) {Bounds2} - holding area for the thermometers
       this.thermometerBoxBounds = new Bounds2(
-        boxCenter.x - boxWidth / 2,
-        boxCenter.y - boxHeight / 2,
-        boxCenter.x + boxWidth / 2,
-        boxCenter.y + boxHeight / 2
+        boxCenterX - boxWidth / 2,
+        boxBottom - boxHeight,
+        boxCenterX + boxWidth / 2,
+        boxBottom
       );
 
       // @public (read-only) - the point controllers that can be moved into the elevation scene
