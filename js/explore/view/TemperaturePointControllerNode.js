@@ -12,8 +12,8 @@ define( require => {
   'use strict';
 
   // modules
-  const BackgroundNode = require( 'SCENERY_PHET/BackgroundNode' );
   const Color = require( 'SCENERY/util/Color' );
+  const ColorizedReadoutNode = require( 'NUMBER_LINE_INTEGERS/common/view/ColorizedReadoutNode' );
   const merge = require( 'PHET_CORE/merge' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -22,6 +22,7 @@ define( require => {
   const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
+  const StringProperty = require( 'AXON/StringProperty' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const TemperatureAndColorSensorNode = require( 'SCENERY_PHET/TemperatureAndColorSensorNode' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -80,33 +81,27 @@ define( require => {
       } );
       compositeThermometerNode.addChild( thermometerLabel );
 
-      // add a textual readout that will describe the temperature verbally, e.g. "20° above 0"
-      const temperatureReadoutTextNode = new Text( '', {
-        font: new PhetFont( 18 ),
-        fill: Color.BLACK,
-        maxWidth: 250
-      } );
-      const temperatureReadoutNode = new BackgroundNode(
-        temperatureReadoutTextNode,
-        merge( {}, NLIConstants.LABEL_BACKGROUND_OPTIONS, {
-
-          // position empirically determined to be centered to the right of the bulb
+      // add a readout that will describe the temperature textually, e.g. "20° above 0"
+      const temperatureReadoutTextProperty = new StringProperty( '' );
+      const temperatureReadout = new ColorizedReadoutNode(
+        temperatureReadoutTextProperty,
+        pointController.colorProperty,
+        {
           left: temperatureAndColorSensorNode.right + 3,
-          bottom: temperatureAndColorSensorNode.bottom - 3,
-
-          backgroundOptions: {
-            opacity: 0.95,
-            lineWidth: 2
+          centerY: 0,
+          textOptions: {
+            font: new PhetFont( 18 ),
+            maxWidth: 250
           }
-        } )
+        }
       );
-      compositeThermometerNode.addChild( temperatureReadoutNode );
+      compositeThermometerNode.addChild( temperatureReadout );
 
       // control the visibility of the textual label, no unlink needed because these point controllers are permanent
       Property.multilink(
         [ showAbsoluteValuesProperty, pointController.isOverMapProperty ],
         ( showAbsoluteValues, isOverMap ) => {
-          temperatureReadoutNode.visible = showAbsoluteValues && isOverMap;
+          temperatureReadout.visible = showAbsoluteValues && isOverMap;
         }
       );
 
@@ -123,9 +118,7 @@ define( require => {
           const template = value < 0 ? negativeTemperatureAmountString :
                            value > 0 ? positiveTemperatureAmountString :
                            zeroTemperatureAmountString;
-          temperatureReadoutTextNode.text = StringUtils.fillIn( template, { value: Math.abs( value ) } );
-          temperatureReadoutNode.background.stroke = pointController.colorProperty.value;
-          temperatureReadoutNode.background.fill = pointController.colorProperty.value.colorUtilsBrighter( 0.75 );
+          temperatureReadoutTextProperty.set( StringUtils.fillIn( template, { value: Math.abs( value ) } ) );
         }
       );
 

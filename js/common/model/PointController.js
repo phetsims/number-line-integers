@@ -98,7 +98,7 @@ define( require => {
       // @public (read-only) {Animation|null} - tracks any animation that is currently in progress
       this.inProgressAnimationProperty = new Property( null );
 
-      // @public (read-only) {NumberLinePoint[]} - points on the number line that this controls and that controls this
+      // @public (read-only) {NumberLinePoint[]} - points on the number line that this controls
       this.numberLinePoints = [];
 
       // add the initial number line points
