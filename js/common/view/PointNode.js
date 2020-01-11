@@ -9,17 +9,16 @@ define( require => {
   'use strict';
 
   // modules
-  const BackgroundNode = require( 'SCENERY_PHET/BackgroundNode' );
   const Circle = require( 'SCENERY/nodes/Circle' );
+  const ColorizedReadoutNode = require( 'NUMBER_LINE_INTEGERS/common/view/ColorizedReadoutNode' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   const merge = require( 'PHET_CORE/merge' );
-  const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
   const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Property = require( 'AXON/Property' );
+  const StringProperty = require( 'AXON/StringProperty' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  const Text = require( 'SCENERY/nodes/Text' );
 
   // constants
   const POINT_NODE_RADIUS = 4.5; // in screen coordinates
@@ -37,7 +36,11 @@ define( require => {
       options = merge( {
 
         // {boolean} - if true, the label text will match the color of the point, if false the label text will be black
-        usePointColorForLabel: true,
+        usePointColorForLabelText: true,
+
+        // {boolean} - if true, the label background will be based on the point color, if false the background will have
+        // a black stroke and white interior
+        colorizeLabelBackground: false,
 
         // {string} - template to be used when displaying the label
         labelTemplate: '{{number}}',
@@ -58,21 +61,23 @@ define( require => {
       } );
       this.addChild( circle );
 
-      const getLabelText = value => {
+      // create the property that will contain the label text
+      const labelTextProperty = new StringProperty( '' );
+
+      // function for updating the label text
+      const updateLabelText = value => {
         let stringValue = StringUtils.fillIn( options.labelTemplate, { value: Math.abs( value ) } );
         if ( value < 0 ) {
           stringValue = MathSymbols.UNARY_MINUS + stringValue;
         }
-        return stringValue;
+        labelTextProperty.set( stringValue );
       };
-      const pointLabelTextNode = new Text( getLabelText( numberLinePoint.valueProperty.value ), {
-        font: options.labelFont,
-        fill: options.usePointColorForLabel ? numberLinePoint.colorProperty : 'black',
-        maxWidth: 75
-      } );
 
       // create a background and add the label text to it
-      const pointLabelNode = new BackgroundNode( pointLabelTextNode, NLIConstants.LABEL_BACKGROUND_OPTIONS );
+      const pointLabelNode = new ColorizedReadoutNode( labelTextProperty, numberLinePoint.colorProperty, {
+        colorizeBackground: options.colorizeLabelBackground,
+        colorizeText: options.usePointColorForLabelText
+      } );
 
       // add the label and link a listener for visibility
       this.addChild( pointLabelNode );
@@ -86,11 +91,13 @@ define( require => {
 
       // update the point representation as it moves
       const updatePointRepresentationMultilink = Property.multilink(
-        [ numberLinePoint.valueProperty,
+        [
+          numberLinePoint.valueProperty,
           numberLine.showOppositesProperty,
           numberLine.orientationProperty,
           numberLine.displayedRangeProperty
-        ], ( value, oppositesVisible ) => {
+        ],
+        ( value, oppositesVisible ) => {
           if ( options.isDoppelganger ) {
             value = -value;
             this.visible = oppositesVisible;
@@ -98,7 +105,7 @@ define( require => {
           circle.center = numberLine.valueToModelPosition( value );
 
           // update the point label text and position
-          pointLabelTextNode.text = getLabelText( value );
+          updateLabelText( value );
           if ( numberLine.isHorizontal ) {
             pointLabelNode.centerX = circle.centerX;
             pointLabelNode.bottom = circle.y - 20;
@@ -117,6 +124,7 @@ define( require => {
         numberLine.showLabelsProperty.unlinkAttribute( labelVisibilityListener );
         updatePointRepresentationMultilink.dispose();
         moveToFrontMultilink.dispose();
+        pointLabelNode.dispose();
       };
     }
 

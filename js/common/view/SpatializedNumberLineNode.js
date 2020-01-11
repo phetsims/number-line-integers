@@ -72,7 +72,8 @@ define( require => {
 
         // options for the point nodes
         pointNodeOptions: {
-          usePointColorForLabel: true
+          usePointColorForLabelText: true,
+          colorizeLabelBackground: false
         }
 
       }, options );

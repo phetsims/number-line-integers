@@ -11,7 +11,7 @@ define( require => {
   'use strict';
 
   // modules
-  const BackgroundNode = require( 'SCENERY_PHET/BackgroundNode' );
+  const ColorizedReadoutNode = require( 'NUMBER_LINE_INTEGERS/common/view/ColorizedReadoutNode' );
   const MonthsComboBox = require( 'NUMBER_LINE_INTEGERS/explore/view/MonthsComboBox' );
   const NLIConstants = require( 'NUMBER_LINE_INTEGERS/common/NLIConstants' );
   const Node = require( 'SCENERY/nodes/Node' );
@@ -66,7 +66,8 @@ define( require => {
         commonNumberLineNodeOptions: {
           tickMarkLabelPositionWhenVertical: 'left',
           pointNodeOptions: {
-            usePointColorForLabel: false
+            usePointColorForLabelText: false,
+            colorizeLabelBackground: true
           }
         },
 
@@ -169,8 +170,6 @@ define( require => {
                   2 * NUMBER_LINE_PANEL_MARGINS,
 
         // this should be at the top of the node, centered between the left edge and the units selector
-        // centerX: ( NUMBER_LINE_PANEL_WIDTH - temperatureUnitsSelector.width ) / 2,
-        // left: 0,
         centerX: ( NUMBER_LINE_CONTENT_WIDTH - temperatureUnitsSelector.width ) / 2,
         top: 0
       } );
@@ -182,11 +181,11 @@ define( require => {
       const onAddedNumberLinePoint = ( numberLine, labelsLayer, addedNumberLinePoint ) => {
 
         // create the textual label
-        const labelText = new Text( addedNumberLinePoint.controller.label, {
-          font: new PhetFont( 16 ),
-          maxWidth: layoutBounds.width * 0.03
-        } );
-        const labelNode = new BackgroundNode( labelText, NLIConstants.LABEL_BACKGROUND_OPTIONS );
+        const labelNode = new ColorizedReadoutNode(
+          new Property( addedNumberLinePoint.controller.label ),
+          addedNumberLinePoint.colorProperty,
+          { textOptions: { font: new PhetFont( 16 ) } }
+        );
         labelsLayer.addChild( labelNode );
 
         const numberLinePointListener = () => {
@@ -207,6 +206,7 @@ define( require => {
           }
           numberLine.residentPoints.removeItemRemovedListener( removalListener );
           labelsLayer.removeChild( labelNode );
+          labelNode.dispose();
           addedNumberLinePoint.valueProperty.unlink( numberLinePointListener );
         };
         numberLine.residentPoints.addItemRemovedListener( removalListener );
