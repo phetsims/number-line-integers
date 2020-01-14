@@ -76,7 +76,11 @@ define( require => {
       // create a background and add the label text to it
       const pointLabelNode = new ColorizedReadoutNode( labelTextProperty, numberLinePoint.colorProperty, {
         colorizeBackground: options.colorizeLabelBackground,
-        colorizeText: options.usePointColorForLabelText
+        colorizeText: options.usePointColorForLabelText,
+        textOptions: {
+          font: new PhetFont( 18 ),
+          maxWidth: 60
+        }
       } );
 
       // add the label and link a listener for visibility

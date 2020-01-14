@@ -184,7 +184,12 @@ define( require => {
         const labelNode = new ColorizedReadoutNode(
           new Property( addedNumberLinePoint.controller.label ),
           addedNumberLinePoint.colorProperty,
-          { textOptions: { font: new PhetFont( 16 ) } }
+          {
+            textOptions: {
+              font: new PhetFont( 16 ),
+              maxWidth: 20
+            }
+          }
         );
         labelsLayer.addChild( labelNode );
 
