@@ -224,7 +224,7 @@ define( require => {
         // way of caching the previously created coin nodes helps to improve performance, see
         // https://github.com/phetsims/number-line-integers/issues/69.
         const coinNodes = coinAnimationLayer.getChildren();
-        let coinNode = coinNodes.find( testCoinNode => !testCoinNode.visible );
+        let coinNode = _.find( coinNodes, testCoinNode => !testCoinNode.visible );
         if ( !coinNode ) {
 
           // there aren't any invisible, previously created coin nodes available, so add a new one
