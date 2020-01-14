@@ -34,6 +34,10 @@ define( require => {
   const BUTTON_TOUCH_DILATION = 8;
   const GREATER_THAN_STRING = '>';
   const LESS_THAN_STRING = '<';
+  const SELECTED_OPERATOR_TEXT_COLOR = '#949494';
+  const SELECTED_OPERATOR_BACKGROUND_COLOR = '#ffffff';
+  const UNSELECTED_OPERATOR_TEXT_COLOR = '#000000';
+  const UNSELECTED_OPERATOR_BACKGROUND_COLOR = '#d3d3d3';
 
   class ComparisonStatementNode extends Node {
 
@@ -339,20 +343,16 @@ define( require => {
       // control the appearance of each selector based on the current selection state
       selectedOperatorProperty.link( selection => {
         if ( selection === LESS_THAN_STRING ) {
-          lessThanOperatorSelectorNode.fill = 'lightgray';
-          lessThanOperatorSelectorNode.stroke = 'gray';
-          lessThanText.stroke = 'gray';
-          greaterThanOperatorSelectorNode.fill = 'white';
-          greaterThanOperatorSelectorNode.stroke = 'black';
-          greaterThanText.stroke = 'black';
+          lessThanText.fill = SELECTED_OPERATOR_TEXT_COLOR;
+          lessThanOperatorSelectorNode.fill = SELECTED_OPERATOR_BACKGROUND_COLOR;
+          greaterThanText.fill = UNSELECTED_OPERATOR_TEXT_COLOR;
+          greaterThanOperatorSelectorNode.fill = UNSELECTED_OPERATOR_BACKGROUND_COLOR;
         }
         else {
-          lessThanOperatorSelectorNode.fill = 'white';
-          lessThanOperatorSelectorNode.stroke = 'black';
-          lessThanText.stroke = 'black';
-          greaterThanOperatorSelectorNode.fill = 'lightgray';
-          greaterThanOperatorSelectorNode.stroke = 'gray';
-          greaterThanText.stroke = 'gray';
+          lessThanText.fill = UNSELECTED_OPERATOR_TEXT_COLOR;
+          lessThanOperatorSelectorNode.fill = UNSELECTED_OPERATOR_BACKGROUND_COLOR;
+          greaterThanText.fill = SELECTED_OPERATOR_TEXT_COLOR;
+          greaterThanOperatorSelectorNode.fill = SELECTED_OPERATOR_BACKGROUND_COLOR;
         }
       } );
 
