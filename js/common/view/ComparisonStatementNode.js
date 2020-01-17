@@ -34,10 +34,11 @@ define( require => {
   const BUTTON_TOUCH_DILATION = 8;
   const GREATER_THAN_STRING = '>';
   const LESS_THAN_STRING = '<';
-  const SELECTED_OPERATOR_TEXT_COLOR = '#949494';
-  const SELECTED_OPERATOR_BACKGROUND_COLOR = '#ffffff';
-  const UNSELECTED_OPERATOR_TEXT_COLOR = '#000000';
-  const UNSELECTED_OPERATOR_BACKGROUND_COLOR = '#d3d3d3';
+  const DEFAULT_COMPARISON_SELECTOR_FONT = new PhetFont( { size: 20, weight: 'bold' } );
+  const SELECTED_OPERATOR_TEXT_COLOR = '#000000';
+  const SELECTED_OPERATOR_BACKGROUND_COLOR = '#d3d3d3';
+  const UNSELECTED_OPERATOR_TEXT_COLOR = '#949494';
+  const UNSELECTED_OPERATOR_BACKGROUND_COLOR = '#ffffff';
 
   class ComparisonStatementNode extends Node {
 
@@ -278,7 +279,7 @@ define( require => {
       options = merge( {
         selectorWidth: 25,
         selectorHeight: 25,
-        font: new PhetFont( 18 ),
+        font: DEFAULT_COMPARISON_SELECTOR_FONT,
         roundedCornerRadius: 5
       }, options );
 
