@@ -29,7 +29,7 @@ define( require => {
      */
     constructor( model ) {
 
-      super();
+      super( { preventFit: true } ); // preventFit used for better performance, see https://github.com/phetsims/number-line-integers/issues/77
 
       // create the layer where the controls go
       const controlsLayer = new Node();
