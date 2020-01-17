@@ -187,7 +187,7 @@ define( require => {
           {
             textOptions: {
               font: new PhetFont( 16 ),
-              maxWidth: 20
+              maxWidth: 20 // empirically determined to prevent layout problems with long and RTL strings
             }
           }
         );

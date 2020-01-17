@@ -79,7 +79,7 @@ define( require => {
         colorizeText: options.usePointColorForLabelText,
         textOptions: {
           font: new PhetFont( 18 ),
-          maxWidth: 60
+          maxWidth: 60 // empirically determined to work in all currently needed cases
         }
       } );
 
