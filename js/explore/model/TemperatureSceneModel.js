@@ -46,8 +46,8 @@ define( require => {
     MAP_CENTER.x + MAP_WIDTH / 2,
     MAP_CENTER.y + MAP_HEIGHT / 2
   );
-  const CELSIUS_NUMBER_LINE_RANGE = new Range( -57, 40 );
-  const FAHRENHEIT_NUMBER_LINE_RANGE = new Range( -70, 104 );
+  const CELSIUS_NUMBER_LINE_RANGE = new Range( -64, 42 );
+  const FAHRENHEIT_NUMBER_LINE_RANGE = new Range( -83, 108 );
   const NUMBER_LINE_HEIGHT = 490; // empirically determined by visual appearance
   const X_MOVE_AMOUNT = 1; // in model/view coords, amount to move a point controller to avoid overlap with another
   const Y_MOVE_AMOUNT = 1; // in model/view coords, amount to move a point controller to avoid overlap with another
