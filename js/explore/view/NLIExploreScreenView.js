@@ -51,7 +51,7 @@ define( require => {
       } );
 
       // map the scene selection icons to their enum values (used in the radio button group)
-      const orientationButtonsContent = [
+      const sceneSelectionButtonsContent = [
         {
           value: NLIScene.ELEVATION,
           node: sceneIconFactory.getIcon( NLIScene.ELEVATION )
@@ -69,7 +69,7 @@ define( require => {
       // create scene selector radio buttons
       const sceneSelectorRadioButtonGroup = new RadioButtonGroup(
         model.selectedSceneProperty,
-        orientationButtonsContent,
+        sceneSelectionButtonsContent,
         {
           buttonContentXMargin: 5,
           buttonContentYMargin: 5,

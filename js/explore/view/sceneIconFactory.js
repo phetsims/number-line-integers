@@ -10,6 +10,7 @@ define( require => {
   'use strict';
 
   // modules
+  const Color = require( 'SCENERY/util/Color' );
   const Dimension2 = require( 'DOT/Dimension2' );
   const Image = require( 'SCENERY/nodes/Image' );
   const NLIScene = require( 'NUMBER_LINE_INTEGERS/explore/model/NLIScene' );
@@ -56,7 +57,9 @@ define( require => {
           sceneIdToIconsMap.set( NLIScene.BANK, piggyBankNode );
         }
         else if ( sceneIdentifier === NLIScene.TEMPERATURE ) {
-          const temperatureSceneIconRoot = new Rectangle( 0, 0, ICON_SIZE.width, ICON_SIZE.height, { fill: 'white' } );
+          const temperatureSceneIconRoot = new Rectangle( 0, 0, ICON_SIZE.width, ICON_SIZE.height, {
+            fill: Color.TRANSPARENT
+          } );
           const thermometerNode = new ThermometerNode( 0, 1, new NumberProperty( 0.5 ) );
           thermometerNode.setScaleMagnitude( ICON_SIZE.height / thermometerNode.height );
           thermometerNode.center = temperatureSceneIconRoot.center;
