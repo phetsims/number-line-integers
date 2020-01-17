@@ -92,9 +92,8 @@ define( require => {
   ];
 
   /**
-   * r is a repeat function that is used to compress the data
-   * it takes in a variable number of arguments: every even-indexed argument is a value
-   *  with the proceeding argument being how many times that value should appear in the output array
+   * Repeat function that is used to compress the data. It takes in a variable number of arguments: every even-indexed
+   * argument is a value with the proceeding argument being how many times that value should appear in the output array.
    */
   const r = function() {
     assert && assert( arguments.length % 2 === 0, 'r requires an even number of parameters' );
@@ -110,12 +109,11 @@ define( require => {
   };
 
   /**
-   * 
-   * Below data set was huge: below commented script was used to compress the data
-   * The below script is not completely efficient, but does manage to compress the data well
-   * For example, it doesn't take advantage of what the previous element in the output is
-   *  in order to better choose whether to use the repeat function
-   * 
+   * The data set below was large enough that it was having a significan impact on the overall size of the sim.  The
+   * commented-out script below was used to compress the data. This script is not completely efficient, but does manage
+   * to compress the data significantly. One example of where it could be improved is that it doesn't currently take
+   * advantage of what the previous element in the output is in order to better choose whether to use the repeat
+   * function.
   
     const distinctValues = [];
     data.forEach( value => {
