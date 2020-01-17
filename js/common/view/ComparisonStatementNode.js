@@ -75,15 +75,13 @@ define( require => {
 
       // create a node that indicates a zero, but has a background like the other numbers so that its height is the same
       const zeroTextNode = new Text( '0', { font: COMPARISON_STATEMENT_FONT } );
-      const zeroNode = new Rectangle(
-        {
-          rectBounds: zeroTextNode.localBounds.dilated( NUMBER_BACKGROUND_DILATION_AMOUNT ),
-          children: [ zeroTextNode ],
-          fill: Color.TRANSPARENT,
-          stroke: Color.TRANSPARENT,
-          lineWidth: NUMBER_BACKGROUND_LINE_WIDTH
-        }
-      );
+      const zeroNode = new Rectangle( {
+        rectBounds: zeroTextNode.localBounds.dilated( NUMBER_BACKGROUND_DILATION_AMOUNT ),
+        children: [ zeroTextNode ],
+        fill: Color.TRANSPARENT,
+        stroke: Color.TRANSPARENT,
+        lineWidth: NUMBER_BACKGROUND_LINE_WIDTH
+      } );
       operatorAndZeroNodesLayer.addChild( zeroNode );
 
       // create and add the nodes that will be used to depict the comparison operators
@@ -110,7 +108,12 @@ define( require => {
 
         // hide operators and zeros for now, will be made visible as needed by the code below
         zeroNode.visible = false;
-        comparisonOperatorNodes.forEach( comparisonOperatorNode => { comparisonOperatorNode.visible = false; } );
+        comparisonOperatorNodes.forEach( comparisonOperatorNode => {
+          comparisonOperatorNode.visible = false;
+
+          // position this so that it won't affect the overall bounds if it is not being used
+          comparisonOperatorNode.left = 0;
+        } );
 
         // list of all nodes that will depict numbers, including zero nodes that don't correspond to a point
         const numberNodes = [];
@@ -217,7 +220,9 @@ define( require => {
             if ( comparisonOperatorNode.text !== comparisonCharacter ) {
 
               // optimization - only set the text if it's not correct, saves time reevaluating bounds
-              comparisonOperatorNode.text = comparisonCharacter;
+              if ( comparisonOperatorNode.text !== comparisonCharacter ) {
+                comparisonOperatorNode.text = comparisonCharacter;
+              }
             }
             comparisonOperatorNode.x = currentXPos;
             currentXPos = comparisonOperatorNode.right + COMPARISON_STATEMENT_SPACING;
