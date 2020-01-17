@@ -76,8 +76,8 @@ define( require => {
       const thermometerLabel = new Text( pointController.label, {
         font: new PhetFont( 16 ),
         centerX: temperatureAndColorSensorNode.thermometerBounds.centerX,
-        top: temperatureAndColorSensorNode.top + 3, // offset empirically determined,
-        maxWidth: 20
+        top: temperatureAndColorSensorNode.top + 4, // offset empirically determined
+        maxWidth: temperatureAndColorSensorNode.width * 0.25 // multiplier empirically determined
       } );
       compositeThermometerNode.addChild( thermometerLabel );
 
