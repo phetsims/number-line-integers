@@ -152,7 +152,6 @@ define( require => {
           }
         ],
         {
-
           // limit the width to half the panel height to handle long labels from translations and string tests
           maxWidth: ( NUMBER_LINE_PANEL_WIDTH - 2 * NUMBER_LINE_PANEL_MARGINS ) / 2,
 

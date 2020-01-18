@@ -166,7 +166,7 @@ define( require => {
 
         // if there aren't enough absolute value indicator lines available, add new ones until there are enough
         while ( absoluteValueLines.length < numberLine.residentPoints.length ) {
-          const absoluteValueLine = new Line( 0, 0, 1, 1 ); // position is arbitrary, will be updated below
+          const absoluteValueLine = new Line( 0, 0, 1, 1 ); // position and size are arbitrary, will be updated below
           absoluteValueLines.push( absoluteValueLine );
           absoluteValueLineLayer.addChild( absoluteValueLine );
         }
@@ -195,8 +195,9 @@ define( require => {
           const pointValue = point.valueProperty.value;
           if ( pointValue === 0 ) {
 
-            // just hide the line entirely in this case
+            // hide the line entirely in this case, and position it so that it doesn't mess with the overall bounds
             lineOnNumberLine.visible = false;
+            lineOnNumberLine.setLine( zeroPosition.x, zeroPosition.y, zeroPosition.x, zeroPosition.y );
           }
           else {
             lineOnNumberLine.visible = true;
