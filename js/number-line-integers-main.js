@@ -23,7 +23,7 @@ define( require => {
       leadDesign: 'Amanda McGarry',
       softwareDevelopment: 'John Blanco, Chris Klusendorf, Saurabh Totey',
       team: 'Ariel Paul, Kathy Perkins, and in cooperation with the Next-Lab project',
-      qualityAssurance: 'Kathryn Woessner',
+      qualityAssurance: 'Logan Bray, Liam Mulhall, Jacob Romero, Kathryn Woessner',
       graphicArts: 'Megan Lai',
       soundDesign: '',
       thanks: ''
