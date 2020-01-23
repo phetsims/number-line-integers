@@ -89,6 +89,7 @@ define( require => {
 
       const resetAllButton = new ResetAllButton( {
         listener: () => {
+          this.interruptSubtreeInput();
           model.reset();
           elevationScene.reset();
           bankScene.reset();
