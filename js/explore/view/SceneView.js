@@ -65,9 +65,17 @@ define( require => {
       this.controlsLayer = new Node();
       this.addChild( this.controlsLayer );
 
+      // @protected (read-only) {Node} - layer where the number line or lines go
+      this.numberLinesLayer = new Node();
+      this.addChild( this.numberLinesLayer );
+
       // @protected (read-only) {Node} - layer where the scene elements go, populated primarily in sub-classes
       this.scenesLayer = new Node();
       this.addChild( this.scenesLayer );
+
+      // @protected (read-only) {Node} - layer where the comparison statements are shown, needs to be above scene elements
+      this.comparisonStatementsLayer = new Node();
+      this.addChild( this.comparisonStatementsLayer );
 
       // checkboxes that control common model properties
       const checkboxes = [
@@ -115,7 +123,7 @@ define( require => {
           expandedProperty: this.comparisonStatementBoxesOpenProperty
         } );
         this.comparisonStatementAccordionBoxes.push( comparisonStatementAccordionBox );
-        this.addChild( comparisonStatementAccordionBox );
+        this.comparisonStatementsLayer.addChild( comparisonStatementAccordionBox );
       } );
 
       // @protected (read-only) {NumberLine} - views of the number lines
@@ -134,7 +142,7 @@ define( require => {
         sceneModel.showNumberLineProperty.linkAttribute( numberLineNode, 'visible' );
         this.numberLineNodes.push( numberLineNode );
         if ( options.automaticallyAddNLNodes ) {
-          this.addChild( numberLineNode );
+          this.numberLinesLayer.addChild( numberLineNode );
         }
       } );
 

@@ -82,11 +82,11 @@ define( require => {
       } );
 
       // put the number lines on their own layer so that their location can be easily adjusted
-      const numberLineLayer = new Node();
+      const numberLinesRootNode = new Node();
       const fahrenheitNumberLineNode = this.numberLineNodes[ FAHRENHEIT_NUMBER_LINE_INDEX ];
       const celsiusNumberLineNode = this.numberLineNodes[ CELSIUS_NUMBER_LINE_INDEX ];
-      numberLineLayer.addChild( fahrenheitNumberLineNode );
-      numberLineLayer.addChild( celsiusNumberLineNode );
+      numberLinesRootNode.addChild( fahrenheitNumberLineNode );
+      numberLinesRootNode.addChild( celsiusNumberLineNode );
 
       // get local references to other items needed to manage the two separate number lines
       const fahrenheitNumberLine = sceneModel.numberLines[ FAHRENHEIT_NUMBER_LINE_INDEX ];
@@ -96,7 +96,7 @@ define( require => {
 
       // node where the contents of the number line panel will be placed
       const numberLinePanelContent = new Node();
-      numberLinePanelContent.addChild( numberLineLayer );
+      numberLinePanelContent.addChild( numberLinesRootNode );
 
       // make sure that the same operator is being used in both the celsius and fahrenheit comparison statements
       celsiusComparisonStatementAccordionBox.comparisonStatementNode.selectedOperatorProperty.link( selectedOperator => {
@@ -223,16 +223,16 @@ define( require => {
         onAddedNumberLinePoint( fahrenheitNumberLine, fahrenheitLabelsLayer, addedPoint );
       } );
 
-      numberLineLayer.addChild( celsiusLabelsLayer );
-      numberLineLayer.addChild( fahrenheitLabelsLayer );
+      numberLinesRootNode.addChild( celsiusLabelsLayer );
+      numberLinesRootNode.addChild( fahrenheitLabelsLayer );
 
       // Set the number line position to be fixed, roughly horizontally centered in the panel, and just below the header
       // label.  It's important that these be absolute numbers so that the layout of the panel doesn't change
       // dramatically as the string sizes change (e.g. in translations and string tests).  The right side of the number
       // line is used to set the X position because there is no text there, so the position won't change if different
       // size labels are present.
-      numberLineLayer.top = 25;
-      numberLineLayer.right = 110;
+      numberLinesRootNode.top = 25;
+      numberLinesRootNode.right = 110;
 
       const numberLinePanel = new Panel(
         numberLinePanelContent,
@@ -249,7 +249,7 @@ define( require => {
           maxWidth: NUMBER_LINE_PANEL_WIDTH
         }
       );
-      this.scenesLayer.addChild( numberLinePanel );
+      this.numberLinesLayer.addChild( numberLinePanel );
 
       Property.multilink(
         [ sceneModel.temperatureUnitsProperty, sceneModel.showNumberLineProperty ],
