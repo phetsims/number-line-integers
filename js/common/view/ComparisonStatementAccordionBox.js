@@ -46,15 +46,16 @@ define( require => {
 
     /**
      * @param {NumberLine} numberLine - the number line whose point values are being depicted
+     * @param {Object} [options]
      * @public
      */
-    constructor( numberLine ) {
+    constructor( numberLine, options ) {
 
       // create the comparison statement node
       const comparisonStatementNode = new ComparisonStatementNode( numberLine );
 
       // embed the comparison statement in an accordion box
-      super( comparisonStatementNode, merge( {}, DEFAULT_OPTIONS, {
+      super( comparisonStatementNode, merge( {}, DEFAULT_OPTIONS, options, {
         titleNode: new Text( comparisonStatementString, {
           font: TITLE_FONT,
           maxWidth: COMPARISON_STATEMENT_BOX_WIDTH * 0.8
