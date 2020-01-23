@@ -10,6 +10,7 @@ define( require => {
   'use strict';
 
   // modules
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
   const Checkbox = require( 'SUN/Checkbox' );
   const ComparisonStatementAccordionBox = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementAccordionBox' );
   const merge = require( 'PHET_CORE/merge' );
@@ -102,10 +103,17 @@ define( require => {
         checkbox.touchArea = checkbox.localBounds.dilated( NLIConstants.CHECKBOX_DILATION );
       } );
 
-      // @protected
+      // @private
+      this.comparisonStatementBoxesOpenProperty = new BooleanProperty( true );
+
+      // @protected - comparison statements that are inside an accordion box
       this.comparisonStatementAccordionBoxes = [];
+
+      // create the comparison statements, which are contained within an accordion box, one for each number line
       sceneModel.numberLines.forEach( numberLine => {
-        const comparisonStatementAccordionBox = new ComparisonStatementAccordionBox( numberLine );
+        const comparisonStatementAccordionBox = new ComparisonStatementAccordionBox( numberLine, {
+          expandedProperty: this.comparisonStatementBoxesOpenProperty
+        } );
         this.comparisonStatementAccordionBoxes.push( comparisonStatementAccordionBox );
         this.addChild( comparisonStatementAccordionBox );
       } );
@@ -150,7 +158,7 @@ define( require => {
      * @public
      */
     reset() {
-      this.comparisonStatementAccordionBoxes.forEach( accordionBox => { accordionBox.reset(); } );
+      this.comparisonStatementBoxesOpenProperty.reset();
     }
   }
 
