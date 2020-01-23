@@ -282,12 +282,23 @@ define( require => {
     }
 
     /**
+     * @override
+     */
+    reset() {
+
+      // only reset the temperature units on a full reset, not a scene reset, see
+      // https://github.com/phetsims/number-line-integers/issues/86
+      this.temperatureUnitsProperty.reset();
+
+      super.reset();
+    }
+
+    /**
      * restore initial state
      * @public
      */
     resetScene() {
 
-      this.temperatureUnitsProperty.reset();
       this.monthProperty.reset();
       this.numberLines.forEach( nl => { nl.reset(); } );
 
