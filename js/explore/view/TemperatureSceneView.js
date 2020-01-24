@@ -107,13 +107,13 @@ define( require => {
       } );
 
       // @private
-      this.monthsComboBox = new MonthsComboBox( sceneModel.monthProperty, this, {
+      this.monthsComboBox = new MonthsComboBox( sceneModel.monthProperty, this.controlsLayer, {
         left: this.checkboxGroup.left,
         top: sceneModel.mapBounds.minY,
         buttonTouchAreaXDilation: 7,
         buttonTouchAreaYDilation: 7
       } );
-      this.scenesLayer.addChild( this.monthsComboBox );
+      this.controlsLayer.addChild( this.monthsComboBox );
 
       // @private - map of the world that depicts temperature data
       this.temperatureMap = new TemperatureMapNode( sceneModel.monthProperty, sceneModel.mapBounds );
