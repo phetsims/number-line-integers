@@ -148,7 +148,8 @@ define( require => {
 
       // button that restores the scene to its initial state but doesn't reset the model and view for the whole screen
       const sceneResetButton = new ResetButton( {
-        listener: function() {
+        listener: () => {
+          this.interruptSubtreeInput();
           sceneModel.resetScene();
         },
         baseColor: '#f2f2f2',
