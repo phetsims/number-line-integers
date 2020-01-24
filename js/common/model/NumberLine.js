@@ -106,6 +106,14 @@ define( require => {
     }
 
     /**
+     * remove all points from the number line
+     * @public
+     */
+    removeAllPoints() {
+      this.residentPoints.clear();
+    }
+
+    /**
      * given a floating point number, return the closest integer value that is on the number line
      * @param {number} proposedValue
      * @returns {number}
@@ -161,7 +169,7 @@ define( require => {
      * @public
      */
     reset() {
-      this.residentPoints.clear();
+      this.removeAllPoints();
       this.addInitialPoints();
     }
   }

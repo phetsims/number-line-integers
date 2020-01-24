@@ -289,6 +289,7 @@ define( require => {
       // only reset the temperature units on a full reset, not a scene reset, see
       // https://github.com/phetsims/number-line-integers/issues/86
       this.temperatureUnitsProperty.reset();
+      this.numberLines.forEach( nl => { nl.reset(); } );
 
       super.reset();
     }
@@ -300,7 +301,7 @@ define( require => {
     resetScene() {
 
       this.monthProperty.reset();
-      this.numberLines.forEach( nl => { nl.reset(); } );
+      this.numberLines.forEach( nl => { nl.removeAllPoints(); } );
 
       // put the point controllers back into their starting positions
       this.permanentPointControllers.forEach( pointController => {
