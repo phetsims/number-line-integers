@@ -167,7 +167,9 @@ define( require => {
      * @public
      */
     reset() {
-      this.comparisonStatementBoxesOpenProperty.reset();
+      this.comparisonStatementAccordionBoxes.forEach( comparisonStatementAccordionBox => {
+        comparisonStatementAccordionBox.reset();
+      } );
     }
   }
 
