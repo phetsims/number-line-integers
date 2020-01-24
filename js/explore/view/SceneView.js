@@ -61,13 +61,13 @@ define( require => {
       // @protected (read-only) {Bounds2}
       this.layoutBounds = layoutBounds;
 
-      // @protected (read-only) {Node} - layer where the controls go
-      this.controlsLayer = new Node();
-      this.addChild( this.controlsLayer );
-
       // @protected (read-only) {Node} - layer where the number line or lines go
       this.numberLinesLayer = new Node();
       this.addChild( this.numberLinesLayer );
+
+      // @protected (read-only) {Node} - layer where the controls go
+      this.controlsLayer = new Node();
+      this.addChild( this.controlsLayer );
 
       // @protected (read-only) {Node} - layer where the scene elements go, populated primarily in sub-classes
       this.scenesLayer = new Node();
