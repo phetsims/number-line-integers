@@ -73,8 +73,13 @@ define( require => {
         centerY: numberLineNode.centerY
       } ) );
 
+      // Add the point controllers.  This is being done a bit differently here in the "Bank" scene than in the other
+      // scenes in that the controllers are being added to the number line layer.  This is because we want them behind
+      // the number line in the z-order, whereas in the other scenes the controllers are above the number lines.  See
+      // https://github.com/phetsims/number-line-integers/issues/88 and
+      // https://github.com/phetsims/number-line-integers/issues/83.
       const pointControllerNodesLayer = new Node();
-      this.scenesLayer.addChild( pointControllerNodesLayer );
+      this.numberLinesLayer.addChild( pointControllerNodesLayer );
       pointControllerNodesLayer.moveToBack();
 
       // add node to represent the primary account point controller, which is always visible
