@@ -220,7 +220,7 @@ define( require => {
           this.centerPosition.x - perpendicularDistance,
           this.modelProjectionBounds.minY - endDistance,
           this.centerPosition.x + perpendicularDistance,
-          this.modelProjectionBounds.maxY + endDistance,
+          this.modelProjectionBounds.maxY + endDistance
         );
       }
       return testBounds.containsPoint( pointControllerPosition );
