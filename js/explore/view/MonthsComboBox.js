@@ -17,21 +17,34 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
 
   // strings
+  const januaryString = require( 'string!NUMBER_LINE_INTEGERS/january' );
+  const februaryString = require( 'string!NUMBER_LINE_INTEGERS/february' );
+  const marchString = require( 'string!NUMBER_LINE_INTEGERS/march' );
+  const aprilString = require( 'string!NUMBER_LINE_INTEGERS/april' );
+  const mayString = require( 'string!NUMBER_LINE_INTEGERS/may' );
+  const juneString = require( 'string!NUMBER_LINE_INTEGERS/june' );
+  const julyString = require( 'string!NUMBER_LINE_INTEGERS/july' );
+  const augustString = require( 'string!NUMBER_LINE_INTEGERS/august' );
+  const septemberString = require( 'string!NUMBER_LINE_INTEGERS/september' );
+  const octoberString = require( 'string!NUMBER_LINE_INTEGERS/october' );
+  const novemberString = require( 'string!NUMBER_LINE_INTEGERS/november' );
+  const decemberString = require( 'string!NUMBER_LINE_INTEGERS/december' );
+  
   const MONTH_STRINGS = [
 
-    // these muse be in order of occurrence, not sorted alphabetically
-    require( 'string!NUMBER_LINE_INTEGERS/january' ),
-    require( 'string!NUMBER_LINE_INTEGERS/february' ),
-    require( 'string!NUMBER_LINE_INTEGERS/march' ),
-    require( 'string!NUMBER_LINE_INTEGERS/april' ),
-    require( 'string!NUMBER_LINE_INTEGERS/may' ),
-    require( 'string!NUMBER_LINE_INTEGERS/june' ),
-    require( 'string!NUMBER_LINE_INTEGERS/july' ),
-    require( 'string!NUMBER_LINE_INTEGERS/august' ),
-    require( 'string!NUMBER_LINE_INTEGERS/september' ),
-    require( 'string!NUMBER_LINE_INTEGERS/october' ),
-    require( 'string!NUMBER_LINE_INTEGERS/november' ),
-    require( 'string!NUMBER_LINE_INTEGERS/december' )
+    // these must be in order of occurrence, not sorted alphabetically
+    januaryString,
+    februaryString,
+    marchString,
+    aprilString,
+    mayString,
+    juneString,
+    julyString,
+    augustString,
+    septemberString,
+    octoberString,
+    novemberString,
+    decemberString
   ];
 
   // constants
