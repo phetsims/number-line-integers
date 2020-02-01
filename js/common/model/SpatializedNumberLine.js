@@ -1,4 +1,4 @@
-// Copyright 2019, University of Colorado Boulder
+// Copyright 2019-2020, University of Colorado Boulder
 
 /**
  * SpatializedNumberLine is a model of a number line that is projected into 2D space.  It also tracks a number of other
