@@ -55,7 +55,7 @@ define( require => {
     /**
      * @param {NumberProperty} monthProperty
      * @param {Node} listParent - node which the ComboBoxListBox will be added
-     * @param {object} options
+     * @param {Object} [options]
      * @public
      */
     constructor( monthProperty, listParent, options ) {
