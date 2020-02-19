@@ -174,7 +174,7 @@ define( require => {
     constructor( comparisonAccountVisible, options ) {
 
       options = merge( {
-        switchSize: new Dimension2( 50, 15 ),
+        toggleSwitchOptions: { size: new Dimension2( 50, 15 ) },
         setEnabled: () => {} // turn off default behavior where opacity is used for non-selected nodes
       }, options );
 
