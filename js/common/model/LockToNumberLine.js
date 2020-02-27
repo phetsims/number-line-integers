@@ -6,15 +6,12 @@
  *
  * @author Saurabh Totey
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const Enumeration = require( 'PHET_CORE/Enumeration' );
-  const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+import Enumeration from '../../../../phet-core/js/Enumeration.js';
+import numberLineIntegers from '../../numberLineIntegers.js';
 
-  // @public
-  const LockToNumberLine = Enumeration.byKeys( [ 'ALWAYS', 'NEVER', 'WHEN_CLOSE' ] );
+// @public
+const LockToNumberLine = Enumeration.byKeys( [ 'ALWAYS', 'NEVER', 'WHEN_CLOSE' ] );
 
-  return numberLineIntegers.register( 'LockToNumberLine', LockToNumberLine );
-} );
+numberLineIntegers.register( 'LockToNumberLine', LockToNumberLine );
+export default LockToNumberLine;

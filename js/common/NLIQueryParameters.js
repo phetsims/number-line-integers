@@ -5,22 +5,19 @@
  *
  * @author Arnab Purkayastha
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+import numberLineIntegers from '../numberLineIntegers.js';
 
-  const NLIQueryParameters = QueryStringMachine.getAll( {
+const NLIQueryParameters = QueryStringMachine.getAll( {
 
-    /**
-     * Query parameter that can be used to make the sim default to Celsius instead of Fahrenheit at startup, added
-     * because it has been requested by users in the past (see https://github.com/phetsims/states-of-matter/issues/216)
-     * This is public facing.
-     */
-    defaultCelsius: { type: 'flag' }
+  /**
+   * Query parameter that can be used to make the sim default to Celsius instead of Fahrenheit at startup, added
+   * because it has been requested by users in the past (see https://github.com/phetsims/states-of-matter/issues/216)
+   * This is public facing.
+   */
+  defaultCelsius: { type: 'flag' }
 
-  } );
-
-  return numberLineIntegers.register( 'NLIQueryParameters', NLIQueryParameters );
 } );
+
+numberLineIntegers.register( 'NLIQueryParameters', NLIQueryParameters );
+export default NLIQueryParameters;

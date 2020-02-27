@@ -6,74 +6,71 @@
  *
  * @author John Blanco (PhET Interactive Simulations)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const AccordionBox = require( 'SUN/AccordionBox' );
-  const ComparisonStatementNode = require( 'NUMBER_LINE_INTEGERS/common/view/ComparisonStatementNode' );
-  const merge = require( 'PHET_CORE/merge' );
-  const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const Text = require( 'SCENERY/nodes/Text' );
+import merge from '../../../../phet-core/js/merge.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import AccordionBox from '../../../../sun/js/AccordionBox.js';
+import numberLineIntegersStrings from '../../number-line-integers-strings.js';
+import numberLineIntegers from '../../numberLineIntegers.js';
+import ComparisonStatementNode from './ComparisonStatementNode.js';
 
-  // strings
-  const comparisonStatementString = require( 'string!NUMBER_LINE_INTEGERS/comparisonStatement' );
+const comparisonStatementString = numberLineIntegersStrings.comparisonStatement;
 
-  // constants
-  const TITLE_FONT = new PhetFont( 18 );
-  const COMPARISON_STATEMENT_BOX_WIDTH = 340; // empirically determined to look decent
-  const DEFAULT_OPTIONS = {
-    fill: 'white',
-    showTitleWhenExpanded: false,
-    cornerRadius: 5,
-    contentAlign: 'right',
-    centerX: 512, // taken from default layoutBounds.centerX
-    top: 10,
-    minWidth: COMPARISON_STATEMENT_BOX_WIDTH,
-    maxWidth: COMPARISON_STATEMENT_BOX_WIDTH,
-    buttonXMargin: 8,
-    buttonYMargin: 6,
-    expandCollapseButtonOptions: {
-      touchAreaXDilation: 15,
-      touchAreaYDilation: 15,
-      mouseAreaXDilation: 5,
-      mouseAreaYDilation: 5
-    }
-  };
+// constants
+const TITLE_FONT = new PhetFont( 18 );
+const COMPARISON_STATEMENT_BOX_WIDTH = 340; // empirically determined to look decent
+const DEFAULT_OPTIONS = {
+  fill: 'white',
+  showTitleWhenExpanded: false,
+  cornerRadius: 5,
+  contentAlign: 'right',
+  centerX: 512, // taken from default layoutBounds.centerX
+  top: 10,
+  minWidth: COMPARISON_STATEMENT_BOX_WIDTH,
+  maxWidth: COMPARISON_STATEMENT_BOX_WIDTH,
+  buttonXMargin: 8,
+  buttonYMargin: 6,
+  expandCollapseButtonOptions: {
+    touchAreaXDilation: 15,
+    touchAreaYDilation: 15,
+    mouseAreaXDilation: 5,
+    mouseAreaYDilation: 5
+  }
+};
 
-  class ComparisonStatementAccordionBox extends AccordionBox {
+class ComparisonStatementAccordionBox extends AccordionBox {
 
-    /**
-     * @param {NumberLine} numberLine - the number line whose point values are being depicted
-     * @param {Object} [options]
-     * @public
-     */
-    constructor( numberLine, options ) {
+  /**
+   * @param {NumberLine} numberLine - the number line whose point values are being depicted
+   * @param {Object} [options]
+   * @public
+   */
+  constructor( numberLine, options ) {
 
-      // create the comparison statement node
-      const comparisonStatementNode = new ComparisonStatementNode( numberLine );
+    // create the comparison statement node
+    const comparisonStatementNode = new ComparisonStatementNode( numberLine );
 
-      // embed the comparison statement in an accordion box
-      super( comparisonStatementNode, merge( {}, DEFAULT_OPTIONS, options, {
-        titleNode: new Text( comparisonStatementString, {
-          font: TITLE_FONT,
-          maxWidth: COMPARISON_STATEMENT_BOX_WIDTH * 0.8
-        } )
-      } ) );
+    // embed the comparison statement in an accordion box
+    super( comparisonStatementNode, merge( {}, DEFAULT_OPTIONS, options, {
+      titleNode: new Text( comparisonStatementString, {
+        font: TITLE_FONT,
+        maxWidth: COMPARISON_STATEMENT_BOX_WIDTH * 0.8
+      } )
+    } ) );
 
-      // @public (read-only) - make the comparison statement node visible to clients
-      this.comparisonStatementNode = comparisonStatementNode;
-    }
-
-    /**
-     * @public
-     */
-    reset() {
-      this.comparisonStatementNode.selectedOperatorProperty.reset();
-      this.expandedProperty.reset();
-    }
+    // @public (read-only) - make the comparison statement node visible to clients
+    this.comparisonStatementNode = comparisonStatementNode;
   }
 
-  return numberLineIntegers.register( 'ComparisonStatementAccordionBox', ComparisonStatementAccordionBox );
-} );
+  /**
+   * @public
+   */
+  reset() {
+    this.comparisonStatementNode.selectedOperatorProperty.reset();
+    this.expandedProperty.reset();
+  }
+}
+
+numberLineIntegers.register( 'ComparisonStatementAccordionBox', ComparisonStatementAccordionBox );
+export default ComparisonStatementAccordionBox;

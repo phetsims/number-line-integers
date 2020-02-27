@@ -5,43 +5,38 @@
  *
  * @author John Blanco (PhET Interactive Simulations)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const Image = require( 'SCENERY/nodes/Image' );
-  const NLIGenericModel = require( 'NUMBER_LINE_INTEGERS/generic/model/NLIGenericModel' );
-  const NLIGenericScreenView = require( 'NUMBER_LINE_INTEGERS/generic/view/NLIGenericScreenView' );
-  const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const Property = require( 'AXON/Property' );
-  const Screen = require( 'JOIST/Screen' );
+import Property from '../../../axon/js/Property.js';
+import Screen from '../../../joist/js/Screen.js';
+import Image from '../../../scenery/js/nodes/Image.js';
+import genericScreenHomeIcon from '../../images/generic-screen-home_png.js';
+import genericScreenNavIcon from '../../images/generic-screen-nav_png.js';
+import numberLineIntegersStrings from '../number-line-integers-strings.js';
+import numberLineIntegers from '../numberLineIntegers.js';
+import NLIGenericModel from './model/NLIGenericModel.js';
+import NLIGenericScreenView from './view/NLIGenericScreenView.js';
 
-  // images
-  const genericScreenHomeIcon = require( 'image!NUMBER_LINE_INTEGERS/generic-screen-home.png' );
-  const genericScreenNavIcon = require( 'image!NUMBER_LINE_INTEGERS/generic-screen-nav.png' );
+const screenGenericString = numberLineIntegersStrings.screen.generic;
 
-  // strings
-  const screenGenericString = require( 'string!NUMBER_LINE_INTEGERS/screen.generic' );
+class NLIGenericScreen extends Screen {
 
-  class NLIGenericScreen extends Screen {
+  /**
+   * @param {Tandem} tandem
+   * @public
+   */
+  constructor( tandem ) {
 
-    /**
-     * @param {Tandem} tandem
-     * @public
-     */
-    constructor( tandem ) {
+    const options = {
+      name: screenGenericString,
+      backgroundColorProperty: new Property( 'rgb( 245, 255, 254 )' ),
+      homeScreenIcon: new Image( genericScreenHomeIcon ),
+      navigationBarIcon: new Image( genericScreenNavIcon ),
+      tandem: tandem
+    };
 
-      const options = {
-        name: screenGenericString,
-        backgroundColorProperty: new Property( 'rgb( 245, 255, 254 )' ),
-        homeScreenIcon: new Image( genericScreenHomeIcon ),
-        navigationBarIcon: new Image( genericScreenNavIcon ),
-        tandem: tandem
-      };
-
-      super( () => new NLIGenericModel(), model => new NLIGenericScreenView( model ), options );
-    }
+    super( () => new NLIGenericModel(), model => new NLIGenericScreenView( model ), options );
   }
+}
 
-  return numberLineIntegers.register( 'NLIGenericScreen', NLIGenericScreen );
-} );
+numberLineIntegers.register( 'NLIGenericScreen', NLIGenericScreen );
+export default NLIGenericScreen;

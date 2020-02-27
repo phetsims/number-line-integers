@@ -5,225 +5,221 @@
  *
  * @author John Blanco (PhET Interactive Simulations)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const ElevationPointControllerNode = require( 'NUMBER_LINE_INTEGERS/explore/view/ElevationPointControllerNode' );
-  const Image = require( 'SCENERY/nodes/Image' );
-  const Node = require( 'SCENERY/nodes/Node' );
-  const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const PointControllerNode = require( 'NUMBER_LINE_INTEGERS/common/view/PointControllerNode' );
-  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  const SceneView = require( 'NUMBER_LINE_INTEGERS/explore/view/SceneView' );
-  const Text = require( 'SCENERY/nodes/Text' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const Vector2 = require( 'DOT/Vector2' );
+import Vector2 from '../../../../dot/js/Vector2.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import birdInAir from '../../../images/bird-air_png.js';
+import birdInWater from '../../../images/bird-water_png.js';
+import elevationBackground from '../../../images/elevation-background_png.js';
+import fishInAir from '../../../images/fish-air_png.js';
+import fishInWater from '../../../images/fish-water_png.js';
+import girlInAir from '../../../images/girl-air_png.js';
+import girlOnRock from '../../../images/girl-rock_png.js';
+import girlInWater from '../../../images/girl-water_png.js';
+import PointControllerNode from '../../common/view/PointControllerNode.js';
+import numberLineIntegersStrings from '../../number-line-integers-strings.js';
+import numberLineIntegers from '../../numberLineIntegers.js';
+import ElevationPointControllerNode from './ElevationPointControllerNode.js';
+import SceneView from './SceneView.js';
 
-  // constants
-  const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
+// constants
+const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
 
-  // strings
-  const elevationAmountString = require( 'string!NUMBER_LINE_INTEGERS/elevationAmount' );
-  const elevationString = require( 'string!NUMBER_LINE_INTEGERS/elevation' );
+const elevationAmountString = numberLineIntegersStrings.elevationAmount;
+const elevationString = numberLineIntegersStrings.elevation;
 
-  // images
-  const birdInAir = require( 'image!NUMBER_LINE_INTEGERS/bird-air.png' );
-  const birdInWater = require( 'image!NUMBER_LINE_INTEGERS/bird-water.png' );
-  const girlInAir = require( 'image!NUMBER_LINE_INTEGERS/girl-air.png' );
-  const girlInWater = require( 'image!NUMBER_LINE_INTEGERS/girl-water.png' );
-  const girlOnRock = require( 'image!NUMBER_LINE_INTEGERS/girl-rock.png' );
-  const elevationBackground = require( 'image!NUMBER_LINE_INTEGERS/elevation-background.png' );
-  const fishInAir = require( 'image!NUMBER_LINE_INTEGERS/fish-air.png' );
-  const fishInWater = require( 'image!NUMBER_LINE_INTEGERS/fish-water.png' );
 
-  class ElevationSceneView extends SceneView {
+class ElevationSceneView extends SceneView {
 
-    /**
-     * @param {ElevationSceneModel} sceneModel
-     * @param {Bounds2} layoutBounds
-     * @public
-     */
-    constructor( sceneModel, layoutBounds ) {
+  /**
+   * @param {ElevationSceneModel} sceneModel
+   * @param {Bounds2} layoutBounds
+   * @public
+   */
+  constructor( sceneModel, layoutBounds ) {
 
-      super( sceneModel, layoutBounds, {
-        commonNumberLineNodeOptions: {
-          numericalLabelTemplate: elevationAmountString,
-          tickMarkLabelPositionWhenVertical: 'left'
-        }
-      } );
+    super( sceneModel, layoutBounds, {
+      commonNumberLineNodeOptions: {
+        numericalLabelTemplate: elevationAmountString,
+        tickMarkLabelPositionWhenVertical: 'left'
+      }
+    } );
 
-      phet.jbDebug = true;
+    phet.jbDebug = true;
 
-      // Create and add the background image for the area where the user will be able to place things and change their
-      // elevation.  This is scaled to match the bounds defined in the model, so the resolution and aspect ratio of the
-      // image needs to be close to what is shown or this won't look good.
-      const elevationAreaImage = new Image( elevationBackground );
-      elevationAreaImage.scale(
-        sceneModel.elevationAreaBounds.width / elevationAreaImage.width,
-        sceneModel.elevationAreaBounds.height / elevationAreaImage.height
-      );
-      elevationAreaImage.center = sceneModel.elevationAreaBounds.center;
-      this.scenesLayer.addChild( elevationAreaImage );
+    // Create and add the background image for the area where the user will be able to place things and change their
+    // elevation.  This is scaled to match the bounds defined in the model, so the resolution and aspect ratio of the
+    // image needs to be close to what is shown or this won't look good.
+    const elevationAreaImage = new Image( elevationBackground );
+    elevationAreaImage.scale(
+      sceneModel.elevationAreaBounds.width / elevationAreaImage.width,
+      sceneModel.elevationAreaBounds.height / elevationAreaImage.height
+    );
+    elevationAreaImage.center = sceneModel.elevationAreaBounds.center;
+    this.scenesLayer.addChild( elevationAreaImage );
 
-      // add the node that represents the box that will hold the items that the user can elevate
-      this.scenesLayer.addChild( new Rectangle.bounds( sceneModel.elevatableItemsBoxBounds, {
-        fill: 'white',
-        stroke: 'black',
-        cornerRadius: 6
-      } ) );
+    // add the node that represents the box that will hold the items that the user can elevate
+    this.scenesLayer.addChild( new Rectangle.bounds( sceneModel.elevatableItemsBoxBounds, {
+      fill: 'white',
+      stroke: 'black',
+      cornerRadius: 6
+    } ) );
 
-      // add label for the number line
-      const numberLineLabel = new Text( elevationString, {
-        font: NUMBER_LINE_LABEL_FONT,
-        centerX: sceneModel.numberLines[ 0 ].centerPosition.x,
-        bottom: this.numberLineNodes[ 0 ].top - 5,
-        maxWidth: this.layoutBounds.width * 0.18
-      } );
-      sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
-      this.scenesLayer.addChild( numberLineLabel );
+    // add label for the number line
+    const numberLineLabel = new Text( elevationString, {
+      font: NUMBER_LINE_LABEL_FONT,
+      centerX: sceneModel.numberLines[ 0 ].centerPosition.x,
+      bottom: this.numberLineNodes[ 0 ].top - 5,
+      maxWidth: this.layoutBounds.width * 0.18
+    } );
+    sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
+    this.scenesLayer.addChild( numberLineLabel );
 
-      // define a function that will be used to switch images based on its position in the model space
-      const selectImageIndex = ( position, currentlySelectedImageIndex ) => {
+    // define a function that will be used to switch images based on its position in the model space
+    const selectImageIndex = ( position, currentlySelectedImageIndex ) => {
 
-        // This function is intended to have some hysteresis, i.e. the image doesn't change until the point controller
-        // fully transitions from above to below sea level or vice versa.
-        let index = currentlySelectedImageIndex;
-        if ( position.y > sceneModel.seaLevel ) {
-          index = 0;
-        }
-        else if ( position.y < sceneModel.seaLevel ) {
-          index = 1;
-        }
-        return index;
-      };
+      // This function is intended to have some hysteresis, i.e. the image doesn't change until the point controller
+      // fully transitions from above to below sea level or vice versa.
+      let index = currentlySelectedImageIndex;
+      if ( position.y > sceneModel.seaLevel ) {
+        index = 0;
+      }
+      else if ( position.y < sceneModel.seaLevel ) {
+        index = 1;
+      }
+      return index;
+    };
 
-      // add a layer where the elevation point controllers go
-      const elevationPointControllersLayer = new Node();
-      this.scenesLayer.addChild( elevationPointControllersLayer );
+    // add a layer where the elevation point controllers go
+    const elevationPointControllersLayer = new Node();
+    this.scenesLayer.addChild( elevationPointControllersLayer );
 
-      // add the girl that the user can place in the elevation scene
-      elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
-        sceneModel.permanentPointControllers[ 0 ],
-        [
-          new Image( girlInWater, { maxWidth: 85, center: new Vector2( 3, 5 ) } ),
-          new Image( girlInAir, { maxWidth: 90, center: new Vector2( 6, -25 ) } ),
-          new Image( girlOnRock, { maxWidth: 30, center: new Vector2( 0, 0 ) } )
-        ],
-        sceneModel.seaLevel,
-        [
-          new Vector2( 3, 30 ),
-          new Vector2( -25, 25 ),
-          new Vector2( -25, 20 )
-        ],
-        {
-          // special highly tweaked function for having the hiker image show up over the cliff
-          imageSelectionFunction: ( position, currentlySelectedImageIndex ) => {
+    // add the girl that the user can place in the elevation scene
+    elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
+      sceneModel.permanentPointControllers[ 0 ],
+      [
+        new Image( girlInWater, { maxWidth: 85, center: new Vector2( 3, 5 ) } ),
+        new Image( girlInAir, { maxWidth: 90, center: new Vector2( 6, -25 ) } ),
+        new Image( girlOnRock, { maxWidth: 30, center: new Vector2( 0, 0 ) } )
+      ],
+      sceneModel.seaLevel,
+      [
+        new Vector2( 3, 30 ),
+        new Vector2( -25, 25 ),
+        new Vector2( -25, 20 )
+      ],
+      {
+        // special highly tweaked function for having the hiker image show up over the cliff
+        imageSelectionFunction: ( position, currentlySelectedImageIndex ) => {
 
-            // This function is intended to have some hysteresis, i.e. the image doesn't change until the point
-            // controller fully transitions from above to below sea level or vice versa.
-            let imageIndex = currentlySelectedImageIndex;
-            if ( position.y > sceneModel.seaLevel ) {
+          // This function is intended to have some hysteresis, i.e. the image doesn't change until the point
+          // controller fully transitions from above to below sea level or vice versa.
+          let imageIndex = currentlySelectedImageIndex;
+          if ( position.y > sceneModel.seaLevel ) {
 
-              // image for underwater
-              imageIndex = 0;
-            }
-            else if ( position.y < sceneModel.seaLevel ) {
-
-              // The position is above sea level.  Decide whether to use the hiker or paraglider image.  This function
-              // was empirically determined to match the background image and will have to be updated if the background
-              // image for the scene changes.
-              if ( position.x >
-                   ( sceneModel.elevationAreaBounds.centerX + 40 + 0.6 * ( sceneModel.seaLevel - position.y ) ) ) {
-
-                // hiker
-                imageIndex = 2;
-              }
-              else {
-
-                // paraglider
-                imageIndex = 1;
-              }
-            }
-            return imageIndex;
-          },
-          connectorLine: false
-        }
-      ) );
-
-      // add the bird that the user can place in the elevation scene
-      elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
-        sceneModel.permanentPointControllers[ 1 ],
-        [
-          new Image( birdInWater, { maxWidth: 65, center: Vector2.ZERO } ),
-          new Image( birdInAir, { maxWidth: 60, center: new Vector2( 0, -10 ) } )
-        ],
-        sceneModel.seaLevel,
-        [
-          new Vector2( 6, 11 ),
-          new Vector2( 5, 10 )
-        ],
-        {
-          imageSelectionFunction: selectImageIndex,
-          connectorLine: false
-        }
-      ) );
-
-      // add the fish that the user can place in the elevation scene
-      elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
-        sceneModel.permanentPointControllers[ 2 ],
-        [
-          new Image( fishInWater, { maxWidth: 60, center: Vector2.ZERO } ),
-          new Image( fishInAir, { maxWidth: 60, center: Vector2.ZERO } )
-        ],
-        sceneModel.seaLevel,
-        [
-          new Vector2( 5, 0 ),
-          new Vector2( 5, 5 )
-        ],
-        {
-          imageSelectionFunction: selectImageIndex,
-          connectorLine: false
-        }
-      ) );
-
-      // add the water
-      this.scenesLayer.addChild( new Rectangle(
-        0,
-        0,
-        sceneModel.elevationAreaBounds.width,
-        sceneModel.elevationAreaBounds.maxY - sceneModel.seaLevel,
-        {
-          left: sceneModel.elevationAreaBounds.minX,
-          top: sceneModel.seaLevel,
-          fill: 'rgba( 0, 204, 204, 0.15 )'
-        }
-      ) );
-
-      // add the layer where the attached point controllers go
-      const attachedPointControllersLayer = new Node();
-      this.addChild( attachedPointControllersLayer );
-      attachedPointControllersLayer.moveToBack(); // so that they are behind the number line in z-order
-
-      // the visibility of the attached point controllers should be the same as the number line
-      sceneModel.showNumberLineProperty.linkAttribute( attachedPointControllersLayer, 'visible' );
-
-      // add/remove the nodes that represent the point controllers that are attached to the number line
-      sceneModel.numberLineAttachedPointControllers.addItemAddedListener( addedPointController => {
-        const pointControllerNode = new PointControllerNode( addedPointController );
-        attachedPointControllersLayer.addChild( pointControllerNode );
-        const handlePointControllerRemoved = removedPointController => {
-          if ( addedPointController === removedPointController ) {
-            attachedPointControllersLayer.removeChild( pointControllerNode );
-            pointControllerNode.dispose();
-            sceneModel.numberLineAttachedPointControllers.removeItemRemovedListener( handlePointControllerRemoved );
+            // image for underwater
+            imageIndex = 0;
           }
-        };
-        sceneModel.numberLineAttachedPointControllers.addItemRemovedListener( handlePointControllerRemoved );
-      } );
-      phet.jbDebug = false;
-    }
-  }
+          else if ( position.y < sceneModel.seaLevel ) {
 
-  return numberLineIntegers.register( 'ElevationSceneView', ElevationSceneView );
-} );
+            // The position is above sea level.  Decide whether to use the hiker or paraglider image.  This function
+            // was empirically determined to match the background image and will have to be updated if the background
+            // image for the scene changes.
+            if ( position.x >
+                 ( sceneModel.elevationAreaBounds.centerX + 40 + 0.6 * ( sceneModel.seaLevel - position.y ) ) ) {
+
+              // hiker
+              imageIndex = 2;
+            }
+            else {
+
+              // paraglider
+              imageIndex = 1;
+            }
+          }
+          return imageIndex;
+        },
+        connectorLine: false
+      }
+    ) );
+
+    // add the bird that the user can place in the elevation scene
+    elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
+      sceneModel.permanentPointControllers[ 1 ],
+      [
+        new Image( birdInWater, { maxWidth: 65, center: Vector2.ZERO } ),
+        new Image( birdInAir, { maxWidth: 60, center: new Vector2( 0, -10 ) } )
+      ],
+      sceneModel.seaLevel,
+      [
+        new Vector2( 6, 11 ),
+        new Vector2( 5, 10 )
+      ],
+      {
+        imageSelectionFunction: selectImageIndex,
+        connectorLine: false
+      }
+    ) );
+
+    // add the fish that the user can place in the elevation scene
+    elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
+      sceneModel.permanentPointControllers[ 2 ],
+      [
+        new Image( fishInWater, { maxWidth: 60, center: Vector2.ZERO } ),
+        new Image( fishInAir, { maxWidth: 60, center: Vector2.ZERO } )
+      ],
+      sceneModel.seaLevel,
+      [
+        new Vector2( 5, 0 ),
+        new Vector2( 5, 5 )
+      ],
+      {
+        imageSelectionFunction: selectImageIndex,
+        connectorLine: false
+      }
+    ) );
+
+    // add the water
+    this.scenesLayer.addChild( new Rectangle(
+      0,
+      0,
+      sceneModel.elevationAreaBounds.width,
+      sceneModel.elevationAreaBounds.maxY - sceneModel.seaLevel,
+      {
+        left: sceneModel.elevationAreaBounds.minX,
+        top: sceneModel.seaLevel,
+        fill: 'rgba( 0, 204, 204, 0.15 )'
+      }
+    ) );
+
+    // add the layer where the attached point controllers go
+    const attachedPointControllersLayer = new Node();
+    this.addChild( attachedPointControllersLayer );
+    attachedPointControllersLayer.moveToBack(); // so that they are behind the number line in z-order
+
+    // the visibility of the attached point controllers should be the same as the number line
+    sceneModel.showNumberLineProperty.linkAttribute( attachedPointControllersLayer, 'visible' );
+
+    // add/remove the nodes that represent the point controllers that are attached to the number line
+    sceneModel.numberLineAttachedPointControllers.addItemAddedListener( addedPointController => {
+      const pointControllerNode = new PointControllerNode( addedPointController );
+      attachedPointControllersLayer.addChild( pointControllerNode );
+      const handlePointControllerRemoved = removedPointController => {
+        if ( addedPointController === removedPointController ) {
+          attachedPointControllersLayer.removeChild( pointControllerNode );
+          pointControllerNode.dispose();
+          sceneModel.numberLineAttachedPointControllers.removeItemRemovedListener( handlePointControllerRemoved );
+        }
+      };
+      sceneModel.numberLineAttachedPointControllers.addItemRemovedListener( handlePointControllerRemoved );
+    } );
+    phet.jbDebug = false;
+  }
+}
+
+numberLineIntegers.register( 'ElevationSceneView', ElevationSceneView );
+export default ElevationSceneView;

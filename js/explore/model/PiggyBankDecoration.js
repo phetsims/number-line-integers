@@ -5,12 +5,8 @@
  *
  * @author John Blanco (PhET Interactive Simulations)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const Enumeration = require( 'PHET_CORE/Enumeration' );
-  const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
+import Enumeration from '../../../../phet-core/js/Enumeration.js';
+import numberLineIntegers from '../../numberLineIntegers.js';
 
-  return numberLineIntegers.register( 'PiggyBankDecoration', Enumeration.byKeys( [ 'LIGHTNING', 'FLOWERS' ] ) );
-} );
+export default numberLineIntegers.register( 'PiggyBankDecoration', Enumeration.byKeys( [ 'LIGHTNING', 'FLOWERS' ] ) );

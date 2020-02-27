@@ -5,43 +5,38 @@
  *
  * @author John Blanco (PhET Interactive Simulations)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const Image = require( 'SCENERY/nodes/Image' );
-  const NLIExploreModel = require( 'NUMBER_LINE_INTEGERS/explore/model/NLIExploreModel' );
-  const NLIExploreScreenView = require( 'NUMBER_LINE_INTEGERS/explore/view/NLIExploreScreenView' );
-  const numberLineIntegers = require( 'NUMBER_LINE_INTEGERS/numberLineIntegers' );
-  const Property = require( 'AXON/Property' );
-  const Screen = require( 'JOIST/Screen' );
+import Property from '../../../axon/js/Property.js';
+import Screen from '../../../joist/js/Screen.js';
+import Image from '../../../scenery/js/nodes/Image.js';
+import exploreScreenHomeIcon from '../../images/explore-screen-home_png.js';
+import exploreScreenNavIcon from '../../images/explore-screen-nav_png.js';
+import numberLineIntegersStrings from '../number-line-integers-strings.js';
+import numberLineIntegers from '../numberLineIntegers.js';
+import NLIExploreModel from './model/NLIExploreModel.js';
+import NLIExploreScreenView from './view/NLIExploreScreenView.js';
 
-  // images
-  const exploreScreenHomeIcon = require( 'image!NUMBER_LINE_INTEGERS/explore-screen-home.png' );
-  const exploreScreenNavIcon = require( 'image!NUMBER_LINE_INTEGERS/explore-screen-nav.png' );
+const screenExploreString = numberLineIntegersStrings.screen.explore;
 
-  // strings
-  const screenExploreString = require( 'string!NUMBER_LINE_INTEGERS/screen.explore' );
+class NLIExploreScreen extends Screen {
 
-  class NLIExploreScreen extends Screen {
+  /**
+   * @param {Tandem} tandem
+   * @public
+   */
+  constructor( tandem ) {
 
-    /**
-     * @param {Tandem} tandem
-     * @public
-     */
-    constructor( tandem ) {
+    const options = {
+      name: screenExploreString,
+      backgroundColorProperty: new Property( 'rgb( 254, 247, 233 )' ),
+      homeScreenIcon: new Image( exploreScreenHomeIcon ),
+      navigationBarIcon: new Image( exploreScreenNavIcon ),
+      tandem: tandem
+    };
 
-      const options = {
-        name: screenExploreString,
-        backgroundColorProperty: new Property( 'rgb( 254, 247, 233 )' ),
-        homeScreenIcon: new Image( exploreScreenHomeIcon ),
-        navigationBarIcon: new Image( exploreScreenNavIcon ),
-        tandem: tandem
-      };
-
-      super( () => new NLIExploreModel(), model => new NLIExploreScreenView( model ), options );
-    }
+    super( () => new NLIExploreModel(), model => new NLIExploreScreenView( model ), options );
   }
+}
 
-  return numberLineIntegers.register( 'NLIExploreScreen', NLIExploreScreen );
-} );
+numberLineIntegers.register( 'NLIExploreScreen', NLIExploreScreen );
+export default NLIExploreScreen;
