@@ -1,4 +1,4 @@
-// Copyright 2019, University of Colorado Boulder
+// Copyright 2019-2020, University of Colorado Boulder
 
 /**
  * TemperaturePointController is a Scenery node that looks like a thermometer with a little triangle that pinpoints the

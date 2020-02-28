@@ -1,4 +1,4 @@
-// Copyright 2019, University of Colorado Boulder
+// Copyright 2019-2020, University of Colorado Boulder
 
 /**
  * PointControllerNode is a Scenery node that represents the view magnification of a point controller.  Interactions with

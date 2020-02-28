@@ -1,4 +1,4 @@
-// Copyright 2019, University of Colorado Boulder
+// Copyright 2019-2020, University of Colorado Boulder
 
 /**
  * reverseRobinsonProjector is a singleton that takes a normalized X Y coordinate on a Robinson projection of the Earth
