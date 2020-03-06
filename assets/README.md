@@ -1,7 +1,5 @@
 This file describes the processes that were used to produce some of the more unusual assets used in this sim.
 
-TODO: Add info about the piggy bank node creation.
-
 Maps and Temperature Data for the "Temperature" scene of the "Scenes" screen.
 =============================================================================
 
@@ -56,4 +54,20 @@ The location for this should be fairly obvious from looking at the code.  The ne
 script by executing the command `node unpack-t2m-temperature.js`.  This will output the adjusted data into a file, and
 you'll need to open that file and cut and paste the unpacked temperature values into the
 `airTemperatureNearSurfaceValues` field in `temperatureDataSet.js`.
++ The temperature data was compressed in order to make the file size more
+compact.  Please read through the information in temperatureDataSet.js to
+see how this was done and to figure out how to repeat the process if an
+when necessary.
 + At this point, the temperature data set should be fully updated, and can be tested in the context of the sim.
+
+
+Piggy Bank Nodes
+================
+
+The nodes that are used to depict piggy banks are a little complicated.  They
+use an SVG outline shape with a fill and some overlaid graphics to depict
+shading and decorations ont the piggy bank.  Looking through the code will help
+a lot in terms of understanding this, but the creation of the SVG shape outline
+is a little tricky.  It was done by taking the path information out of the
+.svg file and pasting into the SVG_STRING value in `piggyBankShapes.js`.  Line
+joins were inserted in the string to make it into a more managable source file.

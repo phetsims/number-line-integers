@@ -106,12 +106,14 @@ const r = function() {
 };
 
 /**
- * The data set below was large enough that it was having a significan impact on the overall size of the sim.  The
+ * The data set below was large enough that it was having a significant impact on the overall size of the sim.  The
  * commented-out script below was used to compress the data. This script is not completely efficient, but does manage
  * to compress the data significantly. One example of where it could be improved is that it doesn't currently take
  * advantage of what the previous element in the output is in order to better choose whether to use the repeat
  * function.
+ */
 
+/*
  const distinctValues = [];
  data.forEach( value => {
     if ( distinctValues.length === 0 || distinctValues[ distinctValues.length - 1 ][ 0 ] !== value ) {

@@ -1,4 +1,10 @@
 #!/usr/bin/env python
+
+# This script was used in conjunction with the Climate Data Store (CDS) API to obtain the temperature data used in the
+# Number Line: Integers PhET simulation.  Adjust the dates as needed if and when updated data is required for the
+# simulation. To use, make sure that you have Python and the necessary imports available, and then run this from the
+# command line. The temperature data needs to then be extracted and formatted using one of the other scripts.
+
 import cdsapi
 c = cdsapi.Client()
 c.retrieve(

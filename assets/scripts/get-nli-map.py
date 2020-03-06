@@ -2,7 +2,9 @@ import cdstoolbox as ct
 
 # This script was used in the Climate Data Store (CDS) Toolbox to produce the maps needed by the Number Line: Integers
 # PhET simulation.  It was run once for each month, and the 'month' field was manually updated each time.  To use,
-# go to the CDS Toolbox, create a script, paste this in and run it.  The map should appear on the right.
+# go to the CDS Toolbox (at https://cds.climate.copernicus.eu/toolbox-editor/18912/their-example-with-grid-usage-fewer-years
+# as of this writing), create a new script, paste this in, modify the date as needed and run it.  The map should appear
+# on the right.
 
 layout = {
     'output_align': 'bottom'
