@@ -206,6 +206,7 @@ class NLIGenericScreenView extends ScreenView {
       model.numberLine.displayedRangeProperty,
       this,
       {
+        listPosition: 'above',
         xMargin: 13,
         yMargin: 6,
         cornerRadius: 4,
