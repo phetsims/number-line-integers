@@ -29,8 +29,8 @@ const COMPARISON_STATEMENT_SPACING = 6; // in screen coords
 const NUMBER_BACKGROUND_DILATION_AMOUNT = 3;
 const NUMBER_BACKGROUND_LINE_WIDTH = 2;
 const BUTTON_TOUCH_DILATION = 8;
-const GREATER_THAN_STRING = '>';
-const LESS_THAN_STRING = '<';
+const GREATER_THAN_STRING = MathSymbols.GREATER_THAN;
+const LESS_THAN_STRING = MathSymbols.LESS_THAN;
 const DEFAULT_COMPARISON_SELECTOR_FONT = new PhetFont( { size: 20, weight: 'bold' } );
 const SELECTED_OPERATOR_TEXT_COLOR = '#000000';
 const SELECTED_OPERATOR_BACKGROUND_COLOR = '#d3d3d3';
@@ -87,7 +87,7 @@ class ComparisonStatementNode extends Node {
     _.times( 2, () => {
 
       // give these an arbitrary value to start with, they will be updated later
-      const comparisonOperatorNode = new Text( '>', {
+      const comparisonOperatorNode = new Text( GREATER_THAN_STRING, {
         font: COMPARISON_STATEMENT_FONT
       } );
       operatorAndZeroNodesLayer.addChild( comparisonOperatorNode );
