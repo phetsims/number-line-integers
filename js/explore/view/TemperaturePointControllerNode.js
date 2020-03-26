@@ -2,7 +2,7 @@
 
 /**
  * A scenery node that is used to control point positions in the temperature scene based on the temperature of the map
- * below this node
+ * below this node.  It looks like a thermometer with a triangular pointer next to it.
  *
  * @author Arnab Purkayastha
  * @author Saurabh Totey
