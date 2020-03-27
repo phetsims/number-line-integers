@@ -1,8 +1,8 @@
 // Copyright 2019-2020, University of Colorado Boulder
 
 /**
- * ComparisonStatementAccordionBox is an accordion box that contains a comparison statement, both of which are
- * configured with the default values used in the "Number Line: Integers" sim.
+ * ComparisonStatementAccordionBox is an accordion box that contains a "comparison statement", which is a mathematical
+ * statement comparing up to three values.
  *
  * @author John Blanco (PhET Interactive Simulations)
  */

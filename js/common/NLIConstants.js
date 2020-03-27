@@ -40,7 +40,7 @@ const NLIConstants = {
   // possible values for temperature units
   TEMPERATURE_UNITS: Enumeration.byKeys( [ 'FAHRENHEIT', 'CELSIUS' ] ),
 
-  // checkbox
+  // checkbox options
   CHECKBOX_OPTIONS: { boxWidth: CHECKBOX_BOX_WIDTH },
   CHECKBOX_TEXT_OPTIONS: {
     font: new PhetFont( 16 ),
