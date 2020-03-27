@@ -24,7 +24,7 @@ import numberLineIntegers from '../../numberLineIntegers.js';
 import LockToNumberLine from './LockToNumberLine.js';
 import NumberLinePoint from './NumberLinePoint.js';
 
-// const
+// constants
 const AVERAGE_ANIMATION_SPEED = 1000; // screen coordinates per second
 const MIN_ANIMATION_TIME = 0.3; // in seconds
 
@@ -320,7 +320,7 @@ class PointController {
 
     if ( animate ) {
 
-      // animate the point controller's return to its home position
+      // animate the point controller's journey to the provided position
       const animation = new Animation( {
         duration: Math.max(
           MIN_ANIMATION_TIME,
@@ -345,7 +345,7 @@ class PointController {
       this.inProgressAnimationProperty.value = animation;
       animation.start();
 
-      // remove the animation from the list when it finishes or is stopped
+      // when the animation is finished, clear the property that is keeping track of it
       animation.finishEmitter.addListener( () => {
         this.inProgressAnimationProperty.value = null;
       } );
