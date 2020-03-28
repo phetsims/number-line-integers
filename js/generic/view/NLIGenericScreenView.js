@@ -54,7 +54,10 @@ class NLIGenericScreenView extends ScreenView {
     this.addChild( controlsLayer );
 
     // add the display of the inequality
-    const comparisonStatementAccordionBox = new ComparisonStatementAccordionBox( model.numberLine );
+    const comparisonStatementAccordionBox = new ComparisonStatementAccordionBox( model.numberLine, {
+      centerX: this.layoutBounds.centerX,
+      top: 10
+    } );
     controlsLayer.addChild( comparisonStatementAccordionBox );
 
     // add the check boxes that will control the number line's presentation

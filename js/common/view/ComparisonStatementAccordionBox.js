@@ -25,8 +25,6 @@ const DEFAULT_OPTIONS = {
   showTitleWhenExpanded: false,
   cornerRadius: 5,
   contentAlign: 'right',
-  centerX: 512, // taken from default layoutBounds.centerX
-  top: 10,
   minWidth: COMPARISON_STATEMENT_BOX_WIDTH,
   maxWidth: COMPARISON_STATEMENT_BOX_WIDTH,
   buttonXMargin: 8,

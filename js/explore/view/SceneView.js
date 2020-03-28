@@ -117,6 +117,8 @@ class SceneView extends Node {
     // create the comparison statements, which are contained within an accordion box, one for each number line
     sceneModel.numberLines.forEach( numberLine => {
       const comparisonStatementAccordionBox = new ComparisonStatementAccordionBox( numberLine, {
+        centerX: layoutBounds.centerX,
+        top: 10,
         expandedProperty: this.comparisonStatementBoxesOpenProperty
       } );
       this.comparisonStatementAccordionBoxes.push( comparisonStatementAccordionBox );
