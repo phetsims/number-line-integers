@@ -17,7 +17,7 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import LockToNumberLine from '../../common/model/LockToNumberLine.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import NLIQueryParameters from '../../common/NLIQueryParameters.js';
-import numberLineIntegersStrings from '../../number-line-integers-strings.js';
+import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import reverseRobinsonProjector from './reverseRobinsonProjector.js';
 import SceneModel from './SceneModel.js';

@@ -11,7 +11,7 @@ import Screen from '../../../joist/js/Screen.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import genericScreenHomeIcon from '../../images/generic-screen-home_png.js';
 import genericScreenNavIcon from '../../images/generic-screen-nav_png.js';
-import numberLineIntegersStrings from '../number-line-integers-strings.js';
+import numberLineIntegersStrings from '../numberLineIntegersStrings.js';
 import numberLineIntegers from '../numberLineIntegers.js';
 import NLIGenericModel from './model/NLIGenericModel.js';
 import NLIGenericScreenView from './view/NLIGenericScreenView.js';

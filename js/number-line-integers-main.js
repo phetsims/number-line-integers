@@ -11,7 +11,7 @@ import SimLauncher from '../../joist/js/SimLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import NLIExploreScreen from './explore/NLIExploreScreen.js';
 import NLIGenericScreen from './generic/NLIGenericScreen.js';
-import numberLineIntegersStrings from './number-line-integers-strings.js';
+import numberLineIntegersStrings from './numberLineIntegersStrings.js';
 
 const numberLineIntegersTitleString = numberLineIntegersStrings[ 'number-line-integers' ].title;
 

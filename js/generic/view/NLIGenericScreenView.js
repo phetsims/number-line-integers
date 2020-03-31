@@ -24,7 +24,7 @@ import NLIConstants from '../../common/NLIConstants.js';
 import ComparisonStatementAccordionBox from '../../common/view/ComparisonStatementAccordionBox.js';
 import PointControllerNode from '../../common/view/PointControllerNode.js';
 import SpatializedNumberLineNode from '../../common/view/SpatializedNumberLineNode.js';
-import numberLineIntegersStrings from '../../number-line-integers-strings.js';
+import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NLIGenericModel from '../model/NLIGenericModel.js';
 

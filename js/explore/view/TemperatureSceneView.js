@@ -19,7 +19,7 @@ import Panel from '../../../../sun/js/Panel.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import ColorizedReadoutNode from '../../common/view/ColorizedReadoutNode.js';
-import numberLineIntegersStrings from '../../number-line-integers-strings.js';
+import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import TemperatureSceneModel from '../model/TemperatureSceneModel.js';
 import MonthsComboBox from './MonthsComboBox.js';

@@ -15,7 +15,7 @@ import HBox from '../../../../scenery/js/nodes/HBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import ABSwitch from '../../../../sun/js/ABSwitch.js';
-import numberLineIntegersStrings from '../../number-line-integers-strings.js';
+import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import BankSceneModel from '../model/BankSceneModel.js';
 import PiggyBankDecoration from '../model/PiggyBankDecoration.js';

@@ -19,7 +19,7 @@ import Color from '../../../../scenery/js/util/Color.js';
 import RoundPushButton from '../../../../sun/js/buttons/RoundPushButton.js';
 import withdrawingCoinsImage from '../../../images/coin-in-hand_png.js';
 import depositingCoinsImage from '../../../images/coin-in-slot_png.js';
-import numberLineIntegersStrings from '../../number-line-integers-strings.js';
+import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 
 // constants

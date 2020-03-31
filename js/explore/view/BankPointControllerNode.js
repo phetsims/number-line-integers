@@ -22,7 +22,7 @@ import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import PointControllerNode from '../../common/view/PointControllerNode.js';
-import numberLineIntegersStrings from '../../number-line-integers-strings.js';
+import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import PiggyBankDecoration from '../model/PiggyBankDecoration.js';
 import PiggyBankNode from './PiggyBankNode.js';

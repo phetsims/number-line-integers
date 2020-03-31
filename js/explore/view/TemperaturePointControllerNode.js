@@ -22,7 +22,7 @@ import Color from '../../../../scenery/js/util/Color.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import ColorizedReadoutNode from '../../common/view/ColorizedReadoutNode.js';
 import PointControllerNode from '../../common/view/PointControllerNode.js';
-import numberLineIntegersStrings from '../../number-line-integers-strings.js';
+import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 
 // constants
