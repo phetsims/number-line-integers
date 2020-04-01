@@ -22,7 +22,7 @@ import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import LockToNumberLine from './LockToNumberLine.js';
-import NumberLinePoint from './NumberLinePoint.js';
+import NumberLinePoint from '../../../../number-line-common/js/common/model/NumberLinePoint.js';
 
 // constants
 const AVERAGE_ANIMATION_SPEED = 1000; // screen coordinates per second
