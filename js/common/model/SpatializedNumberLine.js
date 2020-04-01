@@ -17,7 +17,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
-import NumberLine from './NumberLine.js';
+import NumberLine from '../../../../number-line-common/js/common/model/NumberLine.js';
 
 // constants
 
