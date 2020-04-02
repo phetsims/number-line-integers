@@ -23,7 +23,7 @@ import ComboBoxItem from '../../../../sun/js/ComboBoxItem.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import ComparisonStatementAccordionBox from '../../common/view/ComparisonStatementAccordionBox.js';
 import PointControllerNode from '../../common/view/PointControllerNode.js';
-import SpatializedNumberLineNode from '../../common/view/SpatializedNumberLineNode.js';
+import SpatializedNumberLineNode from '../../../../number-line-common/js/common/view/SpatializedNumberLineNode.js';
 import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NLIGenericModel from '../model/NLIGenericModel.js';
@@ -134,6 +134,7 @@ class NLIGenericScreenView extends ScreenView {
     // add the number line node
     this.addChild( new SpatializedNumberLineNode( model.numberLine, {
       showAbsoluteValueSpans: true,
+      displayedRangeInset: NLIConstants.GENERIC_SCREEN_DISPLAYED_RANGE_INSET,
       pointNodeOptions: {
         labelFont: new PhetFont( 18 )
       }

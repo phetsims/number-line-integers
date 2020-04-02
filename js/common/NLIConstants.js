@@ -24,16 +24,6 @@ const NLIConstants = {
   // of the number line itself.
   GENERIC_SCREEN_DISPLAYED_RANGE_INSET: 25,
 
-  // options used for most if not all label backgrounds
-  LABEL_BACKGROUND_OPTIONS: {
-    backgroundOptions: {
-      opacity: 0.85,
-      cornerRadius: 3
-    },
-    xMargin: 3,
-    yMargin: 3
-  },
-
   // corner radius of the background for most if not all labels
   LABEL_BACKGROUND_CORNER_RADIUS: 3,
 

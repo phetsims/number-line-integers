@@ -13,7 +13,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import PointController from '../../common/model/PointController.js';
-import SpatializedNumberLine from '../../common/model/SpatializedNumberLine.js';
+import SpatializedNumberLine from '../../../../number-line-common/js/common/model/SpatializedNumberLine.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 

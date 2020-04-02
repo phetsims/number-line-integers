@@ -10,6 +10,7 @@
 
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
+import NLCConstants from '../../../../number-line-common/js/common/NLCConstants.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import BackgroundNode from '../../../../scenery-phet/js/BackgroundNode.js';
@@ -20,7 +21,6 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
-import NLIConstants from '../../common/NLIConstants.js';
 import PointControllerNode from '../../common/view/PointControllerNode.js';
 import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
@@ -96,7 +96,7 @@ class BankPointControllerNode extends PointControllerNode {
 
     // the readout that will display the absolute value in a phrase
     const absoluteValueText = new Text( '', { font: new PhetFont( 18 ), maxWidth: 250 } );
-    const absoluteValueBackground = new BackgroundNode( absoluteValueText, NLIConstants.LABEL_BACKGROUND_OPTIONS );
+    const absoluteValueBackground = new BackgroundNode( absoluteValueText, NLCConstants.LABEL_BACKGROUND_OPTIONS );
     this.addChild( absoluteValueBackground );
 
     // get a reference to the number line (there is only one for this scene)
