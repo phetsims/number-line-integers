@@ -24,8 +24,8 @@ import Easing from '../../../../twixt/js/Easing.js';
 import PointControllerNode from '../../common/view/PointControllerNode.js';
 import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
-import PiggyBankDecoration from '../model/PiggyBankDecoration.js';
-import PiggyBankNode from './PiggyBankNode.js';
+import PiggyBankDecoration from '../../../../number-line-common/js/explore/model/PiggyBankDecoration.js';
+import PiggyBankNode from '../../../../number-line-common/js/explore/view/PiggyBankNode.js';
 
 // constants
 const MIN_WIDTH = 80; // screen coords, empirically determined

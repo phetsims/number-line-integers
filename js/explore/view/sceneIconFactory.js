@@ -16,8 +16,8 @@ import Color from '../../../../scenery/js/util/Color.js';
 import birdInAir from '../../../images/bird-air_png.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NLIScene from '../model/NLIScene.js';
-import PiggyBankDecoration from '../model/PiggyBankDecoration.js';
-import PiggyBankNode from './PiggyBankNode.js';
+import PiggyBankDecoration from '../../../../number-line-common/js/explore/model/PiggyBankDecoration.js';
+import PiggyBankNode from '../../../../number-line-common/js/explore/view/PiggyBankNode.js';
 
 // constants
 const ICON_SIZE = new Dimension2( 38, 38 );

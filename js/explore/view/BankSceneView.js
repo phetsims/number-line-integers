@@ -18,10 +18,10 @@ import ABSwitch from '../../../../sun/js/ABSwitch.js';
 import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import BankSceneModel from '../model/BankSceneModel.js';
-import PiggyBankDecoration from '../model/PiggyBankDecoration.js';
+import PiggyBankDecoration from '../../../../number-line-common/js/explore/model/PiggyBankDecoration.js';
 import AccountBalanceControllerNode from './AccountBalanceControllerNode.js';
 import BankPointControllerNode from './BankPointControllerNode.js';
-import PiggyBankNode from './PiggyBankNode.js';
+import PiggyBankNode from '../../../../number-line-common/js/explore/view/PiggyBankNode.js';
 import SceneView from './SceneView.js';
 
 // constants
