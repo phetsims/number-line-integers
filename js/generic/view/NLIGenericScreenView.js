@@ -7,6 +7,7 @@
  */
 
 import ScreenView from '../../../../joist/js/ScreenView.js';
+import NLCConstants from '../../../../number-line-common/js/common/NLCConstants.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
@@ -63,24 +64,24 @@ class NLIGenericScreenView extends ScreenView {
     // add the check boxes that will control the number line's presentation
     const checkboxes = [
       new Checkbox(
-        new Text( labelsString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
+        new Text( labelsString, NLCConstants.CHECKBOX_TEXT_OPTIONS ),
         model.numberLine.showLabelsProperty,
-        NLIConstants.CHECKBOX_OPTIONS
+        NLCConstants.CHECKBOX_OPTIONS
       ),
       new Checkbox(
-        new Text( tickMarksString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
+        new Text( tickMarksString, NLCConstants.CHECKBOX_TEXT_OPTIONS ),
         model.numberLine.showTickMarksProperty,
-        NLIConstants.CHECKBOX_OPTIONS
+        NLCConstants.CHECKBOX_OPTIONS
       ),
       new Checkbox(
-        new Text( oppositeString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
+        new Text( oppositeString, NLCConstants.CHECKBOX_TEXT_OPTIONS ),
         model.numberLine.showOppositesProperty,
-        NLIConstants.CHECKBOX_OPTIONS
+        NLCConstants.CHECKBOX_OPTIONS
       ),
       new Checkbox(
-        new Text( absoluteValueString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
+        new Text( absoluteValueString, NLCConstants.CHECKBOX_TEXT_OPTIONS ),
         model.numberLine.showAbsoluteValuesProperty,
-        NLIConstants.CHECKBOX_OPTIONS
+        NLCConstants.CHECKBOX_OPTIONS
       )
     ];
     const checkboxGroup = new VBox( {
@@ -96,7 +97,7 @@ class NLIGenericScreenView extends ScreenView {
 
     // expands the touch area for the checkboxes
     checkboxes.forEach( checkbox => {
-      checkbox.touchArea = checkbox.localBounds.dilated( NLIConstants.CHECKBOX_DILATION );
+      checkbox.touchArea = checkbox.localBounds.dilated( NLCConstants.CHECKBOX_DILATION );
     } );
 
     const arrowIconOptions = {
@@ -162,8 +163,8 @@ class NLIGenericScreenView extends ScreenView {
         model.reset();
         comparisonStatementAccordionBox.reset();
       },
-      right: this.layoutBounds.maxX - NLIConstants.RESET_BUTTON_INSET_FROM_EDGE,
-      bottom: this.layoutBounds.maxY - NLIConstants.RESET_BUTTON_INSET_FROM_EDGE
+      right: this.layoutBounds.maxX - NLCConstants.RESET_BUTTON_INSET_FROM_EDGE,
+      bottom: this.layoutBounds.maxY - NLCConstants.RESET_BUTTON_INSET_FROM_EDGE
     } );
     controlsLayer.addChild( resetAllButton );
 

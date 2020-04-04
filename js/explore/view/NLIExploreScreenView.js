@@ -7,6 +7,7 @@
  */
 
 import ScreenView from '../../../../joist/js/ScreenView.js';
+import NLCConstants from '../../../../number-line-common/js/common/NLCConstants.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import RadioButtonGroup from '../../../../sun/js/buttons/RadioButtonGroup.js';
@@ -92,8 +93,8 @@ class NLIExploreScreenView extends ScreenView {
         bankScene.reset();
         temperatureScene.reset();
       },
-      right: this.layoutBounds.maxX - NLIConstants.RESET_BUTTON_INSET_FROM_EDGE,
-      bottom: this.layoutBounds.maxY - NLIConstants.RESET_BUTTON_INSET_FROM_EDGE
+      right: this.layoutBounds.maxX - NLCConstants.RESET_BUTTON_INSET_FROM_EDGE,
+      bottom: this.layoutBounds.maxY - NLCConstants.RESET_BUTTON_INSET_FROM_EDGE
     } );
     controlsLayer.addChild( resetAllButton );
   }

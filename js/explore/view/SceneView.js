@@ -8,6 +8,7 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import NLCConstants from '../../../../number-line-common/js/common/NLCConstants.js';
 import merge from '../../../../phet-core/js/merge.js';
 import ResetButton from '../../../../scenery-phet/js/buttons/ResetButton.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -77,19 +78,19 @@ class SceneView extends Node {
     // checkboxes that control common model properties
     const checkboxes = [
       new Checkbox(
-        new Text( numberLineString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
+        new Text( numberLineString, NLCConstants.CHECKBOX_TEXT_OPTIONS ),
         sceneModel.showNumberLineProperty,
-        NLIConstants.CHECKBOX_OPTIONS
+        NLCConstants.CHECKBOX_OPTIONS
       ),
       new Checkbox(
-        new Text( labelsString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
+        new Text( labelsString, NLCConstants.CHECKBOX_TEXT_OPTIONS ),
         sceneModel.numberLineLabelsVisibleProperty,
-        merge( { enabledProperty: sceneModel.showNumberLineProperty }, NLIConstants.CHECKBOX_OPTIONS )
+        merge( { enabledProperty: sceneModel.showNumberLineProperty }, NLCConstants.CHECKBOX_OPTIONS )
       ),
       new Checkbox(
-        new Text( absoluteValueString, NLIConstants.CHECKBOX_TEXT_OPTIONS ),
+        new Text( absoluteValueString, NLCConstants.CHECKBOX_TEXT_OPTIONS ),
         sceneModel.numberLineAbsoluteValueIndicatorsVisibleProperty,
-        NLIConstants.CHECKBOX_OPTIONS
+        NLCConstants.CHECKBOX_OPTIONS
       )
     ];
 
@@ -105,7 +106,7 @@ class SceneView extends Node {
 
     // adds touch dilations to the checkboxes in the checkboxGroup
     checkboxes.forEach( checkbox => {
-      checkbox.touchArea = checkbox.localBounds.dilated( NLIConstants.CHECKBOX_DILATION );
+      checkbox.touchArea = checkbox.localBounds.dilated( NLCConstants.CHECKBOX_DILATION );
     } );
 
     // @private
