@@ -67,7 +67,7 @@ class SceneModel {
     // @public - controls whether the labels on the number lines are visible
     this.numberLineLabelsVisibleProperty = new BooleanProperty( true );
     this.numberLineLabelsVisibleProperty.link( visible => {
-      this.numberLines.forEach( nl => { nl.showLabelsProperty.set( visible ); } );
+      this.numberLines.forEach( nl => { nl.showPointLabelsProperty.set( visible ); } );
     } );
 
     // @public - controls whether the absolute value indicators on the number lines are visible

@@ -65,7 +65,7 @@ class NLIGenericScreenView extends ScreenView {
     const checkboxes = [
       new Checkbox(
         new Text( labelsString, NLCConstants.CHECKBOX_TEXT_OPTIONS ),
-        model.numberLine.showLabelsProperty,
+        model.numberLine.showPointLabelsProperty,
         NLCConstants.CHECKBOX_OPTIONS
       ),
       new Checkbox(
