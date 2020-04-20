@@ -8,6 +8,7 @@
 
 import Property from '../../../axon/js/Property.js';
 import Screen from '../../../joist/js/Screen.js';
+import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import exploreScreenHomeIcon from '../../images/explore-screen-home_png.js';
 import exploreScreenNavIcon from '../../images/explore-screen-nav_png.js';
@@ -29,8 +30,14 @@ class NLIExploreScreen extends Screen {
     const options = {
       name: screenExploreString,
       backgroundColorProperty: new Property( 'rgb( 254, 247, 233 )' ),
-      homeScreenIcon: new Image( exploreScreenHomeIcon ),
-      navigationBarIcon: new Image( exploreScreenNavIcon ),
+      homeScreenIcon: new ScreenIcon( new Image( exploreScreenHomeIcon ), {
+        maxIconWidthProportion: 1,
+        maxIconHeightProportion: 1
+      } ),
+      navigationBarIcon: new ScreenIcon( new Image( exploreScreenNavIcon ), {
+        maxIconWidthProportion: 1,
+        maxIconHeightProportion: 1
+      } ),
       tandem: tandem
     };
 
