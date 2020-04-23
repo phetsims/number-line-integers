@@ -8,8 +8,8 @@
 
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import NLCConstants from '../../../../number-line-common/js/common/NLCConstants.js';
+import NumberLineRangeSelector from '../../../../number-line-common/js/common/view/NumberLineRangeSelector.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -19,8 +19,6 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
 import RadioButtonGroup from '../../../../sun/js/buttons/RadioButtonGroup.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
-import ComboBox from '../../../../sun/js/ComboBox.js';
-import ComboBoxItem from '../../../../sun/js/ComboBoxItem.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import ComparisonStatementAccordionBox from '../../common/view/ComparisonStatementAccordionBox.js';
 import PointControllerNode from '../../common/view/PointControllerNode.js';
@@ -33,11 +31,9 @@ const absoluteValueString = numberLineIntegersStrings.absoluteValue;
 const labelsString = numberLineIntegersStrings.labels;
 const tickMarksString = numberLineIntegersStrings.tickMarks;
 const oppositeString = numberLineIntegersStrings.opposite;
-const rangeString = numberLineIntegersStrings.range;
 
 // constants
 const ARROW_ICON_LENGTH = 40;
-const COMBO_BOX_FONT = new PhetFont( 16 );
 const ORIENTATION_BUTTON_DILATION = 2;
 
 class NLIGenericScreenView extends ScreenView {
@@ -188,40 +184,16 @@ class NLIGenericScreenView extends ScreenView {
       } );
     controlsLayer.addChild( orientationRadioButtonGroup );
 
-    // create the selection items for the range selection combo box
-    const rangeSelectionComboBoxItems = [];
-    NLIGenericModel.NUMBER_LINE_RANGES.forEach( range => {
-      rangeSelectionComboBoxItems.push(
-        new ComboBoxItem(
-          new Text(
-            StringUtils.fillIn( rangeString, {
-              lowValue: range.min,
-              highValue: range.max
-            } ),
-            { font: COMBO_BOX_FONT, maxWidth: this.layoutBounds.width * 0.15 }
-          ),
-          range
-        )
-      );
-    } );
-
-    // combo box for selecting the range
-    const rangeSelectionComboBox = new ComboBox(
-      rangeSelectionComboBoxItems,
+    // number line range selector
+    controlsLayer.addChild( new NumberLineRangeSelector(
       model.numberLine.displayedRangeProperty,
+      NLIGenericModel.NUMBER_LINE_RANGES,
       this,
       {
-        listPosition: 'above',
-        xMargin: 13,
-        yMargin: 6,
-        cornerRadius: 4,
         left: orientationRadioButtonGroup.left,
-        bottom: orientationRadioButtonGroup.top - 12,
-        buttonTouchAreaXDilation: 7,
-        buttonTouchAreaYDilation: 7
+        bottom: orientationRadioButtonGroup.top - 12
       }
-    );
-    controlsLayer.addChild( rangeSelectionComboBox );
+    ) );
   }
 }
 
