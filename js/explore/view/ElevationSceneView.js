@@ -72,7 +72,7 @@ class ElevationSceneView extends SceneView {
     // add label for the number line
     const numberLineLabel = new Text( elevationString, {
       font: NUMBER_LINE_LABEL_FONT,
-      centerX: sceneModel.numberLines[ 0 ].centerPosition.x,
+      centerX: sceneModel.numberLines[ 0 ].centerPositionProperty.value.x,
       bottom: this.numberLineNodes[ 0 ].top - 5,
       maxWidth: this.layoutBounds.width * 0.18
     } );

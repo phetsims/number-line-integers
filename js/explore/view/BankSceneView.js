@@ -58,7 +58,7 @@ class BankSceneView extends SceneView {
     const numberLineLabel = new Text( balanceString, {
       font: NUMBER_LINE_LABEL_FONT,
       right: numberLineNode.left - 4,
-      centerY: numberLine.centerPosition.y,
+      centerY: numberLine.centerPositionProperty.value.y,
       maxWidth: layoutBounds.width * 0.08
     } );
     this.scenesLayer.addChild( numberLineLabel );
