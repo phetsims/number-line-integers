@@ -74,32 +74,24 @@ class TemperaturePointController extends PointController {
       [ this.positionProperty, sceneModel.monthProperty ],
       position => {
 
-        const temperatureInCelsius = sceneModel.getTemperatureAtLocation( position );
-        if ( temperatureInCelsius === null ) {
+        if ( sceneModel.isPositionOverMap( position ) ) {
 
-          // the provided position isn't over the map, so no temperature value can be obtained
-          this.celsiusTemperatureProperty.value = this.celsiusTemperatureProperty.initialValue;
-          this.fahrenheitTemperatureProperty.value = this.fahrenheitTemperatureProperty.initialValue;
-          this.colorProperty.value = options.noTemperatureColor;
-          this.isOverMapProperty.value = false;
-        }
-        else {
-
-          // we got a valid temperature value back, update the values presented to the user
+          // update the values presented to the user
+          const temperatureInCelsius = sceneModel.getTemperatureAtLocation( position );
           this.celsiusTemperatureProperty.value = temperatureInCelsius;
           this.fahrenheitTemperatureProperty.value = celsiusToFahrenheitInteger( temperatureInCelsius );
           this.colorProperty.value = CELSIUS_TEMPERATURE_TO_COLOR_MAPPER.mapTemperatureToColor(
             this.celsiusTemperatureProperty.value
           );
           this.isOverMapProperty.value = true;
+        }
+        else {
 
-          // if there are points on the number line being controlled, update them
-          if ( this.isControllingNumberLinePoint() ) {
-            this.celsiusNumberLinePoint.valueProperty.value = this.celsiusTemperatureProperty.value;
-            this.celsiusNumberLinePoint.colorProperty.value = this.colorProperty.value;
-            this.fahrenheitNumberLinePoint.valueProperty.value = this.fahrenheitTemperatureProperty.value;
-            this.fahrenheitNumberLinePoint.colorProperty.value = this.colorProperty.value;
-          }
+          // the provided position isn't over the map, so no temperature value can be obtained
+          this.celsiusTemperatureProperty.value = this.celsiusTemperatureProperty.initialValue;
+          this.fahrenheitTemperatureProperty.value = this.fahrenheitTemperatureProperty.initialValue;
+          this.colorProperty.value = options.noTemperatureColor;
+          this.isOverMapProperty.value = false;
         }
       }
     );
@@ -112,18 +104,16 @@ class TemperaturePointController extends PointController {
         assert && assert( !this.isControllingNumberLinePoint(), 'should not already have a point' );
 
         // create new points on each number line
-        this.celsiusNumberLinePoint = new NumberLinePoint(
-          this.celsiusTemperatureProperty.value,
-          this.colorProperty.value,
-          this.sceneModel.celsiusNumberLine,
-          this
-        );
-        this.fahrenheitNumberLinePoint = new NumberLinePoint(
-          this.fahrenheitTemperatureProperty.value,
-          this.colorProperty.value,
-          this.sceneModel.fahrenheitNumberLine,
-          this
-        );
+        this.celsiusNumberLinePoint = new NumberLinePoint( this.sceneModel.celsiusNumberLine, {
+          valueProperty: this.celsiusTemperatureProperty,
+          colorProperty: this.colorProperty,
+          controller: this
+        } );
+        this.fahrenheitNumberLinePoint = new NumberLinePoint( this.sceneModel.fahrenheitNumberLine, {
+          valueProperty: this.fahrenheitTemperatureProperty,
+          colorProperty: this.colorProperty,
+          controller: this
+        } );
         this.sceneModel.celsiusNumberLine.addPoint( this.celsiusNumberLinePoint );
         this.sceneModel.fahrenheitNumberLine.addPoint( this.fahrenheitNumberLinePoint );
         this.associateWithNumberLinePoint( this.celsiusNumberLinePoint );

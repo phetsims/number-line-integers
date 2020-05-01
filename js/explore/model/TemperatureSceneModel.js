@@ -144,40 +144,55 @@ class TemperatureSceneModel extends SceneModel {
   }
 
   /**
-   * get the temperature at the specified location
-   * @param {Vector2} location - model coordinates for where to get the temperature
-   * @returns {number|null} - the temperature in degrees Kelvin if the location is over the map, null otherwise
+   * get the temperature at the specified position
+   * @param {Vector2} position - model coordinates for where to get the temperature
+   * @returns {number|null} - the temperature in degrees Kelvin if the position is over the map, null otherwise
    * @public
    */
-  getTemperatureAtLocation( location ) {
+  getTemperatureAtLocation( position ) {
 
-    // Convert the location into normalized values based on the map's position and size.  These values assume a total
-    // span of 1 in the vertical and horizontal directions with the point (0,0) being in the center of the map.
-    const normalizedXPosition = ( location.x - this.mapBounds.centerX ) / this.mapBounds.width;
-    const normalizedYPosition = ( this.mapBounds.centerY - location.y ) / this.mapBounds.height;
-
-    if ( normalizedXPosition < -0.5 || normalizedXPosition > 0.5 ||
-         normalizedYPosition < -0.5 || normalizedYPosition > 0.5 ) {
+    if ( !this.isPositionOverMap( position ) ) {
 
       // the point is not over the map, bail
       return null;
     }
 
+    // Convert the position into normalized values based on the map's position and size.  These values assume a total
+    // span of 1 in the vertical and horizontal directions with the point (0,0) being in the center of the map.
+    const normalizedXPosition = ( position.x - this.mapBounds.centerX ) / this.mapBounds.width;
+    const normalizedYPosition = ( this.mapBounds.centerY - position.y ) / this.mapBounds.height;
+
     // convert the normalized x and y values into latitude and longitude values
     const latLong = reverseRobinsonProjector.xyToLatLong( normalizedXPosition, normalizedYPosition );
 
-    // return null if location is not in map bounds
+    // return null if position is not in map bounds
     if ( latLong.latitude > 90 || latLong.latitude < -90 ||
          latLong.longitude > 180 || latLong.longitude < -180 ) {
       return null;
     }
 
-    // return the temperature at this location on the surface of the Earth for the current month
+    // return the temperature at this position on the surface of the Earth for the current month
     return temperatureDataSet.getNearSurfaceTemperature(
       this.monthProperty.value,
       latLong.latitude,
       latLong.longitude
     );
+  }
+
+  /**
+   * @param {Vector2} position
+   * @returns {boolean}
+   * @public
+   */
+  isPositionOverMap( position ) {
+
+    // Convert the position into normalized values based on the map's position and size.  These values assume a total
+    // span of 1 in the vertical and horizontal directions with the point (0,0) being in the center of the map.
+    const normalizedXPosition = ( position.x - this.mapBounds.centerX ) / this.mapBounds.width;
+    const normalizedYPosition = ( this.mapBounds.centerY - position.y ) / this.mapBounds.height;
+
+    return !( normalizedXPosition < -0.5 || normalizedXPosition > 0.5 ||
+              normalizedYPosition < -0.5 || normalizedYPosition > 0.5 );
   }
 
   /**

@@ -54,12 +54,11 @@ class ElevationPointController extends PointController {
         assert && assert( !this.isControllingNumberLinePoint(), 'should not already have a point' );
 
         // create a new point on the number line
-        const numberLinePoint = new NumberLinePoint(
-          Utils.roundSymmetric( numberLine.modelPositionToValue( this.positionProperty.value ) ),
-          this.color,
-          numberLine,
-          this
-        );
+        const numberLinePoint = new NumberLinePoint( numberLine, {
+          initialValue: Utils.roundSymmetric( numberLine.modelPositionToValue( this.positionProperty.value ) ),
+          initialColor: this.color,
+          controller: this
+        } );
         numberLine.addPoint( numberLinePoint );
         this.associateWithNumberLinePoint( numberLinePoint );
       }

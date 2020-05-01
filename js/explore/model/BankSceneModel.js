@@ -114,16 +114,11 @@ class BankSceneModel extends SceneModel {
         );
 
         // create the point and add it to the number line
-        comparisonAccountNumberLinePoint = new NumberLinePoint(
-          this.comparisonAccount.balanceProperty.value,
-          COMPARISON_ACCOUNT_POINT_COLOR,
-          numberLine
-        );
-        numberLine.addPoint( comparisonAccountNumberLinePoint );
-
-        comparisonAccountNumberLinePoint.valueProperty.link( value => {
-          this.comparisonAccount.balanceProperty.value = value;
+        comparisonAccountNumberLinePoint = new NumberLinePoint( numberLine, {
+          valueProperty: this.comparisonAccount.balanceProperty,
+          initialColor: COMPARISON_ACCOUNT_POINT_COLOR
         } );
+        numberLine.addPoint( comparisonAccountNumberLinePoint );
 
         // associate the controller with this point
         this.comparisonAccountPointController.associateWithNumberLinePoint( comparisonAccountNumberLinePoint );

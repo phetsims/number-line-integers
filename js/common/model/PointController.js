@@ -288,7 +288,11 @@ class PointController {
         );
         if ( numberLinesInRange.length > 0 ) {
           numberLinesInRange.forEach( ( numberLine, i ) => {
-            const numberLinePoint = new NumberLinePoint( constrainedValues[ i ], this.color, numberLine, this );
+            const numberLinePoint = new NumberLinePoint( numberLine, {
+              initialValue: constrainedValues[ i ],
+              initialColor: this.color,
+              controller: this
+            } );
             numberLine.addPoint( numberLinePoint );
             this.associateWithNumberLinePoint( numberLinePoint );
           } );
