@@ -104,18 +104,21 @@ class PointController {
     // @public (read-only) {Color}
     this.color = options.color;
 
-    // if the displayed range of the number line changes while controlling a point, the position must be updated
-    const displayedRangeChangeHandlers = [];
+    // Monitor the number line(s) with which this point controller is associated for changes that require an update to
+    // the point controller's position.
+    const positionChangeUpdaters = [];
     options.numberLines.forEach( numberLine => {
-      const handler = () => {
-        const relevantPoint = _.find( this.numberLinePoints, point => point.numberLine === numberLine );
-        relevantPoint && this.setPositionRelativeToPoint( relevantPoint );
-      };
-      displayedRangeChangeHandlers.push( handler );
-      numberLine.displayedRangeProperty.lazyLink( handler );
+      const multilink = Property.multilink(
+        [ numberLine.displayedRangeProperty, numberLine.centerPositionProperty ],
+        () => {
+          const relevantPoint = _.find( this.numberLinePoints, point => point.numberLine === numberLine );
+          relevantPoint && this.setPositionRelativeToPoint( relevantPoint );
+        }
+      );
+      positionChangeUpdaters.push( multilink );
     } );
 
-    assert && assert( displayedRangeChangeHandlers.length === options.numberLines.length );
+    assert && assert( positionChangeUpdaters.length === options.numberLines.length );
 
     // set our number line points to match this point controller's dragging state
     this.isDraggingProperty.link( isDragging => {
@@ -124,10 +127,10 @@ class PointController {
       } );
     } );
 
-    // @private
+    // @private - clean up links to avoid memory leaks
     this.disposePointController = () => {
-      options.numberLines.forEach( ( numberLine, i ) => {
-        numberLine.displayedRangeProperty.unlink( displayedRangeChangeHandlers[ i ] );
+      positionChangeUpdaters.forEach( positionChangeUpdater => {
+        positionChangeUpdater.dispose();
       } );
     };
   }
