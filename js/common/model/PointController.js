@@ -111,8 +111,10 @@ class PointController {
       const multilink = Property.multilink(
         [ numberLine.displayedRangeProperty, numberLine.centerPositionProperty ],
         () => {
-          const relevantPoint = _.find( this.numberLinePoints, point => point.numberLine === numberLine );
-          relevantPoint && this.setPositionRelativeToPoint( relevantPoint );
+          if ( this.lockToNumberLine !== LockToNumberLine.NEVER && this.numberLinePoints.length === 1 ) {
+            const relevantPoint = _.find( this.numberLinePoints, point => point.numberLine === numberLine );
+            relevantPoint && this.setPositionRelativeToPoint( relevantPoint );
+          }
         }
       );
       positionChangeUpdaters.push( multilink );
