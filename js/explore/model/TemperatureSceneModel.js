@@ -151,16 +151,19 @@ class TemperatureSceneModel extends SceneModel {
    */
   getTemperatureAtLocation( position ) {
 
-    if ( !this.isPositionOverMap( position ) ) {
-
-      // the point is not over the map, bail
-      return null;
-    }
-
-    // Convert the position into normalized values based on the map's position and size.  These values assume a total
+    // Convert the location into normalized values based on the map's position and size.  These values assume a total
     // span of 1 in the vertical and horizontal directions with the point (0,0) being in the center of the map.
     const normalizedXPosition = ( position.x - this.mapBounds.centerX ) / this.mapBounds.width;
     const normalizedYPosition = ( this.mapBounds.centerY - position.y ) / this.mapBounds.height;
+
+    // Test if the position is over the rectangle that contains the map.  This does *not* test the corners of the
+    // rectangle to see whether the point is inside the Robinson projection - that happens further below.
+    if ( normalizedXPosition < -0.5 || normalizedXPosition > 0.5 ||
+         normalizedYPosition < -0.5 || normalizedYPosition > 0.5 ) {
+
+      // the point is not over the map rectangle, bail
+      return null;
+    }
 
     // convert the normalized x and y values into latitude and longitude values
     const latLong = reverseRobinsonProjector.xyToLatLong( normalizedXPosition, normalizedYPosition );
@@ -177,22 +180,6 @@ class TemperatureSceneModel extends SceneModel {
       latLong.latitude,
       latLong.longitude
     );
-  }
-
-  /**
-   * @param {Vector2} position
-   * @returns {boolean}
-   * @public
-   */
-  isPositionOverMap( position ) {
-
-    // Convert the position into normalized values based on the map's position and size.  These values assume a total
-    // span of 1 in the vertical and horizontal directions with the point (0,0) being in the center of the map.
-    const normalizedXPosition = ( position.x - this.mapBounds.centerX ) / this.mapBounds.width;
-    const normalizedYPosition = ( this.mapBounds.centerY - position.y ) / this.mapBounds.height;
-
-    return !( normalizedXPosition < -0.5 || normalizedXPosition > 0.5 ||
-              normalizedYPosition < -0.5 || normalizedYPosition > 0.5 );
   }
 
   /**

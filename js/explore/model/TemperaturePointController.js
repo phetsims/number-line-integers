@@ -74,10 +74,11 @@ class TemperaturePointController extends PointController {
       [ this.positionProperty, sceneModel.monthProperty ],
       position => {
 
-        if ( sceneModel.isPositionOverMap( position ) ) {
+        const temperatureInCelsius = sceneModel.getTemperatureAtLocation( position );
 
-          // update the values presented to the user
-          const temperatureInCelsius = sceneModel.getTemperatureAtLocation( position );
+        if ( typeof temperatureInCelsius === 'number' ) {
+
+          // a valid temperature value was returned, update the values presented to the user
           this.celsiusTemperatureProperty.value = temperatureInCelsius;
           this.fahrenheitTemperatureProperty.value = celsiusToFahrenheitInteger( temperatureInCelsius );
           this.colorProperty.value = CELSIUS_TEMPERATURE_TO_COLOR_MAPPER.mapTemperatureToColor(
