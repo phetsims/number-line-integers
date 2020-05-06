@@ -9,4 +9,6 @@
 import Enumeration from '../../../../phet-core/js/Enumeration.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 
-export default numberLineIntegers.register( 'NLIScene', Enumeration.byKeys( [ 'ELEVATION', 'BANK', 'TEMPERATURE' ] ) );
+const NLIScene = Enumeration.byKeys( [ 'ELEVATION', 'BANK', 'TEMPERATURE' ] );
+numberLineIntegers.register( 'NLIScene', NLIScene );
+export default NLIScene;
