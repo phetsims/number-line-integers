@@ -7,7 +7,7 @@
  */
 
 import Sim from '../../joist/js/Sim.js';
-import SimLauncher from '../../joist/js/SimLauncher.js';
+import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import NLIExploreScreen from './explore/NLIExploreScreen.js';
 import NLIGenericScreen from './generic/NLIGenericScreen.js';
@@ -27,9 +27,9 @@ const simOptions = {
   }
 };
 
-// launch the sim - beware that scenery Image nodes created outside of SimLauncher.launch() will have zero bounds
+// launch the sim - beware that scenery Image nodes created outside of simLauncher.launch() will have zero bounds
 // until the images are fully loaded, see https://github.com/phetsims/coulombs-law/issues/70
-SimLauncher.launch( () => {
+simLauncher.launch( () => {
   const screens = [
     new NLIExploreScreen( Tandem.ROOT.createTandem( 'exploreScreen' ) ),
     new NLIGenericScreen( Tandem.ROOT.createTandem( 'genericScreen' ) )
