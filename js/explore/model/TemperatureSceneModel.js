@@ -149,9 +149,9 @@ class TemperatureSceneModel extends SceneModel {
    * @returns {number|null} - the temperature in degrees Kelvin if the position is over the map, null otherwise
    * @public
    */
-  getTemperatureAtLocation( position ) {
+  getTemperatureAtPosition( position ) {
 
-    // Convert the location into normalized values based on the map's position and size.  These values assume a total
+    // Convert the position into normalized values based on the map's position and size.  These values assume a total
     // span of 1 in the vertical and horizontal directions with the point (0,0) being in the center of the map.
     const normalizedXPosition = ( position.x - this.mapBounds.centerX ) / this.mapBounds.width;
     const normalizedYPosition = ( this.mapBounds.centerY - position.y ) / this.mapBounds.height;
@@ -224,7 +224,7 @@ class TemperatureSceneModel extends SceneModel {
 
   /**
    * Resolve any temperature overlap between the point controllers.  Because the temperature is the same at the same
-   * location, this will also resolve any positional overlap.
+   * position, this will also resolve any positional overlap.
    * @private
    */
   resolvePointControllerOverlap() {
@@ -263,12 +263,12 @@ class TemperatureSceneModel extends SceneModel {
           const newProposedPosition = pointControllerUnderTest.positionProperty.value.plusXY( xMovement, yMovement );
 
           // There could be some rare cases where a point controller moves all the way across the map and doesn't find
-          // a location with a non-overlapping temperature.  For instance, if all the temperature values on the map
+          // a position with a non-overlapping temperature.  For instance, if all the temperature values on the map
           // are the same, this could happen.  Since this seems very unlikely, we test for it and assert if it
           // happens.
           assert && assert(
-            this.getTemperatureAtLocation( newProposedPosition ) !== null,
-            'unable to find location with different temperature value'
+            this.getTemperatureAtPosition( newProposedPosition ) !== null,
+            'unable to find position with different temperature value'
           );
 
           // move the point controller

@@ -19,7 +19,7 @@ const temperatureDataSet = {
    * @param {number} month - month of the year, from 1 to 12
    * @param {number} latitude
    * @param {number} longitude
-   * @returns {number} - temperature at specified location in Kelvin
+   * @returns {number} - temperature at specified position in Kelvin
    * @public
    */
   getNearSurfaceTemperature: ( month, latitude, longitude ) => {

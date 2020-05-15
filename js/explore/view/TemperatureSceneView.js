@@ -78,7 +78,7 @@ class TemperatureSceneView extends SceneView {
       automaticallyAddNLNodes: false
     } );
 
-    // put the number lines on their own layer so that their location can be easily adjusted
+    // put the number lines on their own layer so that their position can be easily adjusted
     const numberLinesRootNode = new Node();
     const fahrenheitNumberLineNode = this.numberLineNodes[ FAHRENHEIT_NUMBER_LINE_INDEX ];
     const celsiusNumberLineNode = this.numberLineNodes[ CELSIUS_NUMBER_LINE_INDEX ];

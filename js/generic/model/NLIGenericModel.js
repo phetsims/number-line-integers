@@ -63,7 +63,7 @@ class NLIGenericModel {
     } );
 
     // @public (read-only) {Property<Bounds2>} - the bounds of the box where the point controllers reside when not
-    // being used, changes its location when the orientation of the number line changes
+    // being used, changes its position when the orientation of the number line changes
     this.pointControllerBoxProperty = new Property( BOTTOM_BOX_BOUNDS, { valueType: Bounds2 } );
 
     // @public (read-only) - an array of the point controllers available for manipulation by the user
