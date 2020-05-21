@@ -8,19 +8,18 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import NLCConstants from '../../../../number-line-common/js/common/NLCConstants.js';
+import NLCheckbox from '../../../../number-line-common/js/common/view/NLCheckbox.js';
 import merge from '../../../../phet-core/js/merge.js';
 import ResetButton from '../../../../scenery-phet/js/buttons/ResetButton.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import Text from '../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
-import Checkbox from '../../../../sun/js/Checkbox.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import ComparisonStatementAccordionBox from '../../common/view/ComparisonStatementAccordionBox.js';
 import SpatializedNumberLineNode from '../../../../number-line-common/js/common/view/SpatializedNumberLineNode.js';
 import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 
+// constants
 const absoluteValueString = numberLineIntegersStrings.absoluteValue;
 const labelsString = numberLineIntegersStrings.labels;
 const numberLineString = numberLineIntegersStrings.numberLine;
@@ -77,21 +76,9 @@ class SceneView extends Node {
 
     // checkboxes that control common model properties
     const checkboxes = [
-      new Checkbox(
-        new Text( numberLineString, NLCConstants.CHECKBOX_TEXT_OPTIONS ),
-        sceneModel.showNumberLineProperty,
-        NLCConstants.CHECKBOX_OPTIONS
-      ),
-      new Checkbox(
-        new Text( labelsString, NLCConstants.CHECKBOX_TEXT_OPTIONS ),
-        sceneModel.numberLineLabelsVisibleProperty,
-        merge( { enabledProperty: sceneModel.showNumberLineProperty }, NLCConstants.CHECKBOX_OPTIONS )
-      ),
-      new Checkbox(
-        new Text( absoluteValueString, NLCConstants.CHECKBOX_TEXT_OPTIONS ),
-        sceneModel.numberLineAbsoluteValueIndicatorsVisibleProperty,
-        NLCConstants.CHECKBOX_OPTIONS
-      )
+      new NLCheckbox( numberLineString, sceneModel.showNumberLineProperty ),
+      new NLCheckbox( labelsString, sceneModel.numberLineLabelsVisibleProperty ),
+      new NLCheckbox( absoluteValueString, sceneModel.numberLineAbsoluteValueIndicatorsVisibleProperty )
     ];
 
     // @protected {VBox} - node containing the checkboxes that control common model properties
@@ -103,11 +90,6 @@ class SceneView extends Node {
       top: layoutBounds.minY + 10
     } );
     this.controlsLayer.addChild( this.checkboxGroup );
-
-    // adds touch dilations to the checkboxes in the checkboxGroup
-    checkboxes.forEach( checkbox => {
-      checkbox.touchArea = checkbox.localBounds.dilated( NLCConstants.CHECKBOX_DILATION );
-    } );
 
     // @private
     this.comparisonStatementBoxesOpenProperty = new BooleanProperty( true );

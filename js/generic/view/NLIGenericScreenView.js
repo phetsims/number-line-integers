@@ -8,6 +8,7 @@
 
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import NLCConstants from '../../../../number-line-common/js/common/NLCConstants.js';
+import NLCheckbox from '../../../../number-line-common/js/common/view/NLCheckbox.js';
 import NumberLineRangeSelector from '../../../../number-line-common/js/common/view/NumberLineRangeSelector.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
@@ -15,10 +16,8 @@ import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.j
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import Text from '../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
 import RadioButtonGroup from '../../../../sun/js/buttons/RadioButtonGroup.js';
-import Checkbox from '../../../../sun/js/Checkbox.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import ComparisonStatementAccordionBox from '../../common/view/ComparisonStatementAccordionBox.js';
 import PointControllerNode from '../../common/view/PointControllerNode.js';
@@ -27,12 +26,11 @@ import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NLIGenericModel from '../model/NLIGenericModel.js';
 
+// constants
 const absoluteValueString = numberLineIntegersStrings.absoluteValue;
 const labelsString = numberLineIntegersStrings.labels;
 const tickMarksString = numberLineIntegersStrings.tickMarks;
 const oppositeString = numberLineIntegersStrings.opposite;
-
-// constants
 const ARROW_ICON_LENGTH = 40;
 const ORIENTATION_BUTTON_DILATION = 2;
 
@@ -59,26 +57,10 @@ class NLIGenericScreenView extends ScreenView {
 
     // add the check boxes that will control the number line's presentation
     const checkboxes = [
-      new Checkbox(
-        new Text( labelsString, NLCConstants.CHECKBOX_TEXT_OPTIONS ),
-        model.numberLine.showPointLabelsProperty,
-        NLCConstants.CHECKBOX_OPTIONS
-      ),
-      new Checkbox(
-        new Text( tickMarksString, NLCConstants.CHECKBOX_TEXT_OPTIONS ),
-        model.numberLine.showTickMarksProperty,
-        NLCConstants.CHECKBOX_OPTIONS
-      ),
-      new Checkbox(
-        new Text( oppositeString, NLCConstants.CHECKBOX_TEXT_OPTIONS ),
-        model.numberLine.showOppositesProperty,
-        NLCConstants.CHECKBOX_OPTIONS
-      ),
-      new Checkbox(
-        new Text( absoluteValueString, NLCConstants.CHECKBOX_TEXT_OPTIONS ),
-        model.numberLine.showAbsoluteValuesProperty,
-        NLCConstants.CHECKBOX_OPTIONS
-      )
+      new NLCheckbox( labelsString, model.numberLine.showPointLabelsProperty ),
+      new NLCheckbox( tickMarksString, model.numberLine.showTickMarksProperty ),
+      new NLCheckbox( oppositeString, model.numberLine.showOppositesProperty ),
+      new NLCheckbox( absoluteValueString, model.numberLine.showAbsoluteValuesProperty )
     ];
     const checkboxGroup = new VBox( {
       children: checkboxes,
@@ -90,11 +72,6 @@ class NLIGenericScreenView extends ScreenView {
       top: this.layoutBounds.minY + 10
     } );
     controlsLayer.addChild( checkboxGroup );
-
-    // expands the touch area for the checkboxes
-    checkboxes.forEach( checkbox => {
-      checkbox.touchArea = checkbox.localBounds.dilated( NLCConstants.CHECKBOX_DILATION );
-    } );
 
     const arrowIconOptions = {
       doubleHead: true,
