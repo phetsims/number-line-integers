@@ -10,14 +10,11 @@ import ScreenView from '../../../../joist/js/ScreenView.js';
 import NLCConstants from '../../../../number-line-common/js/common/NLCConstants.js';
 import NLCheckbox from '../../../../number-line-common/js/common/view/NLCheckbox.js';
 import NumberLineRangeSelector from '../../../../number-line-common/js/common/view/NumberLineRangeSelector.js';
-import Orientation from '../../../../phet-core/js/Orientation.js';
-import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
-import RadioButtonGroup from '../../../../sun/js/buttons/RadioButtonGroup.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import ComparisonStatementAccordionBox from '../../common/view/ComparisonStatementAccordionBox.js';
 import PointControllerNode from '../../common/view/PointControllerNode.js';
@@ -25,19 +22,18 @@ import SpatializedNumberLineNode from '../../../../number-line-common/js/common/
 import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NLIGenericModel from '../model/NLIGenericModel.js';
+import NumberLineOrientationSelector from '../../../../number-line-common/js/common/view/NumberLineOrientationSelector.js';
 
 // constants
 const absoluteValueString = numberLineIntegersStrings.absoluteValue;
 const labelsString = numberLineIntegersStrings.labels;
 const tickMarksString = numberLineIntegersStrings.tickMarks;
 const oppositeString = numberLineIntegersStrings.opposite;
-const ARROW_ICON_LENGTH = 40;
-const ORIENTATION_BUTTON_DILATION = 2;
 
 class NLIGenericScreenView extends ScreenView {
 
   /**
-   * @param {NumberLineIntegersModel} model
+   * @param {NLIGenericModel} model
    * @public
    */
   constructor( model ) {
@@ -72,27 +68,6 @@ class NLIGenericScreenView extends ScreenView {
       top: this.layoutBounds.minY + 10
     } );
     controlsLayer.addChild( checkboxGroup );
-
-    const arrowIconOptions = {
-      doubleHead: true,
-      tailWidth: 1
-    };
-
-    // create the orientation selection icons
-    const horizontalIcon = new ArrowNode( -ARROW_ICON_LENGTH / 2, 0, ARROW_ICON_LENGTH / 2, 0, arrowIconOptions );
-    const verticalIcon = new ArrowNode( 0, -ARROW_ICON_LENGTH / 2, 0, ARROW_ICON_LENGTH / 2, arrowIconOptions );
-
-    // map the orientation icons to their enum values
-    const orientationButtonsContent = [
-      {
-        value: Orientation.HORIZONTAL,
-        node: horizontalIcon
-      },
-      {
-        value: Orientation.VERTICAL,
-        node: verticalIcon
-      }
-    ];
 
     // NOTE: There is no model-view transform for this sim. Model and view space use the same coordinate system.
 
@@ -141,25 +116,11 @@ class NLIGenericScreenView extends ScreenView {
     } );
     controlsLayer.addChild( resetAllButton );
 
-    // orientation radio buttons
-    const orientationRadioButtonGroup = new RadioButtonGroup(
-      model.numberLine.orientationProperty,
-      orientationButtonsContent,
-      {
-        buttonContentXMargin: 5,
-        buttonContentYMargin: 5,
-        left: checkboxGroup.left,
-        bottom: resetAllButton.bottom - 20,
-        baseColor: 'white',
-        selectedLineWidth: 2,
-        deselectedLineWidth: .5,
-        deselectedButtonOpacity: 0.25,
-        orientation: 'horizontal',
-        spacing: 12,
-        touchAreaXDilation: ORIENTATION_BUTTON_DILATION,
-        touchAreaYDilation: ORIENTATION_BUTTON_DILATION
-      } );
-    controlsLayer.addChild( orientationRadioButtonGroup );
+    const orientationSelector = new NumberLineOrientationSelector( model.numberLine.orientationProperty, {
+      left: checkboxGroup.left,
+      bottom: resetAllButton.bottom - 20
+    } );
+    controlsLayer.addChild( orientationSelector );
 
     // number line range selector
     controlsLayer.addChild( new NumberLineRangeSelector(
@@ -167,8 +128,8 @@ class NLIGenericScreenView extends ScreenView {
       NLIGenericModel.NUMBER_LINE_RANGES,
       this,
       {
-        left: orientationRadioButtonGroup.left,
-        bottom: orientationRadioButtonGroup.top - 12
+        left: orientationSelector.left,
+        bottom: orientationSelector.top - 12
       }
     ) );
   }
