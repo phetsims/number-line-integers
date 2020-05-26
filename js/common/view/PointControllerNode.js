@@ -16,6 +16,7 @@ import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
+import LockToNumberLine from '../model/LockToNumberLine.js';
 
 // constants
 const SPHERE_RADIUS = 10; // in screen coords, radius of sphere that is used if no controller node is provided
@@ -67,6 +68,34 @@ class PointControllerNode extends Node {
       connectorLine.visible = options.connectorLineVisibleProperty.value && pointController.isControllingNumberLinePoint();
     };
 
+    // A point controller node is visible most of the time, but if it is controlling a point that goes outside of the
+    // displayed range of the number line, it should be invisible.
+    const updatePointControllerVisibility = () => {
+      let atLeastOnePointVisible = false;
+      pointController.numberLines.forEach( numberLine => {
+        pointController.numberLinePoints.forEach( point => {
+          if ( numberLine.isPointInDisplayedRange( point ) ) {
+            atLeastOnePointVisible = true;
+          }
+        } );
+      } );
+      this.visible = atLeastOnePointVisible;
+    };
+
+    // If this point controller is permanently attached to a number line, monitor that number line for changes to its
+    // displayed range and make updates to this node's visibility.
+    if ( pointController.lockToNumberLine === LockToNumberLine.ALWAYS ) {
+
+      // As of this writing, there is no support for having a point controller permanently locked to multiple number
+      // lines, and it seems like an unlikely case, so the following assert checks that there is only one.  If support
+      // for point controllers that are locked to multiple number lines is ever needed, this will need to change.
+      assert && assert( pointController.numberLines.length === 1 );
+
+      // listen for changes to the number line's displayed range and update visibility
+      const numberLine = pointController.numberLines[ 0 ];
+      numberLine.displayedRangeProperty.link( updatePointControllerVisibility );
+    }
+
     // handle changes to the point controller position
     const updateAppearanceOnPositionChange = position => {
       if ( options.connectorLine && pointController.isControllingNumberLinePoint() ) {
@@ -83,6 +112,7 @@ class PointControllerNode extends Node {
       updateConnectorLineVisibility();
       this.draggableNode.translation = position;
       this.moveToFront(); // make sure that the most recently moved point controller is at the front of the z-order
+      updatePointControllerVisibility();
     };
     pointController.positionProperty.link( updateAppearanceOnPositionChange );
 
@@ -142,7 +172,6 @@ class PointControllerNode extends Node {
     // If the default point controller node is being used, create and hook up the listener that will update touch
     // areas as the orientation changes so that the point controllers can be easily grabbed by a user's finger without
     // covering them up.
-    const numberLine = pointController.numberLines[ 0 ];
     let setTouchDilationBasedOnOrientation;
     if ( !options.node ) {
       setTouchDilationBasedOnOrientation = orientation => {
@@ -158,7 +187,7 @@ class PointControllerNode extends Node {
         }
         this.draggableNode.setTouchArea( touchAreaBounds );
       };
-      numberLine.orientationProperty.link( setTouchDilationBasedOnOrientation );
+      pointController.numberLines[ 0 ].orientationProperty.link( setTouchDilationBasedOnOrientation );
     }
 
     // @private
@@ -169,9 +198,14 @@ class PointControllerNode extends Node {
       if ( options.connectorLineVisibleProperty.hasListener( updateConnectorLineVisibility ) ) {
         options.connectorLineVisibleProperty.unlink( updateConnectorLineVisibility );
       }
-      if ( !options.node ) {
-        numberLine.orientationProperty.unlink( setTouchDilationBasedOnOrientation );
-      }
+      pointController.numberLines.forEach( numberLine => {
+        if ( numberLine.displayedRangeProperty.hasListener( updatePointControllerVisibility ) ) {
+          numberLine.displayedRangeProperty.unlink( updatePointControllerVisibility );
+        }
+        if ( numberLine.orientationProperty.hasListener( setTouchDilationBasedOnOrientation ) ) {
+          numberLine.orientationProperty.unlink( setTouchDilationBasedOnOrientation );
+        }
+      } );
     };
   }
 
