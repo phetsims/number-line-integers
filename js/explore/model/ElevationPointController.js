@@ -9,9 +9,9 @@
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import merge from '../../../../phet-core/js/merge.js';
-import LockToNumberLine from '../../common/model/LockToNumberLine.js';
+import LockToNumberLine from '../../../../number-line-common/js/common/model/LockToNumberLine.js';
 import NumberLinePoint from '../../../../number-line-common/js/common/model/NumberLinePoint.js';
-import PointController from '../../common/model/PointController.js';
+import PointController from '../../../../number-line-common/js/common/model/PointController.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 
 class ElevationPointController extends PointController {

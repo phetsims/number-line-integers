@@ -17,7 +17,7 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import ComparisonStatementAccordionBox from '../../common/view/ComparisonStatementAccordionBox.js';
-import PointControllerNode from '../../common/view/PointControllerNode.js';
+import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
 import SpatializedNumberLineNode from '../../../../number-line-common/js/common/view/SpatializedNumberLineNode.js';
 import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';

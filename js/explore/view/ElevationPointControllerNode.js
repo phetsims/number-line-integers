@@ -17,7 +17,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import NLIConstants from '../../common/NLIConstants.js';
-import PointControllerNode from '../../common/view/PointControllerNode.js';
+import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
 import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 

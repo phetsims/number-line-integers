@@ -14,7 +14,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Range from '../../../../dot/js/Range.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
-import LockToNumberLine from '../../common/model/LockToNumberLine.js';
+import LockToNumberLine from '../../../../number-line-common/js/common/model/LockToNumberLine.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import NLIQueryParameters from '../../common/NLIQueryParameters.js';
 import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
@@ -111,7 +111,11 @@ class TemperatureSceneModel extends SceneModel {
     this.permanentPointControllers = _.times( 3, i => new TemperaturePointController(
       this,
       THERMOMETER_LABELS[ i ],
-      { lockToNumberLine: LockToNumberLine.NEVER, scaleInBox: 0.5 }
+      {
+        numberLines: this.numberLines,
+        lockToNumberLine: LockToNumberLine.NEVER,
+        scaleInBox: 0.5
+      }
     ) );
 
     // put the permanent point controllers in their starting positions

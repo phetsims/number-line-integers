@@ -20,7 +20,7 @@ import fishInWater from '../../../images/fish-water_png.js';
 import girlInAir from '../../../images/girl-air_png.js';
 import girlOnRock from '../../../images/girl-rock_png.js';
 import girlInWater from '../../../images/girl-water_png.js';
-import PointControllerNode from '../../common/view/PointControllerNode.js';
+import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
 import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import ElevationPointControllerNode from './ElevationPointControllerNode.js';

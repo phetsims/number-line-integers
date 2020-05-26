@@ -16,9 +16,9 @@ import Utils from '../../../../dot/js/Utils.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import PaintColorProperty from '../../../../scenery/js/util/PaintColorProperty.js';
-import LockToNumberLine from '../../common/model/LockToNumberLine.js';
+import LockToNumberLine from '../../../../number-line-common/js/common/model/LockToNumberLine.js';
 import NumberLinePoint from '../../../../number-line-common/js/common/model/NumberLinePoint.js';
-import PointController from '../../common/model/PointController.js';
+import PointController from '../../../../number-line-common/js/common/model/PointController.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import TemperatureToColorMapper from './TemperatureToColorMapper.js';
 

@@ -21,7 +21,7 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import ColorizedReadoutNode from '../../../../number-line-common/js/common/view/ColorizedReadoutNode.js';
-import PointControllerNode from '../../common/view/PointControllerNode.js';
+import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
 import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 
