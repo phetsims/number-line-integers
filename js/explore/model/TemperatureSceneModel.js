@@ -286,6 +286,7 @@ class TemperatureSceneModel extends SceneModel {
 
   /**
    * @override
+   * @public
    */
   reset() {
 
