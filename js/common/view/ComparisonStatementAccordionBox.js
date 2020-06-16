@@ -14,6 +14,7 @@ import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import ComparisonStatementNode from './ComparisonStatementNode.js';
+import NLCConstants from '../../../../number-line-common/js/common/NLCConstants.js';
 
 const comparisonStatementString = numberLineIntegersStrings.comparisonStatement;
 
@@ -21,20 +22,9 @@ const comparisonStatementString = numberLineIntegersStrings.comparisonStatement;
 const TITLE_FONT = new PhetFont( 18 );
 const COMPARISON_STATEMENT_BOX_WIDTH = 340; // empirically determined to look decent
 const DEFAULT_OPTIONS = {
-  fill: 'white',
-  showTitleWhenExpanded: false,
-  cornerRadius: 5,
   contentAlign: 'right',
   minWidth: COMPARISON_STATEMENT_BOX_WIDTH,
-  maxWidth: COMPARISON_STATEMENT_BOX_WIDTH,
-  buttonXMargin: 8,
-  buttonYMargin: 6,
-  expandCollapseButtonOptions: {
-    touchAreaXDilation: 15,
-    touchAreaYDilation: 15,
-    mouseAreaXDilation: 5,
-    mouseAreaYDilation: 5
-  }
+  maxWidth: COMPARISON_STATEMENT_BOX_WIDTH
 };
 
 class ComparisonStatementAccordionBox extends AccordionBox {
@@ -50,7 +40,7 @@ class ComparisonStatementAccordionBox extends AccordionBox {
     const comparisonStatementNode = new ComparisonStatementNode( numberLine );
 
     // embed the comparison statement in an accordion box
-    super( comparisonStatementNode, merge( {}, DEFAULT_OPTIONS, options, {
+    super( comparisonStatementNode, merge( {}, DEFAULT_OPTIONS, options, NLCConstants.ACCORDION_BOX_COMMON_OPTIONS, {
       titleNode: new Text( comparisonStatementString, {
         font: TITLE_FONT,
         maxWidth: COMPARISON_STATEMENT_BOX_WIDTH * 0.8
