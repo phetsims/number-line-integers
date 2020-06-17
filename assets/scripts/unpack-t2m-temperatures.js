@@ -10,6 +10,8 @@
  * node ./js/unpack-t2m-temperatures.js
  */
 
+/* eslint-env node */
+
 // modules
 const fs = require( 'fs' );
 
