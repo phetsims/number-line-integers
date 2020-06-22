@@ -117,7 +117,7 @@ class NLIGenericModel {
 
           // there should only be one controlled point
           assert && assert( pointController.numberLinePoints.length === 1 );
-          pointController.setPositionRelativeToPoint( pointController.numberLinePoints[ 0 ] );
+          pointController.setPositionRelativeToPoint( pointController.numberLinePoints.get( 0 ) );
         }
       } );
     } );
@@ -135,7 +135,7 @@ class NLIGenericModel {
           );
 
           // get the point on the number line that is currently controlled by this point controller
-          const numberLinePoint = pointController.numberLinePoints[ 0 ];
+          const numberLinePoint = pointController.numberLinePoints.get( 0 );
 
           if ( !displayedRange.contains( numberLinePoint.valueProperty.value ) ) {
 

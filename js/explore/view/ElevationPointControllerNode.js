@@ -103,7 +103,7 @@ class ElevationPointControllerNode extends PointControllerNode {
             .moveTo( compositeImageNode.x, compositeImageNode.y )
             .lineTo( compositeImageNode.x, seaLevel );
 
-          const value = pointController.numberLinePoints[ 0 ].valueProperty.value;
+          const value = pointController.numberLinePoints.get( 0 ).valueProperty.value;
           let seaLevelText = seaLevelString;
           if ( value < 0 ) {
             seaLevelText = StringUtils.fillIn( amountBelowSeaLevelString, { value: Math.abs( value ) } );

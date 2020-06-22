@@ -135,7 +135,7 @@ class BankPointControllerNode extends PointControllerNode {
         );
 
         // variables needed to make the updates
-        const numberLinePoint = pointController.numberLinePoints[ 0 ];
+        const numberLinePoint = pointController.numberLinePoints.get( 0 );
         const currentBalance = numberLinePoint.valueProperty.value;
 
         // scale the size
