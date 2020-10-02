@@ -6,7 +6,7 @@
  * @author John Blanco (PhET Interactive Simulations)
  */
 
-import ObservableArray from '../../../../axon/js/ObservableArray.js';
+import createObservableArray from '../../../../axon/js/createObservableArray.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Range from '../../../../dot/js/Range.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -104,7 +104,7 @@ class ElevationSceneModel extends SceneModel {
 
     // @public (read-only) - array of point controllers that are attached to the number line when a corresponding
     // elevatable controller is over the elevation area
-    this.numberLineAttachedPointControllers = new ObservableArray();
+    this.numberLineAttachedPointControllers = createObservableArray();
 
     // watch for points coming and going on the number line and add the additional point controllers for them
     numberLine.residentPoints.addItemAddedListener( addedPoint => {
