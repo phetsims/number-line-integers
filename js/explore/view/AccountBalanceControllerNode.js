@@ -25,8 +25,8 @@ import numberLineIntegers from '../../numberLineIntegers.js';
 // constants
 const MARGIN = 10;
 const BUTTON_OPTIONS = {
-  minXMargin: MARGIN,
-  minYMargin: MARGIN,
+  xMargin: MARGIN,
+  yMargin: MARGIN,
   fireOnHold: true,
   fireOnHoldDelay: 400,
   fireOnHoldInterval: 30
