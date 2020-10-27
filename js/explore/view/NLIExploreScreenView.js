@@ -10,7 +10,7 @@ import ScreenView from '../../../../joist/js/ScreenView.js';
 import NLCConstants from '../../../../number-line-common/js/common/NLCConstants.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import RadioButtonGroup from '../../../../sun/js/buttons/RadioButtonGroup.js';
+import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NLIScene from '../model/NLIScene.js';
@@ -65,7 +65,7 @@ class NLIExploreScreenView extends ScreenView {
     ];
 
     // create scene selector radio buttons
-    const sceneSelectorRadioButtonGroup = new RadioButtonGroup(
+    const sceneSelectorRadioButtonGroup = new RectangularRadioButtonGroup(
       model.selectedSceneProperty,
       sceneSelectionButtonsContent,
       {
