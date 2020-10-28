@@ -13,7 +13,7 @@ import Shape from '../../../../kite/js/Shape.js';
 import merge from '../../../../phet-core/js/merge.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import ButtonListener from '../../../../scenery/js/input/ButtonListener.js';
+import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
@@ -303,7 +303,7 @@ class OperatorSelectorNode extends Node {
     lessThanOperatorSelectorNode.touchArea = lessThanOperatorSelectorNode.bounds.withOffsets(
       BUTTON_TOUCH_DILATION, BUTTON_TOUCH_DILATION, 0, BUTTON_TOUCH_DILATION
     );
-    lessThanOperatorSelectorNode.addInputListener( new ButtonListener( {
+    lessThanOperatorSelectorNode.addInputListener( new FireListener( {
       fire: () => {
         selectedOperatorProperty.value = LESS_THAN_STRING;
       }
@@ -331,7 +331,7 @@ class OperatorSelectorNode extends Node {
     greaterThanOperatorSelectorNode.touchArea = greaterThanOperatorSelectorNode.bounds.withOffsets(
       0, BUTTON_TOUCH_DILATION, BUTTON_TOUCH_DILATION, BUTTON_TOUCH_DILATION
     );
-    greaterThanOperatorSelectorNode.addInputListener( new ButtonListener( {
+    greaterThanOperatorSelectorNode.addInputListener( new FireListener( {
       fire: () => {
         selectedOperatorProperty.value = GREATER_THAN_STRING;
       }
