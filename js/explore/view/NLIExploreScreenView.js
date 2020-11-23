@@ -93,8 +93,8 @@ class NLIExploreScreenView extends ScreenView {
         bankScene.reset();
         temperatureScene.reset();
       },
-      right: this.layoutBounds.maxX - NLCConstants.RESET_BUTTON_INSET_FROM_EDGE,
-      bottom: this.layoutBounds.maxY - NLCConstants.RESET_BUTTON_INSET_FROM_EDGE
+      right: this.layoutBounds.maxX - NLCConstants.SCREEN_VIEW_X_MARGIN,
+      bottom: this.layoutBounds.maxY - NLCConstants.SCREEN_VIEW_Y_MARGIN
     } );
     controlsLayer.addChild( resetAllButton );
   }

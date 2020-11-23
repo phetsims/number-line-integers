@@ -111,14 +111,14 @@ class NLIGenericScreenView extends ScreenView {
         model.reset();
         comparisonStatementAccordionBox.reset();
       },
-      right: this.layoutBounds.maxX - NLCConstants.RESET_BUTTON_INSET_FROM_EDGE,
-      bottom: this.layoutBounds.maxY - NLCConstants.RESET_BUTTON_INSET_FROM_EDGE
+      right: this.layoutBounds.maxX - NLCConstants.SCREEN_VIEW_X_MARGIN,
+      bottom: this.layoutBounds.maxY - NLCConstants.SCREEN_VIEW_Y_MARGIN
     } );
     controlsLayer.addChild( resetAllButton );
 
     const orientationSelector = new NumberLineOrientationSelector( model.numberLine.orientationProperty, {
       left: checkboxGroup.left,
-      bottom: resetAllButton.bottom - 20
+      bottom: resetAllButton.centerY
     } );
     controlsLayer.addChild( orientationSelector );
 
