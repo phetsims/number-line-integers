@@ -63,7 +63,7 @@ class ElevationSceneView extends SceneView {
     this.scenesLayer.addChild( elevationAreaImage );
 
     // add the node that represents the box that will hold the items that the user can elevate
-    this.scenesLayer.addChild( new Rectangle.bounds( sceneModel.elevatableItemsBoxBounds, {
+    this.scenesLayer.addChild( Rectangle.bounds( sceneModel.elevatableItemsBoxBounds, {
       fill: 'white',
       stroke: 'black',
       cornerRadius: 6
