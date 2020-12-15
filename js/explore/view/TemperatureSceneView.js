@@ -118,7 +118,7 @@ class TemperatureSceneView extends SceneView {
     this.scenesLayer.addChild( this.temperatureMap );
 
     // add the node that represents the box that will hold the thermometers
-    const thermometerBox = new Rectangle.bounds( sceneModel.thermometerBoxBounds, {
+    const thermometerBox = Rectangle.bounds( sceneModel.thermometerBoxBounds, {
       fill: 'white',
       stroke: 'black',
       cornerRadius: 6
