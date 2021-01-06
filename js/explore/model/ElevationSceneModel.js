@@ -169,8 +169,7 @@ class ElevationSceneModel extends SceneModel {
 
     // put the point controllers back into their starting positions
     this.permanentPointControllers.forEach( pointController => {
-      pointController.removePointsFromNumberLines();
-      pointController.clearNumberLinePoints();
+      pointController.removeClearAndDisposePoints();
       this.putPointControllerInBox( pointController );
     } );
   }

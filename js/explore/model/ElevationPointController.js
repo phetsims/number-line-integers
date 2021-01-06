@@ -65,8 +65,7 @@ class ElevationPointController extends PointController {
       else if ( !over && this.isControllingNumberLinePoint() ) {
 
         // remove our point(s) from the number line and disassociate from them
-        this.removePointsFromNumberLines();
-        this.clearNumberLinePoints();
+        this.removeClearAndDisposePoints();
       }
     } );
   }

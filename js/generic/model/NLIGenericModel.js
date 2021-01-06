@@ -142,6 +142,7 @@ class NLIGenericModel {
             // the point controlled by this controller is out of the displayed range, so get rid of it
             pointController.dissociateFromNumberLinePoint( numberLinePoint );
             this.numberLine.removePoint( numberLinePoint );
+            numberLinePoint.dispose();
 
             // put the controller away
             this.putPointControllerInBox( pointController );
@@ -194,18 +195,20 @@ class NLIGenericModel {
    * @public
    */
   reset() {
-    this.numberLine.reset();
 
-    // clear any associations that the point controllers have with points on the number line
+    // Clear any associations that the point controllers have with points on the number line.
     this.pointControllers.forEach( pointController => {
       pointController.reset();
     } );
 
-    // put the first two point controllers in the box at the bottom of the screen
+    // Reset the number line.
+    this.numberLine.reset();
+
+    // Put the first two point controllers in the box at the bottom of the screen.
     this.putPointControllerInBox( this.pointControllers[ 0 ] );
     this.putPointControllerInBox( this.pointControllers[ 1 ] );
 
-    // associate the third point controller with the point on the number line
+    // Associate the third point controller with the point on the number line.
     assert && assert( this.numberLine.residentPoints.length === 1, 'expected one and only one point on the number line' );
     this.pointControllers[ 2 ].associateWithNumberLinePoint( this.numberLine.residentPoints.get( 0 ) );
   }

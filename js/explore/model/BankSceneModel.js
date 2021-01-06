@@ -132,12 +132,11 @@ class BankSceneModel extends SceneModel {
         );
         assert && assert(
           this.comparisonAccountPointController.numberLinePoints.length === 1,
-          'should be controlling a point'
+          'should be controlling a single point'
         );
 
         // remove the point for the comparison account from the number line
-        this.comparisonAccountPointController.dissociateFromNumberLinePoint( comparisonAccountNumberLinePoint );
-        numberLine.removePoint( comparisonAccountNumberLinePoint );
+        this.comparisonAccountPointController.removeClearAndDisposePoints();
         comparisonAccountNumberLinePoint = null;
       }
     } );

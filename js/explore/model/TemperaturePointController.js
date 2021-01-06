@@ -123,8 +123,7 @@ class TemperaturePointController extends PointController {
       else if ( !over && this.isControllingNumberLinePoint() ) {
 
         // remove our points from the number lines
-        this.removePointsFromNumberLines();
-        this.clearNumberLinePoints();
+        this.removeClearAndDisposePoints();
         this.celsiusNumberLinePoint = null;
         this.fahrenheitNumberLinePoint = null;
       }
