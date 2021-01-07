@@ -12,8 +12,7 @@
   "phet": {
     "phetLibs": [
       "number-line-common",
-      "twixt",
-      "number-line-distance"
+      "twixt"
     ],
     "requirejsNamespace": "NUMBER_LINE_INTEGERS",
     "runnable": true,
