@@ -18,7 +18,7 @@ class NLIExploreModel {
    */
   constructor() {
 
-    // @public {Property<NLIScene>} - currently selected scene
+    // @public {Property.<NLIScene>} - currently selected scene
     this.selectedSceneProperty = new EnumerationProperty( NLIScene, NLIScene.ELEVATION );
 
     // @public (read-only) {ElevationSceneModel} - model instance for the "Elevation" scene

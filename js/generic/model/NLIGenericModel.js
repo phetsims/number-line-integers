@@ -62,7 +62,7 @@ class NLIGenericModel {
       heightInModelSpace: NLIConstants.NLI_LAYOUT_BOUNDS.height - 160
     } );
 
-    // @public (read-only) {Property<Bounds2>} - the bounds of the box where the point controllers reside when not
+    // @public (read-only) {Property.<Bounds2>} - the bounds of the box where the point controllers reside when not
     // being used, changes its position when the orientation of the number line changes
     this.pointControllerBoxProperty = new Property( BOTTOM_BOX_BOUNDS, { valueType: Bounds2 } );
 
