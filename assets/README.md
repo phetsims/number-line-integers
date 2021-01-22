@@ -59,15 +59,3 @@ compact.  Please read through the information in temperatureDataSet.js to
 see how this was done and to figure out how to repeat the process if an
 when necessary.
 + At this point, the temperature data set should be fully updated, and can be tested in the context of the sim.
-
-
-Piggy Bank Nodes
-================
-
-The nodes that are used to depict piggy banks are a little complicated.  They
-use an SVG outline shape with a fill and some overlaid graphics to depict
-shading and decorations ont the piggy bank.  Looking through the code will help
-a lot in terms of understanding this, but the creation of the SVG shape outline
-is a little tricky.  It was done by taking the path information out of the
-.svg file and pasting into the SVG_STRING value in `piggyBankShapes.js`.  Line
-joins were inserted in the string to make it into a more managable source file.
