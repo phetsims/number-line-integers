@@ -15,7 +15,10 @@ const NLIQueryParameters = QueryStringMachine.getAll( {
    * because it has been requested by users in the past (see https://github.com/phetsims/states-of-matter/issues/216)
    * This is public facing.
    */
-  defaultCelsius: { type: 'flag' }
+  defaultCelsius: {
+    type: 'flag',
+    public: true
+  }
 
 } );
 
