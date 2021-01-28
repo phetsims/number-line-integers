@@ -73,11 +73,11 @@ class NLIGenericModel {
       new PointController( { color: INITIAL_POINT_COLOR, numberLines: [ this.numberLine ] } )
     ];
 
-    // put the first two point controllers into the box at the bottom of the screen
+    // Put the first two point controllers into the box at the bottom of the screen.
     this.putPointControllerInBox( this.pointControllers[ 0 ] );
     this.putPointControllerInBox( this.pointControllers[ 1 ] );
 
-    // the third point controller should be associated with the point already on the number line
+    // The third point controller should be associated with the point already on the number line.
     assert && assert( this.numberLine.residentPoints.length === 1, 'expected one and only one point on the number line' );
     this.pointControllers[ 2 ].associateWithNumberLinePoint( this.numberLine.residentPoints.get( 0 ) );
 
@@ -86,7 +86,7 @@ class NLIGenericModel {
     this.pointControllers.forEach( pointController => {
       pointController.isDraggingProperty.lazyLink( dragging => {
 
-        // if the point controller is released and it's not controlling a point on the number line, put it away
+        // If the point controller is released and it's not controlling a point on the number line, put it away.
         if ( !dragging && !pointController.isControllingNumberLinePoint() ) {
           this.putPointControllerInBox( pointController, true );
         }
@@ -100,22 +100,22 @@ class NLIGenericModel {
       this.pointControllerBoxProperty.value = newBoxBounds;
       this.pointControllers.forEach( pointController => {
 
-        // if the point controller is animating, stop it and put it in the box
+        // If the point controller is animating, stop it and put it in the box.
         if ( pointController.inProgressAnimationProperty.value ) {
           pointController.stopAnimation();
           this.putPointControllerInBox( pointController );
         }
 
-        // if the point controller was sitting in the previous box, move it to the new one
+        // If the point controller was sitting in the previous box, move it to the new one.
         else if ( previousBoxBounds.containsPoint( pointController.positionProperty.value ) &&
                   !pointController.isDraggingProperty.value ) {
           this.putPointControllerInBox( pointController );
         }
 
-        // if the controller is controlling a point on the number line, relocate the point and the controller
+        // If the controller is controlling a point on the number line, relocate the point and the controller.
         else if ( pointController.isControllingNumberLinePoint() ) {
 
-          // there should only be one controlled point
+          // There should only be one controlled point.
           assert && assert( pointController.numberLinePoints.length === 1 );
           pointController.setPositionRelativeToPoint( pointController.numberLinePoints.get( 0 ) );
         }
@@ -134,17 +134,17 @@ class NLIGenericModel {
             'point controllers on the "Generic" screen should never control multiple points'
           );
 
-          // get the point on the number line that is currently controlled by this point controller
+          // Get the point on the number line that is currently controlled by this point controller.
           const numberLinePoint = pointController.numberLinePoints.get( 0 );
 
           if ( !displayedRange.contains( numberLinePoint.valueProperty.value ) ) {
 
-            // the point controlled by this controller is out of the displayed range, so get rid of it
+            // The point controlled by this controller is out of the displayed range, so get rid of it.
             pointController.dissociateFromNumberLinePoint( numberLinePoint );
             this.numberLine.removePoint( numberLinePoint );
             numberLinePoint.dispose();
 
-            // put the controller away
+            // Put the controller away.
             this.putPointControllerInBox( pointController );
           }
         }
@@ -153,8 +153,8 @@ class NLIGenericModel {
   }
 
   /**
-   * place the provided point controller into the currently active box, generally done on init, reset, and when the
-   * user "puts it away"
+   * Place the provided point controller into the currently active box, generally done on init, reset, and when the
+   * user "puts it away".
    * @param {PointController} pointController
    * @param {boolean} [animate] - controls whether to animate the return to the box or do it instantly
    * @private
@@ -173,16 +173,16 @@ class NLIGenericModel {
 
     let destination;
 
-    // decide which box and at which position the point controller should be placed
+    // Decide which box and at which position the point controller should be placed.
     if ( this.numberLine.orientationProperty.value === Orientation.HORIZONTAL ) {
 
-      // put point in box at bottom of screen
+      // Put point in box at bottom of screen.
       const spacing = BOTTOM_BOX_BOUNDS.width / numberOfPositions;
       destination = new Vector2( BOTTOM_BOX_BOUNDS.minX + spacing / 2 + spacing * index, BOTTOM_BOX_BOUNDS.centerY );
     }
     else {
 
-      // put point in box at side of screen
+      // Put point in box at side of screen.
       const spacing = SIDE_BOX_BOUNDS.height / numberOfPositions;
       destination = new Vector2( SIDE_BOX_BOUNDS.centerX, SIDE_BOX_BOUNDS.minY + spacing / 2 + spacing * index );
     }
@@ -191,7 +191,7 @@ class NLIGenericModel {
   }
 
   /**
-   * restore model to initial state
+   * Restore model to initial state.
    * @public
    */
   reset() {

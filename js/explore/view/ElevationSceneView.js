@@ -60,14 +60,14 @@ class ElevationSceneView extends SceneView {
     elevationAreaImage.center = sceneModel.elevationAreaBounds.center;
     this.scenesLayer.addChild( elevationAreaImage );
 
-    // add the node that represents the box that will hold the items that the user can elevate
+    // Add the node that represents the box that will hold the items that the user can elevate.
     this.scenesLayer.addChild( Rectangle.bounds( sceneModel.elevatableItemsBoxBounds, {
       fill: 'white',
       stroke: 'black',
       cornerRadius: 6
     } ) );
 
-    // add label for the number line
+    // Add label for the number line.
     const numberLineLabel = new Text( elevationString, {
       font: NUMBER_LINE_LABEL_FONT,
       centerX: sceneModel.numberLines[ 0 ].centerPositionProperty.value.x,
@@ -77,7 +77,7 @@ class ElevationSceneView extends SceneView {
     sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
     this.scenesLayer.addChild( numberLineLabel );
 
-    // define a function that will be used to switch images based on its position in the model space
+    // Define a function that will be used to switch images based on its position in the model space.
     const selectImageIndex = ( position, currentlySelectedImageIndex ) => {
 
       // This function is intended to have some hysteresis, i.e. the image doesn't change until the point controller
@@ -92,11 +92,11 @@ class ElevationSceneView extends SceneView {
       return index;
     };
 
-    // add a layer where the elevation point controllers go
+    // Add a layer where the elevation point controllers go.
     const elevationPointControllersLayer = new Node();
     this.scenesLayer.addChild( elevationPointControllersLayer );
 
-    // add the girl that the user can place in the elevation scene
+    // Add the girl that the user can place in the elevation scene.
     elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
       sceneModel.permanentPointControllers[ 0 ],
       [
@@ -145,7 +145,7 @@ class ElevationSceneView extends SceneView {
       }
     ) );
 
-    // add the bird that the user can place in the elevation scene
+    // Add the bird that the user can place in the elevation scene.
     elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
       sceneModel.permanentPointControllers[ 1 ],
       [
@@ -163,7 +163,7 @@ class ElevationSceneView extends SceneView {
       }
     ) );
 
-    // add the fish that the user can place in the elevation scene
+    // Add the fish that the user can place in the elevation scene.
     elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
       sceneModel.permanentPointControllers[ 2 ],
       [
@@ -181,7 +181,7 @@ class ElevationSceneView extends SceneView {
       }
     ) );
 
-    // add the water
+    // Add the water.
     this.scenesLayer.addChild( new Rectangle(
       0,
       0,
@@ -194,15 +194,15 @@ class ElevationSceneView extends SceneView {
       }
     ) );
 
-    // add the layer where the attached point controllers go
+    // Add the layer where the attached point controllers go.
     const attachedPointControllersLayer = new Node();
     this.addChild( attachedPointControllersLayer );
     attachedPointControllersLayer.moveToBack(); // so that they are behind the number line in z-order
 
-    // the visibility of the attached point controllers should be the same as the number line
+    // The visibility of the attached point controllers should be the same as the number line.
     sceneModel.showNumberLineProperty.linkAttribute( attachedPointControllersLayer, 'visible' );
 
-    // add/remove the nodes that represent the point controllers that are attached to the number line
+    // Add/remove the nodes that represent the point controllers that are attached to the number line.
     sceneModel.numberLineAttachedPointControllers.addItemAddedListener( addedPointController => {
       const pointControllerNode = new PointControllerNode( addedPointController );
       attachedPointControllersLayer.addChild( pointControllerNode );

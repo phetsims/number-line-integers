@@ -29,7 +29,7 @@ const decemberString = numberLineIntegersStrings.december;
 
 const MONTH_STRINGS = [
 
-  // these must be in order of occurrence, not sorted alphabetically
+  // These must be in order of occurrence, not sorted alphabetically.
   januaryString,
   februaryString,
   marchString,

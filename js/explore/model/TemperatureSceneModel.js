@@ -58,7 +58,7 @@ class TemperatureSceneModel extends SceneModel {
    */
   constructor() {
 
-    // the base class has a single number line, so make that one the Fahrenheit version
+    // The base class has a single number line, so make that one the Fahrenheit version.
     super( {
 
       // two number lines, one for Fahrenheit and one for Celsius
@@ -93,7 +93,7 @@ class TemperatureSceneModel extends SceneModel {
       NLIQueryParameters.defaultCelsius ? NLIConstants.TEMPERATURE_UNITS.CELSIUS : NLIConstants.TEMPERATURE_UNITS.FAHRENHEIT
     );
 
-    // specify the position of the box that will hold the thermometers
+    // Specify the position of the box that will hold the thermometers.
     const boxWidth = MAP_WIDTH * 0.5;
     const boxHeight = ( SCENE_BOUNDS.maxY - MAP_BOUNDS.maxY ) * 0.4;
     const boxCenterX = MAP_CENTER.x;
@@ -118,37 +118,37 @@ class TemperatureSceneModel extends SceneModel {
       }
     ) );
 
-    // put the permanent point controllers in their starting positions
+    // Put the permanent point controllers in their starting positions.
     this.permanentPointControllers.forEach( pointController => {
       this.putPointControllerInBox( pointController );
     } );
 
-    // monitor each point controller for when it is dropped and check for whether actions are needed
+    // Monitor each point controller for when it is dropped and check for whether actions are needed.
     this.permanentPointControllers.forEach( pointController => {
       pointController.isDraggingProperty.lazyLink( isDragging => {
         if ( !isDragging ) {
           if ( !pointController.isOverMapProperty.value ) {
 
-            // the point controller was released outside of the map area, so put it away in the holding box
+            // The point controller was released outside of the map area, so put it away in the holding box.
             this.putPointControllerInBox( pointController, true );
           }
           else {
 
-            // the point controller was dropped on the map, resolve any overlap with other point controllers
+            // The point controller was dropped on the map, resolve any overlap with other point controllers.
             this.resolvePointControllerOverlap();
           }
         }
       } );
     } );
 
-    // when the month changes, check and resolve any overlap in temperature values that may have occurred
+    // When the month changes, check and resolve any overlap in temperature values that may have occurred.
     this.monthProperty.lazyLink( () => {
       this.resolvePointControllerOverlap();
     } );
   }
 
   /**
-   * get the temperature at the specified position
+   * Get the temperature at the specified position.
    * @param {Vector2} position - model coordinates for where to get the temperature
    * @returns {number|null} - the temperature in degrees Kelvin if the position is over the map, null otherwise
    * @public
@@ -165,20 +165,20 @@ class TemperatureSceneModel extends SceneModel {
     if ( normalizedXPosition < -0.5 || normalizedXPosition > 0.5 ||
          normalizedYPosition < -0.5 || normalizedYPosition > 0.5 ) {
 
-      // the point is not over the map rectangle, bail
+      // The point is not over the map rectangle - bail.
       return null;
     }
 
-    // convert the normalized x and y values into latitude and longitude values
+    // Convert the normalized x and y values into latitude and longitude values.
     const latLong = reverseRobinsonProjector.xyToLatLong( normalizedXPosition, normalizedYPosition );
 
-    // return null if position is not in map bounds
+    // Return null if position is not in map bounds.
     if ( latLong.latitude > 90 || latLong.latitude < -90 ||
          latLong.longitude > 180 || latLong.longitude < -180 ) {
       return null;
     }
 
-    // return the temperature at this position on the surface of the Earth for the current month
+    // Return the temperature at this position on the surface of the Earth for the current month.
     return temperatureDataSet.getNearSurfaceTemperature(
       this.monthProperty.value,
       latLong.latitude,
@@ -201,8 +201,8 @@ class TemperatureSceneModel extends SceneModel {
   }
 
   /**
-   * place the provided point controller into the holding box, generally done on init, reset, and when the user "puts
-   * it away"
+   * Place the provided point controller into the holding box, generally done on init, reset, and when the user "puts
+   * it away".
    * @param {TemperaturePointController} pointController
    * @param {boolean} [animate] - controls whether to animate the return to the box or do it instantly
    * @private
@@ -233,37 +233,37 @@ class TemperatureSceneModel extends SceneModel {
    */
   resolvePointControllerOverlap() {
 
-    // make a list of all point controller that are currently on the map
+    // Make a list of all point controller that are currently on the map.
     const pointControllersOnMap = this.permanentPointControllers.filter( pointController => {
       return pointController.isOverMapProperty.value && !pointController.isDraggingProperty.value;
     } );
 
     if ( pointControllersOnMap.length >= 2 ) {
 
-      // sort the point controllers such that the most recently added ones are towards the front of the array
+      // Sort the point controllers such that the most recently added ones are towards the front of the array.
       pointControllersOnMap.sort( ( pc1, pc2 ) => {
         return pc2.droppedOnMapTimestamp - pc1.droppedOnMapTimestamp;
       } );
 
-      // loop through all controllers, moving them as necessary to eliminate temperature or position overlap
+      // Loop through all controllers, moving them as necessary to eliminate temperature or position overlap.
       _.times( pointControllersOnMap.length - 1, () => {
 
-        // pull the first controller from the front of the list
+        // Pull the first controller from the front of the list.
         const pointControllerUnderTest = pointControllersOnMap.splice( 0, 1 )[ 0 ];
         const startPosition = pointControllerUnderTest.positionProperty.value.copy();
         let moveCount = 0;
 
-        // test for overlap with all other temperature point controllers, move if detected
+        // Test for overlap with all other temperature point controllers, move if detected.
         while ( _.some(
           pointControllersOnMap,
           pc => pc.celsiusTemperatureProperty.value === pointControllerUnderTest.celsiusTemperatureProperty.value )
           ) {
 
-          // overlap detected, move the point controller towards the a reasonably large area of the map
+          // Overlap detected, move the point controller towards the a reasonably large area of the map.
           const xMovement = ( startPosition.x > MAP_CENTER.x ? -1 : 1 ) * ( moveCount + 1 ) * X_MOVE_AMOUNT;
           const yMovement = ( startPosition.y > MAP_CENTER.y ? -1 : 1 ) * ( moveCount + 1 ) * Y_MOVE_AMOUNT;
 
-          // calculate the new proposed position
+          // Calculate the new proposed position.
           const newProposedPosition = pointControllerUnderTest.positionProperty.value.plusXY( xMovement, yMovement );
 
           // There could be some rare cases where a point controller moves all the way across the map and doesn't find
@@ -275,7 +275,7 @@ class TemperatureSceneModel extends SceneModel {
             'unable to find position with different temperature value'
           );
 
-          // move the point controller
+          // Move the point controller.
           pointControllerUnderTest.positionProperty.set( newProposedPosition );
 
           moveCount++;
@@ -290,8 +290,8 @@ class TemperatureSceneModel extends SceneModel {
    */
   reset() {
 
-    // only reset the temperature units on a full reset, not a scene reset, see
-    // https://github.com/phetsims/number-line-integers/issues/86
+    // Only reset the temperature units on a full reset, not a scene reset, see
+    // https://github.com/phetsims/number-line-integers/issues/86.
     this.temperatureUnitsProperty.reset();
     this.numberLines.forEach( nl => { nl.reset(); } );
 
@@ -299,7 +299,7 @@ class TemperatureSceneModel extends SceneModel {
   }
 
   /**
-   * restore initial state
+   * Restore initial state.
    * @public
    */
   resetScene() {
@@ -307,7 +307,7 @@ class TemperatureSceneModel extends SceneModel {
     this.monthProperty.reset();
     this.numberLines.forEach( nl => { nl.removeAllPoints(); } );
 
-    // put the point controllers back into their starting positions
+    // Put the point controllers back into their starting positions.
     this.permanentPointControllers.forEach( pointController => {
       pointController.reset();
       this.putPointControllerInBox( pointController );

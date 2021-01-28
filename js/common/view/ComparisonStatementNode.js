@@ -56,7 +56,7 @@ class ComparisonStatementNode extends Node {
     const comparisonStatementRoot = new Node();
     this.addChild( comparisonStatementRoot );
 
-    // the comparison statement has numbers and operators that reside on different root nodes for easier manipulation
+    // The comparison statement has numbers and operators that reside on different root nodes for easier manipulation.
     const numberNodesLayer = new Node();
     comparisonStatementRoot.addChild( numberNodesLayer );
     const operatorAndZeroNodesLayer = new Node();
@@ -68,10 +68,10 @@ class ComparisonStatementNode extends Node {
     } );
     this.addChild( operatorSelectionNode );
 
-    // keep track of the previous number node array, used to help with sorting
+    // Keep track of the previous number node array, used to help with sorting.
     let previousNumberNodes = [];
 
-    // create a node that indicates a zero, but has a background like the other numbers so that its height is the same
+    // Create a node that indicates a zero, but has a background like the other numbers so that its height is the same.
     const zeroTextNode = new Text( '0', { font: COMPARISON_STATEMENT_FONT } );
     const zeroNode = new Rectangle( {
       rectBounds: zeroTextNode.localBounds.dilated( NUMBER_BACKGROUND_DILATION_AMOUNT ),
@@ -82,11 +82,11 @@ class ComparisonStatementNode extends Node {
     } );
     operatorAndZeroNodesLayer.addChild( zeroNode );
 
-    // create and add the nodes that will be used to depict the comparison operators
+    // Create and add the nodes that will be used to depict the comparison operators.
     const comparisonOperatorNodes = [];
     _.times( 2, () => {
 
-      // give these an arbitrary value to start with, they will be updated later
+      // Give these an arbitrary value to start with, they will be updated later.
       const comparisonOperatorNode = new Text( GREATER_THAN_STRING, {
         font: COMPARISON_STATEMENT_FONT
       } );
@@ -94,22 +94,22 @@ class ComparisonStatementNode extends Node {
       comparisonOperatorNodes.push( comparisonOperatorNode );
     } );
 
-    // define a function to update the comparision statement, including its layout
+    // Define a function to update the comparison statement, including its layout.
     const updateComparisonStatement = () => {
 
       const numPoints = numberLine.residentPoints.length;
 
-      // verify that this function isn't being asked to handle more points than it is designed for
+      // Verify that this function isn't being asked to handle more points than it is designed for.
       assert && assert( numPoints <= 3, 'too many points on number line' );
 
       const comparisonOperator = this.selectedOperatorProperty.value;
 
-      // hide operators and zeros for now, will be made visible as needed by the code below
+      // Hide operators and zeros for now, will be made visible as needed by the code below.
       zeroNode.visible = false;
       comparisonOperatorNodes.forEach( comparisonOperatorNode => {
         comparisonOperatorNode.visible = false;
 
-        // position this so that it won't affect the overall bounds if it is not being used
+        // Position this so that it won't affect the overall bounds if it is not being used.
         comparisonOperatorNode.left = 0;
       } );
 
@@ -122,17 +122,17 @@ class ComparisonStatementNode extends Node {
 
       if ( numberNodesLayer.getChildrenCount() === 0 ) {
 
-        // if there are no points on the number line, just show a zero
+        // If there are no points on the number line, just show a zero.
         zeroNode.visible = false;
         numberNodes.push( zeroNode );
       }
       else if ( numberNodesLayer.getChildrenCount() === 1 ) {
 
-        // there is only one number node, so show it compared to zero
+        // There is only one number node, so show it compared to zero.
         const pointValueNode = numberNodesLayer.getChildAt( 0 );
         zeroNode.visible = true;
 
-        // add nodes to the list in ascending order
+        // Add nodes to the list in ascending order.
         if ( pointValueNode.point.valueProperty.value < 0 ) {
           numberNodes.push( pointValueNode );
           numberNodes.push( zeroNode );
@@ -143,7 +143,7 @@ class ComparisonStatementNode extends Node {
         }
         else {
 
-          // the node value is equal to zero, so sort it based on the previous position
+          // The node value is equal to zero, so sort it based on the previous position.
           const previousPositionInArray = previousNumberNodes.indexOf( pointValueNode );
           if ( previousPositionInArray === 0 ) {
             numberNodes.push( pointValueNode );
@@ -166,7 +166,7 @@ class ComparisonStatementNode extends Node {
           }
           else {
 
-            // the current values are equal, so use the previous position in the ordered array
+            // The current values are equal, so use the previous position in the ordered array.
             const prevP1NodePosition = previousNumberNodes.indexOf( p1node );
             const prevP2NodePosition = previousNumberNodes.indexOf( p2node );
             if ( prevP1NodePosition > -1 && prevP2NodePosition > -1 ) {
@@ -174,26 +174,26 @@ class ComparisonStatementNode extends Node {
             }
             else {
 
-              // one of the points must have just been added right on top of the other, so call them equal
+              // One of the points must have just been added right on top of the other, so call them equal.
               result = 0;
             }
           }
           return result;
         } );
 
-        // add the nodes in order to the list of value nodes
+        // Add the nodes in order to the list of value nodes.
         orderedNumberNodes.forEach( node => { numberNodes.push( node ); } );
       }
 
-      // save the ordered list in case we need it for comparison purposes the next time we order them
+      // Save the ordered list in case we need it for comparison purposes the next time we order them.
       previousNumberNodes = numberNodes.slice();
 
-      // above, the nodes are sorted in ascending order, so they need to be reversed if using the > operator
+      // Above, the nodes are sorted in ascending order, so they need to be reversed if using the '>' operator.
       if ( comparisonOperator === GREATER_THAN_STRING ) {
         numberNodes.reverse();
       }
 
-      // at this point we should have an ordered list of number nodes, so set their positions
+      // At this point we should have an ordered list of number nodes, so set their positions.
       let currentXPos = 0;
       for ( let i = 0; i < numberNodes.length; i++ ) {
 
@@ -201,14 +201,14 @@ class ComparisonStatementNode extends Node {
         currentNode.left = currentXPos;
         currentXPos = currentNode.right + COMPARISON_STATEMENT_SPACING;
 
-        // if this isn't the last number node a comparison operator will be needed
+        // If this isn't the last number node a comparison operator will be needed.
         if ( i < numberNodes.length - 1 ) {
           let comparisonCharacter = comparisonOperator;
           const currentNodeValue = currentNode.point ? currentNode.point.valueProperty.value : 0;
           const nextNodeValue = numberNodes[ i + 1 ].point ? numberNodes[ i + 1 ].point.valueProperty.value : 0;
           if ( currentNodeValue === nextNodeValue ) {
 
-            // the values are equal, so we need to use less-than-or-equal or greater-than-or-equal comparison operator
+            // The values are equal, so we need to use less-than-or-equal or greater-than-or-equal comparison operator.
             comparisonCharacter = comparisonOperator === LESS_THAN_STRING ?
                                   MathSymbols.LESS_THAN_OR_EQUAL :
                                   MathSymbols.GREATER_THAN_OR_EQUAL;
@@ -231,7 +231,7 @@ class ComparisonStatementNode extends Node {
       operatorSelectionNode.left = 120; // empirically determined
     };
 
-    // add or remove number nodes and otherwise update the comparison statement as points appear, move, and disappear
+    // Add or remove number nodes and otherwise update the comparison statement as points appear, move, and disappear.
     numberLine.residentPoints.forEach( point => {
       numberNodesLayer.addChild( new PointValueNode( point ) );
       point.valueProperty.lazyLink( updateComparisonStatement );
@@ -251,7 +251,7 @@ class ComparisonStatementNode extends Node {
       updateComparisonStatement();
     } );
 
-    // update the comparison statement of the chosen operator changes, this also does the initial update
+    // Update the comparison statement of the chosen operator changes, this also does the initial update.
     this.selectedOperatorProperty.link( updateComparisonStatement );
   }
 
@@ -282,7 +282,7 @@ class OperatorSelectorNode extends Node {
 
     super();
 
-    // create the button for selecting the "less than" operator
+    // Create the button for selecting the "less than" operator.
     const lessThanSelectorShape = Shape.roundedRectangleWithRadii(
       -options.selectorWidth,
       -options.selectorHeight / 2,
@@ -310,7 +310,7 @@ class OperatorSelectorNode extends Node {
     } ) );
     this.addChild( lessThanOperatorSelectorNode );
 
-    // create the button for selecting the "greater than" operator
+    // Create the button for selecting the "greater than" operator.
     const greaterThanSelectorShape = Shape.roundedRectangleWithRadii(
       0,
       -options.selectorHeight / 2,
@@ -338,7 +338,7 @@ class OperatorSelectorNode extends Node {
     } ) );
     this.addChild( greaterThanOperatorSelectorNode );
 
-    // control the appearance of each selector based on the current selection state
+    // Control the appearance of each selector based on the current selection state.
     selectedOperatorProperty.link( selection => {
       if ( selection === LESS_THAN_STRING ) {
         lessThanText.fill = SELECTED_OPERATOR_TEXT_COLOR;
@@ -372,7 +372,7 @@ class PointValueNode extends Node {
     // @public (read-only) {NumberLinePoint}
     this.point = point;
 
-    // background - initial size and coloring is arbitrary, it will be updated in function linked below
+    // background - Initial size and coloring is arbitrary, it will be updated in function linked below.
     const background = new Rectangle( 0, 0, 1, 1, 2, 2, {
       lineWidth: NUMBER_BACKGROUND_LINE_WIDTH,
       visible: false // initially invisible, activated (made visible) when user interacts with the point
@@ -383,7 +383,7 @@ class PointValueNode extends Node {
     const numberText = new Text( '', { font: COMPARISON_STATEMENT_FONT } );
     this.addChild( numberText );
 
-    // update appearance as the value changes
+    // Update appearance as the value changes.
     const handleValueChange = value => {
       numberText.text = value;
       background.setRectBounds( numberText.bounds.dilated( NUMBER_BACKGROUND_DILATION_AMOUNT ) );
@@ -395,10 +395,10 @@ class PointValueNode extends Node {
     };
     point.colorProperty.link( handleColorChange );
 
-    // an animation is used to made the background when the user stops dragging the point
+    // An animation is used to made the background when the user stops dragging the point.
     let backgroundFadeAnimation = null;
 
-    // update the highlight state as the point is dragged
+    // Update the highlight state as the point is dragged.
     const handleDragStateChange = dragging => {
 
       if ( dragging ) {
@@ -410,7 +410,7 @@ class PointValueNode extends Node {
       }
       else if ( !backgroundFadeAnimation ) {
 
-        // start or restart the fade animation
+        // Start or restart the fade animation.
         backgroundFadeAnimation = new Animation( {
           duration: 0.75,
           easing: Easing.CUBIC_OUT,

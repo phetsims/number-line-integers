@@ -46,12 +46,12 @@ class ElevationPointControllerNode extends PointControllerNode {
     // dilates each image's touch area
     imageList.forEach( image => { image.touchArea = image.localBounds.dilated( IMAGE_DILATION ); } );
 
-    // create a node with all the images that will be used to depict this elevatable item
+    // Create a node with all the images that will be used to depict this elevatable item.
     const compositeImageNode = new Node( { children: imageList } );
 
     options = merge( {
 
-      // pass in the parent node that includes all images as the mode that will control the point
+      // Pass in the parent node that includes all images as the mode that will control the point.
       node: compositeImageNode,
 
       // {function} - A function that takes a position and a currently selected image index and returns the index
@@ -65,7 +65,7 @@ class ElevationPointControllerNode extends PointControllerNode {
 
     let textOffset;
 
-    // update the visibility of the images as the position changes
+    // Update the visibility of the images as the position changes.
     pointController.positionProperty.link( position => {
       const currentlySelectedImageIndex = _.findIndex( imageList, image => image.visible );
       const selectedImageIndex = options.imageSelectionFunction( position, currentlySelectedImageIndex );

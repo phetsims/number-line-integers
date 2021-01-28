@@ -74,18 +74,18 @@ class TemperatureSceneView extends SceneView {
         { numericalLabelTemplate: temperatureAmountCelsiusString }
       ],
 
-      // don't have the super constructor add the number line nodes - that will be done below
+      // Don't have the super constructor add the number line nodes - that will be done below.
       automaticallyAddNLNodes: false
     } );
 
-    // put the number lines on their own layer so that their position can be easily adjusted
+    // Put the number lines on their own layer so that their position can be easily adjusted.
     const numberLinesRootNode = new Node();
     const fahrenheitNumberLineNode = this.numberLineNodes[ FAHRENHEIT_NUMBER_LINE_INDEX ];
     const celsiusNumberLineNode = this.numberLineNodes[ CELSIUS_NUMBER_LINE_INDEX ];
     numberLinesRootNode.addChild( fahrenheitNumberLineNode );
     numberLinesRootNode.addChild( celsiusNumberLineNode );
 
-    // get local references to other items needed to manage the two separate number lines
+    // Get local references to other items needed to manage the two separate number lines.
     const fahrenheitNumberLine = sceneModel.numberLines[ FAHRENHEIT_NUMBER_LINE_INDEX ];
     const fahrenheitComparisonStatementAccordionBox = this.comparisonStatementAccordionBoxes[ FAHRENHEIT_NUMBER_LINE_INDEX ];
     const celsiusNumberLine = sceneModel.numberLines[ CELSIUS_NUMBER_LINE_INDEX ];
@@ -95,7 +95,7 @@ class TemperatureSceneView extends SceneView {
     const numberLinePanelContent = new Node();
     numberLinePanelContent.addChild( numberLinesRootNode );
 
-    // make sure that the same operator is being used in both the celsius and fahrenheit comparison statements
+    // Make sure that the same operator is being used in both the celsius and fahrenheit comparison statements.
     celsiusComparisonStatementAccordionBox.comparisonStatementNode.selectedOperatorProperty.link( selectedOperator => {
       fahrenheitComparisonStatementAccordionBox.comparisonStatementNode.selectedOperatorProperty.set( selectedOperator );
     } );
@@ -117,7 +117,7 @@ class TemperatureSceneView extends SceneView {
     this.temperatureMap.center = sceneModel.mapBounds.center;
     this.scenesLayer.addChild( this.temperatureMap );
 
-    // add the node that represents the box that will hold the thermometers
+    // Add the node that represents the box that will hold the thermometers.
     const thermometerBox = Rectangle.bounds( sceneModel.thermometerBoxBounds, {
       fill: 'white',
       stroke: 'black',
@@ -149,10 +149,10 @@ class TemperatureSceneView extends SceneView {
         }
       ],
       {
-        // limit the width to half the panel height to handle long labels from translations and string tests
+        // Limit the width to half the panel height to handle long labels from translations and string tests.
         maxWidth: ( NUMBER_LINE_PANEL_WIDTH - 2 * NUMBER_LINE_PANEL_MARGINS ) / 2,
 
-        // this should appear in the upper left of the panel
+        // This should appear in the upper left of the panel.
         right: NUMBER_LINE_CONTENT_WIDTH,
         top: 0
       }
@@ -165,18 +165,18 @@ class TemperatureSceneView extends SceneView {
       maxWidth: NUMBER_LINE_PANEL_WIDTH - temperatureUnitsSelector.width - TITLE_TO_SELECTOR_SPACING -
                 2 * NUMBER_LINE_PANEL_MARGINS,
 
-      // this should be at the top of the node, centered between the left edge and the units selector
+      // This should be at the top of the node, centered between the left edge and the units selector.
       centerX: ( NUMBER_LINE_CONTENT_WIDTH - temperatureUnitsSelector.width ) / 2,
       top: 0
     } );
     numberLinePanelContent.addChild( numberLinePanelTitle );
 
-    // manage the label texts for each thermometer
+    // Manage the label texts for each thermometer.
     const celsiusLabelsLayer = new Node();
     const fahrenheitLabelsLayer = new Node();
     const onAddedNumberLinePoint = ( numberLine, labelsLayer, addedNumberLinePoint ) => {
 
-      // create the textual label
+      // Create the textual label.
       const labelNode = new ColorizedReadoutNode(
         new Property( addedNumberLinePoint.controller.label ),
         addedNumberLinePoint.colorProperty,

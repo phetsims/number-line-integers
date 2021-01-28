@@ -26,7 +26,7 @@ class ElevationPointController extends PointController {
 
     options = merge( {
 
-      // this style of point controller never locks to the number line
+      // This style of point controller never locks to the number line.
       lockToNumberLine: LockToNumberLine.NEVER,
 
       numberLines: [ numberLine ]
@@ -41,19 +41,19 @@ class ElevationPointController extends PointController {
     // @public (read-only) property that tracks whether this point controller is in the area where it should be controlling a point
     this.overElevationAreaProperty = new BooleanProperty( false );
 
-    // these point controllers are never disposed, so no unlinking is needed
+    // These point controllers are never disposed, so no unlinking is needed.
     this.positionProperty.link( position => {
       this.overElevationAreaProperty.value = elevationAreaBounds.containsPoint( position );
     } );
 
-    // create/remove number line points based on whether we're over the elevation area
+    // Create/remove number line points based on whether we're over the elevation area.
     this.overElevationAreaProperty.lazyLink( over => {
       if ( over && this.isDraggingProperty.value ) {
 
         // state checking
         assert && assert( !this.isControllingNumberLinePoint(), 'should not already have a point' );
 
-        // create a new point on the number line
+        // Create a new point on the number line.
         const numberLinePoint = new NumberLinePoint( numberLine, {
           initialValue: Utils.roundSymmetric( numberLine.modelPositionToValue( this.positionProperty.value ) ),
           initialColor: this.color,
@@ -64,14 +64,14 @@ class ElevationPointController extends PointController {
       }
       else if ( !over && this.isControllingNumberLinePoint() ) {
 
-        // remove our point(s) from the number line and disassociate from them
+        // Remove our point(s) from the number line and disassociate from them.
         this.removeClearAndDisposePoints();
       }
     } );
   }
 
   /**
-   * do essentially what the base class does, but then allow any X direction motion
+   * Do essentially what the base class does, but then allow any X direction motion.
    * @param {Vector2} proposedPosition
    * @override - see base class for more information
    * @public

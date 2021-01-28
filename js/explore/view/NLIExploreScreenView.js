@@ -29,11 +29,11 @@ class NLIExploreScreenView extends ScreenView {
 
     super( { preventFit: true } ); // preventFit used for better performance, see https://github.com/phetsims/number-line-integers/issues/77
 
-    // create the layer where the controls go
+    // Create the layer where the controls go.
     const controlsLayer = new Node();
     this.addChild( controlsLayer );
 
-    // create the root nodes for each of the scenes
+    // Create the root nodes for each of the scenes.
     const elevationScene = new ElevationSceneView( model.elevationSceneModel, this.layoutBounds );
     this.addChild( elevationScene );
     const bankScene = new BankSceneView( model.bankSceneModel, this.layoutBounds );
@@ -41,14 +41,14 @@ class NLIExploreScreenView extends ScreenView {
     const temperatureScene = new TemperatureSceneView( model.temperatureSceneModel, this.layoutBounds );
     this.addChild( temperatureScene );
 
-    // control the visibility of the scenes
+    // Control the visibility of the scenes.
     model.selectedSceneProperty.link( selectedScene => {
       elevationScene.visible = selectedScene === NLIScene.ELEVATION;
       bankScene.visible = selectedScene === NLIScene.BANK;
       temperatureScene.visible = selectedScene === NLIScene.TEMPERATURE;
     } );
 
-    // map the scene selection icons to their enum values (used in the radio button group)
+    // Map the scene selection icons to their enum values (used in the radio button group).
     const sceneSelectionButtonsContent = [
       {
         value: NLIScene.ELEVATION,
@@ -64,7 +64,7 @@ class NLIExploreScreenView extends ScreenView {
       }
     ];
 
-    // create scene selector radio buttons
+    // Create scene selector radio buttons.
     const sceneSelectorRadioButtonGroup = new RectangularRadioButtonGroup(
       model.selectedSceneProperty,
       sceneSelectionButtonsContent,

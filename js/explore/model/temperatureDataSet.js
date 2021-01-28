@@ -15,7 +15,7 @@ import numberLineIntegers from '../../numberLineIntegers.js';
 const temperatureDataSet = {
 
   /**
-   * get the near-surface air temperature for the given month at the given latitude and longitude
+   * Get the near-surface air temperature for the given month at the given latitude and longitude.
    * @param {number} month - month of the year, from 1 to 12
    * @param {number} latitude
    * @param {number} longitude
@@ -31,7 +31,7 @@ const temperatureDataSet = {
       longitude = 360 + longitude;
     }
 
-    // find the index of the closest latitude value in our data set
+    // Find the index of the closest latitude value in our data set.
     let latitudeIndex = 0;
     while ( latitude < latitudeValues[ latitudeIndex ] ) {
       latitudeIndex++;
@@ -43,7 +43,7 @@ const temperatureDataSet = {
       latitudeIndex--;
     }
 
-    // find the index of the closest latitude value in our data set
+    // Find the index of the closest latitude value in our data set.
     let longitudeIndex = 0;
     while ( longitude > longitudeValues[ longitudeIndex ] ) {
       longitudeIndex++;
@@ -55,7 +55,7 @@ const temperatureDataSet = {
       longitudeIndex--;
     }
 
-    // index into the 3D array to get the value of the temperature associated with the calculated index values
+    // Index into the 3D array to get the value of the temperature associated with the calculated index values.
     return airTemperatureNearSurfaceValues[
     monthIndex * ( latitudeValues.length * longitudeValues.length ) +
     latitudeIndex * longitudeValues.length +

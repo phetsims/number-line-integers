@@ -36,10 +36,10 @@ class ComparisonStatementAccordionBox extends AccordionBox {
    */
   constructor( numberLine, options ) {
 
-    // create the comparison statement node
+    // Create the comparison statement node.
     const comparisonStatementNode = new ComparisonStatementNode( numberLine );
 
-    // embed the comparison statement in an accordion box
+    // Embed the comparison statement in an accordion box.
     super( comparisonStatementNode, merge( {}, DEFAULT_OPTIONS, options, NLCConstants.ACCORDION_BOX_COMMON_OPTIONS, {
       titleNode: new Text( comparisonStatementString, {
         font: TITLE_FONT,

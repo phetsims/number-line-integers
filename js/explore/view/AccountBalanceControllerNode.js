@@ -52,7 +52,7 @@ class AccountBalanceControllerNode extends VBox {
 
     options = merge( {}, { buttonBaseColor: Color.blue }, options );
 
-    // closure for making changes to the balance
+    // Closure for making changes to the balance.
     const changeBalance = balanceChangeAmount => {
       if ( ( balanceChangeAmount > 0 && balanceProperty.value < range.max ) ||
            ( balanceChangeAmount < 0 && balanceProperty.value > range.min ) ) {
@@ -83,7 +83,7 @@ class AccountBalanceControllerNode extends VBox {
       ]
     } );
 
-    // create the buttons that the user can use to add and remove money
+    // Create the buttons that the user can use to add and remove money.
     const upButton = new RoundPushButton( merge( {
       content: depositIcon,
       baseColor: options.buttonBaseColor,
@@ -95,7 +95,7 @@ class AccountBalanceControllerNode extends VBox {
       listener: () => { changeBalance( -changeAmount ); }
     }, BUTTON_OPTIONS ) );
 
-    // control the enabled states of the buttons
+    // Control the enabled states of the buttons.
     balanceProperty.link( balance => {
       upButton.enabled = balance < range.max;
       downButton.enabled = balance > range.min;
@@ -114,34 +114,34 @@ class AccountBalanceControllerNode extends VBox {
     // @public (read-only) - emitter that fires when either button is released
     this.buttonReleasedEmitter = new Emitter();
 
-    // monitor the downProperty for each button, locking out the other button and performing emits when released
+    // Monitor the downProperty for each button, locking out the other button and performing emits when released.
     upButton.buttonModel.downProperty.lazyLink( down => {
       if ( down ) {
 
-        // to prevent multi-touch issues, don't let the other button be pushed while this one is down
+        // To prevent multi-touch issues, don't let the other button be pushed while this one is down.
         downButton.pickable = false;
       }
       else {
 
-        // the button has been released, trigger the emitter
+        // The button has been released, trigger the emitter.
         this.buttonReleasedEmitter.emit();
 
-        // restore pickability of peer button
+        // Restore pickability of peer button.
         downButton.pickable = true;
       }
     } );
     downButton.buttonModel.downProperty.lazyLink( down => {
       if ( down ) {
 
-        // to prevent multi-touch issues, don't let the other button be pushed while this one is down
+        // To prevent multi-touch issues, don't let the other button be pushed while this one is down.
         upButton.pickable = false;
       }
       else {
 
-        // the button has been released, trigger the emitter
+        // The button has been released, trigger the emitter.
         this.buttonReleasedEmitter.emit();
 
-        // restore pickability of peer button
+        // Restore pickability of peer button.
         upButton.pickable = true;
       }
     } );

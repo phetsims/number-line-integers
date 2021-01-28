@@ -40,7 +40,7 @@ class TemperatureToColorMapper {
   }
 
   /**
-   * map a celsius temperature to a color value.  The temperature range and the color mapping algorithm must match
+   * Map a celsius temperature to a color value.  The temperature range and the color mapping algorithm must match
    * those used to create the maps used in the simulation for things to work out correctly.
    * @param {number} temperature
    * @returns {Color}
@@ -48,19 +48,19 @@ class TemperatureToColorMapper {
    */
   mapTemperatureToColor( temperature ) {
 
-    // calculate a normalized temperature value
+    // Calculate a normalized temperature value.
     const normalizedTemperature = this.temperatureRange.getNormalizedValue( temperature );
 
-    // Clamp the value.  While it would be possible to create and use a linear function for out-of-bounds values, but
-    // so far this has not been necessary, so it doesn't seem worth it.  Add it if you need it.
+    // Clamp the value.  While it would be possible to create and use a linear function for out-of-bounds values, so far
+    // this has not been necessary, so it doesn't seem worth it.  Add it if you need it.
     const clampedNormalizedTemperature = Utils.clamp( normalizedTemperature, 0, 1 );
 
-    // return the mapped color
+    // Return the mapped color.
     return this.redYellowBlueReverse( clampedNormalizedTemperature );
   }
 
   /**
-   * map a number to a color value based on the red-yellow-blue (RdYlBu) mapping used in Matplotlib
+   * Map a number to a color value based on the red-yellow-blue (RdYlBu) mapping used in Matplotlib.
    * @param {number} value - a number in the range 0 to 1
    * @returns {Color}
    * @private
@@ -77,7 +77,7 @@ class TemperatureToColorMapper {
     const upperEntryIndex = Math.ceil( scaledValue );
     if ( lowerEntryIndex === upperEntryIndex ) {
 
-      // the scaled value matches an entry precisely
+      // The scaled value matches an entry precisely.
       const rgbValues = RdYlBu_data[ lowerEntryIndex ];
       red = rgbValues[ 0 ];
       green = rgbValues[ 1 ];
@@ -85,7 +85,7 @@ class TemperatureToColorMapper {
     }
     else {
 
-      // we need to interpolate between the closest RGB values
+      // We need to interpolate between the closest RGB values.
       const lowerWeighting = 1 - scaledValue + lowerEntryIndex;
       const upperWeighting = 1 - lowerWeighting;
       const lowerRgbValues = RdYlBu_data[ lowerEntryIndex ];
@@ -103,7 +103,7 @@ class TemperatureToColorMapper {
   }
 
   /**
-   * map a number to a color value based on the red-yellow-blue-reverse (RdYlBu_r) mapping used in Matplotlib
+   * Map a number to a color value based on the red-yellow-blue-reverse (RdYlBu_r) mapping used in Matplotlib.
    * @param {number} value - a number in the range 0 to 1
    * @returns {Color}
    * @private

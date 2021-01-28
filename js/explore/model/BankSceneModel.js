@@ -25,9 +25,6 @@ const COMPARISON_ACCOUNT_POINT_COLOR = new Color( '#001fff' );
 const INITIAL_PRIMARY_ACCOUNT_BALANCE = 10;
 const INITIAL_COMPARISON_ACCOUNT_BALANCE = 40;
 
-/**
- * model for the "Bank" scene
- */
 class BankSceneModel extends SceneModel {
 
   /**
@@ -55,11 +52,11 @@ class BankSceneModel extends SceneModel {
     // @public - bank account that is always shown in the view
     this.primaryAccount = new BankAccount( INITIAL_PRIMARY_ACCOUNT_BALANCE );
 
-    // there is only one number line in this scene - get a local reference to it for convenience
+    // There is only one number line in this scene - get a local reference to it for convenience.
     assert && assert( this.numberLines.length === 1 );
     const numberLine = this.numberLines[ 0 ];
 
-    // hook the primary account balance up to the first number line point
+    // Hook the primary account balance up to the first number line point.
     this.primaryAccount.balanceProperty.link( balance => {
       numberLine.residentPoints.get( 0 ).proposeValue( balance );
     } );
@@ -70,7 +67,7 @@ class BankSceneModel extends SceneModel {
     // @public {BankAccount} - bank account that is shown when the user wants to compare two accounts
     this.comparisonAccount = new BankAccount( INITIAL_COMPARISON_ACCOUNT_BALANCE );
 
-    // hook the comparison account balance up to the second number line point
+    // Hook the comparison account balance up to the second number line point.
     this.comparisonAccount.balanceProperty.link( balance => {
       if ( numberLine.residentPoints.length > 1 ) {
         numberLine.residentPoints.get( 1 ).proposeValue( balance );
@@ -99,7 +96,7 @@ class BankSceneModel extends SceneModel {
     // the number line point that represents the comparison account value, only exists when enabled
     let comparisonAccountNumberLinePoint = null;
 
-    // add/remove the point and point controller for the comparison account when enabled
+    // Add/remove the point and point controller for the comparison account when enabled.
     this.showComparisonAccountProperty.lazyLink( showComparisonAccount => {
       if ( showComparisonAccount ) {
 
@@ -113,14 +110,14 @@ class BankSceneModel extends SceneModel {
           'shouldn\'t have number line point for comparison account controller yet'
         );
 
-        // create the point and add it to the number line
+        // Create the point and add it to the number line.
         comparisonAccountNumberLinePoint = new NumberLinePoint( numberLine, {
           valueProperty: this.comparisonAccount.balanceProperty,
           initialColor: COMPARISON_ACCOUNT_POINT_COLOR
         } );
         numberLine.addPoint( comparisonAccountNumberLinePoint );
 
-        // associate the controller with this point
+        // Associate the controller with this point.
         this.comparisonAccountPointController.associateWithNumberLinePoint( comparisonAccountNumberLinePoint );
       }
       else {
@@ -135,7 +132,7 @@ class BankSceneModel extends SceneModel {
           'should be controlling a single point'
         );
 
-        // remove the point for the comparison account from the number line
+        // Remove the point for the comparison account from the number line.
         this.comparisonAccountPointController.removeClearAndDisposePoints();
         comparisonAccountNumberLinePoint = null;
       }
@@ -143,7 +140,7 @@ class BankSceneModel extends SceneModel {
   }
 
   /**
-   * restore initial state to the scene
+   * Restore initial state to the scene.
    * @override
    * @public
    */

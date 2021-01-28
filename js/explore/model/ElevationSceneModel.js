@@ -63,7 +63,7 @@ class ElevationSceneModel extends SceneModel {
     // @public (read-only) {number} - sea level in model coordinates
     this.seaLevel = seaLevel;
 
-    // specify the position of the box that will hold the elevatable items
+    // Specify the position of the box that will hold the elevatable items.
     const boxWidth = elevationAreaWidth * 0.6;
     const boxHeight = ( SCENE_BOUNDS.maxY - elevationAreaBounds.maxY ) * 0.7;
     const boxCenter = new Vector2( elevationAreaCenter.x, ( SCENE_BOUNDS.maxY + elevationAreaBounds.maxY ) / 2 );
@@ -76,7 +76,7 @@ class ElevationSceneModel extends SceneModel {
       boxCenter.y + boxHeight / 2
     );
 
-    // there is only one number line in this scene - create a local reference to it for convenience
+    // There is only one number line in this scene - create a local reference to it for convenience.
     const numberLine = this.numberLines[ 0 ];
 
     // @public (read-only) - the point controllers that can be moved into the elevation scene
@@ -86,7 +86,7 @@ class ElevationSceneModel extends SceneModel {
       new ElevationPointController( numberLine, elevationAreaBounds, { color: new Color( '#446ab7' ) } )
     ];
 
-    // put the permanent point controllers in their starting positions
+    // Put the permanent point controllers in their starting positions.
     this.permanentPointControllers.forEach( pointController => {
       this.putPointControllerInBox( pointController );
     } );
@@ -106,12 +106,12 @@ class ElevationSceneModel extends SceneModel {
     // elevatable controller is over the elevation area
     this.numberLineAttachedPointControllers = createObservableArray();
 
-    // watch for points coming and going on the number line and add the additional point controllers for them
+    // Watch for points coming and going on the number line and add the additional point controllers for them.
     numberLine.residentPoints.addItemAddedListener( addedPoint => {
 
       addedPoint.numberLine = numberLine;
 
-      // add a point controller that will remain attached to the number line that will control this point
+      // Add a point controller that will remain attached to the number line that will control this point.
       const pointController = new PointController( {
         color: addedPoint.colorProperty.value,
         lockToNumberLine: LockToNumberLine.ALWAYS,
@@ -120,7 +120,7 @@ class ElevationSceneModel extends SceneModel {
       } );
       this.numberLineAttachedPointControllers.push( pointController );
 
-      // handle removal of this point from the number line
+      // Handle removal of this point from the number line.
       const handlePointRemoved = removedPoint => {
         if ( addedPoint === removedPoint ) {
           pointController.clearNumberLinePoints();
@@ -134,8 +134,8 @@ class ElevationSceneModel extends SceneModel {
   }
 
   /**
-   * place the provided point controller into the holding box, generally done on init, reset, and when the user "puts
-   * it away"
+   * Place the provided point controller into the holding box. This is generally done on init, reset, and when the user
+   * "puts it away".
    * @param {ElevationPointController} pointController
    * @param {boolean} [animate] - controls whether to animate the return to the box or do it instantly
    * @private
@@ -161,13 +161,13 @@ class ElevationSceneModel extends SceneModel {
   }
 
   /**
-   * restore initial state to the scene
+   * Restore initial state to the scene.
    * @override
    * @public
    */
   resetScene() {
 
-    // put the point controllers back into their starting positions
+    // Put the point controllers back into their starting positions.
     this.permanentPointControllers.forEach( pointController => {
       pointController.removeClearAndDisposePoints();
       this.putPointControllerInBox( pointController );

@@ -38,7 +38,7 @@ class BankAccount {
   }
 
   /**
-   * restore initial state
+   * Restore initial state.
    * @public
    */
   reset() {

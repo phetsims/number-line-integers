@@ -39,7 +39,7 @@ class NLIExploreModel {
   }
 
   /**
-   * restore initial state
+   * Restore initial state.
    * @public
    */
   reset() {

@@ -88,11 +88,11 @@ class SceneModel {
   }
 
   /**
-   * do scene-specific reset
+   * Do scene-specific reset.
    * @protected
    */
   resetScene() {
-    // override as needed in descendant classes
+    // Override as needed in descendant classes.
   }
 }
 

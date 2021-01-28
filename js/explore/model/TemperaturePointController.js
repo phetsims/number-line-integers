@@ -69,7 +69,7 @@ class TemperaturePointController extends PointController {
     // @public - color represented by temperature on map
     this.colorProperty = new PaintColorProperty( options.noTemperatureColor );
 
-    // update temperature and other state information when moved or when month changes
+    // Update temperature and other state information when moved or when month changes.
     Property.multilink(
       [ this.positionProperty, sceneModel.monthProperty ],
       position => {
@@ -78,7 +78,7 @@ class TemperaturePointController extends PointController {
 
         if ( typeof temperatureInCelsius === 'number' ) {
 
-          // a valid temperature value was returned, update the values presented to the user
+          // A valid temperature value was returned, update the values presented to the user.
           this.celsiusTemperatureProperty.value = temperatureInCelsius;
           this.fahrenheitTemperatureProperty.value = celsiusToFahrenheitInteger( temperatureInCelsius );
           this.colorProperty.value = CELSIUS_TEMPERATURE_TO_COLOR_MAPPER.mapTemperatureToColor(
@@ -88,7 +88,7 @@ class TemperaturePointController extends PointController {
         }
         else {
 
-          // the provided position isn't over the map, so no temperature value can be obtained
+          // The provided position isn't over the map, so no temperature value can be obtained.
           this.celsiusTemperatureProperty.value = this.celsiusTemperatureProperty.initialValue;
           this.fahrenheitTemperatureProperty.value = this.fahrenheitTemperatureProperty.initialValue;
           this.colorProperty.value = options.noTemperatureColor;
@@ -97,14 +97,14 @@ class TemperaturePointController extends PointController {
       }
     );
 
-    // create/remove number line points based on whether we're over the map
+    // Create/remove number line points based on whether we're over the map.
     this.isOverMapProperty.lazyLink( over => {
       if ( over && this.isDraggingProperty.value ) {
 
         // state checking
         assert && assert( !this.isControllingNumberLinePoint(), 'should not already have a point' );
 
-        // create new points on each number line
+        // Create new points on each number line.
         this.celsiusNumberLinePoint = new NumberLinePoint( this.sceneModel.celsiusNumberLine, {
           valueProperty: this.celsiusTemperatureProperty,
           colorProperty: this.colorProperty,
@@ -122,29 +122,29 @@ class TemperaturePointController extends PointController {
       }
       else if ( !over && this.isControllingNumberLinePoint() ) {
 
-        // remove our points from the number lines
+        // Remove our points from the number lines.
         this.removeClearAndDisposePoints();
         this.celsiusNumberLinePoint = null;
         this.fahrenheitNumberLinePoint = null;
       }
     } );
 
-    // update the map drop timestamp when dropped
+    // Update the map drop timestamp when dropped.
     this.isDraggingProperty.lazyLink( isDragging => {
       if ( isDragging ) {
 
-        // timestamp is set to -1 when not dropped on the map
+        // The timestamp is set to -1 when not dropped on the map.
         this.droppedOnMapTimestamp = -1;
       }
       else {
         if ( this.isOverMapProperty.value ) {
 
-          // this point controller is being dropped on the map, update the timestamp
+          // This point controller is being dropped on the map, update the timestamp.
           this.droppedOnMapTimestamp = Date.now();
         }
       }
 
-      // update the dragging state of the number line points if present
+      // Update the dragging state of the number line points if present.
       this.celsiusNumberLinePoint && ( this.celsiusNumberLinePoint.isDraggingProperty.value = isDragging );
       this.fahrenheitNumberLinePoint && ( this.fahrenheitNumberLinePoint.isDraggingProperty.value = isDragging );
     } );

@@ -44,14 +44,14 @@ class NLIGenericScreenView extends ScreenView {
     const controlsLayer = new Node();
     this.addChild( controlsLayer );
 
-    // add the display of the inequality
+    // Add the display of the inequality.
     const comparisonStatementAccordionBox = new ComparisonStatementAccordionBox( model.numberLine, {
       centerX: this.layoutBounds.centerX,
       top: 10
     } );
     controlsLayer.addChild( comparisonStatementAccordionBox );
 
-    // add the check boxes that will control the number line's presentation
+    // Add the check boxes that will control the number line's presentation.
     const checkboxes = [
       new NLCheckbox( labelsString, model.numberLine.showPointLabelsProperty ),
       new NLCheckbox( tickMarksString, model.numberLine.showTickMarksProperty ),
@@ -75,12 +75,12 @@ class NLIGenericScreenView extends ScreenView {
     const pointControllerLayer = new Node();
     this.addChild( pointControllerLayer );
 
-    // add the point controller nodes
+    // Add the point controller nodes.
     model.pointControllers.forEach( pointController => {
       pointControllerLayer.addChild( new PointControllerNode( pointController ) );
     } );
 
-    // add the number line node
+    // Add the number line node.
     this.addChild( new SpatializedNumberLineNode( model.numberLine, {
       showAbsoluteValueSpans: true,
       displayedRangeInset: NLIConstants.GENERIC_SCREEN_DISPLAYED_RANGE_INSET,
@@ -93,7 +93,7 @@ class NLIGenericScreenView extends ScreenView {
     model.pointControllerBoxProperty.link( pointControllerBox => {
       pointControllerBoxNode && this.removeChild( pointControllerBoxNode );
 
-      // add the box where the point controllers hang out when not in use
+      // Add the box where the point controllers hang out when not in use.
       pointControllerBoxNode = new Rectangle( pointControllerBox, {
         fill: 'white',
         stroke: 'black',

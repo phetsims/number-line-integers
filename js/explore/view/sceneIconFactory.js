@@ -29,7 +29,7 @@ const sceneIdToIconsMap = new Map();
 const sceneIconFactory = {
 
   /**
-   * generate and return an icon for the specified scene ID
+   * Generate and return an icon for the specified scene ID.
    * @param {SceneID} sceneIdentifier
    * @returns {Node}
    * @public
@@ -64,7 +64,7 @@ const sceneIconFactory = {
       }
     }
 
-    // return the icon instance
+    // Return the icon instance.
     return sceneIdToIconsMap.get( sceneIdentifier );
   }
 };

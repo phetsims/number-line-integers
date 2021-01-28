@@ -1,7 +1,7 @@
 // Copyright 2019-2020, University of Colorado Boulder
 
 /**
- * the 'Explore' screen in the Number Line: Integers simulation
+ * The 'Explore' screen in the Number Line: Integers simulation.
  *
  * @author John Blanco (PhET Interactive Simulations)
  */

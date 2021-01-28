@@ -44,7 +44,7 @@ class TemperaturePointControllerNode extends PointControllerNode {
    */
   constructor( pointController, showAbsoluteValuesProperty, temperatureUnitsProperty, options ) {
 
-    // create a node that contains thermometer and triangle
+    // Create a node that contains thermometer and triangle.
     const compositeThermometerNode = new Node();
 
     options = merge( {
@@ -69,7 +69,7 @@ class TemperaturePointControllerNode extends PointControllerNode {
     );
     compositeThermometerNode.addChild( temperatureAndColorSensorNode );
 
-    // add the textual label for this thermometer, generally a single letter
+    // Add the textual label for this thermometer, generally a single letter.
     const thermometerLabel = new Text( pointController.label, {
       font: new PhetFont( 16 ),
       centerX: temperatureAndColorSensorNode.thermometerBounds.centerX,
@@ -78,7 +78,7 @@ class TemperaturePointControllerNode extends PointControllerNode {
     } );
     compositeThermometerNode.addChild( thermometerLabel );
 
-    // add a readout that will describe the temperature textually, e.g. "20° above 0"
+    // Add a readout that will describe the temperature textually, e.g. "20° above 0".
     const temperatureReadoutTextProperty = new StringProperty( '' );
     const temperatureReadout = new ColorizedReadoutNode(
       temperatureReadoutTextProperty,
@@ -94,7 +94,7 @@ class TemperaturePointControllerNode extends PointControllerNode {
     );
     compositeThermometerNode.addChild( temperatureReadout );
 
-    // control the visibility of the textual label, no unlink needed because these point controllers are permanent
+    // Control the visibility of the textual label, no unlink needed because these point controllers are permanent.
     Property.multilink(
       [ showAbsoluteValuesProperty, pointController.isOverMapProperty ],
       ( showAbsoluteValues, isOverMap ) => {
@@ -102,7 +102,7 @@ class TemperaturePointControllerNode extends PointControllerNode {
       }
     );
 
-    // control the content of the textual label, no unlink needed because these point controllers are permanent
+    // Control the content of the textual label, no unlink needed because these point controllers are permanent.
     Property.multilink(
       [
         pointController.fahrenheitTemperatureProperty,
@@ -119,7 +119,7 @@ class TemperaturePointControllerNode extends PointControllerNode {
       }
     );
 
-    // dilate the touch area for easier grabbing
+    // Dilate the touch area for easier grabbing.
     compositeThermometerNode.touchArea = temperatureAndColorSensorNode.bounds.dilated( TOUCH_DILATION );
 
     super( pointController, options );

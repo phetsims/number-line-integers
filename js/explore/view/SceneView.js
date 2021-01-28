@@ -1,8 +1,8 @@
 // Copyright 2019-2020, University of Colorado Boulder
 
 /**
- * base class for scene views in the "Explore" screen, includes check boxes, comparison statement, and some other UI
- * elements that are common to all scenes
+ * SceneView is a base class for scene views in the "Explore" screen, includes check boxes, comparison statement, and
+ * some other UI elements that are common to all scenes.
  *
  * @author John Blanco (PhET Interactive Simulations)
  */
@@ -97,7 +97,7 @@ class SceneView extends Node {
     // @protected - comparison statements that are inside an accordion box
     this.comparisonStatementAccordionBoxes = [];
 
-    // create the comparison statements, which are contained within an accordion box, one for each number line
+    // Create the comparison statements, which are contained within an accordion box, one for each number line.
     sceneModel.numberLines.forEach( numberLine => {
       const comparisonStatementAccordionBox = new ComparisonStatementAccordionBox( numberLine, {
         centerX: layoutBounds.centerX,
@@ -111,7 +111,7 @@ class SceneView extends Node {
     // @protected (read-only) {NumberLine} - views of the number lines
     this.numberLineNodes = [];
 
-    // create and, if options dictate, add the number line to the view
+    // Create and, if options dictate, add the number line to the view.
     sceneModel.numberLines.forEach( ( numberLine, index ) => {
       const numberLineNode = new SpatializedNumberLineNode(
         numberLine,

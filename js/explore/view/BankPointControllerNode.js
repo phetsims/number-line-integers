@@ -73,11 +73,11 @@ class BankPointControllerNode extends PointControllerNode {
     // root node for draggable controller portion, separate for absolute value display and coin animation
     const controllerNode = new Node();
 
-    // choose the overlay image source, which is artwork that must exactly match the shape of the outline
+    // Choose the overlay image source, which is artwork that must exactly match the shape of the outline.
     const piggyBankNode = new PiggyBankNode( { decorationType: decorationType } );
     controllerNode.addChild( piggyBankNode );
 
-    // add the balance indicator node
+    // Add the balance indicator node.
     const balanceNode = new Text( '', {
       font: new PhetFont( 30 ),
       fill: 'white',
@@ -99,13 +99,13 @@ class BankPointControllerNode extends PointControllerNode {
     const absoluteValueBackground = new BackgroundNode( absoluteValueText, NLCConstants.LABEL_BACKGROUND_OPTIONS );
     this.addChild( absoluteValueBackground );
 
-    // get a reference to the number line (there is only one for this scene)
+    // Get a reference to the number line (there is only one for this scene).
     const numberLine = pointController.numberLines[ 0 ];
 
-    // control visibility of the absolute value readout
+    // Control visibility of the absolute value readout.
     numberLine.showAbsoluteValuesProperty.linkAttribute( absoluteValueBackground, 'visible' );
 
-    // update the position of the absolute value readout (i.e. the text node that says things like, "balance of $2"
+    // Update the position of the absolute value readout (i.e. the text node that says things like, "balance of $2".
     const updateAbsoluteValueReadoutPosition = () => {
       if ( decorationType === PiggyBankDecoration.FLOWERS ) {
         absoluteValueBackground.centerX = controllerNode.centerX - 9; // tweaked a bit to be centered under feet
@@ -121,7 +121,7 @@ class BankPointControllerNode extends PointControllerNode {
       }
     };
 
-    // update the node's appearance as its position changes
+    // Update the node's appearance as its position changes.
     const valueRange = numberLine.displayedRangeProperty.value;
     const unscaledWidth = controllerNode.width;
     const updateController = () => {
@@ -138,11 +138,11 @@ class BankPointControllerNode extends PointControllerNode {
         const numberLinePoint = pointController.numberLinePoints.get( 0 );
         const currentBalance = numberLinePoint.valueProperty.value;
 
-        // scale the size
+        // Scale the size.
         const desiredWidth = MIN_WIDTH + ( Math.abs( currentBalance ) / valueRange.max ) * ( MAX_WIDTH - MIN_WIDTH );
         controllerNode.setScaleMagnitude( desiredWidth / unscaledWidth );
 
-        // update the color of the point and the node's fill
+        // Update the color of the point and the node's fill.
         let fill = EMPTY_FILL;
         if ( currentBalance < 0 ) {
           fill = Color.interpolateRGBA(
@@ -160,7 +160,7 @@ class BankPointControllerNode extends PointControllerNode {
         }
         piggyBankNode.fill = fill;
 
-        // update the balance indicator text
+        // Update the balance indicator text.
         const signIndicator = currentBalance < 0 ? '-' : '';
         balanceNode.text = signIndicator + StringUtils.fillIn( moneyAmountString, {
           currencyUnit: currencyUnitsString,
@@ -168,7 +168,7 @@ class BankPointControllerNode extends PointControllerNode {
         } );
         balanceNode.center = Vector2.ZERO;
 
-        // update the absolute value readout
+        // Update the absolute value readout.
         const value = numberLinePoint.valueProperty.value;
         let stringTemplate;
         if ( value < 0 ) {
@@ -188,11 +188,11 @@ class BankPointControllerNode extends PointControllerNode {
     // immediately called so that absolute value texts are positioned correctly
     updateController();
 
-    // add the layer where the coin animations will occur
+    // Add the layer where the coin animations will occur.
     const coinAnimationLayer = new Node();
     controllerNode.addChild( coinAnimationLayer );
 
-    // add the coins now so that they don't have to be added on the fly during the animation
+    // Add the coins now so that they don't have to be added on the fly during the animation.
     _.times( NUMBER_OF_COINS_TO_PRE_CREATE, () => {
       coinAnimationLayer.addChild( new CoinNode( { centerX: COIN_NODE_X_POSITION, visible: false } ) );
     } );
@@ -209,10 +209,10 @@ class BankPointControllerNode extends PointControllerNode {
     coinClipArea.close();
     coinAnimationLayer.clipArea = coinClipArea;
 
-    // list of the active animations for coin motions
+    // List of the active animations for coin motions.
     let activeAnimations = [];
 
-    // watch for when the balance changes due to interaction with the account balance buttons
+    // Watch for when the balance changes due to interaction with the account balance buttons.
     balanceChangedByButtonEmitter.addListener( balanceChange => {
       assert && assert( Math.abs( balanceChange ) === 1, 'balance changes from the button should always be 1 or -1' );
       const isDeposit = balanceChange > 0;
@@ -224,7 +224,7 @@ class BankPointControllerNode extends PointControllerNode {
       let coinNode = _.find( coinNodes, testCoinNode => !testCoinNode.visible );
       if ( !coinNode ) {
 
-        // there aren't any invisible, previously created coin nodes available, so add a new one
+        // There aren't any invisible, previously created coin nodes available, so add a new one.
         coinNode = new CoinNode( { centerX: COIN_NODE_X_POSITION, visible: false } );
         coinAnimationLayer.addChild( coinNode );
       }
@@ -248,7 +248,7 @@ class BankPointControllerNode extends PointControllerNode {
       coinMotionAnimation.endedEmitter.addListener( () => {
         activeAnimations = _.without( activeAnimations, coinMotionAnimation );
 
-        // just hide the coin node so that we can reuse it later if needed
+        // Just hide the coin node so that we can reuse it later if needed.
         coinNode.visible = false;
       } );
       activeAnimations.push( coinMotionAnimation );
@@ -268,7 +268,7 @@ class CoinNode extends Circle {
     options = merge( { stroke: Color.black, fill: COIN_COLOR }, options );
     super( COIN_RADIUS, options );
 
-    // add the currency marking
+    // Add the currency marking.
     this.addChild( new Text( currencyUnitsString, {
       font: new PhetFont( 18 ),
       center: Vector2.ZERO,

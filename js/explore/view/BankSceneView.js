@@ -50,7 +50,7 @@ class BankSceneView extends SceneView {
       }
     } );
 
-    // get references to the only number line and number line node in this scene
+    // Get references to the only number line and number line node in this scene.
     const numberLine = bankSceneModel.numberLines[ 0 ];
     const numberLineNode = this.numberLineNodes[ 0 ];
 
@@ -64,7 +64,7 @@ class BankSceneView extends SceneView {
     this.scenesLayer.addChild( numberLineLabel );
     bankSceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
 
-    // add the switch that controls whether one or two accounts are shown
+    // Add the switch that controls whether one or two accounts are shown.
     this.scenesLayer.addChild( new AccountVisibilityControlSwitch( bankSceneModel.showComparisonAccountProperty, {
       right: this.layoutBounds.maxX - INSET,
       centerY: numberLineNode.centerY
@@ -79,7 +79,7 @@ class BankSceneView extends SceneView {
     this.numberLinesLayer.addChild( pointControllerNodesLayer );
     pointControllerNodesLayer.moveToBack();
 
-    // add node to represent the primary account point controller, which is always visible
+    // Add node to represent the primary account point controller, which is always visible.
     const primaryAccountPointControllerNode = new BankPointControllerNode(
       bankSceneModel.primaryAccountPointController,
       bankSceneModel.primaryAccount.balanceChangedByButtonEmitter,
@@ -100,15 +100,15 @@ class BankSceneView extends SceneView {
 
     numberLine.residentPoints.lengthProperty.link( numPoints => {
 
-      // show the second controller if the second point is present
+      // Show the second controller if the second point is present.
       comparisonAccountPointControllerNode.visible = numPoints > 1;
     } );
 
-    // calculate a horizontal position for the account balance controls that is centered between some other controls
+    // Calculate a horizontal position for the account balance controls that is centered between some other controls.
     const accountBalanceControllersCenterX = ( this.comparisonStatementAccordionBoxes[ 0 ].right +
                                                this.checkboxGroup.bounds.minX ) / 2;
 
-    // add the controller for the primary account
+    // Add the controller for the primary account.
     const primaryAccountBalanceControllerNode = new AccountBalanceControllerNode(
       bankSceneModel.primaryAccount.balanceProperty,
       bankSceneModel.primaryAccount.balanceChangedByButtonEmitter,
@@ -122,7 +122,7 @@ class BankSceneView extends SceneView {
     );
     this.scenesLayer.addChild( primaryAccountBalanceControllerNode );
 
-    // add the controller for the comparison account, and show it only when that account is enabled
+    // Add the controller for the comparison account, and show it only when that account is enabled.
     const comparisonAccountBalanceControllerNode = new AccountBalanceControllerNode(
       bankSceneModel.comparisonAccount.balanceProperty,
       bankSceneModel.comparisonAccount.balanceChangedByButtonEmitter,
@@ -143,14 +143,14 @@ class BankSceneView extends SceneView {
       if ( bankSceneModel.showComparisonAccountProperty.value &&
            bankSceneModel.comparisonAccount.balanceProperty.value === bankSceneModel.primaryAccount.balanceProperty.value ) {
 
-        // set the comparison account to the previous value of the primary account, in effect swapping values
+        // Set the comparison account to the previous value of the primary account, in effect swapping values.
         bankSceneModel.comparisonAccount.balanceProperty.value = bankSceneModel.primaryAccount.previousBalance;
       }
     } );
     comparisonAccountBalanceControllerNode.buttonReleasedEmitter.addListener( () => {
       if ( bankSceneModel.comparisonAccount.balanceProperty.value === bankSceneModel.primaryAccount.balanceProperty.value ) {
 
-        // set the primary account to the previous value of the comparison account, in effect swapping values
+        // Set the primary account to the previous value of the comparison account, in effect swapping values.
         bankSceneModel.primaryAccount.balanceProperty.value = bankSceneModel.comparisonAccount.previousBalance;
       }
     } );
@@ -158,7 +158,7 @@ class BankSceneView extends SceneView {
 }
 
 /**
- * switch for controlling whether one or two account balances are shown
+ * a switch for controlling whether one or two account balances are shown
  * @private
  */
 class AccountVisibilityControlSwitch extends ABSwitch {
