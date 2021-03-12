@@ -19323,4 +19323,4 @@ VALUES_TO_BE_ADJUSTED.forEach( ( value, index ) => {
 
 fs.writeFileSync( OUTPUT_FILE_NAME, output );
 
-console.log( 'wrote file: ' + OUTPUT_FILE_NAME );
+console.log( `wrote file: ${OUTPUT_FILE_NAME}` );
