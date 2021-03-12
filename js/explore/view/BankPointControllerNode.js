@@ -254,6 +254,15 @@ class BankPointControllerNode extends PointControllerNode {
       activeAnimations.push( coinMotionAnimation );
       coinMotionAnimation.start();
     } );
+
+    this.visibleProperty.lazyLink( visible => {
+
+      // Cancel any in-progress user interactions when this goes invisible.  This helps to prevent multi-touch issues,
+      // see https://github.com/phetsims/number-line-integers/issues/106.
+      if ( !visible ) {
+        this.interruptSubtreeInput();
+      }
+    } );
   }
 }
 
