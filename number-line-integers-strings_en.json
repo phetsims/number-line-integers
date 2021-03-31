@@ -74,9 +74,6 @@
   "opposite": {
     "value": "Opposite"
   },
-  "range": {
-    "value": "{{lowValue}} to {{highValue}}"
-  },
   "temperature": {
     "value": "Temperature"
   },
