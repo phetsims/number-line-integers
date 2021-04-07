@@ -9,26 +9,30 @@
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import NLCConstants from '../../../../number-line-common/js/common/NLCConstants.js';
 import NLCheckbox from '../../../../number-line-common/js/common/view/NLCheckbox.js';
+import NLCheckboxGroup from '../../../../number-line-common/js/common/view/NLCheckboxGroup.js';
+import NumberLineOrientationSelector from '../../../../number-line-common/js/common/view/NumberLineOrientationSelector.js';
 import NumberLineRangeSelector from '../../../../number-line-common/js/common/view/NumberLineRangeSelector.js';
+import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
+import SpatializedNumberLineNode from '../../../../number-line-common/js/common/view/SpatializedNumberLineNode.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import VBox from '../../../../scenery/js/nodes/VBox.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import ComparisonStatementAccordionBox from '../../common/view/ComparisonStatementAccordionBox.js';
-import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
-import SpatializedNumberLineNode from '../../../../number-line-common/js/common/view/SpatializedNumberLineNode.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
+import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import NLIGenericModel from '../model/NLIGenericModel.js';
-import NumberLineOrientationSelector from '../../../../number-line-common/js/common/view/NumberLineOrientationSelector.js';
 
 // constants
 const absoluteValueString = numberLineIntegersStrings.absoluteValue;
 const labelsString = numberLineIntegersStrings.labels;
 const tickMarksString = numberLineIntegersStrings.tickMarks;
 const oppositeString = numberLineIntegersStrings.opposite;
+
+// constants
+const MAX_CHECKBOX_TEXT_WIDTH = 190; // empirically determined to stay within dev bounds
+const CHECKBOX_OPTIONS = { textOptions: { maxWidth: MAX_CHECKBOX_TEXT_WIDTH } };
 
 class NLIGenericScreenView extends ScreenView {
 
@@ -53,15 +57,12 @@ class NLIGenericScreenView extends ScreenView {
 
     // Add the check boxes that will control the number line's presentation.
     const checkboxes = [
-      new NLCheckbox( labelsString, model.numberLine.showPointLabelsProperty ),
-      new NLCheckbox( tickMarksString, model.numberLine.showTickMarksProperty ),
-      new NLCheckbox( oppositeString, model.numberLine.showOppositesProperty ),
-      new NLCheckbox( absoluteValueString, model.numberLine.showAbsoluteValuesProperty )
+      new NLCheckbox( labelsString, model.numberLine.showPointLabelsProperty, CHECKBOX_OPTIONS ),
+      new NLCheckbox( tickMarksString, model.numberLine.showTickMarksProperty, CHECKBOX_OPTIONS ),
+      new NLCheckbox( oppositeString, model.numberLine.showOppositesProperty, CHECKBOX_OPTIONS ),
+      new NLCheckbox( absoluteValueString, model.numberLine.showAbsoluteValuesProperty, CHECKBOX_OPTIONS )
     ];
-    const checkboxGroup = new VBox( {
-      children: checkboxes,
-      spacing: 15,
-      align: 'left',
+    const checkboxGroup = new NLCheckboxGroup( checkboxes, {
 
       // position - empirically determined to look decent
       left: this.layoutBounds.maxX - 220,
