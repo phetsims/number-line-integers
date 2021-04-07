@@ -9,17 +9,19 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import NLCheckbox from '../../../../number-line-common/js/common/view/NLCheckbox.js';
+import NLCheckboxGroup from '../../../../number-line-common/js/common/view/NLCheckboxGroup.js';
+import SpatializedNumberLineNode from '../../../../number-line-common/js/common/view/SpatializedNumberLineNode.js';
 import merge from '../../../../phet-core/js/merge.js';
 import ResetButton from '../../../../scenery-phet/js/buttons/ResetButton.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import VBox from '../../../../scenery/js/nodes/VBox.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import ComparisonStatementAccordionBox from '../../common/view/ComparisonStatementAccordionBox.js';
-import SpatializedNumberLineNode from '../../../../number-line-common/js/common/view/SpatializedNumberLineNode.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
+import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 
 // constants
+const MAX_CHECKBOX_TEXT_WIDTH = 145; // empirically determined to stay within dev bounds
+const CHECKBOX_OPTIONS = { textOptions: { maxWidth: MAX_CHECKBOX_TEXT_WIDTH } };
 const absoluteValueString = numberLineIntegersStrings.absoluteValue;
 const labelsString = numberLineIntegersStrings.labels;
 const numberLineString = numberLineIntegersStrings.numberLine;
@@ -76,16 +78,13 @@ class SceneView extends Node {
 
     // checkboxes that control common model properties
     const checkboxes = [
-      new NLCheckbox( numberLineString, sceneModel.showNumberLineProperty ),
-      new NLCheckbox( labelsString, sceneModel.numberLineLabelsVisibleProperty ),
-      new NLCheckbox( absoluteValueString, sceneModel.numberLineAbsoluteValueIndicatorsVisibleProperty )
+      new NLCheckbox( numberLineString, sceneModel.showNumberLineProperty, CHECKBOX_OPTIONS ),
+      new NLCheckbox( labelsString, sceneModel.numberLineLabelsVisibleProperty, CHECKBOX_OPTIONS ),
+      new NLCheckbox( absoluteValueString, sceneModel.numberLineAbsoluteValueIndicatorsVisibleProperty, CHECKBOX_OPTIONS )
     ];
 
-    // @protected {VBox} - node containing the checkboxes that control common model properties
-    this.checkboxGroup = new VBox( {
-      children: checkboxes,
-      spacing: 15,
-      align: 'left',
+    // @protected {NLCheckboxGroup} - node containing the checkboxes that control common model properties
+    this.checkboxGroup = new NLCheckboxGroup( checkboxes, {
       left: layoutBounds.maxX - NLIConstants.EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET,
       top: layoutBounds.minY + 10
     } );
