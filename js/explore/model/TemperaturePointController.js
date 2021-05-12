@@ -20,7 +20,7 @@ import LockToNumberLine from '../../../../number-line-common/js/common/model/Loc
 import NumberLinePoint from '../../../../number-line-common/js/common/model/NumberLinePoint.js';
 import PointController from '../../../../number-line-common/js/common/model/PointController.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
-import TemperatureToColorMapper from './TemperatureToColorMapper.js';
+import TemperatureToColorMapper from '../../../../number-line-common/js/explore/model/TemperatureToColorMapper.js';
 
 // constants
 const TEMPERATURE_RANGE_ON_MAP = new Range( -60, 50 ); // in Celsius, must match range used to make map images
