@@ -1,4 +1,4 @@
-// Copyright 2019-2020, University of Colorado Boulder
+// Copyright 2019-2021, University of Colorado Boulder
 
 /**
  * sceneIconFactory is a singleton that has methods for creating the icons used in the radio buttons that select the

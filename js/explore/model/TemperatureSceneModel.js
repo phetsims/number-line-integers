@@ -1,4 +1,4 @@
-// Copyright 2019-2020, University of Colorado Boulder
+// Copyright 2019-2021, University of Colorado Boulder
 
 /**
  * TemperatureSceneModel is the model for the "Temperature" scene in the "Explore" screen
