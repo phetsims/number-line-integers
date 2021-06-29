@@ -92,12 +92,12 @@ const latitudeValues = [
  * Repeat function that is used to compress the data. It takes in a variable number of arguments: every even-indexed
  * argument is a value with the proceeding argument being how many times that value should appear in the output array.
  */
-const r = function() {
-  assert && assert( arguments.length % 2 === 0, 'r requires an even number of parameters' );
+const r = function( ...args ) {
+  assert && assert( args.length % 2 === 0, 'r requires an even number of parameters' );
   const array = [];
-  for ( let i = 0; i < arguments.length / 2; i++ ) {
-    const value = arguments[ i * 2 ];
-    const times = arguments[ i * 2 + 1 ];
+  for ( let i = 0; i < args.length / 2; i++ ) {
+    const value = args[ i * 2 ];
+    const times = args[ i * 2 + 1 ];
     for ( let j = 0; j < times; j++ ) {
       array.push( value );
     }
