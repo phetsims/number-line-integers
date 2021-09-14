@@ -1,5 +1,5 @@
 {
-  "comment": "# number-line-integers 1.1.1 Thu Jun 17 2021 16:22:03 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# number-line-integers 1.1.2-rc.1 Tue Sep 14 2021 16:24:45 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "423d662a3672e3de42852ee6d6fdec705ac98dd5",
     "branch": "HEAD"
@@ -33,7 +33,7 @@
     "branch": "HEAD"
   },
   "number-line-integers": {
-    "sha": "49d5fe5d11bda223b069d9ed68ed3ba37bc3a403",
+    "sha": "566eba4344484db7dd8cb8c97d864fdd51c2b6bb",
     "branch": "1.1"
   },
   "phet-core": {
