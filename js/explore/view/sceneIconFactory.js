@@ -10,9 +10,9 @@
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import ThermometerNode from '../../../../scenery-phet/js/ThermometerNode.js';
-import Image from '../../../../scenery/js/nodes/Image.js';
-import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import Color from '../../../../scenery/js/util/Color.js';
+import { Image } from '../../../../scenery/js/imports.js';
+import { Rectangle } from '../../../../scenery/js/imports.js';
+import { Color } from '../../../../scenery/js/imports.js';
 import birdInAir from '../../../../number-line-common/images/bird-air_png.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NLIScene from '../model/NLIScene.js';

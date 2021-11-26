@@ -6,8 +6,8 @@
  * @author Arnab Purkayastha
  */
 
-import Image from '../../../../scenery/js/nodes/Image.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
+import { Image } from '../../../../scenery/js/imports.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import temperatureMapJanuary from '../../../images/world-temperatures-monthly-averaged-2018-01_jpg.js';
 import temperatureMapFebruary from '../../../images/world-temperatures-monthly-averaged-2018-02_jpg.js';
 import temperatureMapMarch from '../../../images/world-temperatures-monthly-averaged-2018-03_jpg.js';
