@@ -6,9 +6,9 @@
  * @author John Blanco (PhET Interactive Simulations)
  */
 
-import Enumeration from '../../../../phet-core/js/Enumeration.js';
+import EnumerationDeprecated from '../../../../phet-core/js/EnumerationDeprecated.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 
-const NLIScene = Enumeration.byKeys( [ 'ELEVATION', 'BANK', 'TEMPERATURE' ] );
+const NLIScene = EnumerationDeprecated.byKeys( [ 'ELEVATION', 'BANK', 'TEMPERATURE' ] );
 numberLineIntegers.register( 'NLIScene', NLIScene );
 export default NLIScene;

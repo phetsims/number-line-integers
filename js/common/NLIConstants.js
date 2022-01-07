@@ -8,7 +8,7 @@
  */
 
 import ScreenView from '../../../joist/js/ScreenView.js';
-import Enumeration from '../../../phet-core/js/Enumeration.js';
+import EnumerationDeprecated from '../../../phet-core/js/EnumerationDeprecated.js';
 import numberLineIntegers from '../numberLineIntegers.js';
 
 const NLIConstants = {
@@ -21,7 +21,7 @@ const NLIConstants = {
   GENERIC_SCREEN_DISPLAYED_RANGE_INSET: 25,
 
   // possible values for temperature units
-  TEMPERATURE_UNITS: Enumeration.byKeys( [ 'FAHRENHEIT', 'CELSIUS' ] ),
+  TEMPERATURE_UNITS: EnumerationDeprecated.byKeys( [ 'FAHRENHEIT', 'CELSIUS' ] ),
 
   // various shared fonts and layout parameters
   EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET: 175
