@@ -8,7 +8,7 @@
  * @author Arnab Purkayastha
  */
 
-import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
+import EnumerationDeprecatedProperty from '../../../../axon/js/EnumerationDeprecatedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Range from '../../../../dot/js/Range.js';
@@ -88,7 +88,7 @@ class TemperatureSceneModel extends SceneModel {
     this.monthProperty = new NumberProperty( 1 );
 
     // @public
-    this.temperatureUnitsProperty = new EnumerationProperty(
+    this.temperatureUnitsProperty = new EnumerationDeprecatedProperty(
       NLIConstants.TEMPERATURE_UNITS,
       NLIQueryParameters.defaultCelsius ? NLIConstants.TEMPERATURE_UNITS.CELSIUS : NLIConstants.TEMPERATURE_UNITS.FAHRENHEIT
     );

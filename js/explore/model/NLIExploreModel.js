@@ -4,7 +4,7 @@
  * @author John Blanco (PhET Interactive Simulations)
  */
 
-import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
+import EnumerationDeprecatedProperty from '../../../../axon/js/EnumerationDeprecatedProperty.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import BankSceneModel from './BankSceneModel.js';
 import ElevationSceneModel from './ElevationSceneModel.js';
@@ -19,7 +19,7 @@ class NLIExploreModel {
   constructor() {
 
     // @public {Property.<NLIScene>} - currently selected scene
-    this.selectedSceneProperty = new EnumerationProperty( NLIScene, NLIScene.ELEVATION );
+    this.selectedSceneProperty = new EnumerationDeprecatedProperty( NLIScene, NLIScene.ELEVATION );
 
     // @public (read-only) {ElevationSceneModel} - model instance for the "Elevation" scene
     this.elevationSceneModel = new ElevationSceneModel();
