@@ -6,26 +6,36 @@
  * @author Arnab Purkayastha
  */
 
-import { Image } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import temperatureMapJanuary from '../../../images/world-temperatures-monthly-averaged-2018-01_jpg.js';
-import temperatureMapFebruary from '../../../images/world-temperatures-monthly-averaged-2018-02_jpg.js';
-import temperatureMapMarch from '../../../images/world-temperatures-monthly-averaged-2018-03_jpg.js';
-import temperatureMapApril from '../../../images/world-temperatures-monthly-averaged-2018-04_jpg.js';
-import temperatureMapMay from '../../../images/world-temperatures-monthly-averaged-2018-05_jpg.js';
-import temperatureMapJune from '../../../images/world-temperatures-monthly-averaged-2018-06_jpg.js';
-import temperatureMapJuly from '../../../images/world-temperatures-monthly-averaged-2018-07_jpg.js';
-import temperatureMapAugust from '../../../images/world-temperatures-monthly-averaged-2018-08_jpg.js';
-import temperatureMapSeptember from '../../../images/world-temperatures-monthly-averaged-2018-09_jpg.js';
-import temperatureMapOctober from '../../../images/world-temperatures-monthly-averaged-2018-10_jpg.js';
-import temperatureMapNovember from '../../../images/world-temperatures-monthly-averaged-2018-11_jpg.js';
-import temperatureMapDecember from '../../../images/world-temperatures-monthly-averaged-2018-12_jpg.js';
+import { Image, Node } from '../../../../scenery/js/imports.js';
+import worldTemperaturesMonthlyAveragedApr2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedApr2018_jpg.js';
+import worldTemperaturesMonthlyAveragedAug2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedAug2018_jpg.js';
+import worldTemperaturesMonthlyAveragedDec2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedDec2018_jpg.js';
+import worldTemperaturesMonthlyAveragedFeb2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedFeb2018_jpg.js';
+import worldTemperaturesMonthlyAveragedJan2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedJan2018_jpg.js';
+import worldTemperaturesMonthlyAveragedJul2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedJul2018_jpg.js';
+import worldTemperaturesMonthlyAveragedJun2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedJun2018_jpg.js';
+import worldTemperaturesMonthlyAveragedMar2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedMar2018_jpg.js';
+import worldTemperaturesMonthlyAveragedMay2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedMay2018_jpg.js';
+import worldTemperaturesMonthlyAveragedNov2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedNov2018_jpg.js';
+import worldTemperaturesMonthlyAveragedOct2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedOct2018_jpg.js';
+import worldTemperaturesMonthlyAveragedSep2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedSep2018_jpg.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 
 // constants
-const TEMPERATURE_IMAGES_MONTHS = [ temperatureMapJanuary, temperatureMapFebruary, temperatureMapMarch,
-  temperatureMapApril, temperatureMapMay, temperatureMapJune, temperatureMapJuly, temperatureMapAugust,
-  temperatureMapSeptember, temperatureMapOctober, temperatureMapNovember, temperatureMapDecember ];
+const TEMPERATURE_IMAGES_MONTHS = [
+  worldTemperaturesMonthlyAveragedJan2018_jpg,
+  worldTemperaturesMonthlyAveragedFeb2018_jpg,
+  worldTemperaturesMonthlyAveragedMar2018_jpg,
+  worldTemperaturesMonthlyAveragedApr2018_jpg,
+  worldTemperaturesMonthlyAveragedMay2018_jpg,
+  worldTemperaturesMonthlyAveragedJun2018_jpg,
+  worldTemperaturesMonthlyAveragedJul2018_jpg,
+  worldTemperaturesMonthlyAveragedAug2018_jpg,
+  worldTemperaturesMonthlyAveragedSep2018_jpg,
+  worldTemperaturesMonthlyAveragedOct2018_jpg,
+  worldTemperaturesMonthlyAveragedNov2018_jpg,
+  worldTemperaturesMonthlyAveragedDec2018_jpg
+];
 
 class TemperatureMapNode extends Node {
 

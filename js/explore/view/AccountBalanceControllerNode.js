@@ -17,8 +17,8 @@ import { Text } from '../../../../scenery/js/imports.js';
 import { VBox } from '../../../../scenery/js/imports.js';
 import { Color } from '../../../../scenery/js/imports.js';
 import RoundPushButton from '../../../../sun/js/buttons/RoundPushButton.js';
-import withdrawingCoinsImage from '../../../images/coin-in-hand_png.js';
-import depositingCoinsImage from '../../../images/coin-in-slot_png.js';
+import coinInHand_png from '../../../images/coinInHand_png.js';
+import coinInSlot_png from '../../../images/coinInSlot_png.js';
 import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 
@@ -64,7 +64,7 @@ class AccountBalanceControllerNode extends VBox {
     // Create the icons that will be used in the buttons.  Sizes and positions were empirically determined.
     const depositIcon = new Node( {
       children: [
-        new Image( depositingCoinsImage, { maxWidth: BUTTON_ICON_WIDTH, centerY: -10 } ),
+        new Image( coinInSlot_png, { maxWidth: BUTTON_ICON_WIDTH, centerY: -10 } ),
         new Text( currencyUnitsString, {
           center: new Vector2( 21, -9 ),
           font: CURRENCY_SYMBOL_FONT,
@@ -74,7 +74,7 @@ class AccountBalanceControllerNode extends VBox {
     } );
     const withdrawIcon = new Node( {
       children: [
-        new Image( withdrawingCoinsImage, { maxWidth: BUTTON_ICON_WIDTH } ),
+        new Image( coinInHand_png, { maxWidth: BUTTON_ICON_WIDTH } ),
         new Text( currencyUnitsString, {
           center: new Vector2( 22, 9 ),
           font: CURRENCY_SYMBOL_FONT,

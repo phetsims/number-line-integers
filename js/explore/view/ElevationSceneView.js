@@ -12,14 +12,14 @@ import { Image } from '../../../../scenery/js/imports.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import { Rectangle } from '../../../../scenery/js/imports.js';
 import { Text } from '../../../../scenery/js/imports.js';
-import birdInAir from '../../../../number-line-common/images/bird-air_png.js';
-import birdInWater from '../../../../number-line-common/images/bird-water_png.js';
-import elevationBackground from '../../../images/elevation-background_png.js';
-import fishInAir from '../../../../number-line-common/images/fish-air_png.js';
-import fishInWater from '../../../../number-line-common/images/fish-water_png.js';
-import girlInAir from '../../../images/girl-air_png.js';
-import girlOnRock from '../../../images/girl-rock_png.js';
-import girlInWater from '../../../images/girl-water_png.js';
+import birdAir_png from '../../../../number-line-common/images/birdAir_png.js';
+import birdWater_png from '../../../../number-line-common/images/birdWater_png.js';
+import elevationBackground_png from '../../../images/elevationBackground_png.js';
+import fishAir_png from '../../../../number-line-common/images/fishAir_png.js';
+import fishWater_png from '../../../../number-line-common/images/fishWater_png.js';
+import girlAir_png from '../../../images/girlAir_png.js';
+import girlRock_png from '../../../images/girlRock_png.js';
+import girlWater_png from '../../../images/girlWater_png.js';
 import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
 import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
@@ -52,7 +52,7 @@ class ElevationSceneView extends SceneView {
     // Create and add the background image for the area where the user will be able to place things and change their
     // elevation.  This is scaled to match the bounds defined in the model, so the resolution and aspect ratio of the
     // image needs to be close to what is shown or this won't look good.
-    const elevationAreaImage = new Image( elevationBackground );
+    const elevationAreaImage = new Image( elevationBackground_png );
     elevationAreaImage.scale(
       sceneModel.elevationAreaBounds.width / elevationAreaImage.width,
       sceneModel.elevationAreaBounds.height / elevationAreaImage.height
@@ -100,9 +100,9 @@ class ElevationSceneView extends SceneView {
     elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
       sceneModel.permanentPointControllers[ 0 ],
       [
-        new Image( girlInWater, { maxWidth: 85, center: new Vector2( 3, 5 ) } ),
-        new Image( girlInAir, { maxWidth: 90, center: new Vector2( 6, -25 ) } ),
-        new Image( girlOnRock, { maxWidth: 30, center: new Vector2( 0, 0 ) } )
+        new Image( girlWater_png, { maxWidth: 85, center: new Vector2( 3, 5 ) } ),
+        new Image( girlAir_png, { maxWidth: 90, center: new Vector2( 6, -25 ) } ),
+        new Image( girlRock_png, { maxWidth: 30, center: new Vector2( 0, 0 ) } )
       ],
       sceneModel.seaLevel,
       [
@@ -149,8 +149,8 @@ class ElevationSceneView extends SceneView {
     elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
       sceneModel.permanentPointControllers[ 1 ],
       [
-        new Image( birdInWater, { maxWidth: 65, center: Vector2.ZERO } ),
-        new Image( birdInAir, { maxWidth: 60, center: new Vector2( 0, -10 ) } )
+        new Image( birdWater_png, { maxWidth: 65, center: Vector2.ZERO } ),
+        new Image( birdAir_png, { maxWidth: 60, center: new Vector2( 0, -10 ) } )
       ],
       sceneModel.seaLevel,
       [
@@ -167,8 +167,8 @@ class ElevationSceneView extends SceneView {
     elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
       sceneModel.permanentPointControllers[ 2 ],
       [
-        new Image( fishInWater, { maxWidth: 60, center: Vector2.ZERO } ),
-        new Image( fishInAir, { maxWidth: 60, center: Vector2.ZERO } )
+        new Image( fishWater_png, { maxWidth: 60, center: Vector2.ZERO } ),
+        new Image( fishAir_png, { maxWidth: 60, center: Vector2.ZERO } )
       ],
       sceneModel.seaLevel,
       [

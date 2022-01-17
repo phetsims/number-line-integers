@@ -10,8 +10,8 @@ import Property from '../../../axon/js/Property.js';
 import Screen from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import { Image } from '../../../scenery/js/imports.js';
-import exploreScreenHomeIcon from '../../images/explore-screen-home_png.js';
-import exploreScreenNavIcon from '../../images/explore-screen-nav_png.js';
+import exploreScreenHome_png from '../../images/exploreScreenHome_png.js';
+import exploreScreenNav_png from '../../images/exploreScreenNav_png.js';
 import numberLineIntegersStrings from '../numberLineIntegersStrings.js';
 import numberLineIntegers from '../numberLineIntegers.js';
 import NLIExploreModel from './model/NLIExploreModel.js';
@@ -30,11 +30,11 @@ class NLIExploreScreen extends Screen {
     const options = {
       name: screenExploreString,
       backgroundColorProperty: new Property( 'rgb( 254, 247, 233 )' ),
-      homeScreenIcon: new ScreenIcon( new Image( exploreScreenHomeIcon ), {
+      homeScreenIcon: new ScreenIcon( new Image( exploreScreenHome_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } ),
-      navigationBarIcon: new ScreenIcon( new Image( exploreScreenNavIcon ), {
+      navigationBarIcon: new ScreenIcon( new Image( exploreScreenNav_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } ),

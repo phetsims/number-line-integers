@@ -10,8 +10,8 @@ import Property from '../../../axon/js/Property.js';
 import Screen from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import { Image } from '../../../scenery/js/imports.js';
-import genericScreenHomeIcon from '../../images/generic-screen-home_png.js';
-import genericScreenNavIcon from '../../images/generic-screen-nav_png.js';
+import genericScreenHome_png from '../../images/genericScreenHome_png.js';
+import genericScreenNav_png from '../../images/genericScreenNav_png.js';
 import numberLineIntegers from '../numberLineIntegers.js';
 import numberLineIntegersStrings from '../numberLineIntegersStrings.js';
 import NLIGenericModel from './model/NLIGenericModel.js';
@@ -30,11 +30,11 @@ class NLIGenericScreen extends Screen {
     const options = {
       name: screenGenericString,
       backgroundColorProperty: new Property( 'rgb( 245, 255, 254 )' ),
-      homeScreenIcon: new ScreenIcon( new Image( genericScreenHomeIcon ), {
+      homeScreenIcon: new ScreenIcon( new Image( genericScreenHome_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } ),
-      navigationBarIcon: new ScreenIcon( new Image( genericScreenNavIcon ), {
+      navigationBarIcon: new ScreenIcon( new Image( genericScreenNav_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } ),
