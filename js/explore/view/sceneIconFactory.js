@@ -13,7 +13,7 @@ import ThermometerNode from '../../../../scenery-phet/js/ThermometerNode.js';
 import { Image } from '../../../../scenery/js/imports.js';
 import { Rectangle } from '../../../../scenery/js/imports.js';
 import { Color } from '../../../../scenery/js/imports.js';
-import birdAir_png from '../../../../number-line-common/images/birdAir_png.js';
+import birdInAir_png from '../../../../number-line-common/images/birdInAir_png.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NLIScene from '../model/NLIScene.js';
 import PiggyBankDecoration from '../../../../number-line-common/js/explore/model/PiggyBankDecoration.js';
@@ -40,7 +40,7 @@ const sceneIconFactory = {
     // loading.
     if ( !sceneIdToIconsMap.get( sceneIdentifier ) ) {
       if ( sceneIdentifier === NLIScene.ELEVATION ) {
-        const elevationSceneIconNode = new Image( birdAir_png );
+        const elevationSceneIconNode = new Image( birdInAir_png );
         const xScale = ICON_SIZE.width / elevationSceneIconNode.width;
         const yScale = ICON_SIZE.height / elevationSceneIconNode.height;
         elevationSceneIconNode.setScaleMagnitude( xScale, yScale );

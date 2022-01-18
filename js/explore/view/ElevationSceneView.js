@@ -12,14 +12,14 @@ import { Image } from '../../../../scenery/js/imports.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import { Rectangle } from '../../../../scenery/js/imports.js';
 import { Text } from '../../../../scenery/js/imports.js';
-import birdAir_png from '../../../../number-line-common/images/birdAir_png.js';
-import birdWater_png from '../../../../number-line-common/images/birdWater_png.js';
+import birdInAir_png from '../../../../number-line-common/images/birdInAir_png.js';
+import birdInWater_png from '../../../../number-line-common/images/birdInWater_png.js';
 import elevationBackground_png from '../../../images/elevationBackground_png.js';
-import fishAir_png from '../../../../number-line-common/images/fishAir_png.js';
-import fishWater_png from '../../../../number-line-common/images/fishWater_png.js';
-import girlAir_png from '../../../images/girlAir_png.js';
-import girlRock_png from '../../../images/girlRock_png.js';
-import girlWater_png from '../../../images/girlWater_png.js';
+import fishInAir_png from '../../../../number-line-common/images/fishInAir_png.js';
+import fishInWater_png from '../../../../number-line-common/images/fishInWater_png.js';
+import girlInAir_png from '../../../images/girlInAir_png.js';
+import girlHiking_png from '../../../images/girlHiking_png.js';
+import girlInWater_png from '../../../images/girlInWater_png.js';
 import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
 import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
@@ -100,9 +100,9 @@ class ElevationSceneView extends SceneView {
     elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
       sceneModel.permanentPointControllers[ 0 ],
       [
-        new Image( girlWater_png, { maxWidth: 85, center: new Vector2( 3, 5 ) } ),
-        new Image( girlAir_png, { maxWidth: 90, center: new Vector2( 6, -25 ) } ),
-        new Image( girlRock_png, { maxWidth: 30, center: new Vector2( 0, 0 ) } )
+        new Image( girlInWater_png, { maxWidth: 85, center: new Vector2( 3, 5 ) } ),
+        new Image( girlInAir_png, { maxWidth: 90, center: new Vector2( 6, -25 ) } ),
+        new Image( girlHiking_png, { maxWidth: 30, center: new Vector2( 0, 0 ) } )
       ],
       sceneModel.seaLevel,
       [
@@ -149,8 +149,8 @@ class ElevationSceneView extends SceneView {
     elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
       sceneModel.permanentPointControllers[ 1 ],
       [
-        new Image( birdWater_png, { maxWidth: 65, center: Vector2.ZERO } ),
-        new Image( birdAir_png, { maxWidth: 60, center: new Vector2( 0, -10 ) } )
+        new Image( birdInWater_png, { maxWidth: 65, center: Vector2.ZERO } ),
+        new Image( birdInAir_png, { maxWidth: 60, center: new Vector2( 0, -10 ) } )
       ],
       sceneModel.seaLevel,
       [
@@ -167,8 +167,8 @@ class ElevationSceneView extends SceneView {
     elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
       sceneModel.permanentPointControllers[ 2 ],
       [
-        new Image( fishWater_png, { maxWidth: 60, center: Vector2.ZERO } ),
-        new Image( fishAir_png, { maxWidth: 60, center: Vector2.ZERO } )
+        new Image( fishInWater_png, { maxWidth: 60, center: Vector2.ZERO } ),
+        new Image( fishInAir_png, { maxWidth: 60, center: Vector2.ZERO } )
       ],
       sceneModel.seaLevel,
       [
