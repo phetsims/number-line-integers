@@ -1,4 +1,4 @@
-// Copyright 2019-2021, University of Colorado Boulder
+// Copyright 2019-2022, University of Colorado Boulder
 
 /**
  * ComparisonStatementNode is a Scenery node that depicts a "comparison statement" between zero to three numerical

@@ -1,4 +1,4 @@
-// Copyright 2019-2021, University of Colorado Boulder
+// Copyright 2019-2022, University of Colorado Boulder
 
 /**
  * a Scenery node that is used to control point positions in the "Elevation" scene of the Number Line Integers sim
