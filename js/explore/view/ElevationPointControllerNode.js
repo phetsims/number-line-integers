@@ -7,7 +7,7 @@
  * @author Saurabh Totey
  */
 
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
@@ -92,7 +92,7 @@ class ElevationPointControllerNode extends PointControllerNode {
 
     // Update the absolute value representation and associated text. There is no need to unlink this since the
     // elevation point controllers don't come and go.
-    Property.multilink(
+    Multilink.multilink(
       [ numberLine.showAbsoluteValuesProperty, pointController.positionProperty ],
       showAbsoluteValues => {
         if ( showAbsoluteValues

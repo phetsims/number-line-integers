@@ -10,7 +10,7 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import merge from '../../../../phet-core/js/merge.js';
@@ -70,7 +70,7 @@ class TemperaturePointController extends PointController {
     this.colorProperty = new PaintColorProperty( options.noTemperatureColor );
 
     // Update temperature and other state information when moved or when month changes.
-    Property.multilink(
+    Multilink.multilink(
       [ this.positionProperty, sceneModel.monthProperty ],
       position => {
 

@@ -9,7 +9,7 @@
  * @author John Blanco (PhET Interactive Simulations)
  */
 
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import merge from '../../../../phet-core/js/merge.js';
@@ -95,7 +95,7 @@ class TemperaturePointControllerNode extends PointControllerNode {
     compositeThermometerNode.addChild( temperatureReadout );
 
     // Control the visibility of the textual label, no unlink needed because these point controllers are permanent.
-    Property.multilink(
+    Multilink.multilink(
       [ showAbsoluteValuesProperty, pointController.isOverMapProperty ],
       ( showAbsoluteValues, isOverMap ) => {
         temperatureReadout.visible = showAbsoluteValues && isOverMap;
@@ -103,7 +103,7 @@ class TemperaturePointControllerNode extends PointControllerNode {
     );
 
     // Control the content of the textual label, no unlink needed because these point controllers are permanent.
-    Property.multilink(
+    Multilink.multilink(
       [
         pointController.fahrenheitTemperatureProperty,
         pointController.celsiusTemperatureProperty,

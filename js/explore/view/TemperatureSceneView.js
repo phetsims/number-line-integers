@@ -9,6 +9,7 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Node } from '../../../../scenery/js/imports.js';
@@ -248,7 +249,7 @@ class TemperatureSceneView extends SceneView {
     );
     this.numberLinesLayer.addChild( numberLinePanel );
 
-    Property.multilink(
+    Multilink.multilink(
       [ sceneModel.temperatureUnitsProperty, sceneModel.showNumberLineProperty ],
       ( temperatureUnits, showNumberLine ) => {
         celsiusNumberLineNode.visible = temperatureUnits === NLIConstants.TEMPERATURE_UNITS.CELSIUS;
