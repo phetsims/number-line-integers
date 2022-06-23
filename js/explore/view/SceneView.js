@@ -78,9 +78,9 @@ class SceneView extends Node {
 
     // checkboxes that control common model properties
     const checkboxes = [
-      new NLCheckbox( numberLineString, sceneModel.showNumberLineProperty, CHECKBOX_OPTIONS ),
-      new NLCheckbox( labelsString, sceneModel.numberLineLabelsVisibleProperty, CHECKBOX_OPTIONS ),
-      new NLCheckbox( absoluteValueString, sceneModel.numberLineAbsoluteValueIndicatorsVisibleProperty, CHECKBOX_OPTIONS )
+      new NLCheckbox( sceneModel.showNumberLineProperty, numberLineString, CHECKBOX_OPTIONS ),
+      new NLCheckbox( sceneModel.numberLineLabelsVisibleProperty, labelsString, CHECKBOX_OPTIONS ),
+      new NLCheckbox( sceneModel.numberLineAbsoluteValueIndicatorsVisibleProperty, absoluteValueString, CHECKBOX_OPTIONS )
     ];
 
     // @protected {NLCheckboxGroup} - node containing the checkboxes that control common model properties

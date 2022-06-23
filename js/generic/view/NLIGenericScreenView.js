@@ -57,10 +57,10 @@ class NLIGenericScreenView extends ScreenView {
 
     // Add the check boxes that will control the number line's presentation.
     const checkboxes = [
-      new NLCheckbox( labelsString, model.numberLine.showPointLabelsProperty, CHECKBOX_OPTIONS ),
-      new NLCheckbox( tickMarksString, model.numberLine.showTickMarksProperty, CHECKBOX_OPTIONS ),
-      new NLCheckbox( oppositeString, model.numberLine.showOppositesProperty, CHECKBOX_OPTIONS ),
-      new NLCheckbox( absoluteValueString, model.numberLine.showAbsoluteValuesProperty, CHECKBOX_OPTIONS )
+      new NLCheckbox( model.numberLine.showPointLabelsProperty, labelsString, CHECKBOX_OPTIONS ),
+      new NLCheckbox( model.numberLine.showTickMarksProperty, tickMarksString, CHECKBOX_OPTIONS ),
+      new NLCheckbox( model.numberLine.showOppositesProperty, oppositeString, CHECKBOX_OPTIONS ),
+      new NLCheckbox( model.numberLine.showAbsoluteValuesProperty, absoluteValueString, CHECKBOX_OPTIONS )
     ];
     const checkboxGroup = new NLCheckboxGroup( checkboxes, {
 
