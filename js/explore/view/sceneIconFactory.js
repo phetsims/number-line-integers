@@ -56,7 +56,7 @@ const sceneIconFactory = {
         const temperatureSceneIconRoot = new Rectangle( 0, 0, ICON_SIZE.width, ICON_SIZE.height, {
           fill: Color.TRANSPARENT
         } );
-        const thermometerNode = new ThermometerNode( 0, 1, new NumberProperty( 0.5 ) );
+        const thermometerNode = new ThermometerNode( new NumberProperty( 0.5 ), 0, 1 );
         thermometerNode.setScaleMagnitude( ICON_SIZE.height / thermometerNode.height );
         thermometerNode.center = temperatureSceneIconRoot.center;
         temperatureSceneIconRoot.addChild( thermometerNode );
