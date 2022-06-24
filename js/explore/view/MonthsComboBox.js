@@ -67,7 +67,7 @@ class MonthsComboBox extends ComboBox {
       comboBoxItems.push( new ComboBoxItem( new Text( monthString, COMBO_BOX_ITEM_OPTIONS ), index + 1 ) );
     } );
 
-    super( comboBoxItems, monthProperty, listParent, options );
+    super( monthProperty, comboBoxItems, listParent, options );
   }
 }
 
