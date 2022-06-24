@@ -53,10 +53,7 @@ class TemperaturePointControllerNode extends PointControllerNode {
     }, options );
 
     const temperatureAndColorSensorNode = new TemperatureAndColorSensorNode(
-      TEMPERATURE_RANGE,
-      pointController.fahrenheitTemperatureProperty,
-      pointController.colorProperty,
-      {
+      pointController.fahrenheitTemperatureProperty, TEMPERATURE_RANGE, pointController.colorProperty, {
         thermometerNodeOptions: {
           fluidMainColor: new Color( 0, 120, 0 ),
           fluidHighlightColor: new Color( 0, 210, 0 ),
@@ -65,8 +62,7 @@ class TemperaturePointControllerNode extends PointControllerNode {
           majorTickLength: 0,
           minorTickLength: 0
         }
-      }
-    );
+      } );
     compositeThermometerNode.addChild( temperatureAndColorSensorNode );
 
     // Add the textual label for this thermometer, generally a single letter.
