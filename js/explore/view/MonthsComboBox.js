@@ -10,9 +10,8 @@ import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Text } from '../../../../scenery/js/imports.js';
 import ComboBox from '../../../../sun/js/ComboBox.js';
-import ComboBoxItem from '../../../../sun/js/ComboBoxItem.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
+import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 
 const januaryString = numberLineIntegersStrings.january;
 const februaryString = numberLineIntegersStrings.february;
@@ -64,7 +63,10 @@ class MonthsComboBox extends ComboBox {
 
     const comboBoxItems = [];
     MONTH_STRINGS.forEach( ( monthString, index ) => {
-      comboBoxItems.push( new ComboBoxItem( new Text( monthString, COMBO_BOX_ITEM_OPTIONS ), index + 1 ) );
+      comboBoxItems.push( {
+        value: index + 1,
+        node: new Text( monthString, COMBO_BOX_ITEM_OPTIONS )
+      } );
     } );
 
     super( monthProperty, comboBoxItems, listParent, options );
