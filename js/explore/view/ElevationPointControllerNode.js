@@ -9,17 +9,15 @@
 
 import Multilink from '../../../../axon/js/Multilink.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import BackgroundNode from '../../../../scenery-phet/js/BackgroundNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Path } from '../../../../scenery/js/imports.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import { Node, Path, Text } from '../../../../scenery/js/imports.js';
 import NLIConstants from '../../common/NLIConstants.js';
-import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
+import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 
 // constants
 const IMAGE_DILATION = 20;

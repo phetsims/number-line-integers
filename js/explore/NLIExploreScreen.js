@@ -12,8 +12,8 @@ import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import { Image } from '../../../scenery/js/imports.js';
 import exploreScreenHome_png from '../../images/exploreScreenHome_png.js';
 import exploreScreenNav_png from '../../images/exploreScreenNav_png.js';
-import numberLineIntegersStrings from '../numberLineIntegersStrings.js';
 import numberLineIntegers from '../numberLineIntegers.js';
+import numberLineIntegersStrings from '../numberLineIntegersStrings.js';
 import NLIExploreModel from './model/NLIExploreModel.js';
 import NLIExploreScreenView from './view/NLIExploreScreenView.js';
 

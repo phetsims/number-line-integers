@@ -8,20 +8,18 @@
  */
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
+import PiggyBankDecoration from '../../../../number-line-common/js/explore/model/PiggyBankDecoration.js';
+import PiggyBankNode from '../../../../number-line-common/js/explore/view/PiggyBankNode.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import { HBox, Node, Text } from '../../../../scenery/js/imports.js';
 import ABSwitch from '../../../../sun/js/ABSwitch.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
+import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import BankSceneModel from '../model/BankSceneModel.js';
-import PiggyBankDecoration from '../../../../number-line-common/js/explore/model/PiggyBankDecoration.js';
 import AccountBalanceControllerNode from './AccountBalanceControllerNode.js';
 import BankPointControllerNode from './BankPointControllerNode.js';
-import PiggyBankNode from '../../../../number-line-common/js/explore/view/PiggyBankNode.js';
 import SceneView from './SceneView.js';
 
 // constants

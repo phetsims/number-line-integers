@@ -8,11 +8,11 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import Orientation from '../../../../phet-core/js/Orientation.js';
-import { Color } from '../../../../scenery/js/imports.js';
 import LockToNumberLine from '../../../../number-line-common/js/common/model/LockToNumberLine.js';
 import NumberLinePoint from '../../../../number-line-common/js/common/model/NumberLinePoint.js';
 import PointController from '../../../../number-line-common/js/common/model/PointController.js';
+import Orientation from '../../../../phet-core/js/Orientation.js';
+import { Color } from '../../../../scenery/js/imports.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import BankAccount from './BankAccount.js';

@@ -9,18 +9,17 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
-import merge from '../../../../phet-core/js/merge.js';
-import { Color } from '../../../../scenery/js/imports.js';
-import { PaintColorProperty } from '../../../../scenery/js/imports.js';
 import LockToNumberLine from '../../../../number-line-common/js/common/model/LockToNumberLine.js';
 import NumberLinePoint from '../../../../number-line-common/js/common/model/NumberLinePoint.js';
 import PointController from '../../../../number-line-common/js/common/model/PointController.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 import TemperatureToColorMapper from '../../../../number-line-common/js/explore/model/TemperatureToColorMapper.js';
+import merge from '../../../../phet-core/js/merge.js';
+import { Color, PaintColorProperty } from '../../../../scenery/js/imports.js';
+import numberLineIntegers from '../../numberLineIntegers.js';
 
 // constants
 const TEMPERATURE_RANGE_ON_MAP = new Range( -60, 50 ); // in Celsius, must match range used to make map images

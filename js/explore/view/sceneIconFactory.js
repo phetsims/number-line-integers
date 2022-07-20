@@ -9,15 +9,13 @@
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
-import ThermometerNode from '../../../../scenery-phet/js/ThermometerNode.js';
-import { Image } from '../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
-import { Color } from '../../../../scenery/js/imports.js';
 import birdInAir_png from '../../../../number-line-common/images/birdInAir_png.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
-import NLIScene from '../model/NLIScene.js';
 import PiggyBankDecoration from '../../../../number-line-common/js/explore/model/PiggyBankDecoration.js';
 import PiggyBankNode from '../../../../number-line-common/js/explore/view/PiggyBankNode.js';
+import ThermometerNode from '../../../../scenery-phet/js/ThermometerNode.js';
+import { Color, Image, Rectangle } from '../../../../scenery/js/imports.js';
+import numberLineIntegers from '../../numberLineIntegers.js';
+import NLIScene from '../model/NLIScene.js';
 
 // constants
 const ICON_SIZE = new Dimension2( 38, 38 );

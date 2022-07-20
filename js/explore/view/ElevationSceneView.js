@@ -7,22 +7,19 @@
  */
 
 import Vector2 from '../../../../dot/js/Vector2.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Image } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
-import { Text } from '../../../../scenery/js/imports.js';
 import birdInAir_png from '../../../../number-line-common/images/birdInAir_png.js';
 import birdInWater_png from '../../../../number-line-common/images/birdInWater_png.js';
-import elevationBackground_png from '../../../images/elevationBackground_png.js';
 import fishInAir_png from '../../../../number-line-common/images/fishInAir_png.js';
 import fishInWater_png from '../../../../number-line-common/images/fishInWater_png.js';
-import girlInAir_png from '../../../images/girlInAir_png.js';
-import girlHiking_png from '../../../images/girlHiking_png.js';
-import girlInWater_png from '../../../images/girlInWater_png.js';
 import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import { Image, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import elevationBackground_png from '../../../images/elevationBackground_png.js';
+import girlHiking_png from '../../../images/girlHiking_png.js';
+import girlInAir_png from '../../../images/girlInAir_png.js';
+import girlInWater_png from '../../../images/girlInWater_png.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
+import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
 import ElevationPointControllerNode from './ElevationPointControllerNode.js';
 import SceneView from './SceneView.js';
 
