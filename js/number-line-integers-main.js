@@ -13,7 +13,7 @@ import NLIExploreScreen from './explore/NLIExploreScreen.js';
 import NLIGenericScreen from './generic/NLIGenericScreen.js';
 import numberLineIntegersStrings from './numberLineIntegersStrings.js';
 
-const numberLineIntegersTitleString = numberLineIntegersStrings[ 'number-line-integers' ].title;
+const numberLineIntegersTitleStringProperty = numberLineIntegersStrings[ 'number-line-integers' ].titleStringProperty;
 
 const simOptions = {
   credits: {
@@ -34,6 +34,6 @@ simLauncher.launch( () => {
     new NLIExploreScreen( Tandem.ROOT.createTandem( 'exploreScreen' ) ),
     new NLIGenericScreen( Tandem.ROOT.createTandem( 'genericScreen' ) )
   ];
-  const sim = new Sim( numberLineIntegersTitleString, screens, simOptions );
+  const sim = new Sim( numberLineIntegersTitleStringProperty, screens, simOptions );
   sim.start();
 } );
