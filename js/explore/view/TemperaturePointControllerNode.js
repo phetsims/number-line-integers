@@ -21,15 +21,15 @@ import TemperatureAndColorSensorNode from '../../../../scenery-phet/js/Temperatu
 import { Color, Node, Text } from '../../../../scenery/js/imports.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
+import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 
 // constants
 const TOUCH_DILATION = 5;
 const TEMPERATURE_RANGE = new Range( -85, 104 ); // determined based on the temperature data that was used
 
-const negativeTemperatureAmountString = numberLineIntegersStrings.negativeTemperatureAmount;
-const positiveTemperatureAmountString = numberLineIntegersStrings.positiveTemperatureAmount;
-const zeroTemperatureAmountString = numberLineIntegersStrings.zeroTemperatureAmount;
+const negativeTemperatureAmountString = NumberLineIntegersStrings.negativeTemperatureAmount;
+const positiveTemperatureAmountString = NumberLineIntegersStrings.positiveTemperatureAmount;
+const zeroTemperatureAmountString = NumberLineIntegersStrings.zeroTemperatureAmount;
 
 class TemperaturePointControllerNode extends PointControllerNode {
 

@@ -13,10 +13,10 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Text } from '../../../../scenery/js/imports.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
+import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ComparisonStatementNode from './ComparisonStatementNode.js';
 
-const comparisonStatementString = numberLineIntegersStrings.comparisonStatement;
+const comparisonStatementString = NumberLineIntegersStrings.comparisonStatement;
 
 // constants
 const TITLE_FONT = new PhetFont( 18 );

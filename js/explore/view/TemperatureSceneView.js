@@ -18,7 +18,7 @@ import Panel from '../../../../sun/js/Panel.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
+import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import TemperatureSceneModel from '../model/TemperatureSceneModel.js';
 import MonthsComboBox from './MonthsComboBox.js';
 import SceneView from './SceneView.js';
@@ -39,12 +39,12 @@ const TITLE_TO_SELECTOR_SPACING = 10;
 const CELSIUS_NUMBER_LINE_INDEX = TemperatureSceneModel.CELSIUS_NUMBER_LINE_INDEX;
 const FAHRENHEIT_NUMBER_LINE_INDEX = TemperatureSceneModel.FAHRENHEIT_NUMBER_LINE_INDEX;
 
-const temperatureAmountCelsiusString = numberLineIntegersStrings.temperatureAmountCelsius;
-const temperatureAmountFahrenheitString = numberLineIntegersStrings.temperatureAmountFahrenheit;
-const temperatureLabelCelsiusString = numberLineIntegersStrings.temperatureLabelCelsius;
-const temperatureLabelFahrenheitString = numberLineIntegersStrings.temperatureLabelFahrenheit;
-const temperatureMapCaptionString = numberLineIntegersStrings.temperatureMapCaption;
-const temperatureString = numberLineIntegersStrings.temperature;
+const temperatureAmountCelsiusString = NumberLineIntegersStrings.temperatureAmountCelsius;
+const temperatureAmountFahrenheitString = NumberLineIntegersStrings.temperatureAmountFahrenheit;
+const temperatureLabelCelsiusString = NumberLineIntegersStrings.temperatureLabelCelsius;
+const temperatureLabelFahrenheitString = NumberLineIntegersStrings.temperatureLabelFahrenheit;
+const temperatureMapCaptionString = NumberLineIntegersStrings.temperatureMapCaption;
+const temperatureString = NumberLineIntegersStrings.temperature;
 
 class TemperatureSceneView extends SceneView {
 

@@ -16,7 +16,7 @@ import RoundPushButton from '../../../../sun/js/buttons/RoundPushButton.js';
 import coinInHand_png from '../../../images/coinInHand_png.js';
 import coinInSlot_png from '../../../images/coinInSlot_png.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
+import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 
 // constants
 const MARGIN = 10;
@@ -31,7 +31,7 @@ const CURRENCY_SYMBOL_FONT = new PhetFont( 12 );
 const CURRENCY_SYMBOL_MAX_WIDTH = 10;
 const BUTTON_ICON_WIDTH = 38;
 
-const currencyUnitsString = numberLineIntegersStrings.currencyUnits;
+const currencyUnitsString = NumberLineIntegersStrings.currencyUnits;
 
 
 class AccountBalanceControllerNode extends VBox {

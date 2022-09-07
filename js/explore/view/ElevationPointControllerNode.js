@@ -17,15 +17,15 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Node, Path, Text } from '../../../../scenery/js/imports.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
+import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 
 // constants
 const IMAGE_DILATION = 20;
 const DISTANCE_TEXT_MAX_WIDTH = 250;
 
-const amountAboveSeaLevelString = numberLineIntegersStrings.amountAboveSeaLevel;
-const amountBelowSeaLevelString = numberLineIntegersStrings.amountBelowSeaLevel;
-const seaLevelString = numberLineIntegersStrings.seaLevel;
+const amountAboveSeaLevelString = NumberLineIntegersStrings.amountAboveSeaLevel;
+const amountBelowSeaLevelString = NumberLineIntegersStrings.amountBelowSeaLevel;
+const seaLevelString = NumberLineIntegersStrings.seaLevel;
 
 class ElevationPointControllerNode extends PointControllerNode {
 

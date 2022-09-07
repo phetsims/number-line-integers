@@ -17,14 +17,14 @@ import { Node } from '../../../../scenery/js/imports.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import ComparisonStatementAccordionBox from '../../common/view/ComparisonStatementAccordionBox.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
+import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 
 // constants
 const MAX_CHECKBOX_TEXT_WIDTH = 145; // empirically determined to stay within dev bounds
 const CHECKBOX_OPTIONS = { textOptions: { maxWidth: MAX_CHECKBOX_TEXT_WIDTH } };
-const absoluteValueString = numberLineIntegersStrings.absoluteValue;
-const labelsString = numberLineIntegersStrings.labels;
-const numberLineString = numberLineIntegersStrings.numberLine;
+const absoluteValueString = NumberLineIntegersStrings.absoluteValue;
+const labelsString = NumberLineIntegersStrings.labels;
+const numberLineString = NumberLineIntegersStrings.numberLine;
 
 class SceneView extends Node {
 

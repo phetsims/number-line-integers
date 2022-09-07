@@ -11,20 +11,20 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Text } from '../../../../scenery/js/imports.js';
 import ComboBox from '../../../../sun/js/ComboBox.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
+import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 
-const januaryString = numberLineIntegersStrings.january;
-const februaryString = numberLineIntegersStrings.february;
-const marchString = numberLineIntegersStrings.march;
-const aprilString = numberLineIntegersStrings.april;
-const mayString = numberLineIntegersStrings.may;
-const juneString = numberLineIntegersStrings.june;
-const julyString = numberLineIntegersStrings.july;
-const augustString = numberLineIntegersStrings.august;
-const septemberString = numberLineIntegersStrings.september;
-const octoberString = numberLineIntegersStrings.october;
-const novemberString = numberLineIntegersStrings.november;
-const decemberString = numberLineIntegersStrings.december;
+const januaryString = NumberLineIntegersStrings.january;
+const februaryString = NumberLineIntegersStrings.february;
+const marchString = NumberLineIntegersStrings.march;
+const aprilString = NumberLineIntegersStrings.april;
+const mayString = NumberLineIntegersStrings.may;
+const juneString = NumberLineIntegersStrings.june;
+const julyString = NumberLineIntegersStrings.july;
+const augustString = NumberLineIntegersStrings.august;
+const septemberString = NumberLineIntegersStrings.september;
+const octoberString = NumberLineIntegersStrings.october;
+const novemberString = NumberLineIntegersStrings.november;
+const decemberString = NumberLineIntegersStrings.december;
 
 const MONTH_STRINGS = [
 

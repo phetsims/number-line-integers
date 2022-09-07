@@ -22,7 +22,7 @@ import { Circle, Color, Node, Text } from '../../../../scenery/js/imports.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
+import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 
 // constants
 const MIN_WIDTH = 80; // screen coords, empirically determined
@@ -41,10 +41,10 @@ const COIN_RADIUS = 10;
 const COIN_COLOR = new Color( 213, 196, 39 );
 const COIN_ANIMATION_DURATION = 0.5; // seconds
 
-const balanceAmountString = numberLineIntegersStrings.balanceAmount;
-const currencyUnitsString = numberLineIntegersStrings.currencyUnits;
-const debtAmountString = numberLineIntegersStrings.debtAmount;
-const moneyAmountString = numberLineIntegersStrings.moneyAmount;
+const balanceAmountString = NumberLineIntegersStrings.balanceAmount;
+const currencyUnitsString = NumberLineIntegersStrings.currencyUnits;
+const debtAmountString = NumberLineIntegersStrings.debtAmount;
+const moneyAmountString = NumberLineIntegersStrings.moneyAmount;
 
 // constants
 const COIN_DEPOSIT_ANIMATION_START_Y = -60; // above the piggy bank, in screen coordinates, empirically determined

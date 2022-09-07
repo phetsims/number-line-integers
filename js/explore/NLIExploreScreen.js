@@ -13,11 +13,11 @@ import { Image } from '../../../scenery/js/imports.js';
 import exploreScreenHome_png from '../../images/exploreScreenHome_png.js';
 import exploreScreenNav_png from '../../images/exploreScreenNav_png.js';
 import numberLineIntegers from '../numberLineIntegers.js';
-import numberLineIntegersStrings from '../numberLineIntegersStrings.js';
+import NumberLineIntegersStrings from '../NumberLineIntegersStrings.js';
 import NLIExploreModel from './model/NLIExploreModel.js';
 import NLIExploreScreenView from './view/NLIExploreScreenView.js';
 
-const screenExploreString = numberLineIntegersStrings.screen.explore;
+const screenExploreString = NumberLineIntegersStrings.screen.explore;
 
 class NLIExploreScreen extends Screen {
 

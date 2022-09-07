@@ -13,11 +13,11 @@ import { Image } from '../../../scenery/js/imports.js';
 import genericScreenHome_png from '../../images/genericScreenHome_png.js';
 import genericScreenNav_png from '../../images/genericScreenNav_png.js';
 import numberLineIntegers from '../numberLineIntegers.js';
-import numberLineIntegersStrings from '../numberLineIntegersStrings.js';
+import NumberLineIntegersStrings from '../NumberLineIntegersStrings.js';
 import NLIGenericModel from './model/NLIGenericModel.js';
 import NLIGenericScreenView from './view/NLIGenericScreenView.js';
 
-const screenGenericString = numberLineIntegersStrings.screen.generic;
+const screenGenericString = NumberLineIntegersStrings.screen.generic;
 
 class NLIGenericScreen extends Screen {
 

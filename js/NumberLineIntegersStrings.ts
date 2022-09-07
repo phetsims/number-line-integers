@@ -101,8 +101,8 @@ type StringsType = {
   'decemberStringProperty': TReadOnlyProperty<string>;
 };
 
-const numberLineIntegersStrings = getStringModule( 'NUMBER_LINE_INTEGERS' ) as StringsType;
+const NumberLineIntegersStrings = getStringModule( 'NUMBER_LINE_INTEGERS' ) as StringsType;
 
-numberLineIntegers.register( 'numberLineIntegersStrings', numberLineIntegersStrings );
+numberLineIntegers.register( 'NumberLineIntegersStrings', NumberLineIntegersStrings );
 
-export default numberLineIntegersStrings;
+export default NumberLineIntegersStrings;

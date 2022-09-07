@@ -18,15 +18,15 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import NLIQueryParameters from '../../common/NLIQueryParameters.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
+import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import reverseRobinsonProjector from './reverseRobinsonProjector.js';
 import SceneModel from './SceneModel.js';
 import temperatureDataSet from './temperatureDataSet.js';
 import TemperaturePointController from './TemperaturePointController.js';
 
-const thermometerALabelString = numberLineIntegersStrings.thermometerALabel;
-const thermometerBLabelString = numberLineIntegersStrings.thermometerBLabel;
-const thermometerCLabelString = numberLineIntegersStrings.thermometerCLabel;
+const thermometerALabelString = NumberLineIntegersStrings.thermometerALabel;
+const thermometerBLabelString = NumberLineIntegersStrings.thermometerBLabel;
+const thermometerCLabelString = NumberLineIntegersStrings.thermometerCLabel;
 
 // constants
 const SCENE_BOUNDS = NLIConstants.NLI_LAYOUT_BOUNDS; // bounds for the scenes match the layout bounds

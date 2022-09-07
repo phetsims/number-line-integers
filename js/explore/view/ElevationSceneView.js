@@ -19,15 +19,15 @@ import girlHiking_png from '../../../images/girlHiking_png.js';
 import girlInAir_png from '../../../images/girlInAir_png.js';
 import girlInWater_png from '../../../images/girlInWater_png.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
+import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ElevationPointControllerNode from './ElevationPointControllerNode.js';
 import SceneView from './SceneView.js';
 
 // constants
 const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
 
-const elevationAmountString = numberLineIntegersStrings.elevationAmount;
-const elevationString = numberLineIntegersStrings.elevation;
+const elevationAmountString = NumberLineIntegersStrings.elevationAmount;
+const elevationString = NumberLineIntegersStrings.elevation;
 
 
 class ElevationSceneView extends SceneView {

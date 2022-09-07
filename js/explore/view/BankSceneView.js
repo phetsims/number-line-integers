@@ -16,7 +16,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { HBox, Node, Text } from '../../../../scenery/js/imports.js';
 import ABSwitch from '../../../../sun/js/ABSwitch.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
+import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import BankSceneModel from '../model/BankSceneModel.js';
 import AccountBalanceControllerNode from './AccountBalanceControllerNode.js';
 import BankPointControllerNode from './BankPointControllerNode.js';
@@ -26,9 +26,9 @@ import SceneView from './SceneView.js';
 const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
 const BALANCE_CHANGE_AMOUNT = 1; // in dollars (or whatever currency units are being used)
 
-const balanceString = numberLineIntegersStrings.balance;
-const currencyUnitsString = numberLineIntegersStrings.currencyUnits;
-const moneyAmountString = numberLineIntegersStrings.moneyAmount;
+const balanceString = NumberLineIntegersStrings.balance;
+const currencyUnitsString = NumberLineIntegersStrings.currencyUnits;
+const moneyAmountString = NumberLineIntegersStrings.moneyAmount;
 
 // constants
 const INSET = 10;

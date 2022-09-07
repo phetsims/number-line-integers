@@ -20,14 +20,14 @@ import { Node, Rectangle } from '../../../../scenery/js/imports.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import ComparisonStatementAccordionBox from '../../common/view/ComparisonStatementAccordionBox.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
-import numberLineIntegersStrings from '../../numberLineIntegersStrings.js';
+import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import NLIGenericModel from '../model/NLIGenericModel.js';
 
 // constants
-const absoluteValueString = numberLineIntegersStrings.absoluteValue;
-const labelsString = numberLineIntegersStrings.labels;
-const tickMarksString = numberLineIntegersStrings.tickMarks;
-const oppositeString = numberLineIntegersStrings.opposite;
+const absoluteValueString = NumberLineIntegersStrings.absoluteValue;
+const labelsString = NumberLineIntegersStrings.labels;
+const tickMarksString = NumberLineIntegersStrings.tickMarks;
+const oppositeString = NumberLineIntegersStrings.opposite;
 
 // constants
 const MAX_CHECKBOX_TEXT_WIDTH = 190; // empirically determined to stay within dev bounds

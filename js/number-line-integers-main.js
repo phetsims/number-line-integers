@@ -11,9 +11,9 @@ import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import NLIExploreScreen from './explore/NLIExploreScreen.js';
 import NLIGenericScreen from './generic/NLIGenericScreen.js';
-import numberLineIntegersStrings from './numberLineIntegersStrings.js';
+import NumberLineIntegersStrings from './NumberLineIntegersStrings.js';
 
-const numberLineIntegersTitleStringProperty = numberLineIntegersStrings[ 'number-line-integers' ].titleStringProperty;
+const numberLineIntegersTitleStringProperty = NumberLineIntegersStrings[ 'number-line-integers' ].titleStringProperty;
 
 const simOptions = {
   credits: {
