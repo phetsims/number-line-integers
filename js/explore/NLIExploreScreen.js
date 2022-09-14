@@ -17,8 +17,6 @@ import NumberLineIntegersStrings from '../NumberLineIntegersStrings.js';
 import NLIExploreModel from './model/NLIExploreModel.js';
 import NLIExploreScreenView from './view/NLIExploreScreenView.js';
 
-const screenExploreString = NumberLineIntegersStrings.screen.explore;
-
 class NLIExploreScreen extends Screen {
 
   /**
@@ -28,7 +26,7 @@ class NLIExploreScreen extends Screen {
   constructor( tandem ) {
 
     const options = {
-      name: screenExploreString,
+      name: NumberLineIntegersStrings.screen.exploreStringProperty,
       backgroundColorProperty: new Property( 'rgb( 254, 247, 233 )' ),
       homeScreenIcon: new ScreenIcon( new Image( exploreScreenHome_png ), {
         maxIconWidthProportion: 1,

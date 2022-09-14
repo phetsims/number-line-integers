@@ -17,8 +17,6 @@ import NumberLineIntegersStrings from '../NumberLineIntegersStrings.js';
 import NLIGenericModel from './model/NLIGenericModel.js';
 import NLIGenericScreenView from './view/NLIGenericScreenView.js';
 
-const screenGenericString = NumberLineIntegersStrings.screen.generic;
-
 class NLIGenericScreen extends Screen {
 
   /**
@@ -28,7 +26,7 @@ class NLIGenericScreen extends Screen {
   constructor( tandem ) {
 
     const options = {
-      name: screenGenericString,
+      name: NumberLineIntegersStrings.screen.genericStringProperty,
       backgroundColorProperty: new Property( 'rgb( 245, 255, 254 )' ),
       homeScreenIcon: new ScreenIcon( new Image( genericScreenHome_png ), {
         maxIconWidthProportion: 1,
