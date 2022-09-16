@@ -73,9 +73,9 @@ class TemperaturePointControllerNode extends PointControllerNode {
     compositeThermometerNode.addChild( thermometerLabel );
 
     // Add a readout that will describe the temperature textually, e.g. "20° above 0".
-    const temperatureReadoutTextProperty = new StringProperty( '' );
+    const temperatureReadoutStringProperty = new StringProperty( '' );
     const temperatureReadout = new ColorizedReadoutNode(
-      temperatureReadoutTextProperty,
+      temperatureReadoutStringProperty,
       pointController.colorProperty,
       {
         left: temperatureAndColorSensorNode.right + 3,
@@ -109,7 +109,7 @@ class TemperaturePointControllerNode extends PointControllerNode {
         const template = value < 0 ? negativeTemperatureAmountString :
                          value > 0 ? positiveTemperatureAmountString :
                          zeroTemperatureAmountString;
-        temperatureReadoutTextProperty.set( StringUtils.fillIn( template, { value: Math.abs( value ) } ) );
+        temperatureReadoutStringProperty.set( StringUtils.fillIn( template, { value: Math.abs( value ) } ) );
       }
     );
 
