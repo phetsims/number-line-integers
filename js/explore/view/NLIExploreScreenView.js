@@ -52,15 +52,15 @@ class NLIExploreScreenView extends ScreenView {
     const sceneSelectionButtonsContent = [
       {
         value: NLIScene.ELEVATION,
-        node: sceneIconFactory.getIcon( NLIScene.ELEVATION )
+        createNode: tandem => sceneIconFactory.getIcon( NLIScene.ELEVATION )
       },
       {
         value: NLIScene.BANK,
-        node: sceneIconFactory.getIcon( NLIScene.BANK )
+        createNode: tandem => sceneIconFactory.getIcon( NLIScene.BANK )
       },
       {
         value: NLIScene.TEMPERATURE,
-        node: sceneIconFactory.getIcon( NLIScene.TEMPERATURE )
+        createNode: tandem => sceneIconFactory.getIcon( NLIScene.TEMPERATURE )
       }
     ];
 
