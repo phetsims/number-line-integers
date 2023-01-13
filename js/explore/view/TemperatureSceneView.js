@@ -139,11 +139,11 @@ class TemperatureSceneView extends SceneView {
       [
         {
           value: NLIConstants.TEMPERATURE_UNITS.FAHRENHEIT,
-          createNode: tandem => new Text( temperatureLabelFahrenheitString, UNITS_SELECTOR_TEXT_OPTIONS )
+          createNode: () => new Text( temperatureLabelFahrenheitString, UNITS_SELECTOR_TEXT_OPTIONS )
         },
         {
           value: NLIConstants.TEMPERATURE_UNITS.CELSIUS,
-          createNode: tandem => new Text( temperatureLabelCelsiusString, UNITS_SELECTOR_TEXT_OPTIONS )
+          createNode: () => new Text( temperatureLabelCelsiusString, UNITS_SELECTOR_TEXT_OPTIONS )
         }
       ],
       {
