@@ -210,11 +210,11 @@ class ComparisonStatementNode extends Node {
           }
           const comparisonOperatorNode = comparisonOperatorNodes[ i ];
           comparisonOperatorNode.visible = true;
-          if ( comparisonOperatorNode.text !== comparisonCharacter ) {
+          if ( comparisonOperatorNode.string !== comparisonCharacter ) {
 
-            // optimization - only set the text if it's not correct, saves time reevaluating bounds
-            if ( comparisonOperatorNode.text !== comparisonCharacter ) {
-              comparisonOperatorNode.text = comparisonCharacter;
+            // optimization - only set the string if it's not correct, saves time reevaluating bounds
+            if ( comparisonOperatorNode.string !== comparisonCharacter ) {
+              comparisonOperatorNode.string = comparisonCharacter;
             }
           }
           comparisonOperatorNode.x = currentXPos;
@@ -380,7 +380,7 @@ class PointValueNode extends Node {
 
     // Update appearance as the value changes.
     const handleValueChange = value => {
-      numberText.text = value;
+      numberText.string = value;
       background.setRectBounds( numberText.bounds.dilated( NUMBER_BACKGROUND_DILATION_AMOUNT ) );
     };
     point.valueProperty.link( handleValueChange );

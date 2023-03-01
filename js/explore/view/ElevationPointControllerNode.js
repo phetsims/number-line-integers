@@ -109,7 +109,7 @@ class ElevationPointControllerNode extends PointControllerNode {
           else if ( value > 0 ) {
             seaLevelText = StringUtils.fillIn( amountAboveSeaLevelString, { value: value } );
           }
-          distanceText.text = seaLevelText;
+          distanceText.string = seaLevelText;
           distanceLabel.visible = true;
           distanceLabel.leftCenter = compositeImageNode.rightCenter.plus( textOffset );
         }

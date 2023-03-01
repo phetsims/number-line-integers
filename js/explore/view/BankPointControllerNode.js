@@ -159,7 +159,7 @@ class BankPointControllerNode extends PointControllerNode {
 
         // Update the balance indicator text.
         const signIndicator = currentBalance < 0 ? '-' : '';
-        balanceNode.text = signIndicator + StringUtils.fillIn( moneyAmountString, {
+        balanceNode.string = signIndicator + StringUtils.fillIn( moneyAmountString, {
           currencyUnit: currencyUnitsString,
           value: Math.abs( currentBalance )
         } );
@@ -176,7 +176,7 @@ class BankPointControllerNode extends PointControllerNode {
           stringTemplate = balanceAmountString;
           absoluteValueText.fill = value > 0 ? POSITIVE_ABSOLUTE_VALUE_TEXT_COLOR : ZERO_FILL;
         }
-        absoluteValueText.text = StringUtils.fillIn( stringTemplate, { value: Math.abs( value ) } );
+        absoluteValueText.string = StringUtils.fillIn( stringTemplate, { value: Math.abs( value ) } );
         updateAbsoluteValueReadoutPosition();
       }
     };
