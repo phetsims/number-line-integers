@@ -1,4 +1,4 @@
-// Copyright 2019-2022, University of Colorado Boulder
+// Copyright 2019-2023, University of Colorado Boulder
 
 /**
  * BankPointControllerNode is a Scenery node that is used to control point positions in the "Bank" scene of the Number
