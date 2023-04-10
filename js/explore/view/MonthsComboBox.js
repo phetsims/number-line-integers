@@ -65,7 +65,7 @@ class MonthsComboBox extends ComboBox {
     MONTH_STRINGS.forEach( ( monthString, index ) => {
       comboBoxItems.push( {
         value: index + 1,
-        node: new Text( monthString, COMBO_BOX_ITEM_OPTIONS )
+        createNode: () => new Text( monthString, COMBO_BOX_ITEM_OPTIONS )
       } );
     } );
 
