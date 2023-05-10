@@ -22,7 +22,11 @@
     ],
     "simulation": true,
     "supportsOutputJS": true,
-    "published": true
+    "published": true,
+    "screenNameKeys": [
+      "NUMBER_LINE_INTEGERS/screen.explore",
+      "NUMBER_LINE_INTEGERS/screen.generic"
+    ]
   },
   "eslintConfig": {
     "extends": "../chipper/eslint/sim_eslintrc.js"
