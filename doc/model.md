@@ -4,8 +4,8 @@
 
 The primary model element in this simulation's code describes an abstract number line that extends from negative
 infinity to positive infinity, though of course practical considerations mean that the span that can be seen is always
-limited to some finite amount.  Points can be added to and removed from the number lines that are modeled in the
-simulation.  This model of a number line is depicted in various situations to the user in order to provide different
+limited to some finite amount. Points can be added to and removed from the number lines that are modeled in the
+simulation. This model of a number line is depicted in various situations to the user in order to provide different
 perspectives on what a number line is, what information it represents, and how it can help in understanding how numbers
 can be compared and understood.
 
@@ -27,6 +27,6 @@ the temperature of the surface of the Earth at the point on the map where the po
 ## Generic Screen
 
 In the "Generic" screen, a general-purpose number line is presented and the user can change the span, the orientation,
-and a number of attributes about what is and isn't shown.  The essential underlying model of the number line is the
-same as in the "Explore" screen, but the user now has much more control over how the number line is presented.  It is
+and a number of attributes about what is and isn't shown. The essential underlying model of the number line is the
+same as in the "Explore" screen, but the user now has much more control over how the number line is presented. It is
 "generic" in the sense that it is not coupled to any particular physical or monetary quantity. 
