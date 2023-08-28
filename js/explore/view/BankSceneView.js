@@ -170,7 +170,7 @@ class AccountVisibilityControlSwitch extends ABSwitch {
 
     options = merge( {
       toggleSwitchOptions: { size: new Dimension2( 50, 15 ) },
-      setEnabled: () => {} // turn off default behavior where opacity is used for non-selected nodes
+      setLabelEnabled: () => {} // turn off default behavior where opacity is used for non-selected nodes
     }, options );
 
     // The node for selecting that the comparison account is hidden is a single piggy bank that matches the style of
