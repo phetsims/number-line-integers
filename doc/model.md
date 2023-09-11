@@ -27,6 +27,6 @@ the temperature of the surface of the Earth at the point on the map where the po
 ## Generic Screen
 
 In the "Generic" screen, a general-purpose number line is presented and the user can change the span, the orientation,
-and a number of attributes about what is and isn't shown. The essential underlying model of the number line is the
-same as in the "Explore" screen, but the user now has much more control over how the number line is presented. It is
+and a number of attributes about what is and isn't shown. The essential underlying model of the number line is the same
+as in the "Explore" screen, but the user now has much more control over how the number line is presented. It is
 "generic" in the sense that it is not coupled to any particular physical or monetary quantity. 
