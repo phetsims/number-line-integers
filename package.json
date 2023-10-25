@@ -26,7 +26,8 @@
     "screenNameKeys": [
       "NUMBER_LINE_INTEGERS/screen.explore",
       "NUMBER_LINE_INTEGERS/screen.generic"
-    ]
+    ],
+    "supportsDynamicLocale": true
   },
   "eslintConfig": {
     "extends": "../chipper/eslint/sim_eslintrc.js"

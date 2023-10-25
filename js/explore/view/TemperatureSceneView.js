@@ -9,7 +9,6 @@
  */
 
 import Multilink from '../../../../axon/js/Multilink.js';
-import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ColorizedReadoutNode from '../../../../number-line-common/js/common/view/ColorizedReadoutNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -39,12 +38,12 @@ const TITLE_TO_SELECTOR_SPACING = 10;
 const CELSIUS_NUMBER_LINE_INDEX = TemperatureSceneModel.CELSIUS_NUMBER_LINE_INDEX;
 const FAHRENHEIT_NUMBER_LINE_INDEX = TemperatureSceneModel.FAHRENHEIT_NUMBER_LINE_INDEX;
 
-const temperatureAmountCelsiusString = NumberLineIntegersStrings.temperatureAmountCelsius;
-const temperatureAmountFahrenheitString = NumberLineIntegersStrings.temperatureAmountFahrenheit;
-const temperatureLabelCelsiusString = NumberLineIntegersStrings.temperatureLabelCelsius;
-const temperatureLabelFahrenheitString = NumberLineIntegersStrings.temperatureLabelFahrenheit;
-const temperatureMapCaptionString = NumberLineIntegersStrings.temperatureMapCaption;
-const temperatureString = NumberLineIntegersStrings.temperature;
+const temperatureAmountCelsiusString = NumberLineIntegersStrings.temperatureAmountCelsiusStringProperty;
+const temperatureAmountFahrenheitString = NumberLineIntegersStrings.temperatureAmountFahrenheitStringProperty;
+const temperatureLabelCelsiusString = NumberLineIntegersStrings.temperatureLabelCelsiusStringProperty;
+const temperatureLabelFahrenheitString = NumberLineIntegersStrings.temperatureLabelFahrenheitStringProperty;
+const temperatureMapCaptionString = NumberLineIntegersStrings.temperatureMapCaptionStringProperty;
+const temperatureString = NumberLineIntegersStrings.temperatureStringProperty;
 
 class TemperatureSceneView extends SceneView {
 
@@ -176,7 +175,7 @@ class TemperatureSceneView extends SceneView {
 
       // Create the textual label.
       const labelNode = new ColorizedReadoutNode(
-        new Property( addedNumberLinePoint.controller.label ),
+        addedNumberLinePoint.controller.label,
         addedNumberLinePoint.colorProperty,
         {
           textOptions: {

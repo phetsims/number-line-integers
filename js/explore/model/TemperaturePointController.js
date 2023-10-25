@@ -34,7 +34,7 @@ class TemperaturePointController extends PointController {
 
   /**
    * @param {TemperatureSceneModel} sceneModel
-   * @param {string} labelText - the text with which this controller will be identified in the view
+   * @param {LocalizedStringProperty} labelText - the text with which this controller will be identified in the view
    * @param {Object} [options]
    * @public
    */
@@ -52,7 +52,7 @@ class TemperaturePointController extends PointController {
     // @private
     this.sceneModel = sceneModel;
 
-    // @public (read-only) {string} - label for PointControllerNode and number line point
+    // @public (read-only) {LocalizedStringProperty} - label for PointControllerNode and number line point
     this.label = labelText;
 
     // @public (read-only) - whether this point controller is over the map

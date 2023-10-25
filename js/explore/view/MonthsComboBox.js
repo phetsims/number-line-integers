@@ -13,18 +13,18 @@ import ComboBox from '../../../../sun/js/ComboBox.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 
-const januaryString = NumberLineIntegersStrings.january;
-const februaryString = NumberLineIntegersStrings.february;
-const marchString = NumberLineIntegersStrings.march;
-const aprilString = NumberLineIntegersStrings.april;
-const mayString = NumberLineIntegersStrings.may;
-const juneString = NumberLineIntegersStrings.june;
-const julyString = NumberLineIntegersStrings.july;
-const augustString = NumberLineIntegersStrings.august;
-const septemberString = NumberLineIntegersStrings.september;
-const octoberString = NumberLineIntegersStrings.october;
-const novemberString = NumberLineIntegersStrings.november;
-const decemberString = NumberLineIntegersStrings.december;
+const januaryString = NumberLineIntegersStrings.januaryStringProperty;
+const februaryString = NumberLineIntegersStrings.februaryStringProperty;
+const marchString = NumberLineIntegersStrings.marchStringProperty;
+const aprilString = NumberLineIntegersStrings.aprilStringProperty;
+const mayString = NumberLineIntegersStrings.mayStringProperty;
+const juneString = NumberLineIntegersStrings.juneStringProperty;
+const julyString = NumberLineIntegersStrings.julyStringProperty;
+const augustString = NumberLineIntegersStrings.augustStringProperty;
+const septemberString = NumberLineIntegersStrings.septemberStringProperty;
+const octoberString = NumberLineIntegersStrings.octoberStringProperty;
+const novemberString = NumberLineIntegersStrings.novemberStringProperty;
+const decemberString = NumberLineIntegersStrings.decemberStringProperty;
 
 const MONTH_STRINGS = [
 

@@ -26,9 +26,9 @@ import SceneView from './SceneView.js';
 const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
 const BALANCE_CHANGE_AMOUNT = 1; // in dollars (or whatever currency units are being used)
 
-const balanceString = NumberLineIntegersStrings.balance;
-const currencyUnitsString = NumberLineIntegersStrings.currencyUnits;
-const moneyAmountString = NumberLineIntegersStrings.moneyAmount;
+const balanceString = NumberLineIntegersStrings.balanceStringProperty;
+const currencyUnitsString = NumberLineIntegersStrings.currencyUnitsStringProperty;
+const moneyAmountString = NumberLineIntegersStrings.moneyAmountStringProperty;
 
 // constants
 const INSET = 10;

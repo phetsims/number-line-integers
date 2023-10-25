@@ -24,9 +24,9 @@ import SceneModel from './SceneModel.js';
 import temperatureDataSet from './temperatureDataSet.js';
 import TemperaturePointController from './TemperaturePointController.js';
 
-const thermometerALabelString = NumberLineIntegersStrings.thermometerALabel;
-const thermometerBLabelString = NumberLineIntegersStrings.thermometerBLabel;
-const thermometerCLabelString = NumberLineIntegersStrings.thermometerCLabel;
+const thermometerALabelString = NumberLineIntegersStrings.thermometerALabelStringProperty;
+const thermometerBLabelString = NumberLineIntegersStrings.thermometerBLabelStringProperty;
+const thermometerCLabelString = NumberLineIntegersStrings.thermometerCLabelStringProperty;
 
 // constants
 const SCENE_BOUNDS = NLIConstants.NLI_LAYOUT_BOUNDS; // bounds for the scenes match the layout bounds

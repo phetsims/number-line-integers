@@ -16,7 +16,7 @@ import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ComparisonStatementNode from './ComparisonStatementNode.js';
 
-const comparisonStatementString = NumberLineIntegersStrings.comparisonStatement;
+const comparisonStatementString = NumberLineIntegersStrings.comparisonStatementStringProperty;
 
 // constants
 const TITLE_FONT = new PhetFont( 18 );

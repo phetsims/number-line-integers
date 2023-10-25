@@ -41,10 +41,10 @@ const COIN_RADIUS = 10;
 const COIN_COLOR = new Color( 213, 196, 39 );
 const COIN_ANIMATION_DURATION = 0.5; // seconds
 
-const balanceAmountString = NumberLineIntegersStrings.balanceAmount;
-const currencyUnitsString = NumberLineIntegersStrings.currencyUnits;
-const debtAmountString = NumberLineIntegersStrings.debtAmount;
-const moneyAmountString = NumberLineIntegersStrings.moneyAmount;
+const balanceAmountString = NumberLineIntegersStrings.balanceAmountStringProperty;
+const currencyUnitsString = NumberLineIntegersStrings.currencyUnitsStringProperty;
+const debtAmountString = NumberLineIntegersStrings.debtAmountStringProperty;
+const moneyAmountString = NumberLineIntegersStrings.moneyAmountStringProperty;
 
 // constants
 const COIN_DEPOSIT_ANIMATION_START_Y = -60; // above the piggy bank, in screen coordinates, empirically determined

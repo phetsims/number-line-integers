@@ -24,10 +24,10 @@ import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import NLIGenericModel from '../model/NLIGenericModel.js';
 
 // constants
-const absoluteValueString = NumberLineIntegersStrings.absoluteValue;
-const labelsString = NumberLineIntegersStrings.labels;
-const tickMarksString = NumberLineIntegersStrings.tickMarks;
-const oppositeString = NumberLineIntegersStrings.opposite;
+const absoluteValueString = NumberLineIntegersStrings.absoluteValueStringProperty;
+const labelsString = NumberLineIntegersStrings.labelsStringProperty;
+const tickMarksString = NumberLineIntegersStrings.tickMarksStringProperty;
+const oppositeString = NumberLineIntegersStrings.oppositeStringProperty;
 
 // constants
 const MAX_CHECKBOX_TEXT_WIDTH = 190; // empirically determined to stay within dev bounds

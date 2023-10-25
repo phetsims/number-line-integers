@@ -22,9 +22,9 @@ import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 // constants
 const MAX_CHECKBOX_TEXT_WIDTH = 145; // empirically determined to stay within dev bounds
 const CHECKBOX_OPTIONS = { textOptions: { maxWidth: MAX_CHECKBOX_TEXT_WIDTH } };
-const absoluteValueString = NumberLineIntegersStrings.absoluteValue;
-const labelsString = NumberLineIntegersStrings.labels;
-const numberLineString = NumberLineIntegersStrings.numberLine;
+const absoluteValueString = NumberLineIntegersStrings.absoluteValueStringProperty;
+const labelsString = NumberLineIntegersStrings.labelsStringProperty;
+const numberLineString = NumberLineIntegersStrings.numberLineStringProperty;
 
 class SceneView extends Node {
 

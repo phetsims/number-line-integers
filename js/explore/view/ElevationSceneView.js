@@ -26,8 +26,8 @@ import SceneView from './SceneView.js';
 // constants
 const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
 
-const elevationAmountString = NumberLineIntegersStrings.elevationAmount;
-const elevationString = NumberLineIntegersStrings.elevation;
+const elevationAmountString = NumberLineIntegersStrings.elevationAmountStringProperty;
+const elevationString = NumberLineIntegersStrings.elevationStringProperty;
 
 
 class ElevationSceneView extends SceneView {

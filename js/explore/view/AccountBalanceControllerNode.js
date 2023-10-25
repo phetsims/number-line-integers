@@ -31,7 +31,7 @@ const CURRENCY_SYMBOL_FONT = new PhetFont( 12 );
 const CURRENCY_SYMBOL_MAX_WIDTH = 10;
 const BUTTON_ICON_WIDTH = 38;
 
-const currencyUnitsString = NumberLineIntegersStrings.currencyUnits;
+const currencyUnitsString = NumberLineIntegersStrings.currencyUnitsStringProperty;
 
 
 class AccountBalanceControllerNode extends VBox {

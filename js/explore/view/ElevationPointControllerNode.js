@@ -23,9 +23,9 @@ import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 const IMAGE_DILATION = 20;
 const DISTANCE_TEXT_MAX_WIDTH = 250;
 
-const amountAboveSeaLevelString = NumberLineIntegersStrings.amountAboveSeaLevel;
-const amountBelowSeaLevelString = NumberLineIntegersStrings.amountBelowSeaLevel;
-const seaLevelString = NumberLineIntegersStrings.seaLevel;
+const amountAboveSeaLevelString = NumberLineIntegersStrings.amountAboveSeaLevelStringProperty;
+const amountBelowSeaLevelString = NumberLineIntegersStrings.amountBelowSeaLevelStringProperty;
+const seaLevelString = NumberLineIntegersStrings.seaLevelStringProperty;
 
 class ElevationPointControllerNode extends PointControllerNode {
 
