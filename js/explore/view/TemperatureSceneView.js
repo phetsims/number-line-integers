@@ -12,7 +12,7 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ColorizedReadoutNode from '../../../../number-line-common/js/common/view/ColorizedReadoutNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { ManualConstraint, Node, Rectangle, RichText, Text } from '../../../../scenery/js/imports.js';
+import { GridBox, HBox, Node, Rectangle, RichText, Text } from '../../../../scenery/js/imports.js';
 import Panel from '../../../../sun/js/Panel.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import NLIConstants from '../../common/NLIConstants.js';
@@ -33,7 +33,8 @@ const UNITS_SELECTOR_TEXT_OPTIONS = {
 };
 const NUMBER_LINE_PANEL_WIDTH = 200; // empirically determined
 const NUMBER_LINE_PANEL_MARGINS = 10;
-const NUMBER_LINE_CONTENT_WIDTH = NUMBER_LINE_PANEL_WIDTH - 2 * NUMBER_LINE_PANEL_MARGINS;
+const TEMPERATURE_UNITS_SELECTOR_WIDTH = 53;
+const PANEL_CONTENT_SPACING = 5;
 const TITLE_TO_SELECTOR_SPACING = 10;
 const CELSIUS_NUMBER_LINE_INDEX = TemperatureSceneModel.CELSIUS_NUMBER_LINE_INDEX;
 const FAHRENHEIT_NUMBER_LINE_INDEX = TemperatureSceneModel.FAHRENHEIT_NUMBER_LINE_INDEX;
@@ -146,30 +147,34 @@ class TemperatureSceneView extends SceneView {
         }
       ],
       {
-        // Limit the width to half the panel height to handle long labels from translations and string tests.
-        maxWidth: ( NUMBER_LINE_PANEL_WIDTH - 2 * NUMBER_LINE_PANEL_MARGINS ) / 2,
-
-        // This should appear in the upper left of the panel.
-        right: NUMBER_LINE_CONTENT_WIDTH,
-        top: 0
+        // Limit the width to half the panel width to handle long labels from translations and string tests.
+        maxWidth: TEMPERATURE_UNITS_SELECTOR_WIDTH,
+        layoutOptions: {
+          xAlign: 'right',
+          xStretch: true,
+          yAlign: 'top',
+          verticalSpan: 2
+        }
       }
     );
-    numberLinePanelContent.addChild( temperatureUnitsSelector );
 
     // title for the panel where the number line will appear
     const numberLinePanelTitle = new Text( temperatureString, {
       font: NUMBER_LINE_LABEL_FONT,
-      maxWidth: NUMBER_LINE_PANEL_WIDTH - temperatureUnitsSelector.width - TITLE_TO_SELECTOR_SPACING -
-                2 * NUMBER_LINE_PANEL_MARGINS,
-      top: 0
+      maxWidth: NUMBER_LINE_PANEL_WIDTH - TEMPERATURE_UNITS_SELECTOR_WIDTH - TITLE_TO_SELECTOR_SPACING -
+                2 * NUMBER_LINE_PANEL_MARGINS
     } );
 
-    ManualConstraint.create( this, [ numberLinePanelTitle ], numberLineTitleProxy => {
-
-      // This should be at the top of the node, centered between the left edge and the units selector.
-      numberLineTitleProxy.centerX = NUMBER_LINE_CONTENT_WIDTH / 2;
+    const titleHBox = new HBox( {
+      children: [ numberLinePanelTitle ],
+      align: 'top',
+      justify: 'center',
+      layoutOptions: {
+        minContentWidth: NUMBER_LINE_PANEL_WIDTH - TEMPERATURE_UNITS_SELECTOR_WIDTH - PANEL_CONTENT_SPACING - ( 2 * NUMBER_LINE_PANEL_MARGINS ),
+        stretch: true
+      }
     } );
-    numberLinePanelContent.addChild( numberLinePanelTitle );
+    console.log( NUMBER_LINE_PANEL_WIDTH - TEMPERATURE_UNITS_SELECTOR_WIDTH - PANEL_CONTENT_SPACING - ( 2 * NUMBER_LINE_PANEL_MARGINS ) );
 
     // Manage the label texts for each thermometer.
     const celsiusLabelsLayer = new Node();
@@ -228,18 +233,23 @@ class TemperatureSceneView extends SceneView {
     // dramatically as the string sizes change (e.g. in translations and string tests).  The right side of the number
     // line is used to set the X position because there is no text there, so the position won't change if different
     // size labels are present.
-    numberLinesRootNode.top = 25;
-    numberLinesRootNode.right = 110;
+    // numberLinesRootNode.top = 25;
+    // numberLinesRootNode.right = 110;
+
+    const gridBox = new GridBox( {
+      columns: [ [ titleHBox, numberLinesRootNode ], [ temperatureUnitsSelector ] ],
+      spacing: PANEL_CONTENT_SPACING,
+      resize: false
+    } );
 
     const numberLinePanel = new Panel(
-      numberLinePanelContent,
+      gridBox,
       {
         fill: 'lightgray',
         stroke: 'transparent',
-        align: 'center',
         resize: false,
-        xMargin: NUMBER_LINE_PANEL_MARGINS,
         yMargin: NUMBER_LINE_PANEL_MARGINS,
+        xMargin: NUMBER_LINE_PANEL_MARGINS,
         centerX: this.temperatureMap.left / 2, // centered between left edge of scene and left edge of map
         centerY: this.layoutBounds.minY + this.layoutBounds.maxY / 2, // centered vertically in the layout bounds
         minWidth: NUMBER_LINE_PANEL_WIDTH,
