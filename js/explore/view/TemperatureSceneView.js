@@ -12,7 +12,7 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ColorizedReadoutNode from '../../../../number-line-common/js/common/view/ColorizedReadoutNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Node, Rectangle, RichText, Text } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, Node, Rectangle, RichText, Text } from '../../../../scenery/js/imports.js';
 import Panel from '../../../../sun/js/Panel.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import NLIConstants from '../../common/NLIConstants.js';
@@ -161,10 +161,13 @@ class TemperatureSceneView extends SceneView {
       font: NUMBER_LINE_LABEL_FONT,
       maxWidth: NUMBER_LINE_PANEL_WIDTH - temperatureUnitsSelector.width - TITLE_TO_SELECTOR_SPACING -
                 2 * NUMBER_LINE_PANEL_MARGINS,
+      top: 0
+    } );
+
+    ManualConstraint.create( this, [ numberLinePanelTitle ], numberLineTitleProxy => {
 
       // This should be at the top of the node, centered between the left edge and the units selector.
-      centerX: ( NUMBER_LINE_CONTENT_WIDTH - temperatureUnitsSelector.width ) / 2,
-      top: 0
+      numberLineTitleProxy.centerX = NUMBER_LINE_CONTENT_WIDTH / 2;
     } );
     numberLinePanelContent.addChild( numberLinePanelTitle );
 
