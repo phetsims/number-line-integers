@@ -174,7 +174,6 @@ class TemperatureSceneView extends SceneView {
         stretch: true
       }
     } );
-    console.log( NUMBER_LINE_PANEL_WIDTH - TEMPERATURE_UNITS_SELECTOR_WIDTH - PANEL_CONTENT_SPACING - ( 2 * NUMBER_LINE_PANEL_MARGINS ) );
 
     // Manage the label texts for each thermometer.
     const celsiusLabelsLayer = new Node();

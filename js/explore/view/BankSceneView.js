@@ -7,11 +7,11 @@
  * @author Saurabh Totey
  */
 
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import PiggyBankDecoration from '../../../../number-line-common/js/explore/model/PiggyBankDecoration.js';
 import PiggyBankNode from '../../../../number-line-common/js/explore/view/PiggyBankNode.js';
 import merge from '../../../../phet-core/js/merge.js';
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { HBox, Node, Text } from '../../../../scenery/js/imports.js';
 import ABSwitch from '../../../../sun/js/ABSwitch.js';
@@ -44,7 +44,7 @@ class BankSceneView extends SceneView {
 
     super( bankSceneModel, layoutBounds, {
       commonNumberLineNodeOptions: {
-        numericalLabelTemplate: StringUtils.fillIn( moneyAmountString, { currencyUnit: currencyUnitsString } )
+        numericalLabelTemplate: new PatternStringProperty( moneyAmountString, { currencyUnit: currencyUnitsString } )
       }
     } );
 
