@@ -13,7 +13,7 @@ import fishInAir_png from '../../../../number-line-common/images/fishInAir_png.j
 import fishInWater_png from '../../../../number-line-common/images/fishInWater_png.js';
 import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Image, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Image, ManualConstraint, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import elevationBackground_png from '../../../images/elevationBackground_png.js';
 import girlHiking_png from '../../../images/girlHiking_png.js';
 import girlInAir_png from '../../../images/girlInAir_png.js';
@@ -67,9 +67,12 @@ class ElevationSceneView extends SceneView {
     // Add label for the number line.
     const numberLineLabel = new Text( elevationString, {
       font: NUMBER_LINE_LABEL_FONT,
-      centerX: sceneModel.numberLines[ 0 ].centerPositionProperty.value.x,
       bottom: this.numberLineNodes[ 0 ].top - 5,
       maxWidth: this.layoutBounds.width * 0.18
+    } );
+
+    ManualConstraint.create( this, [ numberLineLabel, ...this.numberLineNodes ], numberLineLabelProxy => {
+      numberLineLabelProxy.centerX = sceneModel.numberLines[ 0 ].centerPositionProperty.value.x;
     } );
     sceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
     this.scenesLayer.addChild( numberLineLabel );
