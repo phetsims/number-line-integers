@@ -15,12 +15,10 @@ import PointControllerNode from '../../../../number-line-common/js/common/view/P
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Image, ManualConstraint, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import elevationBackground_png from '../../../images/elevationBackground_png.js';
-import girlHiking_png from '../../../images/girlHiking_png.js';
-import girlInAir_png from '../../../images/girlInAir_png.js';
-import girlInWater_png from '../../../images/girlInWater_png.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ElevationPointControllerNode from './ElevationPointControllerNode.js';
+import ExplorerCharacterSetUSA from './ExplorerCharacterSetUSA.js';
 import SceneView from './SceneView.js';
 
 // constants
@@ -100,9 +98,9 @@ class ElevationSceneView extends SceneView {
     elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
       sceneModel.permanentPointControllers[ 0 ],
       [
-        new Image( girlInWater_png, { maxWidth: 85, center: new Vector2( 3, 5 ) } ),
-        new Image( girlInAir_png, { maxWidth: 90, center: new Vector2( 6, -25 ) } ),
-        new Image( girlHiking_png, { maxWidth: 30, center: new Vector2( 0, 0 ) } )
+        new Image( ExplorerCharacterSetUSA.swimming, { maxWidth: 85, center: new Vector2( 3, 5 ) } ),
+        new Image( ExplorerCharacterSetUSA.flying, { maxWidth: 90, center: new Vector2( 6, -25 ) } ),
+        new Image( ExplorerCharacterSetUSA.hiking, { maxWidth: 30, center: new Vector2( 0, 0 ) } )
       ],
       sceneModel.seaLevel,
       [

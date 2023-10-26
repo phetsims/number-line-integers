@@ -6,16 +6,25 @@
  * @author John Blanco (PhET Interactive Simulations)
  */
 
+import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
+import ExplorerImages from './common/view/ExplorerImages.js';
 import NLIExploreScreen from './explore/NLIExploreScreen.js';
 import NLIGenericScreen from './generic/NLIGenericScreen.js';
 import NumberLineIntegersStrings from './NumberLineIntegersStrings.js';
 
 const numberLineIntegersTitleStringProperty = NumberLineIntegersStrings[ 'number-line-integers' ].titleStringProperty;
 
+const preferencesModel = new PreferencesModel( {
+  localizationOptions: {
+    characterSets: ExplorerImages.EXPLORER_CHARACTER_SETS
+  }
+} );
+
 const simOptions = {
+  preferencesModel: preferencesModel,
   credits: {
     leadDesign: 'Amanda McGarry',
     softwareDevelopment: 'John Blanco, Chris Klusendorf, Saurabh Totey',
