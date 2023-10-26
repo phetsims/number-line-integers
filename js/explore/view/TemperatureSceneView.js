@@ -12,7 +12,7 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ColorizedReadoutNode from '../../../../number-line-common/js/common/view/ColorizedReadoutNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { GridBox, HBox, Node, Rectangle, RichText, Text } from '../../../../scenery/js/imports.js';
+import { GridBox, HBox, ManualConstraint, Node, Rectangle, RichText, Text } from '../../../../scenery/js/imports.js';
 import Panel from '../../../../sun/js/Panel.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import NLIConstants from '../../common/NLIConstants.js';
@@ -126,10 +126,15 @@ class TemperatureSceneView extends SceneView {
     // caption for the temperature map
     const temperatureMapCaption = new RichText( temperatureMapCaptionString, {
       align: 'center',
-      centerX: this.temperatureMap.centerX,
-      top: this.temperatureMap.bottom + 7, // a little bit under the map
       font: new PhetFont( 10 ),
-      fill: '#707070'
+      fill: '#707070',
+      maxWidth: sceneModel.mapBounds.width - 200, // empirically determined
+      maxHeight: 60
+    } );
+
+    ManualConstraint.create( this, [ temperatureMapCaption, this.temperatureMap ], ( captionProxy, mapProxy ) => {
+      captionProxy.centerX = mapProxy.centerX;
+      captionProxy.top = mapProxy.bottom + 7; // a little bit under the map
     } );
     this.scenesLayer.addChild( temperatureMapCaption );
 
