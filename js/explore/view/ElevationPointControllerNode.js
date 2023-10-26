@@ -7,11 +7,12 @@
  * @author Saurabh Totey
  */
 
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
 import merge from '../../../../phet-core/js/merge.js';
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import BackgroundNode from '../../../../scenery-phet/js/BackgroundNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Node, Path, Text } from '../../../../scenery/js/imports.js';
@@ -77,12 +78,15 @@ class ElevationPointControllerNode extends PointControllerNode {
 
     // handling of what the point controller does when the absolute value checkbox is checked
     const absoluteValueLine = new Path( null, { stroke: pointController.color, lineWidth: 2 } );
-    const distanceText = new Text( '', {
-      font: new PhetFont( 18 ),
-      fill: pointController.color,
-      maxWidth: DISTANCE_TEXT_MAX_WIDTH
-    } );
-    const distanceLabel = new BackgroundNode( distanceText, NLIConstants.LABEL_BACKGROUND_OPTIONS );
+
+    // We do not have access to the valueProperties we need to create a patternStringProperty at start-up. This is a work-around
+    // to enable dynamicLocale without doing a full restructure of the sim.
+    const distanceTextWrapper = new Node( { children: [] } );
+    const amountAboveTextVisibleProperty = new BooleanProperty( false );
+    const amountBelowTextVisibleProperty = new BooleanProperty( false );
+    const seaLevelTextVisibleProperty = new BooleanProperty( false );
+
+    const distanceLabel = new BackgroundNode( distanceTextWrapper, NLIConstants.LABEL_BACKGROUND_OPTIONS );
     this.addChild( absoluteValueLine );
     this.addChild( distanceLabel );
     absoluteValueLine.moveToBack();
@@ -101,15 +105,50 @@ class ElevationPointControllerNode extends PointControllerNode {
             .moveTo( compositeImageNode.x, compositeImageNode.y )
             .lineTo( compositeImageNode.x, seaLevel );
 
+          if ( distanceTextWrapper.children.length === 0 ) {
+            const amountAboveText = new Text(
+              new PatternStringProperty( amountAboveSeaLevelString, { value: pointController.numberLinePoints.get( 0 ).valueProperty } ),
+              {
+                font: new PhetFont( 18 ),
+                fill: pointController.color,
+                maxWidth: DISTANCE_TEXT_MAX_WIDTH,
+                visibleProperty: amountAboveTextVisibleProperty
+              } );
+            const amountBelowText = new Text(
+              new PatternStringProperty( amountBelowSeaLevelString, { value: pointController.numberLinePoints.get( 0 ).valueProperty } ),
+              {
+                font: new PhetFont( 18 ),
+                fill: pointController.color,
+                maxWidth: DISTANCE_TEXT_MAX_WIDTH,
+                visibleProperty: amountBelowTextVisibleProperty
+              } );
+            const seaLevelText = new Text(
+              new PatternStringProperty( seaLevelString, { value: pointController.numberLinePoints.get( 0 ).valueProperty } ),
+              {
+                font: new PhetFont( 18 ),
+                fill: pointController.color,
+                maxWidth: DISTANCE_TEXT_MAX_WIDTH,
+                visibleProperty: seaLevelTextVisibleProperty
+              } );
+            distanceTextWrapper.children = [ amountAboveText, amountBelowText, seaLevelText ];
+          }
           const value = pointController.numberLinePoints.get( 0 ).valueProperty.value;
-          let seaLevelText = seaLevelString;
           if ( value < 0 ) {
-            seaLevelText = StringUtils.fillIn( amountBelowSeaLevelString, { value: Math.abs( value ) } );
+            seaLevelTextVisibleProperty.value = false;
+            amountAboveTextVisibleProperty.value = false;
+            amountBelowTextVisibleProperty.value = true;
           }
           else if ( value > 0 ) {
-            seaLevelText = StringUtils.fillIn( amountAboveSeaLevelString, { value: value } );
+            seaLevelTextVisibleProperty.value = false;
+            amountAboveTextVisibleProperty.value = true;
+            amountBelowTextVisibleProperty.value = false;
           }
-          distanceText.string = seaLevelText;
+          else if ( value === 0 ) {
+            seaLevelTextVisibleProperty.value = true;
+            amountBelowTextVisibleProperty.value = false;
+            amountAboveTextVisibleProperty.value = false;
+          }
+
           distanceLabel.visible = true;
           distanceLabel.leftCenter = compositeImageNode.rightCenter.plus( textOffset );
         }

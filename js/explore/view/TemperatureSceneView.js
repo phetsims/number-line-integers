@@ -227,14 +227,6 @@ class TemperatureSceneView extends SceneView {
     numberLinesRootNode.addChild( celsiusLabelsLayer );
     numberLinesRootNode.addChild( fahrenheitLabelsLayer );
 
-    // Set the number line position to be fixed, roughly horizontally centered in the panel, and just below the header
-    // label.  It's important that these be absolute numbers so that the layout of the panel doesn't change
-    // dramatically as the string sizes change (e.g. in translations and string tests).  The right side of the number
-    // line is used to set the X position because there is no text there, so the position won't change if different
-    // size labels are present.
-    // numberLinesRootNode.top = 25;
-    // numberLinesRootNode.right = 110;
-
     const gridBox = new GridBox( {
       columns: [ [ titleHBox, numberLinesRootNode ], [ temperatureUnitsSelector ] ],
       spacing: PANEL_CONTENT_SPACING,

@@ -8,6 +8,8 @@
  * @author Saurabh Totey
  */
 
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import NLCConstants from '../../../../number-line-common/js/common/NLCConstants.js';
@@ -15,12 +17,12 @@ import PointControllerNode from '../../../../number-line-common/js/common/view/P
 import PiggyBankDecoration from '../../../../number-line-common/js/explore/model/PiggyBankDecoration.js';
 import PiggyBankNode from '../../../../number-line-common/js/explore/view/PiggyBankNode.js';
 import merge from '../../../../phet-core/js/merge.js';
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import BackgroundNode from '../../../../scenery-phet/js/BackgroundNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Circle, Color, Node, Text } from '../../../../scenery/js/imports.js';
+import { Circle, Color, ColorProperty, Node, Text } from '../../../../scenery/js/imports.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
+import NLIColors from '../../common/NLIColors.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 
@@ -28,17 +30,8 @@ import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 const MIN_WIDTH = 80; // screen coords, empirically determined
 const MAX_WIDTH = 200; // screen coords, empirically determined
 const TOUCH_DILATION = 7; // dilates piggy banks enough to not overlap touch areas with account balance buttons
-const MOST_POSITIVE_FILL = Color.toColor( '#1fb493' );
-const LEAST_POSITIVE_FILL = Color.toColor( '#a5e1d4' );
-const MOST_NEGATIVE_FILL = Color.toColor( '#fb1d25' );
-const LEAST_NEGATIVE_FILL = Color.toColor( '#fda5a8' );
-const POSITIVE_ABSOLUTE_VALUE_TEXT_COLOR = '#0e977b';
-const NEGATIVE_ABSOLUTE_VALUE_TEXT_COLOR = MOST_NEGATIVE_FILL;
-const EMPTY_FILL = Color.WHITE;
-const ZERO_FILL = Color.BLACK;
 const READOUT_DISTANCE_FROM_IMAGE = 5;
 const COIN_RADIUS = 10;
-const COIN_COLOR = new Color( 213, 196, 39 );
 const COIN_ANIMATION_DURATION = 0.5; // seconds
 
 const balanceAmountString = NumberLineIntegersStrings.balanceAmountStringProperty;
@@ -74,15 +67,12 @@ class BankPointControllerNode extends PointControllerNode {
     const piggyBankNode = new PiggyBankNode( { decorationType: decorationType } );
     controllerNode.addChild( piggyBankNode );
 
-    // Add the balance indicator node.
-    const balanceNode = new Text( '', {
-      font: new PhetFont( 30 ),
-      fill: 'white',
-      stroke: 'black',
-      center: Vector2.ZERO,
-      maxWidth: 65
-    } );
-    controllerNode.addChild( balanceNode );
+    // In order to use a PatternStringProperty for dynamic layout we do not have access to the value property
+    // at startup. This wrapper allows us to use a PatternStringProperty without a heavy restructure of the sim
+    // architecture. https://github.com/phetsims/number-line-integers/issues/109
+    const balanceTextWrapper = new Node();
+
+    controllerNode.addChild( balanceTextWrapper );
 
     // dilates the touch area for the controllerNode
     controllerNode.touchArea = controllerNode.bounds.dilated( TOUCH_DILATION );
@@ -92,8 +82,12 @@ class BankPointControllerNode extends PointControllerNode {
     super( pointController, options );
 
     // the readout that will display the absolute value in a phrase
-    const absoluteValueText = new Text( '', { font: new PhetFont( 18 ), maxWidth: 250 } );
-    const absoluteValueBackground = new BackgroundNode( absoluteValueText, NLCConstants.LABEL_BACKGROUND_OPTIONS );
+    const absoluteValueNode = new Node();
+    const absoluteValueMoneyAmountVisibleProperty = new BooleanProperty( false );
+    const absoluteValueDebtAmountVisibleProperty = new BooleanProperty( false );
+    const absoluteValueMoneyTextColorProperty = new ColorProperty( NLIColors.bankAbsoluteValueMoneyTextColor );
+
+    const absoluteValueBackground = new BackgroundNode( absoluteValueNode, NLCConstants.LABEL_BACKGROUND_OPTIONS );
     this.addChild( absoluteValueBackground );
 
     // Get a reference to the number line (there is only one for this scene).
@@ -140,43 +134,78 @@ class BankPointControllerNode extends PointControllerNode {
         controllerNode.setScaleMagnitude( desiredWidth / unscaledWidth );
 
         // Update the color of the point and the node's fill.
-        let fill = EMPTY_FILL;
+        let fill = NLIColors.bankEmptyFillColor;
         if ( currentBalance < 0 ) {
           fill = Color.interpolateRGBA(
-            LEAST_NEGATIVE_FILL,
-            MOST_NEGATIVE_FILL,
+            NLIColors.bankLeastNegativeFillColor,
+            NLIColors.bankMostNegativeFillColor,
             currentBalance / valueRange.min
           );
         }
         else if ( currentBalance > 0 ) {
           fill = Color.interpolateRGBA(
-            LEAST_POSITIVE_FILL,
-            MOST_POSITIVE_FILL,
+            NLIColors.bankLeastPositiveFillColor,
+            NLIColors.bankMostPositiveFillColor,
             currentBalance / valueRange.max
           );
         }
         piggyBankNode.fill = fill;
 
+        // Add the balance indicator text if it has not been added yet.
+        if ( balanceTextWrapper.children.length === 0 ) {
+          const balanceNode = new Text( new PatternStringProperty( balanceAmountString, {
+            currencyUnit: currencyUnitsString,
+            value: numberLinePoint.valueProperty
+          } ), {
+            font: new PhetFont( 30 ),
+            fill: 'white',
+            stroke: 'black',
+            center: Vector2.ZERO,
+            maxWidth: 65
+          } );
+          balanceTextWrapper.children = [ balanceNode ];
+        }
+
         // Update the balance indicator text.
-        const signIndicator = currentBalance < 0 ? '-' : '';
-        balanceNode.string = signIndicator + StringUtils.fillIn( moneyAmountString, {
-          currencyUnit: currencyUnitsString,
-          value: Math.abs( currentBalance )
-        } );
-        balanceNode.center = Vector2.ZERO;
+        balanceTextWrapper.center = Vector2.ZERO;
 
         // Update the absolute value readout.
         const value = numberLinePoint.valueProperty.value;
-        let stringTemplate;
+
+        if ( absoluteValueNode.children.length === 0 ) {
+          const absoluteValueMoneyAmountText = new Text(
+            new PatternStringProperty( moneyAmountString, {
+              value: numberLinePoint.valueProperty,
+              currencyUnit: currencyUnitsString
+            } ),
+            {
+              font: new PhetFont( 18 ),
+              maxWidth: 250,
+              fill: absoluteValueMoneyTextColorProperty,
+              visibleProperty: absoluteValueMoneyAmountVisibleProperty
+            } );
+          const absoluteValueDebtAmountText = new Text(
+            new PatternStringProperty( debtAmountString, { value: numberLinePoint.valueProperty } ),
+            {
+              font: new PhetFont( 18 ),
+              maxWidth: 250,
+              fill: NLIColors.bankAbsoluteValueDebtTextColor,
+              visibleProperty: absoluteValueDebtAmountVisibleProperty
+            } );
+
+          absoluteValueNode.children = [ absoluteValueMoneyAmountText, absoluteValueDebtAmountText ];
+        }
+
         if ( value < 0 ) {
-          stringTemplate = debtAmountString;
-          absoluteValueText.fill = NEGATIVE_ABSOLUTE_VALUE_TEXT_COLOR;
+          absoluteValueMoneyAmountVisibleProperty.value = false;
+          absoluteValueDebtAmountVisibleProperty.value = true;
         }
         else {
-          stringTemplate = balanceAmountString;
-          absoluteValueText.fill = value > 0 ? POSITIVE_ABSOLUTE_VALUE_TEXT_COLOR : ZERO_FILL;
+          absoluteValueMoneyAmountVisibleProperty.value = true;
+          absoluteValueDebtAmountVisibleProperty.value = false;
+
+          absoluteValueMoneyTextColorProperty.value = value === 0 ? NLIColors.bankZeroFillColor : NLIColors.bankAbsoluteValueMoneyTextColor;
         }
-        absoluteValueText.string = StringUtils.fillIn( stringTemplate, { value: Math.abs( value ) } );
         updateAbsoluteValueReadoutPosition();
       }
     };
@@ -271,7 +300,7 @@ class CoinNode extends Circle {
    */
   constructor( options ) {
 
-    options = merge( { stroke: Color.black, fill: COIN_COLOR }, options );
+    options = merge( { stroke: Color.black, fill: NLIColors.coinColor }, options );
     super( COIN_RADIUS, options );
 
     // Add the currency marking.

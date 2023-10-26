@@ -13,7 +13,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import LockToNumberLine from '../../../../number-line-common/js/common/model/LockToNumberLine.js';
 import PointController from '../../../../number-line-common/js/common/model/PointController.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
-import { Color } from '../../../../scenery/js/imports.js';
+import NLIColors from '../../common/NLIColors.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import ElevationPointController from './ElevationPointController.js';
@@ -81,9 +81,9 @@ class ElevationSceneModel extends SceneModel {
 
     // @public (read-only) - the point controllers that can be moved into the elevation scene
     this.permanentPointControllers = [
-      new ElevationPointController( numberLine, elevationAreaBounds, { color: new Color( '#EE3937' ) } ),
-      new ElevationPointController( numberLine, elevationAreaBounds, { color: new Color( 'black' ) } ),
-      new ElevationPointController( numberLine, elevationAreaBounds, { color: new Color( '#446ab7' ) } )
+      new ElevationPointController( numberLine, elevationAreaBounds, { color: NLIColors.girlElevationColor } ),
+      new ElevationPointController( numberLine, elevationAreaBounds, { color: NLIColors.birdElevationColor } ),
+      new ElevationPointController( numberLine, elevationAreaBounds, { color: NLIColors.fishElevationColor } )
     ];
 
     // Put the permanent point controllers in their starting positions.
