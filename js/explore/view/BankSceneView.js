@@ -13,7 +13,7 @@ import PiggyBankDecoration from '../../../../number-line-common/js/explore/model
 import PiggyBankNode from '../../../../number-line-common/js/explore/view/PiggyBankNode.js';
 import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox, Node, Text } from '../../../../scenery/js/imports.js';
+import { HBox, ManualConstraint, Node, Text } from '../../../../scenery/js/imports.js';
 import ABSwitch from '../../../../sun/js/ABSwitch.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
@@ -55,9 +55,11 @@ class BankSceneView extends SceneView {
     // number line label
     const numberLineLabel = new Text( balanceString, {
       font: NUMBER_LINE_LABEL_FONT,
-      right: numberLineNode.left - 4,
       centerY: numberLine.centerPositionProperty.value.y,
       maxWidth: layoutBounds.width * 0.08
+    } );
+    ManualConstraint.create( this, [ numberLineLabel, numberLineNode ], ( labelProxy, nodeProxy ) => {
+      labelProxy.right = nodeProxy.left - 4;
     } );
     this.scenesLayer.addChild( numberLineLabel );
     bankSceneModel.showNumberLineProperty.linkAttribute( numberLineLabel, 'visible' );
