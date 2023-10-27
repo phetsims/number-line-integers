@@ -16,7 +16,7 @@ import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ComparisonStatementNode from './ComparisonStatementNode.js';
 
-const comparisonStatementString = NumberLineIntegersStrings.comparisonStatementStringProperty;
+const comparisonStatementStringProperty = NumberLineIntegersStrings.comparisonStatementStringProperty;
 
 // constants
 const TITLE_FONT = new PhetFont( 18 );
@@ -41,7 +41,7 @@ class ComparisonStatementAccordionBox extends AccordionBox {
 
     // Embed the comparison statement in an accordion box.
     super( comparisonStatementNode, merge( {}, DEFAULT_OPTIONS, options, NLCConstants.ACCORDION_BOX_COMMON_OPTIONS, {
-      titleNode: new Text( comparisonStatementString, {
+      titleNode: new Text( comparisonStatementStringProperty, {
         font: TITLE_FONT,
         maxWidth: COMPARISON_STATEMENT_BOX_WIDTH * 0.8
       } )

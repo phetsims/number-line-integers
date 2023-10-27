@@ -13,7 +13,7 @@ import numberLineIntegers from '../../numberLineIntegers.js';
 export default class ExplorerCharacterSet extends RegionAndCulturePortrayal {
   /**
    *
-   * @param labelString { LocalizedStringProperty }
+   * @param label { LocalizedStringProperty }
    * @param headshotIcon { Image }
    * @param flying { HTMLImageElement }
    * @param hiking { HTMLImageElement }
@@ -21,10 +21,10 @@ export default class ExplorerCharacterSet extends RegionAndCulturePortrayal {
    * @param screenHomeIcon { HTMLImageElement }
    * @param screenNavIcon { HTMLImageElement }
    */
-  constructor( labelString, headshotIcon,
+  constructor( label, headshotIcon,
                flying, hiking, swimming,
                screenHomeIcon, screenNavIcon ) {
-   super( headshotIcon, labelString, {} );
+   super( headshotIcon, label, {} );
 
    this.flying = flying;
    this.hiking = hiking;

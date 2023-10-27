@@ -13,34 +13,34 @@ import ComboBox from '../../../../sun/js/ComboBox.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 
-const januaryString = NumberLineIntegersStrings.januaryStringProperty;
-const februaryString = NumberLineIntegersStrings.februaryStringProperty;
-const marchString = NumberLineIntegersStrings.marchStringProperty;
-const aprilString = NumberLineIntegersStrings.aprilStringProperty;
-const mayString = NumberLineIntegersStrings.mayStringProperty;
-const juneString = NumberLineIntegersStrings.juneStringProperty;
-const julyString = NumberLineIntegersStrings.julyStringProperty;
-const augustString = NumberLineIntegersStrings.augustStringProperty;
-const septemberString = NumberLineIntegersStrings.septemberStringProperty;
-const octoberString = NumberLineIntegersStrings.octoberStringProperty;
-const novemberString = NumberLineIntegersStrings.novemberStringProperty;
-const decemberString = NumberLineIntegersStrings.decemberStringProperty;
+const januaryStringProperty = NumberLineIntegersStrings.januaryStringProperty;
+const februaryStringProperty = NumberLineIntegersStrings.februaryStringProperty;
+const marchStringProperty = NumberLineIntegersStrings.marchStringProperty;
+const aprilStringProperty = NumberLineIntegersStrings.aprilStringProperty;
+const mayStringProperty = NumberLineIntegersStrings.mayStringProperty;
+const juneStringProperty = NumberLineIntegersStrings.juneStringProperty;
+const julyStringProperty = NumberLineIntegersStrings.julyStringProperty;
+const augustStringProperty = NumberLineIntegersStrings.augustStringProperty;
+const septemberStringProperty = NumberLineIntegersStrings.septemberStringProperty;
+const octoberStringProperty = NumberLineIntegersStrings.octoberStringProperty;
+const novemberStringProperty = NumberLineIntegersStrings.novemberStringProperty;
+const decemberStringProperty = NumberLineIntegersStrings.decemberStringProperty;
 
 const MONTH_STRINGS = [
 
   // These must be in order of occurrence, not sorted alphabetically.
-  januaryString,
-  februaryString,
-  marchString,
-  aprilString,
-  mayString,
-  juneString,
-  julyString,
-  augustString,
-  septemberString,
-  octoberString,
-  novemberString,
-  decemberString
+  januaryStringProperty,
+  februaryStringProperty,
+  marchStringProperty,
+  aprilStringProperty,
+  mayStringProperty,
+  juneStringProperty,
+  julyStringProperty,
+  augustStringProperty,
+  septemberStringProperty,
+  octoberStringProperty,
+  novemberStringProperty,
+  decemberStringProperty
 ];
 
 // constants

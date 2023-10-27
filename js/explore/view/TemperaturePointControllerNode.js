@@ -27,9 +27,9 @@ import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 const TOUCH_DILATION = 5;
 const TEMPERATURE_RANGE = new Range( -85, 104 ); // determined based on the temperature data that was used
 
-const negativeTemperatureAmountString = NumberLineIntegersStrings.negativeTemperatureAmountStringProperty;
-const positiveTemperatureAmountString = NumberLineIntegersStrings.positiveTemperatureAmountStringProperty;
-const zeroTemperatureAmountString = NumberLineIntegersStrings.zeroTemperatureAmountStringProperty;
+const negativeTemperatureAmountStringProperty = NumberLineIntegersStrings.negativeTemperatureAmountStringProperty;
+const positiveTemperatureAmountStringProperty = NumberLineIntegersStrings.positiveTemperatureAmountStringProperty;
+const zeroTemperatureAmountStringProperty = NumberLineIntegersStrings.zeroTemperatureAmountStringProperty;
 
 class TemperaturePointControllerNode extends PointControllerNode {
 
@@ -106,9 +106,9 @@ class TemperaturePointControllerNode extends PointControllerNode {
       ],
       ( fahrenheitTemperature, celsiusTemperature, temperatureUnits ) => {
         const value = temperatureUnits === NLIConstants.TEMPERATURE_UNITS.CELSIUS ? celsiusTemperature : fahrenheitTemperature;
-        const template = value < 0 ? negativeTemperatureAmountString :
-                         value > 0 ? positiveTemperatureAmountString :
-                         zeroTemperatureAmountString;
+        const template = value < 0 ? negativeTemperatureAmountStringProperty :
+                         value > 0 ? positiveTemperatureAmountStringProperty :
+                         zeroTemperatureAmountStringProperty;
         temperatureReadoutStringProperty.set( StringUtils.fillIn( template, { value: Math.abs( value ) } ) );
       }
     );

@@ -22,9 +22,9 @@ import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 // constants
 const MAX_CHECKBOX_TEXT_WIDTH = 145; // empirically determined to stay within dev bounds
 const CHECKBOX_OPTIONS = { textOptions: { maxWidth: MAX_CHECKBOX_TEXT_WIDTH } };
-const absoluteValueString = NumberLineIntegersStrings.absoluteValueStringProperty;
-const labelsString = NumberLineIntegersStrings.labelsStringProperty;
-const numberLineString = NumberLineIntegersStrings.numberLineStringProperty;
+const absoluteValueStringProperty = NumberLineIntegersStrings.absoluteValueStringProperty;
+const labelsStringProperty = NumberLineIntegersStrings.labelsStringProperty;
+const numberLineStringProperty = NumberLineIntegersStrings.numberLineStringProperty;
 
 class SceneView extends Node {
 
@@ -78,9 +78,9 @@ class SceneView extends Node {
 
     // checkboxes that control common model properties
     const checkboxes = [
-      new NLCheckbox( sceneModel.showNumberLineProperty, numberLineString, CHECKBOX_OPTIONS ),
-      new NLCheckbox( sceneModel.numberLineLabelsVisibleProperty, labelsString, CHECKBOX_OPTIONS ),
-      new NLCheckbox( sceneModel.numberLineAbsoluteValueIndicatorsVisibleProperty, absoluteValueString, CHECKBOX_OPTIONS )
+      new NLCheckbox( sceneModel.showNumberLineProperty, numberLineStringProperty, CHECKBOX_OPTIONS ),
+      new NLCheckbox( sceneModel.numberLineLabelsVisibleProperty, labelsStringProperty, CHECKBOX_OPTIONS ),
+      new NLCheckbox( sceneModel.numberLineAbsoluteValueIndicatorsVisibleProperty, absoluteValueStringProperty, CHECKBOX_OPTIONS )
     ];
 
     // @protected {NLCheckboxGroup} - node containing the checkboxes that control common model properties

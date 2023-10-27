@@ -24,13 +24,13 @@ import SceneModel from './SceneModel.js';
 import temperatureDataSet from './temperatureDataSet.js';
 import TemperaturePointController from './TemperaturePointController.js';
 
-const thermometerALabelString = NumberLineIntegersStrings.thermometerALabelStringProperty;
-const thermometerBLabelString = NumberLineIntegersStrings.thermometerBLabelStringProperty;
-const thermometerCLabelString = NumberLineIntegersStrings.thermometerCLabelStringProperty;
+const thermometerALabelStringProperty = NumberLineIntegersStrings.thermometerALabelStringProperty;
+const thermometerBLabelStringProperty = NumberLineIntegersStrings.thermometerBLabelStringProperty;
+const thermometerCLabelStringProperty = NumberLineIntegersStrings.thermometerCLabelStringProperty;
 
 // constants
 const SCENE_BOUNDS = NLIConstants.NLI_LAYOUT_BOUNDS; // bounds for the scenes match the layout bounds
-const THERMOMETER_LABELS = [ thermometerALabelString, thermometerBLabelString, thermometerCLabelString ];
+const THERMOMETER_LABELS = [ thermometerALabelStringProperty, thermometerBLabelStringProperty, thermometerCLabelStringProperty ];
 const MAP_WIDTH = 550; // in screen coordinates
 const MAP_HEIGHT = 280; // in screen coordinates
 const MAP_CENTER = new Vector2(

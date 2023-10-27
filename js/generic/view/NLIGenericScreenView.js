@@ -24,10 +24,10 @@ import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import NLIGenericModel from '../model/NLIGenericModel.js';
 
 // constants
-const absoluteValueString = NumberLineIntegersStrings.absoluteValueStringProperty;
-const labelsString = NumberLineIntegersStrings.labelsStringProperty;
-const tickMarksString = NumberLineIntegersStrings.tickMarksStringProperty;
-const oppositeString = NumberLineIntegersStrings.oppositeStringProperty;
+const absoluteValueStringProperty = NumberLineIntegersStrings.absoluteValueStringProperty;
+const labelsStringProperty = NumberLineIntegersStrings.labelsStringProperty;
+const tickMarksStringProperty = NumberLineIntegersStrings.tickMarksStringProperty;
+const oppositeStringProperty = NumberLineIntegersStrings.oppositeStringProperty;
 
 // constants
 const MAX_CHECKBOX_TEXT_WIDTH = 190; // empirically determined to stay within dev bounds
@@ -56,10 +56,10 @@ class NLIGenericScreenView extends ScreenView {
 
     // Add the check boxes that will control the number line's presentation.
     const checkboxes = [
-      new NLCheckbox( model.numberLine.showPointLabelsProperty, labelsString, CHECKBOX_OPTIONS ),
-      new NLCheckbox( model.numberLine.showTickMarksProperty, tickMarksString, CHECKBOX_OPTIONS ),
-      new NLCheckbox( model.numberLine.showOppositesProperty, oppositeString, CHECKBOX_OPTIONS ),
-      new NLCheckbox( model.numberLine.showAbsoluteValuesProperty, absoluteValueString, CHECKBOX_OPTIONS )
+      new NLCheckbox( model.numberLine.showPointLabelsProperty, labelsStringProperty, CHECKBOX_OPTIONS ),
+      new NLCheckbox( model.numberLine.showTickMarksProperty, tickMarksStringProperty, CHECKBOX_OPTIONS ),
+      new NLCheckbox( model.numberLine.showOppositesProperty, oppositeStringProperty, CHECKBOX_OPTIONS ),
+      new NLCheckbox( model.numberLine.showAbsoluteValuesProperty, absoluteValueStringProperty, CHECKBOX_OPTIONS )
     ];
     const checkboxGroup = new NLCheckboxGroup( checkboxes, {
 

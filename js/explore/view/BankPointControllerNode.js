@@ -34,10 +34,10 @@ const READOUT_DISTANCE_FROM_IMAGE = 5;
 const COIN_RADIUS = 10;
 const COIN_ANIMATION_DURATION = 0.5; // seconds
 
-const balanceAmountString = NumberLineIntegersStrings.balanceAmountStringProperty;
-const currencyUnitsString = NumberLineIntegersStrings.currencyUnitsStringProperty;
-const debtAmountString = NumberLineIntegersStrings.debtAmountStringProperty;
-const moneyAmountString = NumberLineIntegersStrings.moneyAmountStringProperty;
+const balanceAmountStringProperty = NumberLineIntegersStrings.balanceAmountStringProperty;
+const currencyUnitsStringProperty = NumberLineIntegersStrings.currencyUnitsStringProperty;
+const debtAmountStringProperty = NumberLineIntegersStrings.debtAmountStringProperty;
+const moneyAmountStringProperty = NumberLineIntegersStrings.moneyAmountStringProperty;
 
 // constants
 const COIN_DEPOSIT_ANIMATION_START_Y = -60; // above the piggy bank, in screen coordinates, empirically determined
@@ -153,8 +153,8 @@ class BankPointControllerNode extends PointControllerNode {
 
         // Add the balance indicator text if it has not been added yet.
         if ( balanceTextWrapper.children.length === 0 ) {
-          const balanceNode = new Text( new PatternStringProperty( balanceAmountString, {
-            currencyUnit: currencyUnitsString,
+          const balanceNode = new Text( new PatternStringProperty( balanceAmountStringProperty, {
+            currencyUnit: currencyUnitsStringProperty,
             value: numberLinePoint.valueProperty
           } ), {
             font: new PhetFont( 30 ),
@@ -174,9 +174,9 @@ class BankPointControllerNode extends PointControllerNode {
 
         if ( absoluteValueNode.children.length === 0 ) {
           const absoluteValueMoneyAmountText = new Text(
-            new PatternStringProperty( moneyAmountString, {
+            new PatternStringProperty( moneyAmountStringProperty, {
               value: numberLinePoint.valueProperty,
-              currencyUnit: currencyUnitsString
+              currencyUnit: currencyUnitsStringProperty
             } ),
             {
               font: new PhetFont( 18 ),
@@ -185,7 +185,7 @@ class BankPointControllerNode extends PointControllerNode {
               visibleProperty: absoluteValueMoneyAmountVisibleProperty
             } );
           const absoluteValueDebtAmountText = new Text(
-            new PatternStringProperty( debtAmountString, { value: numberLinePoint.valueProperty } ),
+            new PatternStringProperty( debtAmountStringProperty, { value: numberLinePoint.valueProperty } ),
             {
               font: new PhetFont( 18 ),
               maxWidth: 250,
@@ -304,7 +304,7 @@ class CoinNode extends Circle {
     super( COIN_RADIUS, options );
 
     // Add the currency marking.
-    this.addChild( new Text( currencyUnitsString, {
+    this.addChild( new Text( currencyUnitsStringProperty, {
       font: new PhetFont( 18 ),
       center: Vector2.ZERO,
       maxWidth: 15

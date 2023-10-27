@@ -31,7 +31,7 @@ const CURRENCY_SYMBOL_FONT = new PhetFont( 12 );
 const CURRENCY_SYMBOL_MAX_WIDTH = 10;
 const BUTTON_ICON_WIDTH = 38;
 
-const currencyUnitsString = NumberLineIntegersStrings.currencyUnitsStringProperty;
+const currencyUnitsStringProperty = NumberLineIntegersStrings.currencyUnitsStringProperty;
 
 
 class AccountBalanceControllerNode extends VBox {
@@ -61,7 +61,7 @@ class AccountBalanceControllerNode extends VBox {
     const depositIcon = new Node( {
       children: [
         new Image( coinInSlot_png, { maxWidth: BUTTON_ICON_WIDTH, centerY: -10 } ),
-        new Text( currencyUnitsString, {
+        new Text( currencyUnitsStringProperty, {
           center: new Vector2( 21, -9 ),
           font: CURRENCY_SYMBOL_FONT,
           maxWidth: CURRENCY_SYMBOL_MAX_WIDTH
@@ -71,7 +71,7 @@ class AccountBalanceControllerNode extends VBox {
     const withdrawIcon = new Node( {
       children: [
         new Image( coinInHand_png, { maxWidth: BUTTON_ICON_WIDTH } ),
-        new Text( currencyUnitsString, {
+        new Text( currencyUnitsStringProperty, {
           center: new Vector2( 22, 9 ),
           font: CURRENCY_SYMBOL_FONT,
           maxWidth: CURRENCY_SYMBOL_MAX_WIDTH

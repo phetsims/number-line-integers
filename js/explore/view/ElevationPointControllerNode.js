@@ -24,9 +24,9 @@ import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 const IMAGE_DILATION = 20;
 const DISTANCE_TEXT_MAX_WIDTH = 250;
 
-const amountAboveSeaLevelString = NumberLineIntegersStrings.amountAboveSeaLevelStringProperty;
-const amountBelowSeaLevelString = NumberLineIntegersStrings.amountBelowSeaLevelStringProperty;
-const seaLevelString = NumberLineIntegersStrings.seaLevelStringProperty;
+const amountAboveSeaLevelStringProperty = NumberLineIntegersStrings.amountAboveSeaLevelStringProperty;
+const amountBelowSeaLevelStringProperty = NumberLineIntegersStrings.amountBelowSeaLevelStringProperty;
+const seaLevelStringProperty = NumberLineIntegersStrings.seaLevelStringProperty;
 
 class ElevationPointControllerNode extends PointControllerNode {
 
@@ -107,7 +107,7 @@ class ElevationPointControllerNode extends PointControllerNode {
 
           if ( distanceTextWrapper.children.length === 0 ) {
             const amountAboveText = new Text(
-              new PatternStringProperty( amountAboveSeaLevelString, { value: pointController.numberLinePoints.get( 0 ).valueProperty } ),
+              new PatternStringProperty( amountAboveSeaLevelStringProperty, { value: pointController.numberLinePoints.get( 0 ).valueProperty } ),
               {
                 font: new PhetFont( 18 ),
                 fill: pointController.color,
@@ -115,7 +115,7 @@ class ElevationPointControllerNode extends PointControllerNode {
                 visibleProperty: amountAboveTextVisibleProperty
               } );
             const amountBelowText = new Text(
-              new PatternStringProperty( amountBelowSeaLevelString, { value: pointController.numberLinePoints.get( 0 ).valueProperty } ),
+              new PatternStringProperty( amountBelowSeaLevelStringProperty, { value: pointController.numberLinePoints.get( 0 ).valueProperty } ),
               {
                 font: new PhetFont( 18 ),
                 fill: pointController.color,
@@ -123,7 +123,7 @@ class ElevationPointControllerNode extends PointControllerNode {
                 visibleProperty: amountBelowTextVisibleProperty
               } );
             const seaLevelText = new Text(
-              new PatternStringProperty( seaLevelString, { value: pointController.numberLinePoints.get( 0 ).valueProperty } ),
+              new PatternStringProperty( seaLevelStringProperty, { value: pointController.numberLinePoints.get( 0 ).valueProperty } ),
               {
                 font: new PhetFont( 18 ),
                 fill: pointController.color,

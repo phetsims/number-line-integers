@@ -26,9 +26,9 @@ import SceneView from './SceneView.js';
 const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
 const BALANCE_CHANGE_AMOUNT = 1; // in dollars (or whatever currency units are being used)
 
-const balanceString = NumberLineIntegersStrings.balanceStringProperty;
-const currencyUnitsString = NumberLineIntegersStrings.currencyUnitsStringProperty;
-const moneyAmountString = NumberLineIntegersStrings.moneyAmountStringProperty;
+const balanceStringProperty = NumberLineIntegersStrings.balanceStringProperty;
+const currencyUnitsStringProperty = NumberLineIntegersStrings.currencyUnitsStringProperty;
+const moneyAmountStringProperty = NumberLineIntegersStrings.moneyAmountStringProperty;
 
 // constants
 const INSET = 10;
@@ -44,7 +44,7 @@ class BankSceneView extends SceneView {
 
     super( bankSceneModel, layoutBounds, {
       commonNumberLineNodeOptions: {
-        numericalLabelTemplate: new PatternStringProperty( moneyAmountString, { currencyUnit: currencyUnitsString } )
+        numericalLabelTemplate: new PatternStringProperty( moneyAmountStringProperty, { currencyUnit: currencyUnitsStringProperty } )
       }
     } );
 
@@ -53,7 +53,7 @@ class BankSceneView extends SceneView {
     const numberLineNode = this.numberLineNodes[ 0 ];
 
     // number line label
-    const numberLineLabel = new Text( balanceString, {
+    const numberLineLabel = new Text( balanceStringProperty, {
       font: NUMBER_LINE_LABEL_FONT,
       centerY: numberLine.centerPositionProperty.value.y,
       maxWidth: layoutBounds.width * 0.08

@@ -24,8 +24,8 @@ import SceneView from './SceneView.js';
 // constants
 const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
 
-const elevationAmountString = NumberLineIntegersStrings.elevationAmountStringProperty;
-const elevationString = NumberLineIntegersStrings.elevationStringProperty;
+const elevationAmountStringProperty = NumberLineIntegersStrings.elevationAmountStringProperty;
+const elevationStringProperty = NumberLineIntegersStrings.elevationStringProperty;
 
 
 class ElevationSceneView extends SceneView {
@@ -39,7 +39,7 @@ class ElevationSceneView extends SceneView {
 
     super( sceneModel, layoutBounds, {
       commonNumberLineNodeOptions: {
-        numericalLabelTemplate: elevationAmountString,
+        numericalLabelTemplate: elevationAmountStringProperty,
         tickMarkLabelPositionWhenVertical: 'left'
       }
     } );
@@ -63,7 +63,7 @@ class ElevationSceneView extends SceneView {
     } ) );
 
     // Add label for the number line.
-    const numberLineLabel = new Text( elevationString, {
+    const numberLineLabel = new Text( elevationStringProperty, {
       font: NUMBER_LINE_LABEL_FONT,
       bottom: this.numberLineNodes[ 0 ].top - 5,
       maxWidth: this.layoutBounds.width * 0.18

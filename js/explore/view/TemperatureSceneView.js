@@ -39,12 +39,12 @@ const TITLE_TO_SELECTOR_SPACING = 10;
 const CELSIUS_NUMBER_LINE_INDEX = TemperatureSceneModel.CELSIUS_NUMBER_LINE_INDEX;
 const FAHRENHEIT_NUMBER_LINE_INDEX = TemperatureSceneModel.FAHRENHEIT_NUMBER_LINE_INDEX;
 
-const temperatureAmountCelsiusString = NumberLineIntegersStrings.temperatureAmountCelsiusStringProperty;
-const temperatureAmountFahrenheitString = NumberLineIntegersStrings.temperatureAmountFahrenheitStringProperty;
-const temperatureLabelCelsiusString = NumberLineIntegersStrings.temperatureLabelCelsiusStringProperty;
-const temperatureLabelFahrenheitString = NumberLineIntegersStrings.temperatureLabelFahrenheitStringProperty;
-const temperatureMapCaptionString = NumberLineIntegersStrings.temperatureMapCaptionStringProperty;
-const temperatureString = NumberLineIntegersStrings.temperatureStringProperty;
+const temperatureAmountCelsiusStringProperty = NumberLineIntegersStrings.temperatureAmountCelsiusStringProperty;
+const temperatureAmountFahrenheitStringProperty = NumberLineIntegersStrings.temperatureAmountFahrenheitStringProperty;
+const temperatureLabelCelsiusStringProperty = NumberLineIntegersStrings.temperatureLabelCelsiusStringProperty;
+const temperatureLabelFahrenheitStringProperty = NumberLineIntegersStrings.temperatureLabelFahrenheitStringProperty;
+const temperatureMapCaptionStringProperty = NumberLineIntegersStrings.temperatureMapCaptionStringProperty;
+const temperatureStringProperty = NumberLineIntegersStrings.temperatureStringProperty;
 
 class TemperatureSceneView extends SceneView {
 
@@ -68,8 +68,8 @@ class TemperatureSceneView extends SceneView {
 
       // options unique to the individual number lines, must be in correct order
       uniqueNumberLineNodeOptionsList: [
-        { numericalLabelTemplate: temperatureAmountFahrenheitString },
-        { numericalLabelTemplate: temperatureAmountCelsiusString }
+        { numericalLabelTemplate: temperatureAmountFahrenheitStringProperty },
+        { numericalLabelTemplate: temperatureAmountCelsiusStringProperty }
       ],
 
       // Don't have the super constructor add the number line nodes - that will be done below.
@@ -124,7 +124,7 @@ class TemperatureSceneView extends SceneView {
     this.scenesLayer.addChild( thermometerBox );
 
     // caption for the temperature map
-    const temperatureMapCaption = new RichText( temperatureMapCaptionString, {
+    const temperatureMapCaption = new RichText( temperatureMapCaptionStringProperty, {
       align: 'center',
       font: new PhetFont( 10 ),
       fill: '#707070',
@@ -144,11 +144,11 @@ class TemperatureSceneView extends SceneView {
       [
         {
           value: NLIConstants.TEMPERATURE_UNITS.FAHRENHEIT,
-          createNode: () => new Text( temperatureLabelFahrenheitString, UNITS_SELECTOR_TEXT_OPTIONS )
+          createNode: () => new Text( temperatureLabelFahrenheitStringProperty, UNITS_SELECTOR_TEXT_OPTIONS )
         },
         {
           value: NLIConstants.TEMPERATURE_UNITS.CELSIUS,
-          createNode: () => new Text( temperatureLabelCelsiusString, UNITS_SELECTOR_TEXT_OPTIONS )
+          createNode: () => new Text( temperatureLabelCelsiusStringProperty, UNITS_SELECTOR_TEXT_OPTIONS )
         }
       ],
       {
@@ -164,7 +164,7 @@ class TemperatureSceneView extends SceneView {
     );
 
     // title for the panel where the number line will appear
-    const numberLinePanelTitle = new Text( temperatureString, {
+    const numberLinePanelTitle = new Text( temperatureStringProperty, {
       font: NUMBER_LINE_LABEL_FONT,
       maxWidth: NUMBER_LINE_PANEL_WIDTH - TEMPERATURE_UNITS_SELECTOR_WIDTH - TITLE_TO_SELECTOR_SPACING -
                 2 * NUMBER_LINE_PANEL_MARGINS
