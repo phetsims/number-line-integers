@@ -17,14 +17,15 @@ import exploreScreenHome_png from '../../../images/exploreScreenHome_png.js';
 import exploreScreenNav_png from '../../../images/exploreScreenNav_png.js';
 
 
-const ExploreCharacterSetAfrica = new ExplorerCharacterSet(
+const ExplorerCharacterSetAfrica = new ExplorerCharacterSet(
     NumberLineIntegersStrings.africaStringProperty,
     new Image( girlHiking_png ),
     girlInAir_png,
     girlHiking_png,
     girlInWater_png,
     exploreScreenHome_png,
-    exploreScreenNav_png
+    exploreScreenNav_png,
+    'africa'
 );
 
-export default ExploreCharacterSetAfrica;
+export default ExplorerCharacterSetAfrica;

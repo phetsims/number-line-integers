@@ -18,7 +18,7 @@ import elevationBackground_png from '../../../images/elevationBackground_png.js'
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ElevationPointControllerNode from './ElevationPointControllerNode.js';
-import ExplorerCharacterSetUSA from './ExplorerCharacterSetUSA.js';
+import ExplorersWrapper from './ExplorersWrapper.js';
 import SceneView from './SceneView.js';
 
 // constants
@@ -94,14 +94,12 @@ class ElevationSceneView extends SceneView {
     const elevationPointControllersLayer = new Node();
     this.scenesLayer.addChild( elevationPointControllersLayer );
 
+    const explorersWrapper = new ExplorersWrapper( sceneModel );
+
     // Add the girl that the user can place in the elevation scene.
     elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
       sceneModel.permanentPointControllers[ 0 ],
-      [
-        new Image( ExplorerCharacterSetUSA.swimming, { maxWidth: 85, center: new Vector2( 3, 5 ) } ),
-        new Image( ExplorerCharacterSetUSA.flying, { maxWidth: 90, center: new Vector2( 6, -25 ) } ),
-        new Image( ExplorerCharacterSetUSA.hiking, { maxWidth: 30, center: new Vector2( 0, 0 ) } )
-      ],
+      explorersWrapper.explorerNodes,
       sceneModel.seaLevel,
       [
         new Vector2( 3, 30 ),
@@ -118,7 +116,7 @@ class ElevationSceneView extends SceneView {
           if ( position.y > sceneModel.seaLevel ) {
 
             // image for underwater
-            imageIndex = 0;
+            imageIndex = 2;
           }
           else if ( position.y < sceneModel.seaLevel ) {
 
@@ -129,12 +127,12 @@ class ElevationSceneView extends SceneView {
                  ( sceneModel.elevationAreaBounds.centerX + 40 + 0.6 * ( sceneModel.seaLevel - position.y ) ) ) {
 
               // hiker
-              imageIndex = 2;
+              imageIndex = 1;
             }
             else {
 
               // paraglider
-              imageIndex = 1;
+              imageIndex = 0;
             }
           }
           return imageIndex;

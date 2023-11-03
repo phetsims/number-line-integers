@@ -24,7 +24,8 @@ const ExplorerCharacterSetUSA = new ExplorerCharacterSet(
   girlHiking_png,
   girlInWater_png,
   exploreScreenHome_png,
-  exploreScreenNav_png
+  exploreScreenNav_png,
+  'usa'
 );
 
 export default ExplorerCharacterSetUSA;

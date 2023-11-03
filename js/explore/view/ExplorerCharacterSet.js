@@ -20,11 +20,12 @@ export default class ExplorerCharacterSet extends RegionAndCulturePortrayal {
    * @param swimming { HTMLImageElement }
    * @param screenHomeIcon { HTMLImageElement }
    * @param screenNavIcon { HTMLImageElement }
+   * @param queryParameterValue { string }
    */
   constructor( label, headshotIcon,
                flying, hiking, swimming,
-               screenHomeIcon, screenNavIcon ) {
-   super( headshotIcon, label, {} );
+               screenHomeIcon, screenNavIcon, queryParameterValue ) {
+   super( headshotIcon, label, queryParameterValue, {} );
 
    this.flying = flying;
    this.hiking = hiking;

@@ -6,13 +6,15 @@
  *
  */
 
+import ExplorerCharacterSetAfrica from '../../explore/view/ExplorerCharacterSetAfrica.js';
 import ExplorerCharacterSetUSA from '../../explore/view/ExplorerCharacterSetUSA.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 
 
 const ExplorerImages = {
   EXPLORER_CHARACTER_SETS: [
-    ExplorerCharacterSetUSA
+    ExplorerCharacterSetUSA,
+    ExplorerCharacterSetAfrica
   ]
 };
 

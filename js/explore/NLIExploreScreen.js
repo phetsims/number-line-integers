@@ -19,10 +19,11 @@ import NLIExploreScreenView from './view/NLIExploreScreenView.js';
 class NLIExploreScreen extends Screen {
 
   /**
+   * @param { PreferencesModel } preferencesModel
    * @param {Tandem} tandem
    * @public
    */
-  constructor( tandem ) {
+  constructor( preferencesModel, tandem ) {
 
     const options = {
       name: NumberLineIntegersStrings.screen.exploreStringProperty,
@@ -38,7 +39,7 @@ class NLIExploreScreen extends Screen {
       tandem: tandem
     };
 
-    super( () => new NLIExploreModel(), model => new NLIExploreScreenView( model ), options );
+    super( () => new NLIExploreModel( preferencesModel ), model => new NLIExploreScreenView( model ), options );
   }
 }
 
