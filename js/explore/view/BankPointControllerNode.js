@@ -20,7 +20,7 @@ import PiggyBankNode from '../../../../number-line-common/js/explore/view/PiggyB
 import merge from '../../../../phet-core/js/merge.js';
 import BackgroundNode from '../../../../scenery-phet/js/BackgroundNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Circle, Color, ColorProperty, HBox, Node, Text } from '../../../../scenery/js/imports.js';
+import { Circle, Color, ColorProperty, FlowBox, HBox, Node, Text } from '../../../../scenery/js/imports.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import NLIColors from '../../common/NLIColors.js';
@@ -83,12 +83,12 @@ class BankPointControllerNode extends PointControllerNode {
     super( pointController, options );
 
     // the readout that will display the absolute value in a phrase
-    const absoluteValueNode = new Node();
+    const absoluteValueFlowBox = new FlowBox();
     const absoluteValueBalanceVisibleProperty = new BooleanProperty( false );
     const absoluteValueDebtAmountVisibleProperty = new BooleanProperty( false );
     const absoluteValueBalanceTextColorProperty = new ColorProperty( NLIColors.bankAbsoluteValueMoneyTextColor );
 
-    const absoluteValueBackground = new BackgroundNode( absoluteValueNode, NLCConstants.LABEL_BACKGROUND_OPTIONS );
+    const absoluteValueBackground = new BackgroundNode( absoluteValueFlowBox, NLCConstants.LABEL_BACKGROUND_OPTIONS );
     this.addChild( absoluteValueBackground );
 
     // Get a reference to the number line (there is only one for this scene).
@@ -190,7 +190,7 @@ class BankPointControllerNode extends PointControllerNode {
         // Update the absolute value readout.
         const value = numberLinePoint.valueProperty.value;
 
-        if ( absoluteValueNode.children.length === 0 ) {
+        if ( absoluteValueFlowBox.children.length === 0 ) {
           const absoluteValueBalanceText = new Text(
             new PatternStringProperty( balanceAmountStringProperty, {
               value: numberLinePoint.valueProperty
@@ -214,7 +214,7 @@ class BankPointControllerNode extends PointControllerNode {
               visibleProperty: absoluteValueDebtAmountVisibleProperty
             } );
 
-          absoluteValueNode.children = [ absoluteValueBalanceText, absoluteValueDebtAmountText ];
+          absoluteValueFlowBox.children = [ absoluteValueBalanceText, absoluteValueDebtAmountText ];
         }
 
         if ( value < 0 ) {
