@@ -9,6 +9,7 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { Shape } from '../../../../kite/js/imports.js';
@@ -19,7 +20,7 @@ import PiggyBankNode from '../../../../number-line-common/js/explore/view/PiggyB
 import merge from '../../../../phet-core/js/merge.js';
 import BackgroundNode from '../../../../scenery-phet/js/BackgroundNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Circle, Color, ColorProperty, Node, Text } from '../../../../scenery/js/imports.js';
+import { Circle, Color, ColorProperty, HBox, Node, Text } from '../../../../scenery/js/imports.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import NLIColors from '../../common/NLIColors.js';
@@ -70,9 +71,9 @@ class BankPointControllerNode extends PointControllerNode {
     // In order to use a PatternStringProperty for dynamic layout we do not have access to the value property
     // at startup. This wrapper allows us to use a PatternStringProperty without a heavy restructure of the sim
     // architecture. https://github.com/phetsims/number-line-integers/issues/109
-    const balanceTextWrapper = new Node();
+    const moneyAmountTextWrapper = new Node();
 
-    controllerNode.addChild( balanceTextWrapper );
+    controllerNode.addChild( moneyAmountTextWrapper );
 
     // dilates the touch area for the controllerNode
     controllerNode.touchArea = controllerNode.bounds.dilated( TOUCH_DILATION );
@@ -83,9 +84,9 @@ class BankPointControllerNode extends PointControllerNode {
 
     // the readout that will display the absolute value in a phrase
     const absoluteValueNode = new Node();
-    const absoluteValueMoneyAmountVisibleProperty = new BooleanProperty( false );
+    const absoluteValueBalanceVisibleProperty = new BooleanProperty( false );
     const absoluteValueDebtAmountVisibleProperty = new BooleanProperty( false );
-    const absoluteValueMoneyTextColorProperty = new ColorProperty( NLIColors.bankAbsoluteValueMoneyTextColor );
+    const absoluteValueBalanceTextColorProperty = new ColorProperty( NLIColors.bankAbsoluteValueMoneyTextColor );
 
     const absoluteValueBackground = new BackgroundNode( absoluteValueNode, NLCConstants.LABEL_BACKGROUND_OPTIONS );
     this.addChild( absoluteValueBackground );
@@ -152,40 +153,60 @@ class BankPointControllerNode extends PointControllerNode {
         piggyBankNode.fill = fill;
 
         // Add the balance indicator text if it has not been added yet.
-        if ( balanceTextWrapper.children.length === 0 ) {
-          const balanceNode = new Text( new PatternStringProperty( balanceAmountStringProperty, {
+        if ( moneyAmountTextWrapper.children.length === 0 ) {
+          const moneyAmountNode = new Text( new PatternStringProperty( moneyAmountStringProperty, {
             currencyUnit: currencyUnitsStringProperty,
             value: numberLinePoint.valueProperty
+          }, {
+            maps: {
+              value: value => Math.abs( value )
+            }
           } ), {
             font: new PhetFont( 30 ),
             fill: 'white',
             stroke: 'black',
             center: Vector2.ZERO,
-            maxWidth: 65
+            maxWidth: 55
           } );
-          balanceTextWrapper.children = [ balanceNode ];
+
+          const moneyAmountHBox = new HBox( {
+            children: [
+              new Text( '-', {
+                font: new PhetFont( 30 ),
+                fill: 'white',
+                stroke: 'black',
+                maxWidth: 10,
+                visibleProperty: new DerivedProperty( [ numberLinePoint.valueProperty ], value => value < 0 )
+              } ),
+              moneyAmountNode
+            ]
+          } );
+          moneyAmountTextWrapper.children = [ moneyAmountHBox ];
         }
 
         // Update the balance indicator text.
-        balanceTextWrapper.center = Vector2.ZERO;
+        moneyAmountTextWrapper.center = Vector2.ZERO;
 
         // Update the absolute value readout.
         const value = numberLinePoint.valueProperty.value;
 
         if ( absoluteValueNode.children.length === 0 ) {
-          const absoluteValueMoneyAmountText = new Text(
-            new PatternStringProperty( moneyAmountStringProperty, {
-              value: numberLinePoint.valueProperty,
-              currencyUnit: currencyUnitsStringProperty
+          const absoluteValueBalanceText = new Text(
+            new PatternStringProperty( balanceAmountStringProperty, {
+              value: numberLinePoint.valueProperty
             } ),
             {
               font: new PhetFont( 18 ),
               maxWidth: 250,
-              fill: absoluteValueMoneyTextColorProperty,
-              visibleProperty: absoluteValueMoneyAmountVisibleProperty
+              fill: absoluteValueBalanceTextColorProperty,
+              visibleProperty: absoluteValueBalanceVisibleProperty
             } );
           const absoluteValueDebtAmountText = new Text(
-            new PatternStringProperty( debtAmountStringProperty, { value: numberLinePoint.valueProperty } ),
+            new PatternStringProperty( debtAmountStringProperty, { value: numberLinePoint.valueProperty }, {
+              maps: {
+                value: value => Math.abs( value )
+              }
+            } ),
             {
               font: new PhetFont( 18 ),
               maxWidth: 250,
@@ -193,18 +214,18 @@ class BankPointControllerNode extends PointControllerNode {
               visibleProperty: absoluteValueDebtAmountVisibleProperty
             } );
 
-          absoluteValueNode.children = [ absoluteValueMoneyAmountText, absoluteValueDebtAmountText ];
+          absoluteValueNode.children = [ absoluteValueBalanceText, absoluteValueDebtAmountText ];
         }
 
         if ( value < 0 ) {
-          absoluteValueMoneyAmountVisibleProperty.value = false;
+          absoluteValueBalanceVisibleProperty.value = false;
           absoluteValueDebtAmountVisibleProperty.value = true;
         }
         else {
-          absoluteValueMoneyAmountVisibleProperty.value = true;
+          absoluteValueBalanceVisibleProperty.value = true;
           absoluteValueDebtAmountVisibleProperty.value = false;
 
-          absoluteValueMoneyTextColorProperty.value = value === 0 ? NLIColors.bankZeroFillColor : NLIColors.bankAbsoluteValueMoneyTextColor;
+          absoluteValueBalanceTextColorProperty.value = value === 0 ? NLIColors.bankZeroFillColor : NLIColors.bankAbsoluteValueMoneyTextColor;
         }
         updateAbsoluteValueReadoutPosition();
       }
