@@ -33,19 +33,19 @@ export default class ExplorersWrapper {
     const flyingImages = explorerSets.map( set => new Image( set.flying,
       {
         visibleProperty: createVisibleProperty( set ),
-        maxWidth: 90,
+        maxHeight: 116,
         center: new Vector2( 6, -25 )
       } ) );
     const hikingImages = explorerSets.map( set => new Image( set.hiking,
       {
         visibleProperty: createVisibleProperty( set ),
-        maxWidth: 30,
+        maxHeight: 71,
         center: new Vector2( 0, 0 )
       } ) );
     const swimmingImages = explorerSets.map( set => new Image( set.swimming,
       {
         visibleProperty: createVisibleProperty( set ),
-        maxWidth: 85,
+        maxHeight: 40,
         center: new Vector2( 3, 5 )
       } ) );
 
