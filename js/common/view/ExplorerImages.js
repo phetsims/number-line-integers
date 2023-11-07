@@ -7,6 +7,8 @@
  */
 
 import ExplorerCharacterSetAfrica from '../../explore/view/ExplorerCharacterSetAfrica.js';
+import ExplorerCharacterSetAsia from '../../explore/view/ExplorerCharacterSetAsia.js';
+import ExplorerCharacterSetLatinAmerica from '../../explore/view/ExplorerCharacterSetLatinAmerica.js';
 import ExplorerCharacterSetUSA from '../../explore/view/ExplorerCharacterSetUSA.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 
@@ -14,7 +16,9 @@ import numberLineIntegers from '../../numberLineIntegers.js';
 const ExplorerImages = {
   EXPLORER_CHARACTER_SETS: [
     ExplorerCharacterSetUSA,
-    ExplorerCharacterSetAfrica
+    ExplorerCharacterSetAfrica,
+    ExplorerCharacterSetAsia,
+    ExplorerCharacterSetLatinAmerica
   ]
 };
 

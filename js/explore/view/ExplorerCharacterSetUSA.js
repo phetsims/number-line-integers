@@ -13,6 +13,7 @@ import exploreScreenNav_png from '../../../images/usa/exploreScreenNav_png.js';
 import girlHiking_png from '../../../images/usa/girlHiking_png.js';
 import girlInAir_png from '../../../images/usa/girlInAir_png.js';
 import girlInWater_png from '../../../images/usa/girlInWater_png.js';
+import { USA_QUERY_VALUE } from '../../common/NLIQueryParameters.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 import { Image } from '../../../../scenery/js/imports.js';
@@ -26,7 +27,7 @@ const ExplorerCharacterSetUSA = new ExplorerCharacterSet(
   girlInWater_png,
   exploreScreenHome_png,
   exploreScreenNav_png,
-  'usa'
+  USA_QUERY_VALUE
 );
 
 export default ExplorerCharacterSetUSA;
