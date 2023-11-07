@@ -7,6 +7,7 @@
  */
 
 
+import RegionAndCultureHeadshotIcon from '../../../../joist/js/preferences/RegionAndCultureHeadshotIcon.js';
 import boyHiking_png from '../../../images/latin-america/boyHiking_png.js';
 import boyInAir_png from '../../../images/latin-america/boyInAir_png.js';
 import boyInWater_png from '../../../images/latin-america/boyInWater_png.js';
@@ -15,12 +16,13 @@ import exploreScreenNav_png from '../../../images/latin-america/exploreScreenNav
 import { LATIN_AMERICA_QUERY_VALUE } from '../../common/NLIQueryParameters.js';
 import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
-import { Image } from '../../../../scenery/js/imports.js';
 
 
 const ExplorerCharacterSetAfrica = new ExplorerCharacterSet(
     NumberLineIntegersStrings.latinAmericaStringProperty,
-    new Image( boyHiking_png ),
+    new RegionAndCultureHeadshotIcon( boyHiking_png, {
+      xClipAreaStart: 15
+    } ),
     boyInAir_png,
     boyHiking_png,
     boyInWater_png,
