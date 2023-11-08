@@ -28,8 +28,8 @@ import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 
 // constants
-const MIN_WIDTH = 80; // screen coords, empirically determined
-const MAX_WIDTH = 200; // screen coords, empirically determined
+const MIN_WIDTH = 75; // screen coords, empirically determined
+const MAX_WIDTH = 150; // screen coords, empirically determined
 const TOUCH_DILATION = 7; // dilates piggy banks enough to not overlap touch areas with account balance buttons
 const READOUT_DISTANCE_FROM_IMAGE = 5;
 const COIN_RADIUS = 10;
@@ -41,12 +41,12 @@ const debtAmountStringProperty = NumberLineIntegersStrings.debtAmountStringPrope
 const moneyAmountStringProperty = NumberLineIntegersStrings.moneyAmountStringProperty;
 
 // constants
-const COIN_DEPOSIT_ANIMATION_START_Y = -60; // above the piggy bank, in screen coordinates, empirically determined
-const COIN_DEPOSIT_ANIMATION_END_Y = 0; // inside the piggy bank, in screen coordinates, empirically determined
-const COIN_WITHDRAWAL_ANIMATION_START_Y = 30; // inside the piggy bank, in screen coordinates, empirically determined
-const COIN_WITHDRAWAL_ANIMATION_END_Y = 60; // below the piggy bank, in screen coordinates, empirically determined
+const COIN_DEPOSIT_ANIMATION_START_Y = -95; // above the piggy bank, in screen coordinates, empirically determined
+const COIN_DEPOSIT_ANIMATION_END_Y = -60; // inside the piggy bank, in screen coordinates, empirically determined
+const COIN_WITHDRAWAL_ANIMATION_START_Y = 70; // inside the piggy bank, in screen coordinates, empirically determined
+const COIN_WITHDRAWAL_ANIMATION_END_Y = 95; // below the piggy bank, in screen coordinates, empirically determined
 const NUMBER_OF_COINS_TO_PRE_CREATE = 20; // number of coins to create for animation, empirically determined
-const COIN_NODE_X_POSITION = -3;
+const COIN_NODE_X_POSITION = 0;
 
 class BankPointControllerNode extends PointControllerNode {
 
@@ -65,8 +65,8 @@ class BankPointControllerNode extends PointControllerNode {
     const controllerNode = new Node();
 
     // Choose the overlay image source, which is artwork that must exactly match the shape of the outline.
-    const piggyBankNode = new MoneyBoxNode( { decorationType: decorationType } );
-    controllerNode.addChild( piggyBankNode );
+    const moneyBoxNode = new MoneyBoxNode( { decorationType: decorationType } );
+    controllerNode.addChild( moneyBoxNode );
 
     // In order to use a PatternStringProperty for dynamic layout we do not have access to the value property
     // at startup. This wrapper allows us to use a PatternStringProperty without a heavy restructure of the sim
@@ -102,13 +102,13 @@ class BankPointControllerNode extends PointControllerNode {
       if ( decorationType === MoneyBoxDecoration.FLOWERS ) {
         absoluteValueBackground.centerX = controllerNode.centerX - 9; // tweaked a bit to be centered under feet
         absoluteValueBackground.top = controllerNode.y +
-                                      piggyBankNode.height / 2 * controllerNode.getScaleVector().y +
+                                      moneyBoxNode.height / 2 * controllerNode.getScaleVector().y +
                                       READOUT_DISTANCE_FROM_IMAGE;
       }
       else {
         absoluteValueBackground.centerX = controllerNode.centerX - 2; // tweaked a bit to be centered over coin slot
         absoluteValueBackground.bottom = controllerNode.y -
-                                         piggyBankNode.height / 2 * controllerNode.getScaleVector().y -
+                                         moneyBoxNode.height / 2 * controllerNode.getScaleVector().y -
                                          READOUT_DISTANCE_FROM_IMAGE;
       }
     };
@@ -150,7 +150,7 @@ class BankPointControllerNode extends PointControllerNode {
             currentBalance / valueRange.max
           );
         }
-        piggyBankNode.fill = fill;
+        moneyBoxNode.fill = fill;
 
         // Add the balance indicator text if it has not been added yet.
         if ( moneyAmountTextWrapper.children.length === 0 ) {
@@ -248,11 +248,11 @@ class BankPointControllerNode extends PointControllerNode {
     // the artwork for the piggy bank changes.  Since the clipping area is intended to make the coins visible when
     // they are outside the bank but invisible inside, this must be drawn as a set of two shapes, one inside the
     // other, with the inner one drawn with the opposite winding order.
-    const coinClipArea = Shape.rectangle( -100, -100, 200, 200 );
-    coinClipArea.moveTo( -20, -40 );
-    coinClipArea.lineTo( -20, 40 );
-    coinClipArea.lineTo( 20, 40 );
-    coinClipArea.lineTo( 20, -40 );
+    const coinClipArea = Shape.rectangle( -100, -150, 200, 300 );
+    coinClipArea.moveTo( -20, -70 );
+    coinClipArea.lineTo( -20, 80 );
+    coinClipArea.lineTo( 20, 80 );
+    coinClipArea.lineTo( 20, -70 );
     coinClipArea.close();
     coinAnimationLayer.clipArea = coinClipArea;
 
