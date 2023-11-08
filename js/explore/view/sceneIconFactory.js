@@ -10,8 +10,8 @@
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import birdInAir_png from '../../../../number-line-common/images/birdInAir_png.js';
-import PiggyBankDecoration from '../../../../number-line-common/js/explore/model/PiggyBankDecoration.js';
-import PiggyBankNode from '../../../../number-line-common/js/explore/view/PiggyBankNode.js';
+import MoneyBoxDecoration from '../../../../number-line-common/js/explore/model/MoneyBoxDecoration.js';
+import MoneyBoxNode from '../../../../number-line-common/js/explore/view/MoneyBoxNode.js';
 import ThermometerNode from '../../../../scenery-phet/js/ThermometerNode.js';
 import { Color, Image, Rectangle } from '../../../../scenery/js/imports.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
@@ -45,7 +45,7 @@ const sceneIconFactory = {
         sceneIdToIconsMap.set( NLIScene.ELEVATION, elevationSceneIconNode );
       }
       else if ( sceneIdentifier === NLIScene.BANK ) {
-        const piggyBankNode = new PiggyBankNode( { decorationType: PiggyBankDecoration.LIGHTNING } );
+        const piggyBankNode = new MoneyBoxNode( { decorationType: MoneyBoxDecoration.LIGHTNING } );
         piggyBankNode.fill = '#1fb493';
         piggyBankNode.setScaleMagnitude( ICON_SIZE.width / piggyBankNode.width );
         sceneIdToIconsMap.set( NLIScene.BANK, piggyBankNode );

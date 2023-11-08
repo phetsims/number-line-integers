@@ -9,8 +9,8 @@
 
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
-import PiggyBankDecoration from '../../../../number-line-common/js/explore/model/PiggyBankDecoration.js';
-import PiggyBankNode from '../../../../number-line-common/js/explore/view/PiggyBankNode.js';
+import MoneyBoxDecoration from '../../../../number-line-common/js/explore/model/MoneyBoxDecoration.js';
+import MoneyBoxNode from '../../../../number-line-common/js/explore/view/MoneyBoxNode.js';
 import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { HBox, ManualConstraint, Node, Text } from '../../../../scenery/js/imports.js';
@@ -83,7 +83,7 @@ class BankSceneView extends SceneView {
     const primaryAccountPointControllerNode = new BankPointControllerNode(
       bankSceneModel.primaryAccountPointController,
       bankSceneModel.primaryAccount.balanceChangedByButtonEmitter,
-      PiggyBankDecoration.FLOWERS,
+      MoneyBoxDecoration.FLOWERS,
       { connectorLineVisibleProperty: bankSceneModel.showNumberLineProperty }
     );
     pointControllerNodesLayer.addChild( primaryAccountPointControllerNode );
@@ -92,7 +92,7 @@ class BankSceneView extends SceneView {
     const comparisonAccountPointControllerNode = new BankPointControllerNode(
       bankSceneModel.comparisonAccountPointController,
       bankSceneModel.comparisonAccount.balanceChangedByButtonEmitter,
-      PiggyBankDecoration.LIGHTNING,
+      MoneyBoxDecoration.LIGHTNING,
       { connectorLineVisibleProperty: bankSceneModel.showNumberLineProperty }
     );
     pointControllerNodesLayer.addChild( comparisonAccountPointControllerNode );
@@ -177,18 +177,18 @@ class AccountVisibilityControlSwitch extends ABSwitch {
 
     // The node for selecting that the comparison account is hidden is a single piggy bank that matches the style of
     // the visible account controller.
-    const comparisonAccountHiddenNode = new PiggyBankNode( {
-      decorationType: PiggyBankDecoration.FLOWERS,
+    const comparisonAccountHiddenNode = new MoneyBoxNode( {
+      decorationType: MoneyBoxDecoration.FLOWERS,
       maxWidth: 40
     } );
 
     // The node for the selection where the comparison account is visible it two smaller piggy banks side by side.
-    const comparisonAccountVisibleLeftPiggyBankNode = new PiggyBankNode( {
-      decorationType: PiggyBankDecoration.FLOWERS,
+    const comparisonAccountVisibleLeftPiggyBankNode = new MoneyBoxNode( {
+      decorationType: MoneyBoxDecoration.FLOWERS,
       maxWidth: 30
     } );
-    const comparisonAccountVisibleRightPiggyBankNode = new PiggyBankNode( {
-      decorationType: PiggyBankDecoration.LIGHTNING,
+    const comparisonAccountVisibleRightPiggyBankNode = new MoneyBoxNode( {
+      decorationType: MoneyBoxDecoration.LIGHTNING,
       maxWidth: 40
     } );
     const comparisonAccountVisibleNode = new HBox( {

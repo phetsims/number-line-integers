@@ -15,8 +15,8 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import NLCConstants from '../../../../number-line-common/js/common/NLCConstants.js';
 import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
-import PiggyBankDecoration from '../../../../number-line-common/js/explore/model/PiggyBankDecoration.js';
-import PiggyBankNode from '../../../../number-line-common/js/explore/view/PiggyBankNode.js';
+import MoneyBoxDecoration from '../../../../number-line-common/js/explore/model/MoneyBoxDecoration.js';
+import MoneyBoxNode from '../../../../number-line-common/js/explore/view/MoneyBoxNode.js';
 import merge from '../../../../phet-core/js/merge.js';
 import BackgroundNode from '../../../../scenery-phet/js/BackgroundNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -53,7 +53,7 @@ class BankPointControllerNode extends PointControllerNode {
   /**
    * @param {PointController} pointController
    * @param {Emitter} balanceChangedByButtonEmitter
-   * @param {PiggyBankDecoration} decorationType - indicates artwork on bank
+   * @param {MoneyBoxDecoration} decorationType - indicates artwork on bank
    * @param {Object} [options]
    * @public
    */
@@ -65,7 +65,7 @@ class BankPointControllerNode extends PointControllerNode {
     const controllerNode = new Node();
 
     // Choose the overlay image source, which is artwork that must exactly match the shape of the outline.
-    const piggyBankNode = new PiggyBankNode( { decorationType: decorationType } );
+    const piggyBankNode = new MoneyBoxNode( { decorationType: decorationType } );
     controllerNode.addChild( piggyBankNode );
 
     // In order to use a PatternStringProperty for dynamic layout we do not have access to the value property
@@ -99,7 +99,7 @@ class BankPointControllerNode extends PointControllerNode {
 
     // Update the position of the absolute value readout (i.e. the text node that says things like, "balance of $2".
     const updateAbsoluteValueReadoutPosition = () => {
-      if ( decorationType === PiggyBankDecoration.FLOWERS ) {
+      if ( decorationType === MoneyBoxDecoration.FLOWERS ) {
         absoluteValueBackground.centerX = controllerNode.centerX - 9; // tweaked a bit to be centered under feet
         absoluteValueBackground.top = controllerNode.y +
                                       piggyBankNode.height / 2 * controllerNode.getScaleVector().y +
