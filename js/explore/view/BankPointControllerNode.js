@@ -28,8 +28,8 @@ import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 
 // constants
-const MIN_WIDTH = 75; // screen coords, empirically determined
-const MAX_WIDTH = 150; // screen coords, empirically determined
+const MIN_WIDTH = 48; // screen coords, empirically determined
+const MAX_WIDTH = 118; // screen coords, empirically determined
 const TOUCH_DILATION = 7; // dilates piggy banks enough to not overlap touch areas with account balance buttons
 const READOUT_DISTANCE_FROM_IMAGE = 5;
 const COIN_RADIUS = 10;
@@ -100,13 +100,13 @@ class BankPointControllerNode extends PointControllerNode {
     // Update the position of the absolute value readout (i.e. the text node that says things like, "balance of $2".
     const updateAbsoluteValueReadoutPosition = () => {
       if ( decorationType === MoneyBoxDecoration.FLOWERS ) {
-        absoluteValueBackground.centerX = controllerNode.centerX - 9; // tweaked a bit to be centered under feet
+        absoluteValueBackground.centerX = controllerNode.centerX; // tweaked a bit to be centered under feet
         absoluteValueBackground.top = controllerNode.y +
                                       moneyBoxNode.height / 2 * controllerNode.getScaleVector().y +
                                       READOUT_DISTANCE_FROM_IMAGE;
       }
       else {
-        absoluteValueBackground.centerX = controllerNode.centerX - 2; // tweaked a bit to be centered over coin slot
+        absoluteValueBackground.centerX = controllerNode.centerX; // tweaked a bit to be centered over coin slot
         absoluteValueBackground.bottom = controllerNode.y -
                                          moneyBoxNode.height / 2 * controllerNode.getScaleVector().y -
                                          READOUT_DISTANCE_FROM_IMAGE;
@@ -162,20 +162,21 @@ class BankPointControllerNode extends PointControllerNode {
               value: value => Math.abs( value )
             }
           } ), {
-            font: new PhetFont( 30 ),
+            font: new PhetFont( 50 ),
             fill: 'white',
             stroke: 'black',
-            center: Vector2.ZERO,
-            maxWidth: 55
+            lineWidth: 1.5,
+            maxWidth: 100
           } );
 
           const moneyAmountHBox = new HBox( {
             children: [
               new Text( '-', {
-                font: new PhetFont( 30 ),
+                font: new PhetFont( 50 ),
                 fill: 'white',
                 stroke: 'black',
-                maxWidth: 10,
+                lineWidth: 1.5,
+                maxWidth: 12,
                 visibleProperty: new DerivedProperty( [ numberLinePoint.valueProperty ], value => value < 0 )
               } ),
               moneyAmountNode
@@ -185,7 +186,7 @@ class BankPointControllerNode extends PointControllerNode {
         }
 
         // Update the balance indicator text.
-        moneyAmountTextWrapper.center = Vector2.ZERO;
+        moneyAmountTextWrapper.center = moneyBoxNode.center.plusXY( -5, 0 );
 
         // Update the absolute value readout.
         const value = numberLinePoint.valueProperty.value;
@@ -249,10 +250,10 @@ class BankPointControllerNode extends PointControllerNode {
     // they are outside the bank but invisible inside, this must be drawn as a set of two shapes, one inside the
     // other, with the inner one drawn with the opposite winding order.
     const coinClipArea = Shape.rectangle( -100, -150, 200, 300 );
-    coinClipArea.moveTo( -20, -70 );
-    coinClipArea.lineTo( -20, 80 );
-    coinClipArea.lineTo( 20, 80 );
-    coinClipArea.lineTo( 20, -70 );
+    coinClipArea.moveTo( -20, -69 );
+    coinClipArea.lineTo( -20, 78 );
+    coinClipArea.lineTo( 20, 78 );
+    coinClipArea.lineTo( 20, -69 );
     coinClipArea.close();
     coinAnimationLayer.clipArea = coinClipArea;
 

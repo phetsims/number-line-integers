@@ -82,14 +82,14 @@ class BankSceneModel extends SceneModel {
       color: numberLine.residentPoints.get( 0 ).colorProperty.value,
       lockToNumberLine: LockToNumberLine.ALWAYS,
       numberLinePoints: [ numberLine.residentPoints.get( 0 ) ],
-      offsetFromHorizontalNumberLine: 138,
+      offsetFromHorizontalNumberLine: 120,
       numberLines: [ numberLine ]
     } );
 
     // @public {PointController} - the point controller for the comparison account
     this.comparisonAccountPointController = new PointController( {
       lockToNumberLine: LockToNumberLine.ALWAYS,
-      offsetFromHorizontalNumberLine: -138,
+      offsetFromHorizontalNumberLine: -120,
       numberLines: [ numberLine ]
     } );
 
