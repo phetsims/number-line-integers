@@ -47,7 +47,7 @@ const sceneIconFactory = {
       else if ( sceneIdentifier === NLIScene.BANK ) {
         const piggyBankNode = new MoneyBoxNode( { decorationType: MoneyBoxDecoration.LIGHTNING } );
         piggyBankNode.fill = '#1fb493';
-        piggyBankNode.setScaleMagnitude( ICON_SIZE.width / piggyBankNode.width );
+        piggyBankNode.setScaleMagnitude( ICON_SIZE.height / piggyBankNode.height );
         sceneIdToIconsMap.set( NLIScene.BANK, piggyBankNode );
       }
       else if ( sceneIdentifier === NLIScene.TEMPERATURE ) {
