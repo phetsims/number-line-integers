@@ -103,6 +103,8 @@ type StringsType = {
   'unitedStatesOfAmericaStringProperty': LocalizedStringProperty;
   'africa': string;
   'africaStringProperty': LocalizedStringProperty;
+  'africaModest': string;
+  'africaModestStringProperty': LocalizedStringProperty;
   'latinAmerica': string;
   'latinAmericaStringProperty': LocalizedStringProperty;
   'asia': string;

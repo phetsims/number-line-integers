@@ -7,6 +7,7 @@
  */
 
 import ExplorerCharacterSetAfrica from '../../explore/view/ExplorerCharacterSetAfrica.js';
+import ExplorerCharacterSetAfricaConservative from '../../explore/view/ExplorerCharacterSetAfricaConservative.js';
 import ExplorerCharacterSetAsia from '../../explore/view/ExplorerCharacterSetAsia.js';
 import ExplorerCharacterSetLatinAmerica from '../../explore/view/ExplorerCharacterSetLatinAmerica.js';
 import ExplorerCharacterSetUSA from '../../explore/view/ExplorerCharacterSetUSA.js';
@@ -17,6 +18,7 @@ const ExplorerImages = {
   EXPLORER_CHARACTER_SETS: [
     ExplorerCharacterSetUSA,
     ExplorerCharacterSetAfrica,
+    ExplorerCharacterSetAfricaConservative,
     ExplorerCharacterSetAsia,
     ExplorerCharacterSetLatinAmerica
   ]

@@ -134,6 +134,9 @@
   "africa": {
     "value": "Africa"
   },
+  "africaModest": {
+    "value": "Africa (Modest)"
+  },
   "latinAmerica": {
     "value": "Latin America"
   },
