@@ -20,7 +20,7 @@ import MoneyBoxNode from '../../../../number-line-common/js/explore/view/MoneyBo
 import merge from '../../../../phet-core/js/merge.js';
 import BackgroundNode from '../../../../scenery-phet/js/BackgroundNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Circle, Color, ColorProperty, FlowBox, HBox, Node, Text } from '../../../../scenery/js/imports.js';
+import { Circle, Color, ColorProperty, FlowBox, HBox, ManualConstraint, Node, Text } from '../../../../scenery/js/imports.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import NLIColors from '../../common/NLIColors.js';
@@ -116,6 +116,10 @@ class BankPointControllerNode extends PointControllerNode {
     // Update the node's appearance as its position changes.
     const valueRange = numberLine.displayedRangeProperty.value;
     const unscaledWidth = controllerNode.width;
+
+    ManualConstraint.create( this, [ moneyAmountTextWrapper, moneyBoxNode ], ( textProxy, moneyBoxProxy ) => {
+      textProxy.center = moneyBoxProxy.center;
+    } );
     const updateController = () => {
 
       if ( pointController.numberLinePoints.length > 0 ) {
@@ -162,7 +166,7 @@ class BankPointControllerNode extends PointControllerNode {
               value: value => Math.abs( value )
             }
           } ), {
-            font: new PhetFont( 50 ),
+            font: new PhetFont( 48 ),
             fill: 'white',
             stroke: 'black',
             lineWidth: 1.5,
@@ -172,7 +176,7 @@ class BankPointControllerNode extends PointControllerNode {
           const moneyAmountHBox = new HBox( {
             children: [
               new Text( '-', {
-                font: new PhetFont( 50 ),
+                font: new PhetFont( 48 ),
                 fill: 'white',
                 stroke: 'black',
                 lineWidth: 1.5,
@@ -184,9 +188,6 @@ class BankPointControllerNode extends PointControllerNode {
           } );
           moneyAmountTextWrapper.children = [ moneyAmountHBox ];
         }
-
-        // Update the balance indicator text.
-        moneyAmountTextWrapper.center = moneyBoxNode.center.plusXY( -5, 0 );
 
         // Update the absolute value readout.
         const value = numberLinePoint.valueProperty.value;
