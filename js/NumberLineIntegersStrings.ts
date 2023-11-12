@@ -109,6 +109,8 @@ type StringsType = {
   'latinAmericaStringProperty': LocalizedStringProperty;
   'asia': string;
   'asiaStringProperty': LocalizedStringProperty;
+  'oceania': string;
+  'oceaniaStringProperty': LocalizedStringProperty;
 };
 
 const NumberLineIntegersStrings = getStringModule( 'NUMBER_LINE_INTEGERS' ) as StringsType;
