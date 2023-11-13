@@ -21,7 +21,9 @@ import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 const ExplorerCharacterSetAfrica = new ExplorerCharacterSet(
     NumberLineIntegersStrings.latinAmericaStringProperty,
     new RegionAndCultureHeadshotIcon( boyHiking_png, {
-      xClipAreaStart: 15
+      xClipAreaStart: 15,
+      scale: 1.2,
+      headshotDimension: 32
     } ),
     boyInAir_png,
     boyHiking_png,

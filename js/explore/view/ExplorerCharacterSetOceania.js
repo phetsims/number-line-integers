@@ -22,7 +22,9 @@ import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 const ExplorerCharacterSetOceania = new ExplorerCharacterSet(
   NumberLineIntegersStrings.oceaniaStringProperty,
   new RegionAndCultureHeadshotIcon( girlHiking_png, {
-    xClipAreaStart: 12
+    xClipAreaStart: 18,
+    scale: 1.2,
+    headshotDimension: 32
   } ),
   girlInAir_png,
   girlHiking_png,
