@@ -1,5 +1,5 @@
 {
-  "comment": "# number-line-integers 1.2.0-dev.4 Mon Nov 13 2023 09:28:08 GMT-0700 (Mountain Standard Time)",
+  "comment": "# number-line-integers 1.2.0-dev.5 Mon Nov 13 2023 10:44:46 GMT-0600 (Central Standard Time)",
   "assert": {
     "sha": "94831413cd4dd4dc27c2a1aebbcafd3987934a99",
     "branch": "main"
@@ -33,7 +33,7 @@
     "branch": "main"
   },
   "number-line-integers": {
-    "sha": "36974bf0ebfc764d648188fa23377166f3b37bc0",
+    "sha": "4afa66b994f11708d78d21c8d7fc2eef3b4d5f50",
     "branch": "main"
   },
   "perennial-alias": {
