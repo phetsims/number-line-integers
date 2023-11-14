@@ -119,6 +119,7 @@ class BankPointControllerNode extends PointControllerNode {
 
     ManualConstraint.create( this, [ moneyAmountTextWrapper, moneyBoxNode ], ( textProxy, moneyBoxProxy ) => {
       textProxy.center = moneyBoxProxy.center;
+      updateAbsoluteValueReadoutPosition();
     } );
     const updateController = () => {
 
