@@ -102,9 +102,9 @@ class ElevationSceneView extends SceneView {
       explorersWrapper.explorerNodes,
       sceneModel.seaLevel,
       [
-        new Vector2( 3, 30 ),
         new Vector2( -25, 25 ),
-        new Vector2( -25, 20 )
+        new Vector2( -25, 20 ),
+        new Vector2( 3, 30 )
       ],
       {
         // special highly tweaked function for having the hiker image show up over the cliff

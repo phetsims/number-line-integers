@@ -11,12 +11,12 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import NLCConstants from '../../../../number-line-common/js/common/NLCConstants.js';
 import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
 import merge from '../../../../phet-core/js/merge.js';
 import BackgroundNode from '../../../../scenery-phet/js/BackgroundNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Node, Path, Text } from '../../../../scenery/js/imports.js';
-import NLIConstants from '../../common/NLIConstants.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 
@@ -81,12 +81,12 @@ class ElevationPointControllerNode extends PointControllerNode {
 
     // We do not have access to the valueProperties we need to create a patternStringProperty at start-up. This is a work-around
     // to enable dynamicLocale without doing a full restructure of the sim.
-    const distanceTextWrapper = new Node( { children: [] } );
+    const distanceTextWrapper = new Node( { children: [], excludeInvisibleChildrenFromBounds: true } );
     const amountAboveTextVisibleProperty = new BooleanProperty( false );
     const amountBelowTextVisibleProperty = new BooleanProperty( false );
     const seaLevelTextVisibleProperty = new BooleanProperty( false );
 
-    const distanceLabel = new BackgroundNode( distanceTextWrapper, NLIConstants.LABEL_BACKGROUND_OPTIONS );
+    const distanceLabel = new BackgroundNode( distanceTextWrapper, NLCConstants.LABEL_BACKGROUND_OPTIONS );
     this.addChild( absoluteValueLine );
     this.addChild( distanceLabel );
     absoluteValueLine.moveToBack();
