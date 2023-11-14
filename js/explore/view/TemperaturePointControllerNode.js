@@ -9,13 +9,13 @@
  * @author John Blanco (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import StringProperty from '../../../../axon/js/StringProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import ColorizedReadoutNode from '../../../../number-line-common/js/common/view/ColorizedReadoutNode.js';
 import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
 import merge from '../../../../phet-core/js/merge.js';
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import TemperatureAndColorSensorNode from '../../../../scenery-phet/js/TemperatureAndColorSensorNode.js';
 import { Color, Node, Text } from '../../../../scenery/js/imports.js';
@@ -73,43 +73,90 @@ class TemperaturePointControllerNode extends PointControllerNode {
     compositeThermometerNode.addChild( thermometerLabel );
 
     // Add a readout that will describe the temperature textually, e.g. "20° above 0".
-    const temperatureReadoutStringProperty = new StringProperty( '' );
-    const temperatureReadout = new ColorizedReadoutNode(
-      temperatureReadoutStringProperty,
-      pointController.colorProperty,
-      {
-        left: temperatureAndColorSensorNode.right + 3,
-        centerY: 0,
-        textOptions: {
-          font: new PhetFont( 18 ),
-          maxWidth: 250
+    const createTemperatureReadoutNode = ( stringProperty, temperatureProperty, visibleProperty ) => {
+      return new ColorizedReadoutNode(
+        new PatternStringProperty( stringProperty, { value: temperatureProperty }, {
+          maps: {
+            value: value => Math.abs( value )
+          }
+        } ),
+        pointController.colorProperty,
+        {
+          left: temperatureAndColorSensorNode.right + 3,
+          centerY: 0,
+          textOptions: {
+            font: new PhetFont( 18 ),
+            maxWidth: 250
+          },
+          visibleProperty: visibleProperty
         }
-      }
-    );
-    compositeThermometerNode.addChild( temperatureReadout );
+      );
+    };
+
+    // NEGATIVE readouts
+    const negativeFahrenheitTemperatureReadout = createTemperatureReadoutNode(
+      negativeTemperatureAmountStringProperty,
+      pointController.fahrenheitTemperatureProperty,
+      new DerivedProperty( [ pointController.fahrenheitTemperatureProperty, temperatureUnitsProperty ],
+        ( fahrenheit, units ) => {
+          return units === NLIConstants.TEMPERATURE_UNITS.FAHRENHEIT && fahrenheit < 0;
+        } ) );
+
+    const negativeCelsiusTemperatureReadout = createTemperatureReadoutNode(
+      negativeTemperatureAmountStringProperty,
+      pointController.celsiusTemperatureProperty,
+      new DerivedProperty( [ pointController.celsiusTemperatureProperty, temperatureUnitsProperty ],
+        ( celsius, units ) => {
+          return units === NLIConstants.TEMPERATURE_UNITS.CELSIUS && celsius < 0;
+        } ) );
+
+    // ZERO readouts
+    const zeroFahrenheitTemperatureReadout = createTemperatureReadoutNode(
+      zeroTemperatureAmountStringProperty,
+      pointController.fahrenheitTemperatureProperty,
+      new DerivedProperty( [ pointController.fahrenheitTemperatureProperty, temperatureUnitsProperty ],
+        ( fahrenheit, units ) => {
+          return units === NLIConstants.TEMPERATURE_UNITS.FAHRENHEIT && fahrenheit === 0;
+        } ) );
+
+    const zeroCelsiusTemperatureReadout = createTemperatureReadoutNode(
+      zeroTemperatureAmountStringProperty,
+      pointController.celsiusTemperatureProperty,
+      new DerivedProperty( [ pointController.celsiusTemperatureProperty, temperatureUnitsProperty ],
+        ( celsius, units ) => {
+          return units === NLIConstants.TEMPERATURE_UNITS.CELSIUS && celsius === 0;
+        } ) );
+
+    // POSITIVE readouts
+    const positiveFahrenheitTemperatureReadout = createTemperatureReadoutNode(
+      positiveTemperatureAmountStringProperty,
+      pointController.fahrenheitTemperatureProperty,
+      new DerivedProperty( [ pointController.fahrenheitTemperatureProperty, temperatureUnitsProperty ],
+        ( fahrenheit, units ) => {
+          return units === NLIConstants.TEMPERATURE_UNITS.FAHRENHEIT && fahrenheit > 0;
+        } ) );
+
+    const positiveTemperatureReadout = createTemperatureReadoutNode(
+      positiveTemperatureAmountStringProperty,
+      pointController.celsiusTemperatureProperty,
+      new DerivedProperty( [ pointController.celsiusTemperatureProperty, temperatureUnitsProperty ],
+        ( celsius, units ) => {
+          return units === NLIConstants.TEMPERATURE_UNITS.CELSIUS && celsius > 0;
+        } ) );
+
+    const temperatureReadoutWrapper = new Node( {
+      children: [ negativeFahrenheitTemperatureReadout, negativeCelsiusTemperatureReadout, zeroFahrenheitTemperatureReadout,
+        zeroCelsiusTemperatureReadout, positiveFahrenheitTemperatureReadout, positiveTemperatureReadout ]
+    } );
+
+    compositeThermometerNode.addChild( temperatureReadoutWrapper );
+
 
     // Control the visibility of the textual label, no unlink needed because these point controllers are permanent.
     Multilink.multilink(
       [ showAbsoluteValuesProperty, pointController.isOverMapProperty ],
       ( showAbsoluteValues, isOverMap ) => {
-        temperatureReadout.visible = showAbsoluteValues && isOverMap;
-      }
-    );
-
-    // Control the content of the textual label, no unlink needed because these point controllers are permanent.
-    Multilink.multilink(
-      [
-        pointController.fahrenheitTemperatureProperty,
-        pointController.celsiusTemperatureProperty,
-        temperatureUnitsProperty,
-        pointController.isOverMapProperty
-      ],
-      ( fahrenheitTemperature, celsiusTemperature, temperatureUnits ) => {
-        const value = temperatureUnits === NLIConstants.TEMPERATURE_UNITS.CELSIUS ? celsiusTemperature : fahrenheitTemperature;
-        const template = value < 0 ? negativeTemperatureAmountStringProperty :
-                         value > 0 ? positiveTemperatureAmountStringProperty :
-                         zeroTemperatureAmountStringProperty;
-        temperatureReadoutStringProperty.set( StringUtils.fillIn( template, { value: Math.abs( value ) } ) );
+        temperatureReadoutWrapper.visible = showAbsoluteValues && isOverMap;
       }
     );
 
