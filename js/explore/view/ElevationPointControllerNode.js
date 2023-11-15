@@ -8,6 +8,7 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import Property from '../../../../axon/js/Property.js';
@@ -95,14 +96,16 @@ class ElevationPointControllerNode extends PointControllerNode {
 
     // numberLinePoints only has one active numberLinePoint at a time. When a point is removed the property will
     // have a value of null.
-    const currentNumberLinePointProperty = new Property( null );
+    const currentNumberLinePointValueProperty = new Property( null );
+
+    const pointValueProperty = new DynamicProperty( currentNumberLinePointValueProperty );
 
     pointController.numberLinePoints.addItemAddedListener( point => {
-      currentNumberLinePointProperty.set( point );
+      currentNumberLinePointValueProperty.set( point.valueProperty );
     } );
 
     pointController.numberLinePoints.addItemRemovedListener( point => {
-      currentNumberLinePointProperty.set( null );
+      currentNumberLinePointValueProperty.set( null );
     } );
 
 
@@ -121,7 +124,7 @@ class ElevationPointControllerNode extends PointControllerNode {
 
           if ( distanceTextWrapper.children.length === 0 ) {
             const amountAboveText = new Text(
-              new PatternStringProperty( amountAboveSeaLevelStringProperty, { value: currentNumberLinePointProperty } ),
+              new PatternStringProperty( amountAboveSeaLevelStringProperty, { value: pointValueProperty } ),
               {
                 font: new PhetFont( 18 ),
                 fill: pointController.color,
@@ -129,11 +132,7 @@ class ElevationPointControllerNode extends PointControllerNode {
                 visibleProperty: amountAboveTextVisibleProperty
               } );
             const amountBelowText = new Text(
-              new PatternStringProperty( amountBelowSeaLevelStringProperty, { value: currentNumberLinePointProperty }, {
-                maps: {
-                  value: value => Math.abs( value )
-                }
-              } ),
+              new PatternStringProperty( amountBelowSeaLevelStringProperty, { value: pointValueProperty } ),
               {
                 font: new PhetFont( 18 ),
                 fill: pointController.color,
@@ -141,7 +140,7 @@ class ElevationPointControllerNode extends PointControllerNode {
                 visibleProperty: amountBelowTextVisibleProperty
               } );
             const seaLevelText = new Text(
-              new PatternStringProperty( seaLevelStringProperty, { value: currentNumberLinePointProperty } ),
+              new PatternStringProperty( seaLevelStringProperty, { value: pointValueProperty } ),
               {
                 font: new PhetFont( 18 ),
                 fill: pointController.color,
