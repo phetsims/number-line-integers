@@ -109,7 +109,11 @@ class ElevationPointControllerNode extends PointControllerNode {
 
     const amountBelowTextVisibleProperty = new BooleanProperty( false );
     const amountBelowText = new Text(
-        new PatternStringProperty( amountBelowSeaLevelStringProperty, { value: pointValueProperty } ),
+        new PatternStringProperty( amountBelowSeaLevelStringProperty, { value: pointValueProperty }, {
+          maps: {
+            value: value => Math.abs( value )
+          }
+        } ),
         {
           font: new PhetFont( 18 ),
           fill: pointController.color,
