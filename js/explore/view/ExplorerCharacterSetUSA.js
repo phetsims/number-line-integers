@@ -10,6 +10,7 @@
 
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import RegionAndCultureHeadshotIcon from '../../../../joist/js/preferences/RegionAndCultureHeadshotIcon.js';
+import { GridBox } from '../../../../scenery/js/imports.js';
 import exploreScreenHome_png from '../../../images/usa/exploreScreenHome_png.js';
 import exploreScreenNav_png from '../../../images/usa/exploreScreenNav_png.js';
 import girlHiking_png from '../../../images/usa/girlHiking_png.js';
@@ -23,6 +24,26 @@ import ExplorerCharacterSetAsia from './ExplorerCharacterSetAsia.js';
 import ExplorerCharacterSetAfricaModest from './ExplorerCharacterSetAfricaModest.js';
 import ExplorerCharacterSetLatinAmerica from './ExplorerCharacterSetLatinAmerica.js';
 import ExplorerCharacterSetOceania from './ExplorerCharacterSetOceania.js';
+
+const USA_HEADSHOT_ICON = new GridBox( {
+  rows: [
+      [ new RegionAndCultureHeadshotIcon( girlHiking_png, {
+          xClipAreaStart: 12,
+          scale: 0.5
+  } ),
+          new RegionAndCultureHeadshotIcon( ExplorerCharacterSetAfrica.hiking, {
+              xClipAreaStart: 12,
+              scale: 0.5
+  } ) ],
+      [ new RegionAndCultureHeadshotIcon( ExplorerCharacterSetAsia.hiking, {
+          xClipAreaStart: 12,
+          scale: 0.5
+      } ),
+          new RegionAndCultureHeadshotIcon( ExplorerCharacterSetLatinAmerica.hiking, {
+              xClipAreaStart: 12,
+              scale: 0.5
+          } ) ] ]
+} );
 
 const phetGirlCharacterSet = new ExplorerCharacterSet(
     NumberLineIntegersStrings.unitedStatesOfAmericaStringProperty,
@@ -48,9 +69,7 @@ const RANDOM_USA_CHARACTER_SET = dotRandom.sample( [
 
 const ExplorerCharacterSetUSA = new ExplorerCharacterSet(
     NumberLineIntegersStrings.unitedStatesOfAmericaStringProperty,
-    new RegionAndCultureHeadshotIcon( girlHiking_png, {
-        xClipAreaStart: 12
-    } ),
+    USA_HEADSHOT_ICON,
     RANDOM_USA_CHARACTER_SET.flying,
     RANDOM_USA_CHARACTER_SET.hiking,
     RANDOM_USA_CHARACTER_SET.swimming,
