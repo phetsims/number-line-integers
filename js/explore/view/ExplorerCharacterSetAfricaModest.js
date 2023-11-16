@@ -18,7 +18,7 @@ import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 
 
-const ExplorerCharacterSetAfricaConservative = new ExplorerCharacterSet(
+const ExplorerCharacterSetAfricaModest = new ExplorerCharacterSet(
   NumberLineIntegersStrings.africaModestStringProperty,
   new RegionAndCultureHeadshotIcon( girlHiking_png, {
     xClipAreaStart: 15
@@ -31,4 +31,4 @@ const ExplorerCharacterSetAfricaConservative = new ExplorerCharacterSet(
   AFRICA_MODEST_QUERY_VALUE
 );
 
-export default ExplorerCharacterSetAfricaConservative;
+export default ExplorerCharacterSetAfricaModest;
