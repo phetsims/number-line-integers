@@ -81,23 +81,11 @@ class ElevationPointControllerNode extends PointControllerNode {
     // handling of what the point controller does when the absolute value checkbox is checked
     const absoluteValueLine = new Path( null, { stroke: pointController.color, lineWidth: 2 } );
 
-    // We do not have access to the valueProperties we need to create a patternStringProperty at start-up. This is a work-around
-    // to enable dynamicLocale without doing a full restructure of the sim.
-    const distanceTextWrapper = new Node( { children: [], excludeInvisibleChildrenFromBounds: true } );
-    const amountAboveTextVisibleProperty = new BooleanProperty( false );
-    const amountBelowTextVisibleProperty = new BooleanProperty( false );
-    const seaLevelTextVisibleProperty = new BooleanProperty( false );
-
-    const distanceLabel = new BackgroundNode( distanceTextWrapper, NLCConstants.LABEL_BACKGROUND_OPTIONS );
-    this.addChild( absoluteValueLine );
-    this.addChild( distanceLabel );
-    absoluteValueLine.moveToBack();
-    const numberLine = pointController.numberLines[ 0 ];
-
-    // numberLinePoints only has one active numberLinePoint at a time. When a point is removed the property will
+    // This assumes that numberLinePoints only has one active numberLinePoint at a time. When a point is removed the property will
     // have a value of null.
     const currentNumberLinePointValueProperty = new Property( null );
 
+    // This dynamicProperty allows our pattern strings to track the value property of the active numberLinePoint.
     const pointValueProperty = new DynamicProperty( currentNumberLinePointValueProperty );
 
     pointController.numberLinePoints.addItemAddedListener( point => {
@@ -109,6 +97,42 @@ class ElevationPointControllerNode extends PointControllerNode {
       currentNumberLinePointValueProperty.set( null );
     } );
 
+    const amountAboveTextVisibleProperty = new BooleanProperty( false );
+    const amountAboveText = new Text(
+        new PatternStringProperty( amountAboveSeaLevelStringProperty, { value: pointValueProperty } ),
+        {
+          font: new PhetFont( 18 ),
+          fill: pointController.color,
+          maxWidth: DISTANCE_TEXT_MAX_WIDTH,
+          visibleProperty: amountAboveTextVisibleProperty
+        } );
+
+    const amountBelowTextVisibleProperty = new BooleanProperty( false );
+    const amountBelowText = new Text(
+        new PatternStringProperty( amountBelowSeaLevelStringProperty, { value: pointValueProperty } ),
+        {
+          font: new PhetFont( 18 ),
+          fill: pointController.color,
+          maxWidth: DISTANCE_TEXT_MAX_WIDTH,
+          visibleProperty: amountBelowTextVisibleProperty
+        } );
+
+    const seaLevelTextVisibleProperty = new BooleanProperty( false );
+    const seaLevelText = new Text(
+        new PatternStringProperty( seaLevelStringProperty, { value: pointValueProperty } ),
+        {
+          font: new PhetFont( 18 ),
+          fill: pointController.color,
+          maxWidth: DISTANCE_TEXT_MAX_WIDTH,
+          visibleProperty: seaLevelTextVisibleProperty
+        } );
+    const distanceTextWrapper = new Node( { children: [ amountAboveText, amountBelowText, seaLevelText ], excludeInvisibleChildrenFromBounds: true } );
+
+    const distanceLabel = new BackgroundNode( distanceTextWrapper, NLCConstants.LABEL_BACKGROUND_OPTIONS );
+    this.addChild( absoluteValueLine );
+    this.addChild( distanceLabel );
+    absoluteValueLine.moveToBack();
+    const numberLine = pointController.numberLines[ 0 ];
 
     // Update the absolute value representation and associated text. There is no need to unlink this since the
     // elevation point controllers don't come and go.
@@ -123,34 +147,7 @@ class ElevationPointControllerNode extends PointControllerNode {
             .moveTo( compositeImageNode.x, compositeImageNode.y )
             .lineTo( compositeImageNode.x, seaLevel );
 
-          if ( distanceTextWrapper.children.length === 0 ) {
-            const amountAboveText = new Text(
-              new PatternStringProperty( amountAboveSeaLevelStringProperty, { value: pointValueProperty } ),
-              {
-                font: new PhetFont( 18 ),
-                fill: pointController.color,
-                maxWidth: DISTANCE_TEXT_MAX_WIDTH,
-                visibleProperty: amountAboveTextVisibleProperty
-              } );
-            const amountBelowText = new Text(
-              new PatternStringProperty( amountBelowSeaLevelStringProperty, { value: pointValueProperty } ),
-              {
-                font: new PhetFont( 18 ),
-                fill: pointController.color,
-                maxWidth: DISTANCE_TEXT_MAX_WIDTH,
-                visibleProperty: amountBelowTextVisibleProperty
-              } );
-            const seaLevelText = new Text(
-              new PatternStringProperty( seaLevelStringProperty, { value: pointValueProperty } ),
-              {
-                font: new PhetFont( 18 ),
-                fill: pointController.color,
-                maxWidth: DISTANCE_TEXT_MAX_WIDTH,
-                visibleProperty: seaLevelTextVisibleProperty
-              } );
-            distanceTextWrapper.children = [ amountAboveText, amountBelowText, seaLevelText ];
-          }
-          const value = pointController.numberLinePoints.get( 0 ).valueProperty.value;
+          const value = pointValueProperty.value;
           if ( value < 0 ) {
             seaLevelTextVisibleProperty.value = false;
             amountAboveTextVisibleProperty.value = false;
