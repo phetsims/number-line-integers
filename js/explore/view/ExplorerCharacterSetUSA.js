@@ -20,62 +20,62 @@ import { USA_QUERY_VALUE } from '../../common/NLIQueryParameters.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 import ExplorerCharacterSetAfrica from './ExplorerCharacterSetAfrica.js';
-import ExplorerCharacterSetAsia from './ExplorerCharacterSetAsia.js';
 import ExplorerCharacterSetAfricaModest from './ExplorerCharacterSetAfricaModest.js';
+import ExplorerCharacterSetAsia from './ExplorerCharacterSetAsia.js';
 import ExplorerCharacterSetLatinAmerica from './ExplorerCharacterSetLatinAmerica.js';
 import ExplorerCharacterSetOceania from './ExplorerCharacterSetOceania.js';
 
 const USA_HEADSHOT_ICON = new GridBox( {
   rows: [
-      [ new RegionAndCultureHeadshotIcon( girlHiking_png, {
-          xClipAreaStart: 12,
-          scale: 0.5
-  } ),
-          new RegionAndCultureHeadshotIcon( ExplorerCharacterSetAfrica.hiking, {
-              xClipAreaStart: 12,
-              scale: 0.5
-  } ) ],
-      [ new RegionAndCultureHeadshotIcon( ExplorerCharacterSetAsia.hiking, {
-          xClipAreaStart: 12,
-          scale: 0.5
-      } ),
-          new RegionAndCultureHeadshotIcon( ExplorerCharacterSetLatinAmerica.hiking, {
-              xClipAreaStart: 12,
-              scale: 0.5
-          } ) ] ]
+    [ new RegionAndCultureHeadshotIcon( girlHiking_png, {
+      xClipAreaStart: 12,
+      scale: 0.5
+    } ),
+      new RegionAndCultureHeadshotIcon( ExplorerCharacterSetAfrica.hiking, {
+        xClipAreaStart: 12,
+        scale: 0.5
+      } ) ],
+    [ new RegionAndCultureHeadshotIcon( ExplorerCharacterSetAsia.hiking, {
+      xClipAreaStart: 12,
+      scale: 0.5
+    } ),
+      new RegionAndCultureHeadshotIcon( ExplorerCharacterSetLatinAmerica.hiking, {
+        xClipAreaStart: 12,
+        scale: 0.5
+      } ) ] ]
 } );
 
 const phetGirlCharacterSet = new ExplorerCharacterSet(
-    NumberLineIntegersStrings.unitedStatesOfAmericaStringProperty,
-    new RegionAndCultureHeadshotIcon( girlHiking_png, {
-        xClipAreaStart: 12
-    } ),
-    girlInAir_png,
-    girlHiking_png,
-    girlInWater_png,
-    exploreScreenHome_png,
-    exploreScreenNav_png,
-    USA_QUERY_VALUE
+  NumberLineIntegersStrings.unitedStatesOfAmericaStringProperty,
+  new RegionAndCultureHeadshotIcon( girlHiking_png, {
+    xClipAreaStart: 12
+  } ),
+  girlInAir_png,
+  girlHiking_png,
+  girlInWater_png,
+  exploreScreenHome_png,
+  exploreScreenNav_png,
+  USA_QUERY_VALUE
 );
 
 const RANDOM_USA_CHARACTER_SET = dotRandom.sample( [
-    phetGirlCharacterSet,
-    ExplorerCharacterSetAfrica,
-    ExplorerCharacterSetAfricaModest,
-    ExplorerCharacterSetAsia,
-    ExplorerCharacterSetLatinAmerica,
-    ExplorerCharacterSetOceania
+  phetGirlCharacterSet,
+  ExplorerCharacterSetAfrica,
+  ExplorerCharacterSetAfricaModest,
+  ExplorerCharacterSetAsia,
+  ExplorerCharacterSetLatinAmerica,
+  ExplorerCharacterSetOceania
 ] );
 
 const ExplorerCharacterSetUSA = new ExplorerCharacterSet(
-    NumberLineIntegersStrings.unitedStatesOfAmericaStringProperty,
-    USA_HEADSHOT_ICON,
-    RANDOM_USA_CHARACTER_SET.flying,
-    RANDOM_USA_CHARACTER_SET.hiking,
-    RANDOM_USA_CHARACTER_SET.swimming,
-    RANDOM_USA_CHARACTER_SET.screenHomeIcon,
-    RANDOM_USA_CHARACTER_SET.screenNavIcon,
-    USA_QUERY_VALUE
+  NumberLineIntegersStrings.unitedStatesOfAmericaStringProperty,
+  USA_HEADSHOT_ICON,
+  RANDOM_USA_CHARACTER_SET.flying,
+  RANDOM_USA_CHARACTER_SET.hiking,
+  RANDOM_USA_CHARACTER_SET.swimming,
+  RANDOM_USA_CHARACTER_SET.screenHomeIcon,
+  RANDOM_USA_CHARACTER_SET.screenNavIcon,
+  USA_QUERY_VALUE
 );
 
 
