@@ -101,6 +101,7 @@ class ElevationPointControllerNode extends PointControllerNode {
     const pointValueProperty = new DynamicProperty( currentNumberLinePointValueProperty );
 
     pointController.numberLinePoints.addItemAddedListener( point => {
+      assert && assert( pointController.numberLinePoints.length === 1, 'ElevationPointControllerNode should only have one numberLinePoint' );
       currentNumberLinePointValueProperty.set( point.valueProperty );
     } );
 
