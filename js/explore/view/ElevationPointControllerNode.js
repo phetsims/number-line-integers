@@ -44,7 +44,7 @@ class ElevationPointControllerNode extends PointControllerNode {
 
     assert && assert( !options || !options.node, 'options should not include a node for this constructor' );
 
-    // dilates each image's touch area
+    // Dilate each image's touch area for easier interaction on touch screens.
     imageList.forEach( image => { image.touchArea = image.localBounds.dilated( IMAGE_DILATION ); } );
 
     // Create a node with all the images that will be used to depict this elevatable item.
@@ -52,16 +52,15 @@ class ElevationPointControllerNode extends PointControllerNode {
 
     options = merge( {
 
-      // Pass in the parent node that includes all images as the mode that will control the point.
+      // Pass in the parent node that includes all images as the node that will control the point.
       node: compositeImageNode,
 
       // {function} - A function that takes a position and a currently selected image index and returns the index
-      // of the image that should be visible.  This enabled fairly complex appearance changes to the point controller
+      // of the image that should be visible.  This enables fairly complex appearance changes to the point controller
       // node.
       imageSelectionFunction: ( position, currentlySelectedImageIndex ) => {
         return currentlySelectedImageIndex;
       }
-
     }, options );
 
     let textOffset;
@@ -78,59 +77,68 @@ class ElevationPointControllerNode extends PointControllerNode {
 
     super( pointController, options );
 
-    // handling of what the point controller does when the absolute value checkbox is checked
     const absoluteValueLine = new Path( null, { stroke: pointController.color, lineWidth: 2 } );
 
-    // This assumes that numberLinePoints only has one active numberLinePoint at a time. When a point is removed the property will
-    // have a value of null.
+    // This assumes that numberLinePoints only has one active numberLinePoint at a time. When a point is removed the
+    // property will have a value of null.
     const currentNumberLinePointValueProperty = new Property( null );
 
-    // This dynamicProperty allows our pattern strings to track the value property of the active numberLinePoint.
+    // This DynamicProperty allows our pattern strings to track the value property of the active number line point.
     const pointValueProperty = new DynamicProperty( currentNumberLinePointValueProperty );
 
     pointController.numberLinePoints.addItemAddedListener( point => {
-      assert && assert( pointController.numberLinePoints.length === 1, 'ElevationPointControllerNode should only have one numberLinePoint' );
+      assert && assert(
+        pointController.numberLinePoints.length === 1,
+        'ElevationPointControllerNode should only have one numberLinePoint'
+      );
       currentNumberLinePointValueProperty.set( point.valueProperty );
     } );
 
-    pointController.numberLinePoints.addItemRemovedListener( point => {
+    // Handle removal of the controlled point from the number line.
+    pointController.numberLinePoints.addItemRemovedListener( () => {
       currentNumberLinePointValueProperty.set( null );
     } );
 
     const amountAboveTextVisibleProperty = new BooleanProperty( false );
     const amountAboveText = new Text(
-        new PatternStringProperty( amountAboveSeaLevelStringProperty, { value: pointValueProperty } ),
-        {
-          font: new PhetFont( 18 ),
-          fill: pointController.color,
-          maxWidth: DISTANCE_TEXT_MAX_WIDTH,
-          visibleProperty: amountAboveTextVisibleProperty
-        } );
+      new PatternStringProperty( amountAboveSeaLevelStringProperty, { value: pointValueProperty } ),
+      {
+        font: new PhetFont( 18 ),
+        fill: pointController.color,
+        maxWidth: DISTANCE_TEXT_MAX_WIDTH,
+        visibleProperty: amountAboveTextVisibleProperty
+      }
+    );
 
     const amountBelowTextVisibleProperty = new BooleanProperty( false );
     const amountBelowText = new Text(
-        new PatternStringProperty( amountBelowSeaLevelStringProperty, { value: pointValueProperty }, {
-          maps: {
-            value: value => Math.abs( value )
-          }
-        } ),
-        {
-          font: new PhetFont( 18 ),
-          fill: pointController.color,
-          maxWidth: DISTANCE_TEXT_MAX_WIDTH,
-          visibleProperty: amountBelowTextVisibleProperty
-        } );
+      new PatternStringProperty( amountBelowSeaLevelStringProperty, { value: pointValueProperty }, {
+        maps: {
+          value: value => Math.abs( value )
+        }
+      } ),
+      {
+        font: new PhetFont( 18 ),
+        fill: pointController.color,
+        maxWidth: DISTANCE_TEXT_MAX_WIDTH,
+        visibleProperty: amountBelowTextVisibleProperty
+      }
+    );
 
     const seaLevelTextVisibleProperty = new BooleanProperty( false );
     const seaLevelText = new Text(
-        new PatternStringProperty( seaLevelStringProperty, { value: pointValueProperty } ),
-        {
-          font: new PhetFont( 18 ),
-          fill: pointController.color,
-          maxWidth: DISTANCE_TEXT_MAX_WIDTH,
-          visibleProperty: seaLevelTextVisibleProperty
-        } );
-    const distanceTextWrapper = new Node( { children: [ amountAboveText, amountBelowText, seaLevelText ], excludeInvisibleChildrenFromBounds: true } );
+      new PatternStringProperty( seaLevelStringProperty, { value: pointValueProperty } ),
+      {
+        font: new PhetFont( 18 ),
+        fill: pointController.color,
+        maxWidth: DISTANCE_TEXT_MAX_WIDTH,
+        visibleProperty: seaLevelTextVisibleProperty
+      }
+    );
+    const distanceTextWrapper = new Node( {
+      children: [ amountAboveText, amountBelowText, seaLevelText ],
+      excludeInvisibleChildrenFromBounds: true
+    } );
 
     const distanceLabel = new BackgroundNode( distanceTextWrapper, NLCConstants.LABEL_BACKGROUND_OPTIONS );
     this.addChild( absoluteValueLine );
@@ -138,8 +146,8 @@ class ElevationPointControllerNode extends PointControllerNode {
     absoluteValueLine.moveToBack();
     const numberLine = pointController.numberLines[ 0 ];
 
-    // Update the absolute value representation and associated text. There is no need to unlink this since the
-    // elevation point controllers don't come and go.
+    // Update the absolute value representation and associated text. There is no need to unlink this since the elevation
+    // point controllers don't come and go.
     Multilink.multilink(
       [ numberLine.showAbsoluteValuesProperty, pointController.positionProperty ],
       showAbsoluteValues => {
@@ -147,27 +155,17 @@ class ElevationPointControllerNode extends PointControllerNode {
              && pointController.overElevationAreaProperty.value
              && pointController.isControllingNumberLinePoint() ) {
 
+          // Update the line that goes between the image and sea level.
           absoluteValueLine.shape = new Shape()
             .moveTo( compositeImageNode.x, compositeImageNode.y )
             .lineTo( compositeImageNode.x, seaLevel );
 
-          const value = pointValueProperty.value;
-          if ( value < 0 ) {
-            seaLevelTextVisibleProperty.value = false;
-            amountAboveTextVisibleProperty.value = false;
-            amountBelowTextVisibleProperty.value = true;
-          }
-          else if ( value > 0 ) {
-            seaLevelTextVisibleProperty.value = false;
-            amountAboveTextVisibleProperty.value = true;
-            amountBelowTextVisibleProperty.value = false;
-          }
-          else if ( value === 0 ) {
-            seaLevelTextVisibleProperty.value = true;
-            amountBelowTextVisibleProperty.value = false;
-            amountAboveTextVisibleProperty.value = false;
-          }
+          // Update the visibility of the labels that describe the absolute value in text.
+          seaLevelTextVisibleProperty.value = pointValueProperty.value === 0;
+          amountAboveTextVisibleProperty.value = pointValueProperty.value > 0;
+          amountBelowTextVisibleProperty.value = pointValueProperty.value < 0;
 
+          // Update parent label node's position and visibility.
           distanceLabel.visible = true;
           distanceLabel.leftCenter = compositeImageNode.rightCenter.plus( textOffset );
         }
@@ -175,7 +173,8 @@ class ElevationPointControllerNode extends PointControllerNode {
           absoluteValueLine.shape = null;
           distanceLabel.visible = false;
         }
-      } );
+      }
+    );
   }
 }
 
