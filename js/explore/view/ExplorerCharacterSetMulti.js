@@ -30,7 +30,7 @@ const RANDOM_CHARACTER_SET = dotRandom.sample( [
 ] );
 
 const ExplorerCharacterSetMulti = new ExplorerCharacterSet(
-    NumberLineIntegersStrings.unitedStatesOfAmericaStringProperty,
+    NumberLineIntegersStrings.multiculturalStringProperty,
     RANDOM_CHARACTER_SET.flying,
     RANDOM_CHARACTER_SET.hiking,
     RANDOM_CHARACTER_SET.swimming,
