@@ -34,11 +34,11 @@ class TemperaturePointController extends PointController {
 
   /**
    * @param {TemperatureSceneModel} sceneModel
-   * @param {LocalizedStringProperty} labelText - the text with which this controller will be identified in the view
+   * @param {LocalizedStringProperty} labelTextProperty - the text with which this controller will be identified in the view
    * @param {Object} [options]
    * @public
    */
-  constructor( sceneModel, labelText, options ) {
+  constructor( sceneModel, labelTextProperty, options ) {
 
     options = merge( {
       noTemperatureColor: Color.white,
@@ -53,7 +53,7 @@ class TemperaturePointController extends PointController {
     this.sceneModel = sceneModel;
 
     // @public (read-only) {LocalizedStringProperty} - label for PointControllerNode and number line point
-    this.label = labelText;
+    this.label = labelTextProperty;
 
     // @public (read-only) - whether this point controller is over the map
     this.isOverMapProperty = new BooleanProperty( false );

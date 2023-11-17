@@ -40,7 +40,7 @@ const currencyUnitsStringProperty = NumberLineIntegersStrings.currencyUnitsStrin
 const debtAmountStringProperty = NumberLineIntegersStrings.debtAmountStringProperty;
 const moneyAmountStringProperty = NumberLineIntegersStrings.moneyAmountStringProperty;
 
-// constants
+// constants // REVIEW, were all of these changed because of dynamic layout? Can you describe to me why they needed to be changed, and add doc about that if you think it is helpful.
 const COIN_DEPOSIT_ANIMATION_START_Y = -95; // above the piggy bank, in screen coordinates, empirically determined
 const COIN_DEPOSIT_ANIMATION_END_Y = -60; // inside the piggy bank, in screen coordinates, empirically determined
 const COIN_WITHDRAWAL_ANIMATION_START_Y = 70; // inside the piggy bank, in screen coordinates, empirically determined
@@ -251,6 +251,7 @@ class BankPointControllerNode extends PointControllerNode {
     // the artwork for the piggy bank changes.  Since the clipping area is intended to make the coins visible when
     // they are outside the bank but invisible inside, this must be drawn as a set of two shapes, one inside the
     // other, with the inner one drawn with the opposite winding order.
+    // REVIEW, were all of these changed because of dynamic layout? Can you describe to me why they needed to be changed, and add doc about that if you think it is helpful.
     const coinClipArea = Shape.rectangle( -100, -150, 200, 300 );
     coinClipArea.moveTo( -20, -69 );
     coinClipArea.lineTo( -20, 78 );
