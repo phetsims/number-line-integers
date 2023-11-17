@@ -15,8 +15,8 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import NLCConstants from '../../../../number-line-common/js/common/NLCConstants.js';
 import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
-import MoneyBoxDecoration from '../../../../number-line-common/js/explore/model/MoneyBoxDecoration.js';
-import MoneyBoxNode from '../../../../number-line-common/js/explore/view/MoneyBoxNode.js';
+import MoneyJarDecoration from '../../../../number-line-common/js/explore/model/MoneyJarDecoration.js';
+import MoneyJarNode from '../../../../number-line-common/js/explore/view/MoneyJarNode.js';
 import merge from '../../../../phet-core/js/merge.js';
 import BackgroundNode from '../../../../scenery-phet/js/BackgroundNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -53,7 +53,7 @@ class BankPointControllerNode extends PointControllerNode {
   /**
    * @param {PointController} pointController
    * @param {Emitter} balanceChangedByButtonEmitter
-   * @param {MoneyBoxDecoration} decorationType - indicates artwork on bank
+   * @param {MoneyJarDecoration} decorationType - indicates artwork on bank
    * @param {Object} [options]
    * @public
    */
@@ -65,8 +65,8 @@ class BankPointControllerNode extends PointControllerNode {
     const controllerNode = new Node();
 
     // Choose the overlay image source, which is artwork that must exactly match the shape of the outline.
-    const moneyBoxNode = new MoneyBoxNode( { decorationType: decorationType } );
-    controllerNode.addChild( moneyBoxNode );
+    const moneyJarNode = new MoneyJarNode( { decorationType: decorationType } );
+    controllerNode.addChild( moneyJarNode );
 
     // In order to use a PatternStringProperty for dynamic layout we do not have access to the value property
     // at startup. This wrapper allows us to use a PatternStringProperty without a heavy restructure of the sim
@@ -99,16 +99,16 @@ class BankPointControllerNode extends PointControllerNode {
 
     // Update the position of the absolute value readout (i.e. the text node that says things like, "balance of $2".
     const updateAbsoluteValueReadoutPosition = () => {
-      if ( decorationType === MoneyBoxDecoration.FLOWERS ) {
+      if ( decorationType === MoneyJarDecoration.FLOWERS ) {
         absoluteValueBackground.centerX = controllerNode.centerX; // tweaked a bit to be centered under feet
         absoluteValueBackground.top = controllerNode.y +
-                                      moneyBoxNode.height / 2 * controllerNode.getScaleVector().y +
+                                      moneyJarNode.height / 2 * controllerNode.getScaleVector().y +
                                       READOUT_DISTANCE_FROM_IMAGE;
       }
       else {
         absoluteValueBackground.centerX = controllerNode.centerX; // tweaked a bit to be centered over coin slot
         absoluteValueBackground.bottom = controllerNode.y -
-                                         moneyBoxNode.height / 2 * controllerNode.getScaleVector().y -
+                                         moneyJarNode.height / 2 * controllerNode.getScaleVector().y -
                                          READOUT_DISTANCE_FROM_IMAGE;
       }
     };
@@ -117,7 +117,7 @@ class BankPointControllerNode extends PointControllerNode {
     const valueRange = numberLine.displayedRangeProperty.value;
     const unscaledWidth = controllerNode.width;
 
-    ManualConstraint.create( this, [ moneyAmountTextWrapper, moneyBoxNode, absoluteValueBackground ], ( textProxy, moneyBoxProxy ) => {
+    ManualConstraint.create( this, [ moneyAmountTextWrapper, moneyJarNode, absoluteValueBackground ], ( textProxy, moneyBoxProxy ) => {
       textProxy.center = moneyBoxProxy.center;
       updateAbsoluteValueReadoutPosition();
     } );
@@ -155,7 +155,7 @@ class BankPointControllerNode extends PointControllerNode {
             currentBalance / valueRange.max
           );
         }
-        moneyBoxNode.fill = fill;
+        moneyJarNode.fill = fill;
 
         // Add the balance indicator text if it has not been added yet.
         if ( moneyAmountTextWrapper.children.length === 0 ) {

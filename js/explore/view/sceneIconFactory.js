@@ -10,8 +10,8 @@
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import birdInAir_png from '../../../../number-line-common/images/birdInAir_png.js';
-import MoneyBoxDecoration from '../../../../number-line-common/js/explore/model/MoneyBoxDecoration.js';
-import MoneyBoxNode from '../../../../number-line-common/js/explore/view/MoneyBoxNode.js';
+import MoneyJarDecoration from '../../../../number-line-common/js/explore/model/MoneyJarDecoration.js';
+import MoneyJarNode from '../../../../number-line-common/js/explore/view/MoneyJarNode.js';
 import ThermometerNode from '../../../../scenery-phet/js/ThermometerNode.js';
 import { Color, Image, Rectangle } from '../../../../scenery/js/imports.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
@@ -28,7 +28,7 @@ const sceneIconFactory = {
 
   /**
    * Generate and return an icon for the specified scene ID.
-   * @param {SceneID} sceneIdentifier
+   * @param { SceneID } sceneIdentifier
    * @returns {Node}
    * @public
    */
@@ -45,10 +45,10 @@ const sceneIconFactory = {
         sceneIdToIconsMap.set( NLIScene.ELEVATION, elevationSceneIconNode );
       }
       else if ( sceneIdentifier === NLIScene.BANK ) {
-        const piggyBankNode = new MoneyBoxNode( { decorationType: MoneyBoxDecoration.LIGHTNING } );
-        piggyBankNode.fill = '#1fb493';
-        piggyBankNode.setScaleMagnitude( ICON_SIZE.height / piggyBankNode.height );
-        sceneIdToIconsMap.set( NLIScene.BANK, piggyBankNode );
+        const moneyJarNode = new MoneyJarNode( { decorationType: MoneyJarDecoration.LIGHTNING } );
+        moneyJarNode.fill = '#1fb493';
+        moneyJarNode.setScaleMagnitude( ICON_SIZE.height / moneyJarNode.height );
+        sceneIdToIconsMap.set( NLIScene.BANK, moneyJarNode );
       }
       else if ( sceneIdentifier === NLIScene.TEMPERATURE ) {
         const temperatureSceneIconRoot = new Rectangle( 0, 0, ICON_SIZE.width, ICON_SIZE.height, {

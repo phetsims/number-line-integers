@@ -9,8 +9,8 @@
 
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
-import MoneyBoxDecoration from '../../../../number-line-common/js/explore/model/MoneyBoxDecoration.js';
-import MoneyBoxNode from '../../../../number-line-common/js/explore/view/MoneyBoxNode.js';
+import MoneyJarDecoration from '../../../../number-line-common/js/explore/model/MoneyJarDecoration.js';
+import MoneyJarNode from '../../../../number-line-common/js/explore/view/MoneyJarNode.js';
 import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { HBox, ManualConstraint, Node, Text } from '../../../../scenery/js/imports.js';
@@ -83,7 +83,7 @@ class BankSceneView extends SceneView {
     const primaryAccountPointControllerNode = new BankPointControllerNode(
       bankSceneModel.primaryAccountPointController,
       bankSceneModel.primaryAccount.balanceChangedByButtonEmitter,
-      MoneyBoxDecoration.FLOWERS,
+      MoneyJarDecoration.FLOWERS,
       { connectorLineVisibleProperty: bankSceneModel.showNumberLineProperty }
     );
     pointControllerNodesLayer.addChild( primaryAccountPointControllerNode );
@@ -92,7 +92,7 @@ class BankSceneView extends SceneView {
     const comparisonAccountPointControllerNode = new BankPointControllerNode(
       bankSceneModel.comparisonAccountPointController,
       bankSceneModel.comparisonAccount.balanceChangedByButtonEmitter,
-      MoneyBoxDecoration.LIGHTNING,
+      MoneyJarDecoration.LIGHTNING,
       { connectorLineVisibleProperty: bankSceneModel.showNumberLineProperty }
     );
     pointControllerNodesLayer.addChild( comparisonAccountPointControllerNode );
@@ -177,24 +177,24 @@ class AccountVisibilityControlSwitch extends ABSwitch {
 
     // The node for selecting that the comparison account is hidden is a single piggy bank that matches the style of
     // the visible account controller.
-    const comparisonAccountHiddenNode = new MoneyBoxNode( {
-      decorationType: MoneyBoxDecoration.FLOWERS,
+    const comparisonAccountHiddenNode = new MoneyJarNode( {
+      decorationType: MoneyJarDecoration.FLOWERS,
       maxWidth: 40
     } );
 
     // The node for the selection where the comparison account is visible it two smaller piggy banks side by side.
-    const comparisonAccountVisibleLeftPiggyBankNode = new MoneyBoxNode( {
-      decorationType: MoneyBoxDecoration.FLOWERS,
+    const comparisonAccountVisibleLeftMoneyJarNode = new MoneyJarNode( {
+      decorationType: MoneyJarDecoration.FLOWERS,
       maxWidth: 30
     } );
-    const comparisonAccountVisibleRightPiggyBankNode = new MoneyBoxNode( {
-      decorationType: MoneyBoxDecoration.LIGHTNING,
+    const comparisonAccountVisibleRightMoneyJarNode = new MoneyJarNode( {
+      decorationType: MoneyJarDecoration.LIGHTNING,
       maxWidth: 40
     } );
     const comparisonAccountVisibleNode = new HBox( {
       children: [
-        comparisonAccountVisibleLeftPiggyBankNode,
-        comparisonAccountVisibleRightPiggyBankNode
+        comparisonAccountVisibleLeftMoneyJarNode,
+        comparisonAccountVisibleRightMoneyJarNode
       ],
       spacing: 10
     } );
@@ -206,8 +206,8 @@ class AccountVisibilityControlSwitch extends ABSwitch {
       const singleFill = isComparisonAccountVisible ? inactiveColor : activeColor;
       const doubleFill = isComparisonAccountVisible ? activeColor : inactiveColor;
       comparisonAccountHiddenNode.fill = singleFill;
-      comparisonAccountVisibleLeftPiggyBankNode.fill = doubleFill;
-      comparisonAccountVisibleRightPiggyBankNode.fill = doubleFill;
+      comparisonAccountVisibleLeftMoneyJarNode.fill = doubleFill;
+      comparisonAccountVisibleRightMoneyJarNode.fill = doubleFill;
     } );
 
     super(
