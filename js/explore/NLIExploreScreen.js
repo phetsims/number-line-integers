@@ -8,10 +8,11 @@
 
 import Property from '../../../axon/js/Property.js';
 import Screen from '../../../joist/js/Screen.js';
+import ExplorerImages from '../common/view/ExplorerImages.js';
 import numberLineIntegers from '../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../NumberLineIntegersStrings.js';
 import NLIExploreModel from './model/NLIExploreModel.js';
-import ExploreScreenIcon from './view/ExploreScreenIcon.js';
+import ExploreScreenIcon from '../../../number-line-common/js/explore/view/ExploreScreenIcon.js';
 import NLIExploreScreenView from './view/NLIExploreScreenView.js';
 
 class NLIExploreScreen extends Screen {
@@ -26,8 +27,8 @@ class NLIExploreScreen extends Screen {
     const options = {
       name: NumberLineIntegersStrings.screen.exploreStringProperty,
       backgroundColorProperty: new Property( 'rgb( 254, 247, 233 )' ),
-      homeScreenIcon: new ExploreScreenIcon( preferencesModel.localizationModel.regionAndCulturePortrayalProperty, 'home' ),
-      navigationBarIcon: new ExploreScreenIcon( preferencesModel.localizationModel.regionAndCulturePortrayalProperty, 'nav' ),
+      homeScreenIcon: new ExploreScreenIcon( ExplorerImages.EXPLORER_CHARACTER_SETS, preferencesModel.localizationModel.regionAndCulturePortrayalProperty, 'home' ),
+      navigationBarIcon: new ExploreScreenIcon( ExplorerImages.EXPLORER_CHARACTER_SETS, preferencesModel.localizationModel.regionAndCulturePortrayalProperty, 'nav' ),
       tandem: tandem
     };
 

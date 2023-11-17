@@ -7,10 +7,10 @@
  *
  */
 
-import RegionAndCulturePortrayal from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
+import NumberLineCharacterSet from '../../../../number-line-common/js/explore/view/NumberLineCharacterSet.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 
-export default class ExplorerCharacterSet extends RegionAndCulturePortrayal {
+export default class ExplorerCharacterSet extends NumberLineCharacterSet {
   /**
    *
    * @param label { LocalizedStringProperty }
@@ -25,13 +25,11 @@ export default class ExplorerCharacterSet extends RegionAndCulturePortrayal {
   constructor( label, headshotIcon,
                flying, hiking, swimming,
                screenHomeIcon, screenNavIcon, queryParameterValue ) {
-   super( headshotIcon, label, queryParameterValue, {} );
+    super( headshotIcon, label, screenHomeIcon, screenNavIcon, queryParameterValue );
 
-   this.flying = flying;
-   this.hiking = hiking;
-   this.swimming = swimming;
-   this.screenHomeIcon = screenHomeIcon;
-   this.screenNavIcon = screenNavIcon;
+    this.flying = flying;
+    this.hiking = hiking;
+    this.swimming = swimming;
   }
 }
 
