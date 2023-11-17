@@ -7,7 +7,6 @@
  */
 
 
-import RegionAndCultureHeadshotIcon from '../../../../joist/js/preferences/RegionAndCultureHeadshotIcon.js';
 import exploreScreenHome_png from '../../../images/africa-conservative/exploreScreenHome_png.js';
 import exploreScreenNav_png from '../../../images/africa-conservative/exploreScreenNav_png.js';
 import girlHiking_png from '../../../images/africa-conservative/girlHiking_png.js';
@@ -19,16 +18,13 @@ import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 
 
 const ExplorerCharacterSetAfricaModest = new ExplorerCharacterSet(
-  NumberLineIntegersStrings.africaModestStringProperty,
-  new RegionAndCultureHeadshotIcon( girlHiking_png, {
-    xClipAreaStart: 15
-  } ),
-  girlInAir_png,
-  girlHiking_png,
-  girlInWater_png,
-  exploreScreenHome_png,
-  exploreScreenNav_png,
-  AFRICA_MODEST_QUERY_VALUE
+    NumberLineIntegersStrings.africaModestStringProperty,
+    girlInAir_png,
+    girlHiking_png,
+    girlInWater_png,
+    exploreScreenHome_png,
+    exploreScreenNav_png,
+    AFRICA_MODEST_QUERY_VALUE
 );
 
 export default ExplorerCharacterSetAfricaModest;

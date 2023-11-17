@@ -7,7 +7,6 @@
  */
 
 
-import RegionAndCultureHeadshotIcon from '../../../../joist/js/preferences/RegionAndCultureHeadshotIcon.js';
 import exploreScreenHome_png from '../../../images/africa/exploreScreenHome_png.js';
 import exploreScreenNav_png from '../../../images/africa/exploreScreenNav_png.js';
 import { AFRICA_QUERY_VALUE } from '../../common/NLIQueryParameters.js';
@@ -20,9 +19,6 @@ import girlInWater_png from '../../../images/africa/girlInWater_png.js';
 
 const ExplorerCharacterSetAfrica = new ExplorerCharacterSet(
     NumberLineIntegersStrings.africaStringProperty,
-    new RegionAndCultureHeadshotIcon( girlHiking_png, {
-      xClipAreaStart: 15
-    } ),
     girlInAir_png,
     girlHiking_png,
     girlInWater_png,

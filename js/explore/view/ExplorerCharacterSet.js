@@ -14,7 +14,6 @@ export default class ExplorerCharacterSet extends NumberLineCharacterSet {
   /**
    *
    * @param label { LocalizedStringProperty }
-   * @param headshotIcon { Image }
    * @param flying { HTMLImageElement }
    * @param hiking { HTMLImageElement }
    * @param swimming { HTMLImageElement }
@@ -22,10 +21,10 @@ export default class ExplorerCharacterSet extends NumberLineCharacterSet {
    * @param screenNavIcon { HTMLImageElement }
    * @param queryParameterValue { string }
    */
-  constructor( label, headshotIcon,
+  constructor( label,
                flying, hiking, swimming,
                screenHomeIcon, screenNavIcon, queryParameterValue ) {
-    super( headshotIcon, label, screenHomeIcon, screenNavIcon, queryParameterValue );
+    super( label, screenHomeIcon, screenNavIcon, queryParameterValue );
 
     this.flying = flying;
     this.hiking = hiking;

@@ -14,6 +14,7 @@ export const AFRICA_MODEST_QUERY_VALUE = 'africaModest';
 export const ASIA_QUERY_VALUE = 'asia';
 export const LATIN_AMERICA_QUERY_VALUE = 'latinAmerica';
 export const OCEANIA_QUERY_VALUE = 'oceania';
+export const MULTICULTURAL_QUERY_VALUE = 'multi';
 
 const NLIQueryParameters = QueryStringMachine.getAll( {
 
@@ -31,8 +32,8 @@ const NLIQueryParameters = QueryStringMachine.getAll( {
   // sets that appear throughout the sim.
   regionAndCulture: {
     type: 'string',
-    validValues: [ USA_QUERY_VALUE, AFRICA_QUERY_VALUE, AFRICA_MODEST_QUERY_VALUE, ASIA_QUERY_VALUE, LATIN_AMERICA_QUERY_VALUE, OCEANIA_QUERY_VALUE ],
-    defaultValue: USA_QUERY_VALUE
+    validValues: [ MULTICULTURAL_QUERY_VALUE, AFRICA_QUERY_VALUE, AFRICA_MODEST_QUERY_VALUE, ASIA_QUERY_VALUE, LATIN_AMERICA_QUERY_VALUE, OCEANIA_QUERY_VALUE, USA_QUERY_VALUE ],
+    defaultValue: MULTICULTURAL_QUERY_VALUE
   }
 
 } );

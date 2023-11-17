@@ -8,7 +8,6 @@
  */
 
 
-import RegionAndCultureHeadshotIcon from '../../../../joist/js/preferences/RegionAndCultureHeadshotIcon.js';
 import exploreScreenHome_png from '../../../images/oceania/exploreScreenHome_png.js';
 import exploreScreenNav_png from '../../../images/oceania/exploreScreenNav_png.js';
 import girlHiking_png from '../../../images/oceania/girlHiking_png.js';
@@ -20,18 +19,13 @@ import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 
 
 const ExplorerCharacterSetOceania = new ExplorerCharacterSet(
-  NumberLineIntegersStrings.oceaniaStringProperty,
-  new RegionAndCultureHeadshotIcon( girlHiking_png, {
-    xClipAreaStart: 18,
-    scale: 1.2,
-    headshotDimension: 32
-  } ),
-  girlInAir_png,
-  girlHiking_png,
-  girlInWater_png,
-  exploreScreenHome_png,
-  exploreScreenNav_png,
-  OCEANIA_QUERY_VALUE
+    NumberLineIntegersStrings.oceaniaStringProperty,
+    girlInAir_png,
+    girlHiking_png,
+    girlInWater_png,
+    exploreScreenHome_png,
+    exploreScreenNav_png,
+    OCEANIA_QUERY_VALUE
 );
 
 export default ExplorerCharacterSetOceania;
