@@ -36,9 +36,9 @@
         "latinAmerica",
         "oceania",
         "usa"
-      ]
-    },
-    "supportsDynamicLocale": true
+      ],
+      "supportsDynamicLocale": true
+    }
   },
   "eslintConfig": {
     "extends": "../chipper/eslint/sim_eslintrc.js"
