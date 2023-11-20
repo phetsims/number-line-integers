@@ -10,7 +10,6 @@ import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
-import NLIQueryParameters from './common/NLIQueryParameters.js';
 import ExplorerImages from './common/view/ExplorerImages.js';
 import NLIExploreScreen from './explore/NLIExploreScreen.js';
 import NLIGenericScreen from './generic/NLIGenericScreen.js';
@@ -20,8 +19,7 @@ const numberLineIntegersTitleStringProperty = NumberLineIntegersStrings[ 'number
 
 const preferencesModel = new PreferencesModel( {
   localizationOptions: {
-    characterSets: ExplorerImages.EXPLORER_CHARACTER_SETS,
-    queryParameterValue: NLIQueryParameters.regionAndCulture
+    characterSets: ExplorerImages.EXPLORER_CHARACTER_SETS
   }
 } );
 

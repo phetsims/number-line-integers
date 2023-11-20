@@ -27,6 +27,17 @@
       "NUMBER_LINE_INTEGERS/screen.explore",
       "NUMBER_LINE_INTEGERS/screen.generic"
     ],
+    "simFeatures": {
+      "supportedRegionsAndCultures": [
+        "multi",
+        "africa",
+        "africaModest",
+        "asia",
+        "latinAmerica",
+        "oceania",
+        "usa"
+      ]
+    },
     "supportsDynamicLocale": true
   },
   "eslintConfig": {

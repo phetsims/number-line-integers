@@ -7,12 +7,12 @@
  *
  */
 
+import { USA_QUERY_VALUE } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import exploreScreenHome_png from '../../../images/usa/exploreScreenHome_png.js';
 import exploreScreenNav_png from '../../../images/usa/exploreScreenNav_png.js';
 import girlHiking_png from '../../../images/usa/girlHiking_png.js';
 import girlInAir_png from '../../../images/usa/girlInAir_png.js';
 import girlInWater_png from '../../../images/usa/girlInWater_png.js';
-import { USA_QUERY_VALUE } from '../../common/NLIQueryParameters.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 

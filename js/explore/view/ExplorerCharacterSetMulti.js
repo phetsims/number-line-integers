@@ -9,7 +9,7 @@
 
 
 import dotRandom from '../../../../dot/js/dotRandom.js';
-import { MULTICULTURAL_QUERY_VALUE } from '../../common/NLIQueryParameters.js';
+import { MULTICULTURAL_QUERY_VALUE } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 import ExplorerCharacterSetAfrica from './ExplorerCharacterSetAfrica.js';
