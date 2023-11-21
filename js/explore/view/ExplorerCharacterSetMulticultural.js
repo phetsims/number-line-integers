@@ -29,7 +29,7 @@ const RANDOM_CHARACTER_SET = dotRandom.sample( [
     ExplorerCharacterSetOceania
 ] );
 
-const ExplorerCharacterSetMulti = new ExplorerCharacterSet(
+const ExplorerCharacterSetMulticultural = new ExplorerCharacterSet(
     NumberLineIntegersStrings.multiculturalStringProperty,
     RANDOM_CHARACTER_SET.flying,
     RANDOM_CHARACTER_SET.hiking,
@@ -39,4 +39,4 @@ const ExplorerCharacterSetMulti = new ExplorerCharacterSet(
     MULTICULTURAL_REGION_AND_CULTURE_ID
 );
 
-export default ExplorerCharacterSetMulti;
+export default ExplorerCharacterSetMulticultural;
