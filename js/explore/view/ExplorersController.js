@@ -24,27 +24,21 @@ export default class ExplorersController {
     const explorerSets = ExplorerImages.EXPLORER_CHARACTER_SETS;
     const regionAdnCulturePortrayalProperty = sceneModel.regionAndCulturePortrayalProperty;
 
-    const createVisibleProperty = set => {
-      return new DerivedProperty( [ regionAdnCulturePortrayalProperty ], portrayal => {
-        return portrayal === set;
-      } );
-    };
-
     const flyingImages = explorerSets.map( set => new Image( set.flying,
       {
-        visibleProperty: createVisibleProperty( set ),
+        visibleProperty: DerivedProperty.valueEqualsConstant( regionAdnCulturePortrayalProperty, set ),
         maxHeight: 116,
         center: new Vector2( 6, -25 )
       } ) );
     const hikingImages = explorerSets.map( set => new Image( set.hiking,
       {
-        visibleProperty: createVisibleProperty( set ),
+        visibleProperty: DerivedProperty.valueEqualsConstant( regionAdnCulturePortrayalProperty, set ),
         maxHeight: 71,
         center: new Vector2( 0, 0 )
       } ) );
     const swimmingImages = explorerSets.map( set => new Image( set.swimming,
       {
-        visibleProperty: createVisibleProperty( set ),
+        visibleProperty: DerivedProperty.valueEqualsConstant( regionAdnCulturePortrayalProperty, set ),
         maxHeight: 40,
         center: new Vector2( 3, 5 )
       } ) );
