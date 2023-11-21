@@ -18,7 +18,7 @@ import elevationBackground_png from '../../../images/elevationBackground_png.js'
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ElevationPointControllerNode from './ElevationPointControllerNode.js';
-import ExplorersWrapper from './ExplorersWrapper.js';
+import ExplorersController from './ExplorersController.js';
 import SceneView from './SceneView.js';
 
 // constants
@@ -94,12 +94,12 @@ class ElevationSceneView extends SceneView {
     const elevationPointControllersLayer = new Node();
     this.scenesLayer.addChild( elevationPointControllersLayer );
 
-    const explorersWrapper = new ExplorersWrapper( sceneModel );
+    const explorersController = new ExplorersController( sceneModel );
 
     // Add the girl that the user can place in the elevation scene.
     elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
       sceneModel.permanentPointControllers[ 0 ],
-      explorersWrapper.explorerNodes,
+      explorersController.explorerNodes,
       sceneModel.seaLevel,
       [
         new Vector2( -25, 25 ),

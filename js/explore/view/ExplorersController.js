@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * The ExplorersWrapper creates the images  of each version of the explorer ( flying, hiking, and swimming), as well
+ * The ExplorersController creates the images  of each version of the explorer ( flying, hiking, and swimming), as well
  * as defines the visibility of each individual image based on the regionAndCulturePortrayalProperty.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
@@ -14,7 +14,7 @@ import { Image, Node } from '../../../../scenery/js/imports.js';
 import ExplorerImages from '../../common/view/ExplorerImages.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 
-export default class ExplorersWrapper {
+export default class ExplorersController {
   /**
    *
    * @param { ElevationSceneModel } sceneModel
@@ -61,4 +61,4 @@ export default class ExplorersWrapper {
   }
 }
 
-numberLineIntegers.register( 'ExplorersWrapper', ExplorersWrapper );
+numberLineIntegers.register( 'ExplorersController', ExplorersController );
