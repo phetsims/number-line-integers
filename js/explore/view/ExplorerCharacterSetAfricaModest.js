@@ -7,7 +7,7 @@
  */
 
 
-import { AFRICA_MODEST_QUERY_VALUE } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
+import { AFRICA_MODEST_REGION_AND_CULTURE_ID } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import exploreScreenHome_png from '../../../images/africa-conservative/exploreScreenHome_png.js';
 import exploreScreenNav_png from '../../../images/africa-conservative/exploreScreenNav_png.js';
 import girlHiking_png from '../../../images/africa-conservative/girlHiking_png.js';
@@ -24,7 +24,7 @@ const ExplorerCharacterSetAfricaModest = new ExplorerCharacterSet(
     girlInWater_png,
     exploreScreenHome_png,
     exploreScreenNav_png,
-    AFRICA_MODEST_QUERY_VALUE
+    AFRICA_MODEST_REGION_AND_CULTURE_ID
 );
 
 export default ExplorerCharacterSetAfricaModest;

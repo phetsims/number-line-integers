@@ -7,7 +7,7 @@
  */
 
 
-import { LATIN_AMERICA_QUERY_VALUE } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
+import { LATIN_AMERICA_REGION_AND_CULTURE_ID } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import boyHiking_png from '../../../images/latin-america/boyHiking_png.js';
 import boyInAir_png from '../../../images/latin-america/boyInAir_png.js';
 import boyInWater_png from '../../../images/latin-america/boyInWater_png.js';
@@ -24,7 +24,7 @@ const ExplorerCharacterSetAfrica = new ExplorerCharacterSet(
     boyInWater_png,
     exploreScreenHome_png,
     exploreScreenNav_png,
-    LATIN_AMERICA_QUERY_VALUE
+    LATIN_AMERICA_REGION_AND_CULTURE_ID
 );
 
 export default ExplorerCharacterSetAfrica;

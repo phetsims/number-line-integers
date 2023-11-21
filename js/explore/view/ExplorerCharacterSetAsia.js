@@ -7,7 +7,7 @@
  */
 
 
-import { ASIA_QUERY_VALUE } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
+import { ASIA_REGION_AND_CULTURE_ID } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import exploreScreenHome_png from '../../../images/asia/exploreScreenHome_png.js';
 import exploreScreenNav_png from '../../../images/asia/exploreScreenNav_png.js';
 import girlHiking_png from '../../../images/asia/girlHiking_png.js';
@@ -24,7 +24,7 @@ const ExplorerCharacterSetAfrica = new ExplorerCharacterSet(
     girlInWater_png,
     exploreScreenHome_png,
     exploreScreenNav_png,
-    ASIA_QUERY_VALUE
+    ASIA_REGION_AND_CULTURE_ID
 );
 
 export default ExplorerCharacterSetAfrica;

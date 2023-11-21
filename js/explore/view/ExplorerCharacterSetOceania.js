@@ -8,7 +8,7 @@
  */
 
 
-import { OCEANIA_QUERY_VALUE } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
+import { OCEANIA_REGION_AND_CULTURE_ID } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import exploreScreenHome_png from '../../../images/oceania/exploreScreenHome_png.js';
 import exploreScreenNav_png from '../../../images/oceania/exploreScreenNav_png.js';
 import girlHiking_png from '../../../images/oceania/girlHiking_png.js';
@@ -25,7 +25,7 @@ const ExplorerCharacterSetOceania = new ExplorerCharacterSet(
     girlInWater_png,
     exploreScreenHome_png,
     exploreScreenNav_png,
-    OCEANIA_QUERY_VALUE
+    OCEANIA_REGION_AND_CULTURE_ID
 );
 
 export default ExplorerCharacterSetOceania;

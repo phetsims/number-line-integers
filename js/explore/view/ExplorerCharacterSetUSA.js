@@ -7,7 +7,7 @@
  *
  */
 
-import { USA_QUERY_VALUE } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
+import { USA_REGION_AND_CULTURE_ID } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import exploreScreenHome_png from '../../../images/usa/exploreScreenHome_png.js';
 import exploreScreenNav_png from '../../../images/usa/exploreScreenNav_png.js';
 import girlHiking_png from '../../../images/usa/girlHiking_png.js';
@@ -24,7 +24,7 @@ const ExplorerCharacterSetUSA = new ExplorerCharacterSet(
     girlInWater_png,
     exploreScreenHome_png,
     exploreScreenNav_png,
-    USA_QUERY_VALUE
+    USA_REGION_AND_CULTURE_ID
 );
 
 

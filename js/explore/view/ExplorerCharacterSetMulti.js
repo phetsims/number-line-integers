@@ -9,7 +9,7 @@
 
 
 import dotRandom from '../../../../dot/js/dotRandom.js';
-import { MULTICULTURAL_QUERY_VALUE } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
+import { MULTICULTURAL_REGION_AND_CULTURE_ID } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 import ExplorerCharacterSetAfrica from './ExplorerCharacterSetAfrica.js';
@@ -36,7 +36,7 @@ const ExplorerCharacterSetMulti = new ExplorerCharacterSet(
     RANDOM_CHARACTER_SET.swimming,
     RANDOM_CHARACTER_SET.screenHomeIcon,
     RANDOM_CHARACTER_SET.screenNavIcon,
-    MULTICULTURAL_QUERY_VALUE
+    MULTICULTURAL_REGION_AND_CULTURE_ID
 );
 
 export default ExplorerCharacterSetMulti;
