@@ -10,7 +10,9 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import NLCConstants from '../../../../number-line-common/js/common/NLCConstants.js';
@@ -68,10 +70,53 @@ class BankPointControllerNode extends PointControllerNode {
     const moneyJarNode = new MoneyJarNode( { decorationType: decorationType } );
     controllerNode.addChild( moneyJarNode );
 
-    // In order to use a PatternStringProperty for dynamic layout we do not have access to the value property
-    // at startup. This wrapper allows us to use a PatternStringProperty without a heavy restructure of the sim
-    // architecture. https://github.com/phetsims/number-line-integers/issues/109
-    const moneyAmountTextWrapper = new Node();
+    // This assumes that numberLinePoints only has one active numberLinePoint at a time. When a point is removed the
+    // property will have a value of null.
+    const currentNumberLinePointValueProperty = new Property( null );
+    const pointValueProperty = new DynamicProperty( currentNumberLinePointValueProperty );
+
+    pointController.numberLinePoints.addItemAddedListener( point => {
+      assert && assert(
+        pointController.numberLinePoints.length === 1,
+        'BankPointControllerNode should only have one numberLinePoint'
+      );
+      currentNumberLinePointValueProperty.set( point.valueProperty );
+    } );
+
+    // Handle removal of the controlled point from the number line.
+    pointController.numberLinePoints.addItemRemovedListener( () => {
+      currentNumberLinePointValueProperty.set( null );
+    } );
+
+    const moneyAmountNode = new Text( new PatternStringProperty( moneyAmountStringProperty, {
+      currencyUnit: currencyUnitsStringProperty,
+      value: pointValueProperty
+    }, {
+      maps: {
+        value: value => Math.abs( value )
+      }
+    } ), {
+      font: new PhetFont( 48 ),
+      fill: 'white',
+      stroke: 'black',
+      lineWidth: 1.5,
+      maxWidth: 100
+    } );
+
+    const moneyAmountHBox = new HBox( {
+      children: [
+        new Text( '-', {
+          font: new PhetFont( 48 ),
+          fill: 'white',
+          stroke: 'black',
+          lineWidth: 1.5,
+          maxWidth: 12,
+          visibleProperty: new DerivedProperty( [ pointValueProperty ], value => value < 0 )
+        } ),
+        moneyAmountNode
+      ]
+    } );
+    const moneyAmountTextWrapper = new Node( { children: [ moneyAmountHBox ] } );
 
     controllerNode.addChild( moneyAmountTextWrapper );
 
@@ -82,12 +127,35 @@ class BankPointControllerNode extends PointControllerNode {
 
     super( pointController, options );
 
-    // the readout that will display the absolute value in a phrase
-    const absoluteValueFlowBox = new FlowBox();
+    // Add the readout that will display the absolute value in a phrase
     const absoluteValueBalanceVisibleProperty = new BooleanProperty( false );
     const absoluteValueDebtAmountVisibleProperty = new BooleanProperty( false );
     const absoluteValueBalanceTextColorProperty = new ColorProperty( NLIColors.bankAbsoluteValueMoneyTextColor );
 
+    const absoluteValueBalanceText = new Text(
+      new PatternStringProperty( balanceAmountStringProperty, {
+        value: pointValueProperty
+      } ),
+      {
+        font: new PhetFont( 18 ),
+        maxWidth: 250,
+        fill: absoluteValueBalanceTextColorProperty,
+        visibleProperty: absoluteValueBalanceVisibleProperty
+      } );
+    const absoluteValueDebtAmountText = new Text(
+      new PatternStringProperty( debtAmountStringProperty, { value: pointValueProperty }, {
+        maps: {
+          value: value => Math.abs( value )
+        }
+      } ),
+      {
+        font: new PhetFont( 18 ),
+        maxWidth: 250,
+        fill: NLIColors.bankAbsoluteValueDebtTextColor,
+        visibleProperty: absoluteValueDebtAmountVisibleProperty
+      } );
+
+    const absoluteValueFlowBox = new FlowBox( { children: [ absoluteValueBalanceText, absoluteValueDebtAmountText ] } );
     const absoluteValueBackground = new BackgroundNode( absoluteValueFlowBox, NLCConstants.LABEL_BACKGROUND_OPTIONS );
     this.addChild( absoluteValueBackground );
 
@@ -157,77 +225,12 @@ class BankPointControllerNode extends PointControllerNode {
         }
         moneyJarNode.fill = fill;
 
-        // Add the balance indicator text if it has not been added yet.
-        if ( moneyAmountTextWrapper.children.length === 0 ) {
-          const moneyAmountNode = new Text( new PatternStringProperty( moneyAmountStringProperty, {
-            currencyUnit: currencyUnitsStringProperty,
-            value: numberLinePoint.valueProperty
-          }, {
-            maps: {
-              value: value => Math.abs( value )
-            }
-          } ), {
-            font: new PhetFont( 48 ),
-            fill: 'white',
-            stroke: 'black',
-            lineWidth: 1.5,
-            maxWidth: 100
-          } );
-
-          const moneyAmountHBox = new HBox( {
-            children: [
-              new Text( '-', {
-                font: new PhetFont( 48 ),
-                fill: 'white',
-                stroke: 'black',
-                lineWidth: 1.5,
-                maxWidth: 12,
-                visibleProperty: new DerivedProperty( [ numberLinePoint.valueProperty ], value => value < 0 )
-              } ),
-              moneyAmountNode
-            ]
-          } );
-          moneyAmountTextWrapper.children = [ moneyAmountHBox ];
-        }
-
         // Update the absolute value readout.
         const value = numberLinePoint.valueProperty.value;
+        absoluteValueBalanceVisibleProperty.value = value >= 0;
+        absoluteValueDebtAmountVisibleProperty.value = value < 0;
 
-        if ( absoluteValueFlowBox.children.length === 0 ) {
-          const absoluteValueBalanceText = new Text(
-            new PatternStringProperty( balanceAmountStringProperty, {
-              value: numberLinePoint.valueProperty
-            } ),
-            {
-              font: new PhetFont( 18 ),
-              maxWidth: 250,
-              fill: absoluteValueBalanceTextColorProperty,
-              visibleProperty: absoluteValueBalanceVisibleProperty
-            } );
-          const absoluteValueDebtAmountText = new Text(
-            new PatternStringProperty( debtAmountStringProperty, { value: numberLinePoint.valueProperty }, {
-              maps: {
-                value: value => Math.abs( value )
-              }
-            } ),
-            {
-              font: new PhetFont( 18 ),
-              maxWidth: 250,
-              fill: NLIColors.bankAbsoluteValueDebtTextColor,
-              visibleProperty: absoluteValueDebtAmountVisibleProperty
-            } );
-
-          absoluteValueFlowBox.children = [ absoluteValueBalanceText, absoluteValueDebtAmountText ];
-        }
-
-        if ( value < 0 ) {
-          absoluteValueBalanceVisibleProperty.value = false;
-          absoluteValueDebtAmountVisibleProperty.value = true;
-        }
-        else {
-          absoluteValueBalanceVisibleProperty.value = true;
-          absoluteValueDebtAmountVisibleProperty.value = false;
-
+        if ( value >= 0 ) {
           absoluteValueBalanceTextColorProperty.value = value === 0 ? NLIColors.bankZeroFillColor : NLIColors.bankAbsoluteValueMoneyTextColor;
         }
         updateAbsoluteValueReadoutPosition();
