@@ -8,24 +8,24 @@
  */
 
 
+import JoistStrings from '../../../../joist/js/JoistStrings.js';
 import { OCEANIA_REGION_AND_CULTURE_ID } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import exploreScreenHome_png from '../../../images/oceania/exploreScreenHome_png.js';
 import exploreScreenNav_png from '../../../images/oceania/exploreScreenNav_png.js';
 import girlHiking_png from '../../../images/oceania/girlHiking_png.js';
 import girlInAir_png from '../../../images/oceania/girlInAir_png.js';
 import girlInWater_png from '../../../images/oceania/girlInWater_png.js';
-import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 
 
 const ExplorerCharacterSetOceania = new ExplorerCharacterSet(
-    NumberLineIntegersStrings.oceaniaStringProperty,
-    girlInAir_png,
-    girlHiking_png,
-    girlInWater_png,
-    exploreScreenHome_png,
-    exploreScreenNav_png,
-    OCEANIA_REGION_AND_CULTURE_ID
+  JoistStrings.preferences.tabs.localization.regionAndCulture.portrayalSets.oceaniaStringProperty,
+  girlInAir_png,
+  girlHiking_png,
+  girlInWater_png,
+  exploreScreenHome_png,
+  exploreScreenNav_png,
+  OCEANIA_REGION_AND_CULTURE_ID
 );
 
 export default ExplorerCharacterSetOceania;

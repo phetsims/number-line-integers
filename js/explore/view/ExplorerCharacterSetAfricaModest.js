@@ -7,18 +7,18 @@
  */
 
 
+import JoistStrings from '../../../../joist/js/JoistStrings.js';
 import { AFRICA_MODEST_REGION_AND_CULTURE_ID } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import exploreScreenHome_png from '../../../images/africa-conservative/exploreScreenHome_png.js';
 import exploreScreenNav_png from '../../../images/africa-conservative/exploreScreenNav_png.js';
 import girlHiking_png from '../../../images/africa-conservative/girlHiking_png.js';
 import girlInAir_png from '../../../images/africa-conservative/girlInAir_png.js';
 import girlInWater_png from '../../../images/africa-conservative/girlInWater_png.js';
-import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 
 
 const ExplorerCharacterSetAfricaModest = new ExplorerCharacterSet(
-    NumberLineIntegersStrings.africaModestStringProperty,
+    JoistStrings.preferences.tabs.localization.regionAndCulture.portrayalSets.africaModestStringProperty,
     girlInAir_png,
     girlHiking_png,
     girlInWater_png,

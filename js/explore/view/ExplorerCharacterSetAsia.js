@@ -7,18 +7,18 @@
  */
 
 
+import JoistStrings from '../../../../joist/js/JoistStrings.js';
 import { ASIA_REGION_AND_CULTURE_ID } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import exploreScreenHome_png from '../../../images/asia/exploreScreenHome_png.js';
 import exploreScreenNav_png from '../../../images/asia/exploreScreenNav_png.js';
 import girlHiking_png from '../../../images/asia/girlHiking_png.js';
 import girlInAir_png from '../../../images/asia/girlInAir_png.js';
 import girlInWater_png from '../../../images/asia/girlInWater_png.js';
-import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 
 
-const ExplorerCharacterSetAfrica = new ExplorerCharacterSet(
-    NumberLineIntegersStrings.asiaStringProperty,
+const ExplorerCharacterSetAsia = new ExplorerCharacterSet(
+    JoistStrings.preferences.tabs.localization.regionAndCulture.portrayalSets.asiaStringProperty,
     girlInAir_png,
     girlHiking_png,
     girlInWater_png,
@@ -27,4 +27,4 @@ const ExplorerCharacterSetAfrica = new ExplorerCharacterSet(
     ASIA_REGION_AND_CULTURE_ID
 );
 
-export default ExplorerCharacterSetAfrica;
+export default ExplorerCharacterSetAsia;

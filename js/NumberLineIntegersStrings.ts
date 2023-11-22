@@ -56,13 +56,6 @@ type StringsType = {
   'octoberStringProperty': LocalizedStringProperty;
   'novemberStringProperty': LocalizedStringProperty;
   'decemberStringProperty': LocalizedStringProperty;
-  'unitedStatesOfAmericaStringProperty': LocalizedStringProperty;
-  'africaStringProperty': LocalizedStringProperty;
-  'africaModestStringProperty': LocalizedStringProperty;
-  'latinAmericaStringProperty': LocalizedStringProperty;
-  'asiaStringProperty': LocalizedStringProperty;
-  'oceaniaStringProperty': LocalizedStringProperty;
-  'multiculturalStringProperty': LocalizedStringProperty;
 };
 
 const NumberLineIntegersStrings = getStringModule( 'NUMBER_LINE_INTEGERS' ) as StringsType;
