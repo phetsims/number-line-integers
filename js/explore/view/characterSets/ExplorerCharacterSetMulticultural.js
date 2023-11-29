@@ -8,9 +8,9 @@
  */
 
 
-import dotRandom from '../../../../dot/js/dotRandom.js';
-import JoistStrings from '../../../../joist/js/JoistStrings.js';
-import { MULTICULTURAL_REGION_AND_CULTURE_ID } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
+import dotRandom from '../../../../../dot/js/dotRandom.js';
+import JoistStrings from '../../../../../joist/js/JoistStrings.ts';
+import { MULTICULTURAL_REGION_AND_CULTURE_ID } from '../../../../../joist/js/preferences/RegionAndCulturePortrayal.ts';
 import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 import ExplorerCharacterSetAfrica from './ExplorerCharacterSetAfrica.js';
 import ExplorerCharacterSetAfricaModest from './ExplorerCharacterSetAfricaModest.js';

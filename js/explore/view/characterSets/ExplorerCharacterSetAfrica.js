@@ -7,13 +7,13 @@
  */
 
 
-import JoistStrings from '../../../../joist/js/JoistStrings.js';
-import { AFRICA_REGION_AND_CULTURE_ID } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
-import exploreScreenHome_png from '../../../images/africa/exploreScreenHome_png.js';
-import exploreScreenNav_png from '../../../images/africa/exploreScreenNav_png.js';
-import girlHiking_png from '../../../images/africa/girlHiking_png.js';
-import girlInAir_png from '../../../images/africa/girlInAir_png.js';
-import girlInWater_png from '../../../images/africa/girlInWater_png.js';
+import JoistStrings from '../../../../../joist/js/JoistStrings.js';
+import { AFRICA_REGION_AND_CULTURE_ID } from '../../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
+import exploreScreenHome_png from '../../../../images/africa/exploreScreenHome_png.js';
+import exploreScreenNav_png from '../../../../images/africa/exploreScreenNav_png.js';
+import girlHiking_png from '../../../../images/africa/girlHiking_png.js';
+import girlInAir_png from '../../../../images/africa/girlInAir_png.js';
+import girlInWater_png from '../../../../images/africa/girlInWater_png.js';
 import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 
 

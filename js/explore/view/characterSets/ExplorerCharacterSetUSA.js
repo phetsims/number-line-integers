@@ -7,13 +7,13 @@
  *
  */
 
-import JoistStrings from '../../../../joist/js/JoistStrings.js';
-import { USA_REGION_AND_CULTURE_ID } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
-import exploreScreenHome_png from '../../../images/usa/exploreScreenHome_png.js';
-import exploreScreenNav_png from '../../../images/usa/exploreScreenNav_png.js';
-import girlHiking_png from '../../../images/usa/girlHiking_png.js';
-import girlInAir_png from '../../../images/usa/girlInAir_png.js';
-import girlInWater_png from '../../../images/usa/girlInWater_png.js';
+import JoistStrings from '../../../../../joist/js/JoistStrings.ts';
+import { USA_REGION_AND_CULTURE_ID } from '../../../../../joist/js/preferences/RegionAndCulturePortrayal.ts';
+import exploreScreenHome_png from '../../../../images/usa/exploreScreenHome_png.ts';
+import exploreScreenNav_png from '../../../../images/usa/exploreScreenNav_png.ts';
+import girlHiking_png from '../../../../images/usa/girlHiking_png.ts';
+import girlInAir_png from '../../../../images/usa/girlInAir_png.ts';
+import girlInWater_png from '../../../../images/usa/girlInWater_png.ts';
 import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 
 

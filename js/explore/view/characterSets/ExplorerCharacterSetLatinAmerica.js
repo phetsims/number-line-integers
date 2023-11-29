@@ -7,13 +7,13 @@
  */
 
 
-import JoistStrings from '../../../../joist/js/JoistStrings.js';
-import { LATIN_AMERICA_REGION_AND_CULTURE_ID } from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
-import boyHiking_png from '../../../images/latin-america/boyHiking_png.js';
-import boyInAir_png from '../../../images/latin-america/boyInAir_png.js';
-import boyInWater_png from '../../../images/latin-america/boyInWater_png.js';
-import exploreScreenHome_png from '../../../images/latin-america/exploreScreenHome_png.js';
-import exploreScreenNav_png from '../../../images/latin-america/exploreScreenNav_png.js';
+import JoistStrings from '../../../../../joist/js/JoistStrings.ts';
+import { LATIN_AMERICA_REGION_AND_CULTURE_ID } from '../../../../../joist/js/preferences/RegionAndCulturePortrayal.ts';
+import boyHiking_png from '../../../../images/latin-america/boyHiking_png.ts';
+import boyInAir_png from '../../../../images/latin-america/boyInAir_png.ts';
+import boyInWater_png from '../../../../images/latin-america/boyInWater_png.ts';
+import exploreScreenHome_png from '../../../../images/latin-america/exploreScreenHome_png.ts';
+import exploreScreenNav_png from '../../../../images/latin-america/exploreScreenNav_png.ts';
 import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 
 

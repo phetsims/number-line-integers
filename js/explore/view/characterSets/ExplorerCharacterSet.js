@@ -7,8 +7,8 @@
  *
  */
 
-import NumberLineCharacterSet from '../../../../number-line-common/js/explore/view/NumberLineCharacterSet.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
+import NumberLineCharacterSet from '../../../../../number-line-common/js/explore/view/NumberLineCharacterSet.js';
+import numberLineIntegers from '../../../numberLineIntegers.js';
 
 export default class ExplorerCharacterSet extends NumberLineCharacterSet {
   /**

@@ -11,7 +11,7 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { Image, Node } from '../../../../scenery/js/imports.js';
-import ExplorerImages from '../../common/view/ExplorerImages.js';
+import ExplorerImages from './ExplorerImages.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 
 export default class ExplorerCharacters {

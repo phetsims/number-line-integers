@@ -8,7 +8,7 @@
 
 import Property from '../../../axon/js/Property.js';
 import Screen from '../../../joist/js/Screen.js';
-import ExplorerImages from '../common/view/ExplorerImages.js';
+import ExplorerImages from './view/ExplorerImages.js';
 import numberLineIntegers from '../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../NumberLineIntegersStrings.js';
 import NLIExploreModel from './model/NLIExploreModel.js';

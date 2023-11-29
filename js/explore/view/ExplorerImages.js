@@ -6,13 +6,13 @@
  *
  */
 
-import ExplorerCharacterSetAfrica from '../../explore/view/ExplorerCharacterSetAfrica.js';
-import ExplorerCharacterSetAfricaModest from '../../explore/view/ExplorerCharacterSetAfricaModest.js';
-import ExplorerCharacterSetAsia from '../../explore/view/ExplorerCharacterSetAsia.js';
-import ExplorerCharacterSetLatinAmerica from '../../explore/view/ExplorerCharacterSetLatinAmerica.js';
-import ExplorerCharacterSetMulticultural from '../../explore/view/ExplorerCharacterSetMulticultural.js';
-import ExplorerCharacterSetOceania from '../../explore/view/ExplorerCharacterSetOceania.js';
-import ExplorerCharacterSetUSA from '../../explore/view/ExplorerCharacterSetUSA.js';
+import ExplorerCharacterSetAfrica from './characterSets/ExplorerCharacterSetAfrica.js';
+import ExplorerCharacterSetAfricaModest from './characterSets/ExplorerCharacterSetAfricaModest.js';
+import ExplorerCharacterSetAsia from './characterSets/ExplorerCharacterSetAsia.js';
+import ExplorerCharacterSetLatinAmerica from './characterSets/ExplorerCharacterSetLatinAmerica.js';
+import ExplorerCharacterSetMulticultural from './characterSets/ExplorerCharacterSetMulticultural.js';
+import ExplorerCharacterSetOceania from './characterSets/ExplorerCharacterSetOceania.js';
+import ExplorerCharacterSetUSA from './characterSets/ExplorerCharacterSetUSA.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 
 
