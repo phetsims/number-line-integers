@@ -8,13 +8,13 @@
  */
 
 
-import JoistStrings from '../../../../../joist/js/JoistStrings.ts';
-import { OCEANIA_REGION_AND_CULTURE_ID } from '../../../../../joist/js/preferences/RegionAndCulturePortrayal.ts';
-import exploreScreenHome_png from '../../../../images/oceania/exploreScreenHome_png.ts';
-import exploreScreenNav_png from '../../../../images/oceania/exploreScreenNav_png.ts';
-import girlHiking_png from '../../../../images/oceania/girlHiking_png.ts';
-import girlInAir_png from '../../../../images/oceania/girlInAir_png.ts';
-import girlInWater_png from '../../../../images/oceania/girlInWater_png.ts';
+import JoistStrings from '../../../../../joist/js/JoistStrings.js';
+import { OCEANIA_REGION_AND_CULTURE_ID } from '../../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
+import exploreScreenHome_png from '../../../../images/oceania/exploreScreenHome_png.js';
+import exploreScreenNav_png from '../../../../images/oceania/exploreScreenNav_png.js';
+import girlHiking_png from '../../../../images/oceania/girlHiking_png.js';
+import girlInAir_png from '../../../../images/oceania/girlInAir_png.js';
+import girlInWater_png from '../../../../images/oceania/girlInWater_png.js';
 import ExplorerCharacterSet from './ExplorerCharacterSet.js';
 
 
