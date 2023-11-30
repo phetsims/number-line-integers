@@ -42,11 +42,11 @@ const currencyUnitsStringProperty = NumberLineIntegersStrings.currencyUnitsStrin
 const debtAmountStringProperty = NumberLineIntegersStrings.debtAmountStringProperty;
 const moneyAmountStringProperty = NumberLineIntegersStrings.moneyAmountStringProperty;
 
-// constants // REVIEW, were all of these changed because of dynamic layout? Can you describe to me why they needed to be changed, and add doc about that if you think it is helpful.
-const COIN_DEPOSIT_ANIMATION_START_Y = -95; // above the piggy bank, in screen coordinates, empirically determined
-const COIN_DEPOSIT_ANIMATION_END_Y = -60; // inside the piggy bank, in screen coordinates, empirically determined
-const COIN_WITHDRAWAL_ANIMATION_START_Y = 70; // inside the piggy bank, in screen coordinates, empirically determined
-const COIN_WITHDRAWAL_ANIMATION_END_Y = 95; // below the piggy bank, in screen coordinates, empirically determined
+// constants
+const COIN_DEPOSIT_ANIMATION_START_Y = -95; // above the money jar, in screen coordinates, empirically determined
+const COIN_DEPOSIT_ANIMATION_END_Y = -60; // inside the money jar, in screen coordinates, empirically determined
+const COIN_WITHDRAWAL_ANIMATION_START_Y = 70; // inside the money jar, in screen coordinates, empirically determined
+const COIN_WITHDRAWAL_ANIMATION_END_Y = 95; // below the money jar, in screen coordinates, empirically determined
 const NUMBER_OF_COINS_TO_PRE_CREATE = 20; // number of coins to create for animation, empirically determined
 const COIN_NODE_X_POSITION = 0;
 
@@ -168,13 +168,13 @@ class BankPointControllerNode extends PointControllerNode {
     // Update the position of the absolute value readout (i.e. the text node that says things like, "balance of $2".
     const updateAbsoluteValueReadoutPosition = () => {
       if ( decorationType === MoneyJarDecoration.FLOWERS ) {
-        absoluteValueBackground.centerX = controllerNode.centerX; // tweaked a bit to be centered under feet
+        absoluteValueBackground.centerX = controllerNode.centerX;
         absoluteValueBackground.top = controllerNode.y +
                                       moneyJarNode.height / 2 * controllerNode.getScaleVector().y +
                                       READOUT_DISTANCE_FROM_IMAGE;
       }
       else {
-        absoluteValueBackground.centerX = controllerNode.centerX; // tweaked a bit to be centered over coin slot
+        absoluteValueBackground.centerX = controllerNode.centerX;
         absoluteValueBackground.bottom = controllerNode.y -
                                          moneyJarNode.height / 2 * controllerNode.getScaleVector().y -
                                          READOUT_DISTANCE_FROM_IMAGE;
@@ -185,6 +185,7 @@ class BankPointControllerNode extends PointControllerNode {
     const valueRange = numberLine.displayedRangeProperty.value;
     const unscaledWidth = controllerNode.width;
 
+    // Center labels as user interactions or translations change label/money jar bounds
     ManualConstraint.create( this, [ moneyAmountTextWrapper, moneyJarNode, absoluteValueBackground ], ( textProxy, moneyBoxProxy ) => {
       textProxy.center = moneyBoxProxy.center;
       updateAbsoluteValueReadoutPosition();
@@ -251,10 +252,9 @@ class BankPointControllerNode extends PointControllerNode {
     } );
 
     // Add a clipping area so that the coins look like they are going in and out.  This must be manually updated if
-    // the artwork for the piggy bank changes.  Since the clipping area is intended to make the coins visible when
+    // the artwork for the money jar changes.  Since the clipping area is intended to make the coins visible when
     // they are outside the bank but invisible inside, this must be drawn as a set of two shapes, one inside the
     // other, with the inner one drawn with the opposite winding order.
-    // REVIEW, were all of these changed because of dynamic layout? Can you describe to me why they needed to be changed, and add doc about that if you think it is helpful.
     const coinClipArea = Shape.rectangle( -100, -150, 200, 300 );
     coinClipArea.moveTo( -20, -69 );
     coinClipArea.lineTo( -20, 78 );
