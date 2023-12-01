@@ -14,10 +14,10 @@ import exploreScreenNav_png from '../../../../images/africa-conservative/explore
 import girlHiking_png from '../../../../images/africa-conservative/girlHiking_png.js';
 import girlInAir_png from '../../../../images/africa-conservative/girlInAir_png.js';
 import girlInWater_png from '../../../../images/africa-conservative/girlInWater_png.js';
-import ExplorerCharacterSet from './ExplorerCharacterSet.js';
+import ExplorerPortrayal from './ExplorerPortrayal.js';
 
 
-const ExplorerCharacterSetAfricaModest = new ExplorerCharacterSet(
+const ExplorerPortrayalAfricaModest = new ExplorerPortrayal(
     JoistStrings.preferences.tabs.localization.regionAndCulture.portrayalSets.africaModestStringProperty,
     girlInAir_png,
     girlHiking_png,
@@ -27,4 +27,4 @@ const ExplorerCharacterSetAfricaModest = new ExplorerCharacterSet(
     AFRICA_MODEST_REGION_AND_CULTURE_ID
 );
 
-export default ExplorerCharacterSetAfricaModest;
+export default ExplorerPortrayalAfricaModest;

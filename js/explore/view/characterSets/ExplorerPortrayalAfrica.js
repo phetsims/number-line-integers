@@ -14,10 +14,10 @@ import exploreScreenNav_png from '../../../../images/africa/exploreScreenNav_png
 import girlHiking_png from '../../../../images/africa/girlHiking_png.js';
 import girlInAir_png from '../../../../images/africa/girlInAir_png.js';
 import girlInWater_png from '../../../../images/africa/girlInWater_png.js';
-import ExplorerCharacterSet from './ExplorerCharacterSet.js';
+import ExplorerPortrayal from './ExplorerPortrayal.js';
 
 
-const ExplorerCharacterSetAfrica = new ExplorerCharacterSet(
+const ExplorerPortrayalAfrica = new ExplorerPortrayal(
     JoistStrings.preferences.tabs.localization.regionAndCulture.portrayalSets.africaStringProperty,
     girlInAir_png,
     girlHiking_png,
@@ -27,4 +27,4 @@ const ExplorerCharacterSetAfrica = new ExplorerCharacterSet(
     AFRICA_REGION_AND_CULTURE_ID
 );
 
-export default ExplorerCharacterSetAfrica;
+export default ExplorerPortrayalAfrica;

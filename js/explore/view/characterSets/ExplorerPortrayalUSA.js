@@ -14,10 +14,10 @@ import exploreScreenNav_png from '../../../../images/usa/exploreScreenNav_png.js
 import girlHiking_png from '../../../../images/usa/girlHiking_png.js';
 import girlInAir_png from '../../../../images/usa/girlInAir_png.js';
 import girlInWater_png from '../../../../images/usa/girlInWater_png.js';
-import ExplorerCharacterSet from './ExplorerCharacterSet.js';
+import ExplorerPortrayal from './ExplorerPortrayal.js';
 
 
-const ExplorerCharacterSetUSA = new ExplorerCharacterSet(
+const ExplorerPortrayalUSA = new ExplorerPortrayal(
   JoistStrings.preferences.tabs.localization.regionAndCulture.portrayalSets.unitedStatesOfAmericaStringProperty,
   girlInAir_png,
   girlHiking_png,
@@ -28,4 +28,4 @@ const ExplorerCharacterSetUSA = new ExplorerCharacterSet(
 );
 
 
-export default ExplorerCharacterSetUSA;
+export default ExplorerPortrayalUSA;

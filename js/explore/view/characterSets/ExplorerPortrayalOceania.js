@@ -15,10 +15,10 @@ import exploreScreenNav_png from '../../../../images/oceania/exploreScreenNav_pn
 import girlHiking_png from '../../../../images/oceania/girlHiking_png.js';
 import girlInAir_png from '../../../../images/oceania/girlInAir_png.js';
 import girlInWater_png from '../../../../images/oceania/girlInWater_png.js';
-import ExplorerCharacterSet from './ExplorerCharacterSet.js';
+import ExplorerPortrayal from './ExplorerPortrayal.js';
 
 
-const ExplorerCharacterSetOceania = new ExplorerCharacterSet(
+const ExplorerPortrayalOceania = new ExplorerPortrayal(
   JoistStrings.preferences.tabs.localization.regionAndCulture.portrayalSets.oceaniaStringProperty,
   girlInAir_png,
   girlHiking_png,
@@ -28,4 +28,4 @@ const ExplorerCharacterSetOceania = new ExplorerCharacterSet(
   OCEANIA_REGION_AND_CULTURE_ID
 );
 
-export default ExplorerCharacterSetOceania;
+export default ExplorerPortrayalOceania;

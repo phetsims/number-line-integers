@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * The ExplorerCharacterSet defines what is needed for each character set in Number Line Integers.
+ * The ExplorerPortrayal defines what is needed for each character set in Number Line Integers.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *
@@ -10,7 +10,7 @@
 import NumberLinePortrayal from '../../../../../number-line-common/js/explore/view/NumberLinePortrayal.js';
 import numberLineIntegers from '../../../numberLineIntegers.js';
 
-export default class ExplorerCharacterSet extends NumberLinePortrayal {
+export default class ExplorerPortrayal extends NumberLinePortrayal {
   /**
    *
    * @param label { LocalizedStringProperty }
@@ -32,4 +32,4 @@ export default class ExplorerCharacterSet extends NumberLinePortrayal {
   }
 }
 
-numberLineIntegers.register( 'ExplorerCharacterSet', ExplorerCharacterSet );
+numberLineIntegers.register( 'ExplorerPortrayal', ExplorerPortrayal );

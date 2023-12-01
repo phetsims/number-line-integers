@@ -14,10 +14,10 @@ import boyInAir_png from '../../../../images/latin-america/boyInAir_png.js';
 import boyInWater_png from '../../../../images/latin-america/boyInWater_png.js';
 import exploreScreenHome_png from '../../../../images/latin-america/exploreScreenHome_png.js';
 import exploreScreenNav_png from '../../../../images/latin-america/exploreScreenNav_png.js';
-import ExplorerCharacterSet from './ExplorerCharacterSet.js';
+import ExplorerPortrayal from './ExplorerPortrayal.js';
 
 
-const ExplorerCharacterSetLatinAmerica = new ExplorerCharacterSet(
+const ExplorerPortrayalLatinAmerica = new ExplorerPortrayal(
   JoistStrings.preferences.tabs.localization.regionAndCulture.portrayalSets.latinAmericaStringProperty,
   boyInAir_png,
   boyHiking_png,
@@ -27,4 +27,4 @@ const ExplorerCharacterSetLatinAmerica = new ExplorerCharacterSet(
   LATIN_AMERICA_REGION_AND_CULTURE_ID
 );
 
-export default ExplorerCharacterSetLatinAmerica;
+export default ExplorerPortrayalLatinAmerica;
