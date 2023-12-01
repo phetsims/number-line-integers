@@ -7,10 +7,10 @@
  *
  */
 
-import NumberLineCharacterSet from '../../../../../number-line-common/js/explore/view/NumberLineCharacterSet.js';
+import NumberLinePortrayal from '../../../../../number-line-common/js/explore/view/NumberLinePortrayal.js';
 import numberLineIntegers from '../../../numberLineIntegers.js';
 
-export default class ExplorerCharacterSet extends NumberLineCharacterSet {
+export default class ExplorerCharacterSet extends NumberLinePortrayal {
   /**
    *
    * @param label { LocalizedStringProperty }
