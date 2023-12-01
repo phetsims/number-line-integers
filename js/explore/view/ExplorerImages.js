@@ -6,13 +6,13 @@
  *
  */
 
-import ExplorerPortrayalAfrica from './characterSets/ExplorerPortrayalAfrica.js';
-import ExplorerPortrayalAfricaModest from './characterSets/ExplorerPortrayalAfricaModest.js';
-import ExplorerPortrayalAsia from './characterSets/ExplorerPortrayalAsia.js';
-import ExplorerPortrayalLatinAmerica from './characterSets/ExplorerPortrayalLatinAmerica.js';
-import ExplorerPortrayalMulticultural from './characterSets/ExplorerPortrayalMulticultural.js';
-import ExplorerPortrayalOceania from './characterSets/ExplorerPortrayalOceania.js';
-import ExplorerPortrayalUSA from './characterSets/ExplorerPortrayalUSA.js';
+import ExplorerPortrayalAfrica from './portrayal/ExplorerPortrayalAfrica.js';
+import ExplorerPortrayalAfricaModest from './portrayal/ExplorerPortrayalAfricaModest.js';
+import ExplorerPortrayalAsia from './portrayal/ExplorerPortrayalAsia.js';
+import ExplorerPortrayalLatinAmerica from './portrayal/ExplorerPortrayalLatinAmerica.js';
+import ExplorerPortrayalMulticultural from './portrayal/ExplorerPortrayalMulticultural.js';
+import ExplorerPortrayalOceania from './portrayal/ExplorerPortrayalOceania.js';
+import ExplorerPortrayalUSA from './portrayal/ExplorerPortrayalUSA.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 
 
