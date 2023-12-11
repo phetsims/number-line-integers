@@ -72,7 +72,11 @@ class BankPointControllerNode extends PointControllerNode {
 
     // This assumes that numberLinePoints only has one active numberLinePoint at a time. When a point is removed the
     // property will have a value of null.
-    const currentNumberLinePointValueProperty = new Property( null );
+    const currentNumberLinePointValueProperty = new Property( pointController.numberLinePoints[ 0 ]?.valueProperty || null );
+
+    // {Property<number|null>}
+    // As points are added and removed from the numberLine, this DynamicProperty listens to the valueProperty
+    // of the active point. There will never be more than one point on the numberLine for this ControllerNode.
     const pointValueProperty = new DynamicProperty( currentNumberLinePointValueProperty );
 
     pointController.numberLinePoints.addItemAddedListener( point => {
