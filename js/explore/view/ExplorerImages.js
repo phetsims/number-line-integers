@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 /**
- * Explorer images contains an array of character sets, each representing a different region/culture.
+ * Explorer images contains an array of portrayals, each representing a different region/culture.
  *
  * @author Marla Schulz (PhET Interactive Simulations)
  *

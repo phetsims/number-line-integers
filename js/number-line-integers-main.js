@@ -19,7 +19,7 @@ const numberLineIntegersTitleStringProperty = NumberLineIntegersStrings[ 'number
 
 const preferencesModel = new PreferencesModel( {
   localizationOptions: {
-    characterSets: ExplorerImages.EXPLORER_CHARACTER_SETS
+    portrayals: ExplorerImages.EXPLORER_CHARACTER_SETS
   }
 } );
 
