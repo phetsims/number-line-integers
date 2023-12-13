@@ -1,5 +1,5 @@
 {
-  "comment": "# number-line-integers 1.2.0-rc.1 Tue Dec 12 2023 16:55:49 GMT-0800 (Pacific Standard Time)",
+  "comment": "# number-line-integers 1.2.0-rc.1 Tue Dec 12 2023 17:09:34 GMT-0800 (Pacific Standard Time)",
   "assert": {
     "sha": "47dac8ba80fe19cc82ef8453fb68ddf7c05b363f",
     "branch": "HEAD"
@@ -29,11 +29,11 @@
     "branch": "HEAD"
   },
   "number-line-common": {
-    "sha": "5795e6e697729c299655a65e9758c09a6f565519",
-    "branch": "HEAD"
+    "sha": "c7f3ab73260898acebe7f0d0c9765f1aa3dcc8a6",
+    "branch": "number-line-integers-1.2"
   },
   "number-line-integers": {
-    "sha": "0686ead54e4f82f585f2b226d38e24279b8344e5",
+    "sha": "c7b78d2072946d9c480f47fbed992523ef0888c4",
     "branch": "1.2"
   },
   "perennial-alias": {
