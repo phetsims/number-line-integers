@@ -187,7 +187,12 @@ class BankPointControllerNode extends PointControllerNode {
 
     // Update the node's appearance as its position changes.
     const valueRange = numberLine.displayedRangeProperty.value;
-    const unscaledWidth = controllerNode.width;
+
+    // The base width of the money jar node, before scaling. This may change if the money jar artwork changes, and adjustments
+    // may have to be made. If other elements are added to the controllerNode that will affect the max or min width of the
+    // controllerNode, this will have to be adjusted.
+    //https://github.com/phetsims/number-line-integers/issues/125
+    const unscaledWidth = moneyJarNode.width;
 
     // Center labels as user interactions or translations change label/money jar bounds
     ManualConstraint.create( this, [ moneyAmountTextWrapper, moneyJarNode, absoluteValueBackground ], ( textProxy, moneyBoxProxy ) => {
