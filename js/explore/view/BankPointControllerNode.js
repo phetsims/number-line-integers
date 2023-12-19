@@ -341,11 +341,15 @@ class CoinNode extends Circle {
     super( COIN_RADIUS, options );
 
     // Add the currency marking.
-    this.addChild( new Text( currencyUnitsStringProperty, {
+    const currencyText = new Text( currencyUnitsStringProperty, {
       font: new PhetFont( 18 ),
-      center: Vector2.ZERO,
       maxWidth: 15
-    } ) );
+    } );
+    this.addChild( currencyText );
+
+    ManualConstraint.create( this, [ currencyText ], currencyTextProxy => {
+      currencyTextProxy.center = Vector2.ZERO;
+    } );
   }
 }
 

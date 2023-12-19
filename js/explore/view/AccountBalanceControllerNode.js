@@ -11,7 +11,7 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Color, Image, Node, Text, VBox } from '../../../../scenery/js/imports.js';
+import { Color, Image, ManualConstraint, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import RoundPushButton from '../../../../sun/js/buttons/RoundPushButton.js';
 import coinInHand_png from '../../../images/coinInHand_png.js';
 import coinInSlot_png from '../../../images/coinInSlot_png.js';
@@ -30,6 +30,8 @@ const BUTTON_OPTIONS = {
 const CURRENCY_SYMBOL_FONT = new PhetFont( 12 );
 const CURRENCY_SYMBOL_MAX_WIDTH = 10;
 const BUTTON_ICON_WIDTH = 38;
+const DEPOSIT_ICON_CENTER = new Vector2( 21, -9 );
+const WITHDRAW_ICON_CENTER = new Vector2( 22, 9 );
 
 const currencyUnitsStringProperty = NumberLineIntegersStrings.currencyUnitsStringProperty;
 
@@ -57,26 +59,36 @@ class AccountBalanceControllerNode extends VBox {
       }
     };
 
+    const depositCurrencyText = new Text( currencyUnitsStringProperty, {
+      font: CURRENCY_SYMBOL_FONT,
+      maxWidth: CURRENCY_SYMBOL_MAX_WIDTH
+    } );
+    const withdrawCurrencyText = new Text( currencyUnitsStringProperty, {
+      font: CURRENCY_SYMBOL_FONT,
+      maxWidth: CURRENCY_SYMBOL_MAX_WIDTH
+    } );
+
     // Create the icons that will be used in the buttons.  Sizes and positions were empirically determined.
     const depositIcon = new Node( {
       children: [
         new Image( coinInSlot_png, { maxWidth: BUTTON_ICON_WIDTH, centerY: -10 } ),
-        new Text( currencyUnitsStringProperty, {
-          center: new Vector2( 21, -9 ),
-          font: CURRENCY_SYMBOL_FONT,
-          maxWidth: CURRENCY_SYMBOL_MAX_WIDTH
-        } )
+        depositCurrencyText
       ]
     } );
+
+    ManualConstraint.create( depositIcon, [ depositCurrencyText ], depositTextProxy => {
+      depositTextProxy.center = DEPOSIT_ICON_CENTER;
+    } );
+    
     const withdrawIcon = new Node( {
       children: [
         new Image( coinInHand_png, { maxWidth: BUTTON_ICON_WIDTH } ),
-        new Text( currencyUnitsStringProperty, {
-          center: new Vector2( 22, 9 ),
-          font: CURRENCY_SYMBOL_FONT,
-          maxWidth: CURRENCY_SYMBOL_MAX_WIDTH
-        } )
+        withdrawCurrencyText
       ]
+    } );
+
+    ManualConstraint.create( withdrawIcon, [ withdrawCurrencyText ], withdrawTextProxy => {
+      withdrawTextProxy.center = WITHDRAW_ICON_CENTER;
     } );
 
     // Create the buttons that the user can use to add and remove money.
@@ -106,6 +118,7 @@ class AccountBalanceControllerNode extends VBox {
     }, options );
 
     super( options );
+
 
     // @public (read-only) - emitter that fires when either button is released
     this.buttonReleasedEmitter = new Emitter();
