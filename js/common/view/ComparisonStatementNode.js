@@ -202,11 +202,15 @@ class ComparisonStatementNode extends Node {
           const currentNodeValue = currentNode.point ? currentNode.point.valueProperty.value : 0;
           const nextNodeValue = numberNodes[ i + 1 ].point ? numberNodes[ i + 1 ].point.valueProperty.value : 0;
           if ( currentNodeValue === nextNodeValue ) {
-
-            // The values are equal, so we need to use less-than-or-equal or greater-than-or-equal comparison operator.
-            comparisonCharacter = comparisonOperator === LESS_THAN_STRING ?
-                                  MathSymbols.LESS_THAN_OR_EQUAL :
-                                  MathSymbols.GREATER_THAN_OR_EQUAL;
+              if ( numberNodes.length === 2 ) {
+                comparisonCharacter = MathSymbols.EQUAL_TO;
+              }
+              else {
+                // The values are equal, so we need to use less-than-or-equal or greater-than-or-equal comparison operator.
+                comparisonCharacter = comparisonOperator === LESS_THAN_STRING ?
+                                      MathSymbols.LESS_THAN_OR_EQUAL :
+                                      MathSymbols.GREATER_THAN_OR_EQUAL;
+              }
           }
           const comparisonOperatorNode = comparisonOperatorNodes[ i ];
           comparisonOperatorNode.visible = true;
