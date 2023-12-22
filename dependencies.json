@@ -13,7 +13,7 @@
     "branch": "HEAD"
   },
   "chipper": {
-    "sha": "22ca86b06b366d3077a85480498922e2bbb32d3b",
+    "sha": "bd6d15449cb5dbbb03e6cce7f6522f7e6635f259",
     "branch": "HEAD"
   },
   "dot": {
@@ -21,7 +21,7 @@
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "e3b10a5a3509be35dc3d9b00850129a89d68136d",
+    "sha": "d615f72e4af4b8bf49c026baeca30e4659925c08",
     "branch": "HEAD"
   },
   "kite": {
@@ -29,11 +29,11 @@
     "branch": "HEAD"
   },
   "number-line-common": {
-    "sha": "c7f3ab73260898acebe7f0d0c9765f1aa3dcc8a6",
+    "sha": "8e3a2bef50ed298044fb194fa9a0c01d0c21aa91",
     "branch": "HEAD"
   },
   "number-line-integers": {
-    "sha": "a42b9e46b5e9cc8c3e78c7bac2a9db3b5a680e80",
+    "sha": "e079957b1de7e859a99a1684a3edba86670a69f4",
     "branch": "1.2"
   },
   "perennial-alias": {
@@ -69,7 +69,7 @@
     "branch": "HEAD"
   },
   "scenery": {
-    "sha": "7df1efe81a202b628bcd16b7d2771776f7af37e3",
+    "sha": "1e232342d1d349e91009875d2dbee0419246717e",
     "branch": "HEAD"
   },
   "scenery-phet": {
