@@ -27,9 +27,9 @@ const simOptions = {
   preferencesModel: preferencesModel,
   credits: {
     leadDesign: 'Amanda McGarry',
-    softwareDevelopment: 'John Blanco, Chris Klusendorf, Saurabh Totey',
+    softwareDevelopment: 'John Blanco, Chris Klusendorf, Marla Schulz, Saurabh Totey',
     team: 'Ariel Paul, Kathy Perkins, and in cooperation with the Next-Lab project',
-    qualityAssurance: 'Logan Bray, Liam Mulhall, Jacob Romero, Kathryn Woessner',
+    qualityAssurance: 'Logan Bray, Jaron Droder, Clifford Hardin, Liam Mulhall, Jacob Romero, Nancy Salpepi, Kathryn Woessner',
     graphicArts: 'Megan Lai',
     soundDesign: '',
     thanks: ''
