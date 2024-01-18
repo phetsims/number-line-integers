@@ -8,6 +8,8 @@
  *
  * EXAMPLE USAGE:
  * node ./js/unpack-t2m-temperatures.js
+ *
+ * @author John Blanco (PhET Interactive Simulations)
  */
 
 /* eslint-env node */
