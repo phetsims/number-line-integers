@@ -29,15 +29,15 @@
     ],
     "simFeatures": {
       "supportedRegionsAndCultures": [
-        "multi",
         "africa",
         "africaModest",
         "asia",
         "latinAmerica",
         "oceania",
+        "random",
         "usa"
       ],
-      "defaultRegionAndCulture": "multi",
+      "defaultRegionAndCulture": "random",
       "supportsDynamicLocale": true
     }
   },
