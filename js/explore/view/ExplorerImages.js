@@ -10,7 +10,7 @@ import ExplorerPortrayalAfrica from './portrayal/ExplorerPortrayalAfrica.js';
 import ExplorerPortrayalAfricaModest from './portrayal/ExplorerPortrayalAfricaModest.js';
 import ExplorerPortrayalAsia from './portrayal/ExplorerPortrayalAsia.js';
 import ExplorerPortrayalLatinAmerica from './portrayal/ExplorerPortrayalLatinAmerica.js';
-import ExplorerPortrayalMulticultural from './portrayal/ExplorerPortrayalMulticultural.js';
+import ExplorerPortrayalRandom from './portrayal/ExplorerPortrayalRandom.js';
 import ExplorerPortrayalOceania from './portrayal/ExplorerPortrayalOceania.js';
 import ExplorerPortrayalUSA from './portrayal/ExplorerPortrayalUSA.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
@@ -18,7 +18,7 @@ import numberLineIntegers from '../../numberLineIntegers.js';
 
 const ExplorerImages = {
   EXPLORER_CHARACTER_SETS: [
-    ExplorerPortrayalMulticultural,
+    ExplorerPortrayalRandom,
     ExplorerPortrayalAfrica,
     ExplorerPortrayalAfricaModest,
     ExplorerPortrayalAsia,

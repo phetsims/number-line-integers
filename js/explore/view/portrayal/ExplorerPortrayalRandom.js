@@ -29,8 +29,8 @@ const RANDOM_CHARACTER_SET = dotRandom.sample( [
   ExplorerPortrayalOceania
 ] );
 
-const ExplorerPortrayalMulticultural = new ExplorerPortrayal(
-  JoistStrings.preferences.tabs.localization.regionAndCulture.portrayalSets.multiculturalStringProperty,
+const ExplorerPortrayalRandom = new ExplorerPortrayal(
+  JoistStrings.preferences.tabs.localization.regionAndCulture.portrayalSets.randomStringProperty,
   RANDOM_CHARACTER_SET.flying,
   RANDOM_CHARACTER_SET.hiking,
   RANDOM_CHARACTER_SET.swimming,
@@ -39,4 +39,4 @@ const ExplorerPortrayalMulticultural = new ExplorerPortrayal(
   RANDOM_REGION_AND_CULTURE_ID
 );
 
-export default ExplorerPortrayalMulticultural;
+export default ExplorerPortrayalRandom;
