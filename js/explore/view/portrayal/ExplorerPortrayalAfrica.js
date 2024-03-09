@@ -9,11 +9,11 @@
 
 import JoistStrings from '../../../../../joist/js/JoistStrings.js';
 import { AFRICA_REGION_AND_CULTURE_ID } from '../../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
-import africaExploreScreenHome_png from '../../../../images/localized/africaExploreScreenHome_png.js';
-import africaExploreScreenNav_png from '../../../../images/localized/africaExploreScreenNav_png.js';
-import africaGirlHiking_png from '../../../../images/localized/africaGirlHiking_png.js';
-import africaGirlInAir_png from '../../../../images/localized/africaGirlInAir_png.js';
-import africaGirlInWater_png from '../../../../images/localized/africaGirlInWater_png.js';
+import africaExploreScreenHome_png from '../../../../images/africa/africaExploreScreenHome_png.js';
+import africaExploreScreenNav_png from '../../../../images/africa/africaExploreScreenNav_png.js';
+import africaGirlHiking_png from '../../../../images/africa/africaGirlHiking_png.js';
+import africaGirlInAir_png from '../../../../images/africa/africaGirlInAir_png.js';
+import africaGirlInWater_png from '../../../../images/africa/africaGirlInWater_png.js';
 import ExplorerPortrayal from './ExplorerPortrayal.js';
 
 

@@ -9,11 +9,11 @@
 
 import JoistStrings from '../../../../../joist/js/JoistStrings.js';
 import { AFRICA_MODEST_REGION_AND_CULTURE_ID } from '../../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
-import africaModestExploreScreenHome_png from '../../../../images/localized/africaModestExploreScreenHome_png.js';
-import africaModestExploreScreenNav_png from '../../../../images/localized/africaModestExploreScreenNav_png.js';
-import africaModestGirlHiking_png from '../../../../images/localized/africaModestGirlHiking_png.js';
-import africaModestGirlInAir_png from '../../../../images/localized/africaModestGirlInAir_png.js';
-import africaModestGirlInWater_png from '../../../../images/localized/africaModestGirlInWater_png.js';
+import africaModestExploreScreenHome_png from '../../../../images/africaModest/africaModestExploreScreenHome_png.js';
+import africaModestExploreScreenNav_png from '../../../../images/africaModest/africaModestExploreScreenNav_png.js';
+import africaModestGirlHiking_png from '../../../../images/africaModest/africaModestGirlHiking_png.js';
+import africaModestGirlInAir_png from '../../../../images/africaModest/africaModestGirlInAir_png.js';
+import africaModestGirlInWater_png from '../../../../images/africaModest/africaModestGirlInWater_png.js';
 import ExplorerPortrayal from './ExplorerPortrayal.js';
 
 

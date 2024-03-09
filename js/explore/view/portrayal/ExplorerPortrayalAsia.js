@@ -9,11 +9,11 @@
 
 import JoistStrings from '../../../../../joist/js/JoistStrings.js';
 import { ASIA_REGION_AND_CULTURE_ID } from '../../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
-import asiaExploreScreenHome_png from '../../../../images/localized/asiaExploreScreenHome_png.js';
-import asiaExploreScreenNav_png from '../../../../images/localized/asiaExploreScreenNav_png.js';
-import asiaGirlHiking_png from '../../../../images/localized/asiaGirlHiking_png.js';
-import asiaGirlInAir_png from '../../../../images/localized/asiaGirlInAir_png.js';
-import asiaGirlInWater_png from '../../../../images/localized/asiaGirlInWater_png.js';
+import asiaExploreScreenHome_png from '../../../../images/asia/asiaExploreScreenHome_png.js';
+import asiaExploreScreenNav_png from '../../../../images/asia/asiaExploreScreenNav_png.js';
+import asiaGirlHiking_png from '../../../../images/asia/asiaGirlHiking_png.js';
+import asiaGirlInAir_png from '../../../../images/asia/asiaGirlInAir_png.js';
+import asiaGirlInWater_png from '../../../../images/asia/asiaGirlInWater_png.js';
 import ExplorerPortrayal from './ExplorerPortrayal.js';
 
 

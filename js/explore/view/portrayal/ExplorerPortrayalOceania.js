@@ -10,11 +10,11 @@
 
 import JoistStrings from '../../../../../joist/js/JoistStrings.js';
 import { OCEANIA_REGION_AND_CULTURE_ID } from '../../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
-import oceaniaExploreScreenHome_png from '../../../../images/localized/oceaniaExploreScreenHome_png.js';
-import oceaniaExploreScreenNav_png from '../../../../images/localized/oceaniaExploreScreenNav_png.js';
-import oceaniaGirlHiking_png from '../../../../images/localized/oceaniaGirlHiking_png.js';
-import oceaniaGirlInAir_png from '../../../../images/localized/oceaniaGirlInAir_png.js';
-import oceaniaGirlInWater_png from '../../../../images/localized/oceaniaGirlInWater_png.js';
+import oceaniaExploreScreenHome_png from '../../../../images/oceania/oceaniaExploreScreenHome_png.js';
+import oceaniaExploreScreenNav_png from '../../../../images/oceania/oceaniaExploreScreenNav_png.js';
+import oceaniaGirlHiking_png from '../../../../images/oceania/oceaniaGirlHiking_png.js';
+import oceaniaGirlInAir_png from '../../../../images/oceania/oceaniaGirlInAir_png.js';
+import oceaniaGirlInWater_png from '../../../../images/oceania/oceaniaGirlInWater_png.js';
 import ExplorerPortrayal from './ExplorerPortrayal.js';
 
 
