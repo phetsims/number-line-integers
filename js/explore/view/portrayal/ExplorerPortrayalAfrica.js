@@ -9,21 +9,21 @@
 
 import JoistStrings from '../../../../../joist/js/JoistStrings.js';
 import { AFRICA_REGION_AND_CULTURE_ID } from '../../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
-import exploreScreenHome_png from '../../../../images/africa/exploreScreenHome_png.js';
-import exploreScreenNav_png from '../../../../images/africa/exploreScreenNav_png.js';
-import girlHiking_png from '../../../../images/africa/girlHiking_png.js';
-import girlInAir_png from '../../../../images/africa/girlInAir_png.js';
-import girlInWater_png from '../../../../images/africa/girlInWater_png.js';
+import africaExploreScreenHome_png from '../../../../images/localized/africaExploreScreenHome_png.js';
+import africaExploreScreenNav_png from '../../../../images/localized/africaExploreScreenNav_png.js';
+import africaGirlHiking_png from '../../../../images/localized/africaGirlHiking_png.js';
+import africaGirlInAir_png from '../../../../images/localized/africaGirlInAir_png.js';
+import africaGirlInWater_png from '../../../../images/localized/africaGirlInWater_png.js';
 import ExplorerPortrayal from './ExplorerPortrayal.js';
 
 
 const ExplorerPortrayalAfrica = new ExplorerPortrayal(
     JoistStrings.preferences.tabs.localization.regionAndCulture.portrayalSets.africaStringProperty,
-    girlInAir_png,
-    girlHiking_png,
-    girlInWater_png,
-    exploreScreenHome_png,
-    exploreScreenNav_png,
+    africaGirlInAir_png,
+    africaGirlHiking_png,
+    africaGirlInWater_png,
+    africaExploreScreenHome_png,
+    africaExploreScreenNav_png,
     AFRICA_REGION_AND_CULTURE_ID
 );
 

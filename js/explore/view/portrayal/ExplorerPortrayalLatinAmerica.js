@@ -9,21 +9,21 @@
 
 import JoistStrings from '../../../../../joist/js/JoistStrings.js';
 import { LATIN_AMERICA_REGION_AND_CULTURE_ID } from '../../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
-import boyHiking_png from '../../../../images/latin-america/boyHiking_png.js';
-import boyInAir_png from '../../../../images/latin-america/boyInAir_png.js';
-import boyInWater_png from '../../../../images/latin-america/boyInWater_png.js';
-import exploreScreenHome_png from '../../../../images/latin-america/exploreScreenHome_png.js';
-import exploreScreenNav_png from '../../../../images/latin-america/exploreScreenNav_png.js';
+import latinAmericaBoyHiking_png from '../../../../images/localized/latinAmericaBoyHiking_png.js';
+import latinAmericaBoyInAir_png from '../../../../images/localized/latinAmericaBoyInAir_png.js';
+import latinAmericaBoyInWater_png from '../../../../images/localized/latinAmericaBoyInWater_png.js';
+import latinAmericaExploreScreenHome_png from '../../../../images/localized/latinAmericaExploreScreenHome_png.js';
+import latinAmericaExploreScreenNav_png from '../../../../images/localized/latinAmericaExploreScreenNav_png.js';
 import ExplorerPortrayal from './ExplorerPortrayal.js';
 
 
 const ExplorerPortrayalLatinAmerica = new ExplorerPortrayal(
   JoistStrings.preferences.tabs.localization.regionAndCulture.portrayalSets.latinAmericaStringProperty,
-  boyInAir_png,
-  boyHiking_png,
-  boyInWater_png,
-  exploreScreenHome_png,
-  exploreScreenNav_png,
+  latinAmericaBoyInAir_png,
+  latinAmericaBoyHiking_png,
+  latinAmericaBoyInWater_png,
+  latinAmericaExploreScreenHome_png,
+  latinAmericaExploreScreenNav_png,
   LATIN_AMERICA_REGION_AND_CULTURE_ID
 );
 

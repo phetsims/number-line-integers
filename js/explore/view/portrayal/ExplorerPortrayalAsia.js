@@ -9,21 +9,21 @@
 
 import JoistStrings from '../../../../../joist/js/JoistStrings.js';
 import { ASIA_REGION_AND_CULTURE_ID } from '../../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
-import exploreScreenHome_png from '../../../../images/asia/exploreScreenHome_png.js';
-import exploreScreenNav_png from '../../../../images/asia/exploreScreenNav_png.js';
-import girlHiking_png from '../../../../images/asia/girlHiking_png.js';
-import girlInAir_png from '../../../../images/asia/girlInAir_png.js';
-import girlInWater_png from '../../../../images/asia/girlInWater_png.js';
+import asiaExploreScreenHome_png from '../../../../images/localized/asiaExploreScreenHome_png.js';
+import asiaExploreScreenNav_png from '../../../../images/localized/asiaExploreScreenNav_png.js';
+import asiaGirlHiking_png from '../../../../images/localized/asiaGirlHiking_png.js';
+import asiaGirlInAir_png from '../../../../images/localized/asiaGirlInAir_png.js';
+import asiaGirlInWater_png from '../../../../images/localized/asiaGirlInWater_png.js';
 import ExplorerPortrayal from './ExplorerPortrayal.js';
 
 
 const ExplorerPortrayalAsia = new ExplorerPortrayal(
     JoistStrings.preferences.tabs.localization.regionAndCulture.portrayalSets.asiaStringProperty,
-    girlInAir_png,
-    girlHiking_png,
-    girlInWater_png,
-    exploreScreenHome_png,
-    exploreScreenNav_png,
+    asiaGirlInAir_png,
+    asiaGirlHiking_png,
+    asiaGirlInWater_png,
+    asiaExploreScreenHome_png,
+    asiaExploreScreenNav_png,
     ASIA_REGION_AND_CULTURE_ID
 );
 

@@ -9,21 +9,21 @@
 
 import JoistStrings from '../../../../../joist/js/JoistStrings.js';
 import { USA_REGION_AND_CULTURE_ID } from '../../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
-import exploreScreenHome_png from '../../../../images/usa/exploreScreenHome_png.js';
-import exploreScreenNav_png from '../../../../images/usa/exploreScreenNav_png.js';
-import girlHiking_png from '../../../../images/usa/girlHiking_png.js';
-import girlInAir_png from '../../../../images/usa/girlInAir_png.js';
-import girlInWater_png from '../../../../images/usa/girlInWater_png.js';
+import usaExploreScreenHome_png from '../../../../images/localized/usaExploreScreenHome_png.js';
+import usaExploreScreenNav_png from '../../../../images/localized/usaExploreScreenNav_png.js';
+import usaGirlHiking_png from '../../../../images/localized/usaGirlHiking_png.js';
+import usaGirlInAir_png from '../../../../images/localized/usaGirlInAir_png.js';
+import usaGirlInWater_png from '../../../../images/localized/usaGirlInWater_png.js';
 import ExplorerPortrayal from './ExplorerPortrayal.js';
 
 
 const ExplorerPortrayalUSA = new ExplorerPortrayal(
   JoistStrings.preferences.tabs.localization.regionAndCulture.portrayalSets.unitedStatesOfAmericaStringProperty,
-  girlInAir_png,
-  girlHiking_png,
-  girlInWater_png,
-  exploreScreenHome_png,
-  exploreScreenNav_png,
+  usaGirlInAir_png,
+  usaGirlHiking_png,
+  usaGirlInWater_png,
+  usaExploreScreenHome_png,
+  usaExploreScreenNav_png,
   USA_REGION_AND_CULTURE_ID
 );
 
