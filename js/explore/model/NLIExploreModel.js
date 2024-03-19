@@ -15,15 +15,14 @@ class NLIExploreModel {
 
   /**
    * @public
-   * @param { PreferencesModel } preferencesModel
    */
-  constructor( preferencesModel ) {
+  constructor() {
 
     // @public {Property.<NLIScene>} - currently selected scene
     this.selectedSceneProperty = new EnumerationDeprecatedProperty( NLIScene, NLIScene.ELEVATION );
 
     // @public (read-only) {ElevationSceneModel} - model instance for the "Elevation" scene
-    this.elevationSceneModel = new ElevationSceneModel( preferencesModel );
+    this.elevationSceneModel = new ElevationSceneModel();
 
     // @public (read-only) {BankSceneModel} - model instance for the "Bank" scene
     this.bankSceneModel = new BankSceneModel();

@@ -34,7 +34,7 @@ class ElevationPointControllerNode extends PointControllerNode {
 
   /**
    * @param {ElevationPointController} pointController
-   * @param {Node[]} imageList - an array of images used to depict this node
+   * @param {Image[]} imageList - an array of images used to depict this node
    * @param {number} seaLevel - the y value in view coordinates of the sea level
    * @param {Vector2[]} textOffsets - the offsets for the centerLeft positions of the absolute value texts relative to the image rightCenter
    * @param {Object} [options]

@@ -26,9 +26,8 @@ class ElevationSceneModel extends SceneModel {
 
   /**
    * @public
-   * @param { PreferencesModel } preferencesModel
    */
-  constructor( preferencesModel ) {
+  constructor() {
 
     const seaLevel = SCENE_BOUNDS.centerY + 10; // sea level in model coordinates
     const numberLineRange = new Range( -80, 100 ); // in meters
@@ -132,12 +131,6 @@ class ElevationSceneModel extends SceneModel {
       };
       numberLine.residentPoints.addItemRemovedListener( handlePointRemoved );
     } );
-
-    /**
-     * @public
-     * @type {Property<RegionAndCulturePortrayal>}
-     */
-    this.regionAndCulturePortrayalProperty = preferencesModel.localizationModel.regionAndCulturePortrayalProperty;
   }
 
   /**

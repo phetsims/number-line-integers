@@ -16,9 +16,9 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Image, ManualConstraint, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import elevationBackground_png from '../../../images/elevationBackground_png.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
+import NumberLineIntegersImages from '../../NumberLineIntegersImages.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ElevationPointControllerNode from './ElevationPointControllerNode.js';
-import ExplorerCharacters from './ExplorerCharacters.js';
 import SceneView from './SceneView.js';
 
 // constants
@@ -94,14 +94,18 @@ class ElevationSceneView extends SceneView {
     const elevationPointControllersLayer = new Node();
     this.scenesLayer.addChild( elevationPointControllersLayer );
 
-    const explorersController = new ExplorerCharacters( sceneModel );
-
     // Add the girl that the user can place in the elevation scene.
     elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
       sceneModel.permanentPointControllers[ 0 ],
-      explorersController.explorerNodes,
+      [
+        // imageSelectionFunction below depends on the images being in this order: flying, hiking, swimming.
+        new Image( NumberLineIntegersImages.personInAirImageProperty, { maxHeight: 116, center: new Vector2( 6, -25 ) } ),
+        new Image( NumberLineIntegersImages.personHikingImageProperty, { maxHeight: 71, center: new Vector2( 0, 0 ) } ),
+        new Image( NumberLineIntegersImages.personInWaterImageProperty, { maxHeight: 40, center: new Vector2( 3, 5 ) } )
+      ],
       sceneModel.seaLevel,
       [
+        // Text offsets for the images above, respectively.
         new Vector2( -25, 25 ),
         new Vector2( -25, 20 ),
         new Vector2( 3, 30 )

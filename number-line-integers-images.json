@@ -1,0 +1,44 @@
+{
+  "usa": {
+    "exploreScreenHomeIcon": "images/usa/usaExploreScreenHomeIcon_png.ts",
+    "exploreScreenNavIcon": "images/usa/usaExploreScreenNavIcon_png.ts",
+    "personHiking": "images/usa/usaGirlHiking_png.ts",
+    "personInAir": "images/usa/usaGirlInAir_png.ts",
+    "personInWater": "images/usa/usaGirlInWater_png.ts"
+  },
+  "africa": {
+    "exploreScreenHomeIcon": "images/africa/africaExploreScreenHomeIcon_png.ts",
+    "exploreScreenNavIcon": "images/africa/africaExploreScreenNavIcon_png.ts",
+    "personHiking": "images/africa/africaGirlHiking_png.ts",
+    "personInAir": "images/africa/africaGirlInAir_png.ts",
+    "personInWater": "images/africa/africaGirlInWater_png.ts"
+  },
+  "africaModest": {
+    "exploreScreenHomeIcon": "images/africaModest/africaModestExploreScreenHomeIcon_png.ts",
+    "exploreScreenNavIcon": "images/africaModest/africaModestExploreScreenNavIcon_png.ts",
+    "personHiking": "images/africaModest/africaModestGirlHiking_png.ts",
+    "personInAir": "images/africaModest/africaModestGirlInAir_png.ts",
+    "personInWater": "images/africaModest/africaModestGirlInWater_png.ts"
+  },
+  "asia": {
+    "exploreScreenHomeIcon": "images/asia/asiaExploreScreenHomeIcon_png.ts",
+    "exploreScreenNavIcon": "images/asia/asiaExploreScreenNavIcon_png.ts",
+    "personHiking": "images/asia/asiaGirlHiking_png.ts",
+    "personInAir": "images/asia/asiaGirlInAir_png.ts",
+    "personInWater": "images/asia/asiaGirlInWater_png.ts"
+  },
+  "latinAmerica": {
+    "exploreScreenHomeIcon": "images/latinAmerica/latinAmericaExploreScreenHomeIcon_png.ts",
+    "exploreScreenNavIcon": "images/latinAmerica/latinAmericaExploreScreenNavIcon_png.ts",
+    "personHiking": "images/latinAmerica/latinAmericaBoyHiking_png.ts",
+    "personInAir": "images/latinAmerica/latinAmericaBoyInAir_png.ts",
+    "personInWater": "images/latinAmerica/latinAmericaBoyInWater_png.ts"
+  },
+  "oceania": {
+    "exploreScreenHomeIcon": "images/oceania/oceaniaExploreScreenHomeIcon_png.ts",
+    "exploreScreenNavIcon": "images/oceania/oceaniaExploreScreenNavIcon_png.ts",
+    "personHiking": "images/oceania/oceaniaGirlHiking_png.ts",
+    "personInAir": "images/oceania/oceaniaGirlInAir_png.ts",
+    "personInWater": "images/oceania/oceaniaGirlInWater_png.ts"
+  }
+}
