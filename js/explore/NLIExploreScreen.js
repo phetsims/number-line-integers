@@ -27,11 +27,11 @@ class NLIExploreScreen extends Screen {
     const options = {
       name: NumberLineIntegersStrings.screen.exploreStringProperty,
       backgroundColorProperty: new Property( 'rgb( 254, 247, 233 )' ),
-      homeScreenIcon: new ScreenIcon( new Image( NumberLineIntegersImages.exploreScreenHomeIconImageProperty ), {
+      homeScreenIcon: new ScreenIcon( new Image( NumberLineIntegersImages.exploreHomeScreenIconImageProperty ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } ),
-      navigationBarIcon: new ScreenIcon( new Image( NumberLineIntegersImages.exploreScreenNavIconImageProperty ), {
+      navigationBarIcon: new ScreenIcon( new Image( NumberLineIntegersImages.exploreScreenNavbarIconImageProperty ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } ),

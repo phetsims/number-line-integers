@@ -1,5 +1,5 @@
 {
-  "oceaniaExploreScreenHomeIcon.png": {
+  "oceaniaExploreHomeScreenIcon.png": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
     ],
@@ -7,7 +7,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Mariah Hermsmeyer"
   },
-  "oceaniaExploreScreenNavIcon.png": {
+  "oceaniaExploreScreenNavbarIcon.png": {
     "text": [
       "Copyright 2023 University of Colorado Boulder"
     ],
