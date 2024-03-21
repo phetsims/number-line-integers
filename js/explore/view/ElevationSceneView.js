@@ -12,6 +12,8 @@ import birdInWater_png from '../../../../number-line-common/images/birdInWater_p
 import fishInAir_png from '../../../../number-line-common/images/fishInAir_png.js';
 import fishInWater_png from '../../../../number-line-common/images/fishInWater_png.js';
 import PointControllerNode from '../../../../number-line-common/js/common/view/PointControllerNode.js';
+import Enumeration from '../../../../phet-core/js/Enumeration.js';
+import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Image, ManualConstraint, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import elevationBackground_png from '../../../images/elevationBackground_png.js';
@@ -27,6 +29,19 @@ const NUMBER_LINE_LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
 const elevationAmountStringProperty = NumberLineIntegersStrings.elevationAmountStringProperty;
 const elevationStringProperty = NumberLineIntegersStrings.elevationStringProperty;
 
+// enum for mapping images used by the point controllers to the situations that can occur
+export class PointControllerImageKey extends EnumerationValue {
+
+  static IN_THE_AIR = new PointControllerImageKey();
+  static UNDER_WATER = new PointControllerImageKey();
+  static ON_OR_OVER_LAND = new PointControllerImageKey();
+
+  static enumeration = new Enumeration( PointControllerImageKey );
+
+  constructor() {
+    super();
+  }
+}
 
 class ElevationSceneView extends SceneView {
 
@@ -76,51 +91,56 @@ class ElevationSceneView extends SceneView {
     this.scenesLayer.addChild( numberLineLabel );
 
     // Define a function that will be used to switch images based on its position in the model space.
-    const selectImageIndex = ( position, currentlySelectedImageIndex ) => {
+    const getImageKey = ( position, currentlySelectedImageKey ) => {
 
       // This function is intended to have some hysteresis, i.e. the image doesn't change until the point controller
       // fully transitions from above to below sea level or vice versa.
-      let index = currentlySelectedImageIndex;
+      let key = currentlySelectedImageKey;
       if ( position.y > sceneModel.seaLevel ) {
-        index = 0;
+        key = PointControllerImageKey.UNDER_WATER;
       }
       else if ( position.y < sceneModel.seaLevel ) {
-        index = 1;
+        key = PointControllerImageKey.IN_THE_AIR;
       }
-      return index;
+      return key;
     };
 
     // Add a layer where the elevation point controllers go.
     const elevationPointControllersLayer = new Node();
     this.scenesLayer.addChild( elevationPointControllersLayer );
 
-    // Add the girl that the user can place in the elevation scene.
+    // Add the person that the user can place in the elevation scene.
     elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
       sceneModel.permanentPointControllers[ 0 ],
-      [
-        // imageSelectionFunction below depends on the images being in this order: flying, hiking, swimming.
-        new Image( NumberLineIntegersImages.personInAirImageProperty, { maxHeight: 116, center: new Vector2( 6, -25 ) } ),
-        new Image( NumberLineIntegersImages.personHikingImageProperty, { maxHeight: 71, center: new Vector2( 0, 0 ) } ),
-        new Image( NumberLineIntegersImages.personInWaterImageProperty, { maxHeight: 40, center: new Vector2( 3, 5 ) } )
-      ],
+      new Map( [
+        [
+          PointControllerImageKey.IN_THE_AIR,
+          new Image( NumberLineIntegersImages.personInAirImageProperty, { maxHeight: 116, center: new Vector2( 6, -25 ) } )
+        ],
+        [
+          PointControllerImageKey.ON_OR_OVER_LAND,
+          new Image( NumberLineIntegersImages.personHikingImageProperty, { maxHeight: 71, center: new Vector2( 0, 0 ) } )
+        ],
+        [
+          PointControllerImageKey.UNDER_WATER,
+          new Image( NumberLineIntegersImages.personInWaterImageProperty, { maxHeight: 40, center: new Vector2( 3, 5 ) } )
+        ]
+      ] ),
       sceneModel.seaLevel,
-      [
-        // Text offsets for the images above, respectively.
-        new Vector2( -25, 25 ),
-        new Vector2( -25, 20 ),
-        new Vector2( 3, 30 )
-      ],
+      new Map( [
+        [ PointControllerImageKey.IN_THE_AIR, new Vector2( -25, 25 ) ],
+        [ PointControllerImageKey.ON_OR_OVER_LAND, new Vector2( -25, 20 ) ],
+        [ PointControllerImageKey.UNDER_WATER, new Vector2( 3, 30 ) ]
+      ] ),
       {
         // special highly tweaked function for having the hiker image show up over the cliff
-        imageSelectionFunction: ( position, currentlySelectedImageIndex ) => {
+        imageSelectionFunction: ( position, currentlySelectedKey ) => {
 
           // This function is intended to have some hysteresis, i.e. the image doesn't change until the point
           // controller fully transitions from above to below sea level or vice versa.
-          let imageIndex = currentlySelectedImageIndex;
+          let imageKey = currentlySelectedKey;
           if ( position.y > sceneModel.seaLevel ) {
-
-            // image for underwater
-            imageIndex = 2;
+            imageKey = PointControllerImageKey.UNDER_WATER;
           }
           else if ( position.y < sceneModel.seaLevel ) {
 
@@ -130,16 +150,13 @@ class ElevationSceneView extends SceneView {
             if ( position.x >
                  ( sceneModel.elevationAreaBounds.centerX + 40 + 0.6 * ( sceneModel.seaLevel - position.y ) ) ) {
 
-              // hiker
-              imageIndex = 1;
+              imageKey = PointControllerImageKey.ON_OR_OVER_LAND;
             }
             else {
-
-              // paraglider
-              imageIndex = 0;
+              imageKey = PointControllerImageKey.IN_THE_AIR;
             }
           }
-          return imageIndex;
+          return imageKey;
         },
         connectorLine: false
       }
@@ -148,17 +165,23 @@ class ElevationSceneView extends SceneView {
     // Add the bird that the user can place in the elevation scene.
     elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
       sceneModel.permanentPointControllers[ 1 ],
-      [
-        new Image( birdInWater_png, { maxWidth: 65, center: Vector2.ZERO } ),
-        new Image( birdInAir_png, { maxWidth: 60, center: new Vector2( 0, -10 ) } )
-      ],
+      new Map( [
+        [
+          PointControllerImageKey.IN_THE_AIR,
+          new Image( birdInAir_png, { maxWidth: 60, center: new Vector2( 0, -10 ) } )
+        ],
+        [
+          PointControllerImageKey.UNDER_WATER,
+          new Image( birdInWater_png, { maxWidth: 65, center: Vector2.ZERO } )
+        ]
+      ] ),
       sceneModel.seaLevel,
-      [
-        new Vector2( 6, 11 ),
-        new Vector2( 5, 10 )
-      ],
+      new Map( [
+        [ PointControllerImageKey.IN_THE_AIR, new Vector2( 6, 11 ) ],
+        [ PointControllerImageKey.UNDER_WATER, new Vector2( 5, 10 ) ]
+      ] ),
       {
-        imageSelectionFunction: selectImageIndex,
+        imageSelectionFunction: getImageKey,
         connectorLine: false
       }
     ) );
@@ -166,17 +189,23 @@ class ElevationSceneView extends SceneView {
     // Add the fish that the user can place in the elevation scene.
     elevationPointControllersLayer.addChild( new ElevationPointControllerNode(
       sceneModel.permanentPointControllers[ 2 ],
-      [
-        new Image( fishInWater_png, { maxWidth: 60, center: Vector2.ZERO } ),
-        new Image( fishInAir_png, { maxWidth: 60, center: Vector2.ZERO } )
-      ],
+      new Map( [
+        [
+          PointControllerImageKey.IN_THE_AIR,
+          new Image( fishInAir_png, { maxWidth: 60, center: Vector2.ZERO } )
+        ],
+        [
+          PointControllerImageKey.UNDER_WATER,
+          new Image( fishInWater_png, { maxWidth: 60, center: Vector2.ZERO } )
+        ]
+      ] ),
       sceneModel.seaLevel,
-      [
-        new Vector2( 5, 0 ),
-        new Vector2( 5, 5 )
-      ],
+      new Map( [
+        [ PointControllerImageKey.IN_THE_AIR, new Vector2( 5, 5 ) ],
+        [ PointControllerImageKey.UNDER_WATER, new Vector2( 5, 0 ) ]
+      ] ),
       {
-        imageSelectionFunction: selectImageIndex,
+        imageSelectionFunction: getImageKey,
         connectorLine: false
       }
     ) );

@@ -21,6 +21,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Node, Path, Text } from '../../../../scenery/js/imports.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
+import { PointControllerImageKey } from './ElevationSceneView.js';
 
 // constants
 const IMAGE_DILATION = 20;
@@ -34,45 +35,65 @@ class ElevationPointControllerNode extends PointControllerNode {
 
   /**
    * @param {ElevationPointController} pointController
-   * @param {Image[]} imageList - an array of images used to depict this node
+   * @param {Map<PointControllerImageKey, Image>} imageMap - the set of images to use for this node, keyed to enable
+   *                                                         switching between them based on position
    * @param {number} seaLevel - the y value in view coordinates of the sea level
-   * @param {Vector2[]} textOffsets - the offsets for the centerLeft positions of the absolute value texts relative to the image rightCenter
+   * @param {Map<PointControllerImageKey, Vector2>} textOffsets - the offsets for the centerLeft positions of the
+   *                                                              absolute value texts relative to the image
+   *                                                              rightCenter
    * @param {Object} [options]
    * @public
    */
-  constructor( pointController, imageList, seaLevel, textOffsets, options ) {
+  constructor( pointController, imageMap, seaLevel, textOffsets, options ) {
 
     assert && assert( !options || !options.node, 'options should not include a node for this constructor' );
 
     // Dilate each image's touch area for easier interaction on touch screens.
-    imageList.forEach( image => { image.touchArea = image.localBounds.dilated( IMAGE_DILATION ); } );
+    imageMap.forEach( image => { image.touchArea = image.localBounds.dilated( IMAGE_DILATION ); } );
 
     // Create a node with all the images that will be used to depict this elevatable item.
-    const compositeImageNode = new Node( { children: imageList } );
+    const compositeImageNode = new Node( { children: Array.from( imageMap.values() ) } );
 
     options = merge( {
 
       // Pass in the parent node that includes all images as the node that will control the point.
       node: compositeImageNode,
 
-      // {function} - A function that takes a position and a currently selected image index and returns the index
-      // of the image that should be visible.  This enables fairly complex appearance changes to the point controller
-      // node.
-      imageSelectionFunction: ( position, currentlySelectedImageIndex ) => {
-        return currentlySelectedImageIndex;
+      // {function} - A function that takes a position and a currently selected image key and returns the key for  the
+      // image that should be visible.  This enables fairly complex appearance changes to the point controller node.
+      imageSelectionFunction: ( position, currentlySelectedImageKey ) => {
+        return currentlySelectedImageKey;
       }
     }, options );
 
-    let textOffset;
+    // Set the initial visibility of the images used for this node.
+    let currentlySelectedImageKey = PointControllerImageKey.IN_THE_AIR;
+    for ( const [ key, value ] of imageMap ) {
+      value.visible = key === currentlySelectedImageKey;
+    }
+
+    // offset used for positioning text
+    let textOffset = textOffsets.get( currentlySelectedImageKey );
 
     // Update the visibility of the images as the position changes.
     pointController.positionProperty.link( position => {
-      const currentlySelectedImageIndex = _.findIndex( imageList, image => image.visible );
-      const selectedImageIndex = options.imageSelectionFunction( position, currentlySelectedImageIndex );
-      imageList.forEach( ( image, index ) => {
-        image.visible = selectedImageIndex === index;
-      } );
-      textOffset = textOffsets[ selectedImageIndex ];
+
+      const keyForImageToShow = options.imageSelectionFunction( position, currentlySelectedImageKey );
+
+      if ( keyForImageToShow !== currentlySelectedImageKey ) {
+
+        // Check that the needed information was provided at construction.
+        assert && assert( imageMap.has( keyForImageToShow ), 'imageMap does not contain an entry for this key' );
+        assert && assert( textOffsets.has( keyForImageToShow ), 'textOffsets does not contain an entry for this key' );
+
+        // Update image visibility and offsets.
+        imageMap.get( currentlySelectedImageKey ).visible = false;
+        imageMap.get( keyForImageToShow ).visible = true;
+        textOffset = textOffsets.get( keyForImageToShow );
+
+        // Update the selected image for the next time through.
+        currentlySelectedImageKey = keyForImageToShow;
+      }
     } );
 
     super( pointController, options );
