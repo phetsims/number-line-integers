@@ -1,4 +1,4 @@
-// Copyright 2019-2023, University of Colorado Boulder
+// Copyright 2019-2024, University of Colorado Boulder
 
 /**
  * ComparisonStatementAccordionBox is an accordion box that contains a "comparison statement", which is a mathematical
