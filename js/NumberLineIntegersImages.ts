@@ -5,7 +5,6 @@
  */
 /* eslint-disable */
 import LocalizedImageProperty from '../../joist/js/i18n/LocalizedImageProperty.js';
-import numberLineIntegers from './numberLineIntegers.js';
 import africaExploreHomeScreenIcon_png from '../images/africa/africaExploreHomeScreenIcon_png.js';
 import africaExploreScreenNavbarIcon_png from '../images/africa/africaExploreScreenNavbarIcon_png.js';
 import africaGirlHiking_png from '../images/africa/africaGirlHiking_png.js';
@@ -36,6 +35,7 @@ import usaExploreScreenNavbarIcon_png from '../images/usa/usaExploreScreenNavbar
 import usaGirlHiking_png from '../images/usa/usaGirlHiking_png.js';
 import usaGirlInAir_png from '../images/usa/usaGirlInAir_png.js';
 import usaGirlInWater_png from '../images/usa/usaGirlInWater_png.js';
+import numberLineIntegers from './numberLineIntegers.js';
 
 const NumberLineIntegersImages = {
   exploreHomeScreenIconImageProperty: new LocalizedImageProperty( 'exploreHomeScreenIcon', {
