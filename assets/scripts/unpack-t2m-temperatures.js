@@ -12,7 +12,7 @@
  * @author John Blanco (PhET Interactive Simulations)
  */
 
-/* eslint-env node */
+/* global require */
 
 // modules
 const fs = require( 'fs' );
@@ -19307,7 +19307,7 @@ VALUES_TO_BE_ADJUSTED.forEach( ( value, index ) => {
   
 
   // adjust the value and add it to the output string
-  output += Math.round( value * SCALE_FACTOR + OFFSET_FACTOR ); // eslint-disable-line bad-sim-text
+  output += Math.round( value * SCALE_FACTOR + OFFSET_FACTOR ); // eslint-disable-line phet/bad-sim-text
 
   // add a comma unless it's the last item
   if ( index !== VALUES_TO_BE_ADJUSTED.length - 1 ) {
