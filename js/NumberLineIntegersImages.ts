@@ -1,10 +1,10 @@
 // Copyright 2024, University of Colorado Boulder
-
+/* eslint-disable */
+/* @formatter:off */
 /**
  * Auto-generated from modulify, DO NOT manually modify.
  */
-/* eslint-disable */
-/* @formatter:off */
+ 
 import LocalizedImageProperty from '../../joist/js/i18n/LocalizedImageProperty.js';
 import numberLineIntegers from './numberLineIntegers.js';
 import africaExploreHomeScreenIcon_png from '../images/africa/africaExploreHomeScreenIcon_png.js';
