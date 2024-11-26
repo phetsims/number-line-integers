@@ -107,7 +107,6 @@ class NLIGenericScreenView extends ScreenView {
     // reset all button
     const resetAllButton = new ResetAllButton( {
       listener: () => {
-        this.interruptSubtreeInput();
         model.reset();
         comparisonStatementAccordionBox.reset();
       },
