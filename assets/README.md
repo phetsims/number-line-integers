@@ -31,8 +31,8 @@ Steps to Create the Map Images
 ------------------------------
 
 + Create and download the maps using the CDSToolbox and the Python code. The script for retrieving a map for a single
-  month is in the `assets/scripts` directory and is named `get-nli-map.py`. The CDS Toolbox interface allows a The
-  script needs to be run once for each month.
+  month is in the `assets/scripts` directory and is named `get-nli-map.py`. The script needs to be run once for each
+  month.
 + Download each image, crop it, make the portions outside the map transparent (Photoshop was used to do this for the
   original images)
 
@@ -56,5 +56,5 @@ Steps to Get the Temperature Data
   you'll need to open that file and cut and paste the unpacked temperature values into the
   `airTemperatureNearSurfaceValues` field in `temperatureDataSet.js`.
 + The temperature data was compressed in order to make the file size more compact. Please read through the information
-  in temperatureDataSet.js to see how this was done and to figure out how to repeat the process if an when necessary.
+  in temperatureDataSet.js to see how this was done and to figure out how to repeat the process if and when necessary.
 + At this point, the temperature data set should be fully updated, and can be tested in the context of the sim.
