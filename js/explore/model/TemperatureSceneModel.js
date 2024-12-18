@@ -150,7 +150,7 @@ class TemperatureSceneModel extends SceneModel {
   /**
    * Get the temperature at the specified position.
    * @param {Vector2} position - model coordinates for where to get the temperature
-   * @returns {number|null} - the temperature in degrees Kelvin if the position is over the map, null otherwise
+   * @returns {number|null} - the temperature in degrees Celsius if the position is over the map, null otherwise
    * @public
    */
   getTemperatureAtPosition( position ) {
