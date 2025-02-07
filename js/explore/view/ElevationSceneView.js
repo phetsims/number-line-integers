@@ -15,7 +15,11 @@ import PointControllerNode from '../../../../number-line-common/js/common/view/P
 import Enumeration from '../../../../phet-core/js/Enumeration.js';
 import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Image, ManualConstraint, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
 import elevationBackground_png from '../../../images/elevationBackground_png.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersImages from '../../NumberLineIntegersImages.js';

@@ -12,7 +12,7 @@ import LockToNumberLine from '../../../../number-line-common/js/common/model/Loc
 import NumberLinePoint from '../../../../number-line-common/js/common/model/NumberLinePoint.js';
 import PointController from '../../../../number-line-common/js/common/model/PointController.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
-import { Color } from '../../../../scenery/js/imports.js';
+import Color from '../../../../scenery/js/util/Color.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import BankAccount from './BankAccount.js';

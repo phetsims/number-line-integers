@@ -18,7 +18,8 @@ import NumberLinePoint from '../../../../number-line-common/js/common/model/Numb
 import PointController from '../../../../number-line-common/js/common/model/PointController.js';
 import TemperatureToColorMapper from '../../../../number-line-common/js/explore/model/TemperatureToColorMapper.js';
 import merge from '../../../../phet-core/js/merge.js';
-import { Color, PaintColorProperty } from '../../../../scenery/js/imports.js';
+import Color from '../../../../scenery/js/util/Color.js';
+import PaintColorProperty from '../../../../scenery/js/util/PaintColorProperty.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 
 // constants

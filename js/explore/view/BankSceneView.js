@@ -13,7 +13,10 @@ import MoneyJarDecoration from '../../../../number-line-common/js/explore/model/
 import MoneyJarNode from '../../../../number-line-common/js/explore/view/MoneyJarNode.js';
 import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox, ManualConstraint, Node, Text } from '../../../../scenery/js/imports.js';
+import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
+import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
 import ABSwitch from '../../../../sun/js/ABSwitch.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';

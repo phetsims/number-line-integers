@@ -13,7 +13,9 @@ import birdInAir_png from '../../../../number-line-common/images/birdInAir_png.j
 import MoneyJarDecoration from '../../../../number-line-common/js/explore/model/MoneyJarDecoration.js';
 import MoneyJarNode from '../../../../number-line-common/js/explore/view/MoneyJarNode.js';
 import ThermometerNode from '../../../../scenery-phet/js/ThermometerNode.js';
-import { Color, Image, Rectangle } from '../../../../scenery/js/imports.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import Color from '../../../../scenery/js/util/Color.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NLIScene from '../model/NLIScene.js';
 

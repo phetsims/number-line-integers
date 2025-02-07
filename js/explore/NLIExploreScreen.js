@@ -9,7 +9,7 @@
 import Property from '../../../axon/js/Property.js';
 import Screen from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
-import { Image } from '../../../scenery/js/imports.js';
+import Image from '../../../scenery/js/nodes/Image.js';
 import numberLineIntegers from '../numberLineIntegers.js';
 import NumberLineIntegersImages from '../NumberLineIntegersImages.js';
 import NumberLineIntegersStrings from '../NumberLineIntegersStrings.js';

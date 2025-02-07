@@ -16,7 +16,8 @@ import PointControllerNode from '../../../../number-line-common/js/common/view/P
 import SpatializedNumberLineNode from '../../../../number-line-common/js/common/view/SpatializedNumberLineNode.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Node, Rectangle } from '../../../../scenery/js/imports.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import ComparisonStatementAccordionBox from '../../common/view/ComparisonStatementAccordionBox.js';
 import numberLineIntegers from '../../numberLineIntegers.js';

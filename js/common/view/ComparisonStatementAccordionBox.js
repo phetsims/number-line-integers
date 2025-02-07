@@ -10,7 +10,7 @@
 import NLCConstants from '../../../../number-line-common/js/common/NLCConstants.js';
 import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';

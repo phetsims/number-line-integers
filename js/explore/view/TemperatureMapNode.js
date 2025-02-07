@@ -6,7 +6,8 @@
  * @author Arnab Purkayastha
  */
 
-import { Image, Node } from '../../../../scenery/js/imports.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import worldTemperaturesMonthlyAveragedApr2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedApr2018_jpg.js';
 import worldTemperaturesMonthlyAveragedAug2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedAug2018_jpg.js';
 import worldTemperaturesMonthlyAveragedDec2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedDec2018_jpg.js';
