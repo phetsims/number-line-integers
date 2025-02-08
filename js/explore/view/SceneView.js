@@ -1,4 +1,4 @@
-// Copyright 2019-2023, University of Colorado Boulder
+// Copyright 2019-2025, University of Colorado Boulder
 
 /**
  * SceneView is a base class for scene views in the "Explore" screen, includes check boxes, comparison statement, and
