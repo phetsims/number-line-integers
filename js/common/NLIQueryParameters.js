@@ -6,6 +6,7 @@
  * @author Arnab Purkayastha
  */
 
+import { QueryStringMachine } from '../../../query-string-machine/js/QueryStringMachineModule.js';
 import numberLineIntegers from '../numberLineIntegers.js';
 
 const NLIQueryParameters = QueryStringMachine.getAll( {
