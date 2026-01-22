@@ -1,4 +1,4 @@
-// Copyright 2019, University of Colorado Boulder
+// Copyright 2019-2020, University of Colorado Boulder
 
 /**
  * AccountBalanceControllerNode is a Scenery node that is used to add and remove money from a property that represents

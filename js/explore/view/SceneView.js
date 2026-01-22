@@ -1,4 +1,4 @@
-// Copyright 2019, University of Colorado Boulder
+// Copyright 2019-2020, University of Colorado Boulder
 
 /**
  * base class for scene views in the "Explore" screen, includes check boxes, comparison statement, and some other UI

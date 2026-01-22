@@ -1,4 +1,4 @@
-// Copyright 2019, University of Colorado Boulder
+// Copyright 2019-2020, University of Colorado Boulder
 
 /**
  * SpatializedNumberLineNode is a Scenery node that presents a number line that is mapped into 2D space.
