@@ -33,7 +33,7 @@
     "branch": "HEAD"
   },
   "number-line-integers": {
-    "sha": "df39bf0486b8fac0b5130ae8760fc827d1a10dba",
+    "sha": "72a4770097e47595dd82ba081fda90d282da5e1a",
     "branch": "1.2"
   },
   "perennial-alias": {
@@ -57,7 +57,7 @@
     "branch": "HEAD"
   },
   "phetcommon": {
-    "sha": "e1ae16a968f9e8225edf696698df5379fc814e87",
+    "sha": "ed7520150398d744c5338666f6a1d566ba755b5d",
     "branch": "HEAD"
   },
   "phetmarks": {
