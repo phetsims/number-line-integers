@@ -20,7 +20,6 @@ import worldTemperaturesMonthlyAveragedMay2018_jpg from '../../../images/worldTe
 import worldTemperaturesMonthlyAveragedNov2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedNov2018_jpg.js';
 import worldTemperaturesMonthlyAveragedOct2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedOct2018_jpg.js';
 import worldTemperaturesMonthlyAveragedSep2018_jpg from '../../../images/worldTemperaturesMonthlyAveragedSep2018_jpg.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 
 // constants
 const TEMPERATURE_IMAGES_MONTHS = [
@@ -71,5 +70,4 @@ class TemperatureMapNode extends Node {
   }
 }
 
-numberLineIntegers.register( 'TemperatureMapNode', TemperatureMapNode );
 export default TemperatureMapNode;

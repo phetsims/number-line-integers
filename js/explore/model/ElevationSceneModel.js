@@ -15,7 +15,6 @@ import PointController from '../../../../number-line-common/js/common/model/Poin
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import NLIColors from '../../common/NLIColors.js';
 import NLIConstants from '../../common/NLIConstants.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 import ElevationPointController from './ElevationPointController.js';
 import SceneModel from './SceneModel.js';
 
@@ -175,5 +174,4 @@ class ElevationSceneModel extends SceneModel {
   }
 }
 
-numberLineIntegers.register( 'ElevationSceneModel', ElevationSceneModel );
 export default ElevationSceneModel;

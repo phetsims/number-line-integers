@@ -12,7 +12,6 @@ import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.j
 import Node from '../../../../scenery/js/nodes/Node.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import NLIConstants from '../../common/NLIConstants.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 import NLIScene from '../model/NLIScene.js';
 import BankSceneView from './BankSceneView.js';
 import ElevationSceneView from './ElevationSceneView.js';
@@ -103,5 +102,4 @@ class NLIExploreScreenView extends ScreenView {
   }
 }
 
-numberLineIntegers.register( 'NLIExploreScreenView', NLIExploreScreenView );
 export default NLIExploreScreenView;

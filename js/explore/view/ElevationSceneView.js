@@ -21,7 +21,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import elevationBackground_png from '../../../images/elevationBackground_png.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersImages from '../../NumberLineIntegersImages.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ElevationPointControllerNode from './ElevationPointControllerNode.js';
@@ -251,5 +250,4 @@ class ElevationSceneView extends SceneView {
   }
 }
 
-numberLineIntegers.register( 'ElevationSceneView', ElevationSceneView );
 export default ElevationSceneView;

@@ -9,7 +9,6 @@
 import Emitter from '../../../../axon/js/Emitter.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 
 class BankAccount {
 
@@ -46,5 +45,4 @@ class BankAccount {
   }
 }
 
-numberLineIntegers.register( 'BankAccount', BankAccount );
 export default BankAccount;

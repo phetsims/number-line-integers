@@ -12,7 +12,6 @@ import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import ComparisonStatementNode from './ComparisonStatementNode.js';
 
@@ -60,5 +59,4 @@ class ComparisonStatementAccordionBox extends AccordionBox {
   }
 }
 
-numberLineIntegers.register( 'ComparisonStatementAccordionBox', ComparisonStatementAccordionBox );
 export default ComparisonStatementAccordionBox;

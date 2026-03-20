@@ -12,7 +12,6 @@ import LockToNumberLine from '../../../../number-line-common/js/common/model/Loc
 import NumberLinePoint from '../../../../number-line-common/js/common/model/NumberLinePoint.js';
 import PointController from '../../../../number-line-common/js/common/model/PointController.js';
 import merge from '../../../../phet-core/js/merge.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 
 class ElevationPointController extends PointController {
 
@@ -91,5 +90,4 @@ class ElevationPointController extends PointController {
 }
 
 
-numberLineIntegers.register( 'ElevationPointController', ElevationPointController );
 export default ElevationPointController;

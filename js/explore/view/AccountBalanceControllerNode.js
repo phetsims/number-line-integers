@@ -20,7 +20,6 @@ import Color from '../../../../scenery/js/util/Color.js';
 import RoundPushButton from '../../../../sun/js/buttons/RoundPushButton.js';
 import coinInHand_png from '../../../images/coinInHand_png.js';
 import coinInSlot_png from '../../../images/coinInSlot_png.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 
 // constants
@@ -162,5 +161,4 @@ class AccountBalanceControllerNode extends VBox {
   }
 }
 
-numberLineIntegers.register( 'AccountBalanceControllerNode', AccountBalanceControllerNode );
 export default AccountBalanceControllerNode;

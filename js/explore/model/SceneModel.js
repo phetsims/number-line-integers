@@ -11,7 +11,6 @@ import Range from '../../../../dot/js/Range.js';
 import SpatializedNumberLine from '../../../../number-line-common/js/common/model/SpatializedNumberLine.js';
 import merge from '../../../../phet-core/js/merge.js';
 import NLIConstants from '../../common/NLIConstants.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 
 // constants
 const SCENE_BOUNDS = NLIConstants.NLI_LAYOUT_BOUNDS; // bounds for the scenes match the layout bounds
@@ -96,5 +95,4 @@ class SceneModel {
   }
 }
 
-numberLineIntegers.register( 'SceneModel', SceneModel );
 export default SceneModel;

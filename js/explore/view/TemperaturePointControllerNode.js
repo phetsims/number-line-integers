@@ -22,7 +22,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import NLIConstants from '../../common/NLIConstants.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 
 // constants
@@ -169,5 +168,4 @@ class TemperaturePointControllerNode extends PointControllerNode {
   }
 }
 
-numberLineIntegers.register( 'TemperaturePointControllerNode', TemperaturePointControllerNode );
 export default TemperaturePointControllerNode;

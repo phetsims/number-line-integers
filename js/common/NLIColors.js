@@ -15,7 +15,6 @@
  */
 
 import Color from '../../../scenery/js/util/Color.js';
-import numberLineIntegers from '../numberLineIntegers.js';
 
 
 const CAVColors = {
@@ -36,5 +35,4 @@ const CAVColors = {
 
 };
 
-numberLineIntegers.register( 'CAVColors', CAVColors );
 export default CAVColors;

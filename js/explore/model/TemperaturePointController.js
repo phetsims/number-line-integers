@@ -20,7 +20,6 @@ import TemperatureToColorMapper from '../../../../number-line-common/js/explore/
 import merge from '../../../../phet-core/js/merge.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import PaintColorProperty from '../../../../scenery/js/util/PaintColorProperty.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 
 // constants
 const TEMPERATURE_RANGE_ON_MAP = new Range( -60, 50 ); // in Celsius, must match range used to make map images
@@ -161,5 +160,4 @@ class TemperaturePointController extends PointController {
   }
 }
 
-numberLineIntegers.register( 'TemperaturePointController', TemperaturePointController );
 export default TemperaturePointController;

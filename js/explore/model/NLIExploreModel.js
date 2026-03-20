@@ -5,7 +5,6 @@
  */
 
 import EnumerationDeprecatedProperty from '../../../../axon/js/EnumerationDeprecatedProperty.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 import BankSceneModel from './BankSceneModel.js';
 import ElevationSceneModel from './ElevationSceneModel.js';
 import NLIScene from './NLIScene.js';
@@ -50,5 +49,4 @@ class NLIExploreModel {
   }
 }
 
-numberLineIntegers.register( 'NLIExploreModel', NLIExploreModel );
 export default NLIExploreModel;

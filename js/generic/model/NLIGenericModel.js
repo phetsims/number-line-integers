@@ -15,7 +15,6 @@ import SpatializedNumberLine from '../../../../number-line-common/js/common/mode
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import NLIConstants from '../../common/NLIConstants.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 
 // constants
 const NL_Y_OFFSET = 30; // offset of the number line from the center of the bounds, empirically determined
@@ -217,5 +216,4 @@ class NLIGenericModel {
 // static properties
 NLIGenericModel.NUMBER_LINE_RANGES = NUMBER_LINE_RANGES;
 
-numberLineIntegers.register( 'NLIGenericModel', NLIGenericModel );
 export default NLIGenericModel;

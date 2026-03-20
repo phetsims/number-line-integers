@@ -33,7 +33,6 @@ import ColorProperty from '../../../../scenery/js/util/ColorProperty.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import NLIColors from '../../common/NLIColors.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 
 // constants
@@ -360,5 +359,4 @@ class CoinNode extends Circle {
   }
 }
 
-numberLineIntegers.register( 'BankPointControllerNode', BankPointControllerNode );
 export default BankPointControllerNode;

@@ -21,7 +21,6 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 
 // constants
 const COMPARISON_STATEMENT_FONT = new PhetFont( 26 );
@@ -448,5 +447,4 @@ class PointValueNode extends Node {
   }
 }
 
-numberLineIntegers.register( 'ComparisonStatementNode', ComparisonStatementNode );
 export default ComparisonStatementNode;

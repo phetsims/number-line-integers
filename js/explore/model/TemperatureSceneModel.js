@@ -17,7 +17,6 @@ import LockToNumberLine from '../../../../number-line-common/js/common/model/Loc
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import NLIQueryParameters from '../../common/NLIQueryParameters.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import reverseRobinsonProjector from './reverseRobinsonProjector.js';
 import SceneModel from './SceneModel.js';
@@ -332,5 +331,4 @@ function getNumberLineZeroPosition( range ) {
   );
 }
 
-numberLineIntegers.register( 'TemperatureSceneModel', TemperatureSceneModel );
 export default TemperatureSceneModel;

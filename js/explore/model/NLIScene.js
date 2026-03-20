@@ -7,8 +7,6 @@
  */
 
 import EnumerationDeprecated from '../../../../phet-core/js/EnumerationDeprecated.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 
 const NLIScene = EnumerationDeprecated.byKeys( [ 'ELEVATION', 'BANK', 'TEMPERATURE' ] );
-numberLineIntegers.register( 'NLIScene', NLIScene );
 export default NLIScene;

@@ -16,7 +16,6 @@ import ThermometerNode from '../../../../scenery-phet/js/ThermometerNode.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Color from '../../../../scenery/js/util/Color.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 import NLIScene from '../model/NLIScene.js';
 
 // constants
@@ -69,5 +68,4 @@ const sceneIconFactory = {
   }
 };
 
-numberLineIntegers.register( 'sceneIconFactory', sceneIconFactory );
 export default sceneIconFactory;

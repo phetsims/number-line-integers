@@ -10,7 +10,6 @@ import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import ComboBox from '../../../../sun/js/ComboBox.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 
 const januaryStringProperty = NumberLineIntegersStrings.januaryStringProperty;
@@ -73,5 +72,4 @@ class MonthsComboBox extends ComboBox {
   }
 }
 
-numberLineIntegers.register( 'MonthsComboBox', MonthsComboBox );
 export default MonthsComboBox;

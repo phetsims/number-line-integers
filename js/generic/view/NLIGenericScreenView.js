@@ -20,7 +20,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import ComparisonStatementAccordionBox from '../../common/view/ComparisonStatementAccordionBox.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import NLIGenericModel from '../model/NLIGenericModel.js';
 
@@ -135,5 +134,4 @@ class NLIGenericScreenView extends ScreenView {
   }
 }
 
-numberLineIntegers.register( 'NLIGenericScreenView', NLIGenericScreenView );
 export default NLIGenericScreenView;

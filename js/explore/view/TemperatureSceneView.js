@@ -22,7 +22,6 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import Panel from '../../../../sun/js/Panel.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import NLIConstants from '../../common/NLIConstants.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 import TemperatureSceneModel from '../model/TemperatureSceneModel.js';
 import MonthsComboBox from './MonthsComboBox.js';
@@ -285,5 +284,4 @@ class TemperatureSceneView extends SceneView {
   }
 }
 
-numberLineIntegers.register( 'TemperatureSceneView', TemperatureSceneView );
 export default TemperatureSceneView;

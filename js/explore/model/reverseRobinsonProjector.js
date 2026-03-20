@@ -8,8 +8,6 @@
  * @author John Blanco (PhET Interactive Simulations)
  */
 
-import numberLineIntegers from '../../numberLineIntegers.js';
-
 const reverseRobinsonProjector = {
 
   /**
@@ -100,5 +98,4 @@ const nValues = [
   -0.45126573496
 ];
 
-numberLineIntegers.register( 'reverseRobinsonProjector', reverseRobinsonProjector );
 export default reverseRobinsonProjector;

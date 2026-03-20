@@ -9,7 +9,6 @@
 
 import ScreenView from '../../../joist/js/ScreenView.js';
 import EnumerationDeprecated from '../../../phet-core/js/EnumerationDeprecated.js';
-import numberLineIntegers from '../numberLineIntegers.js';
 
 const NLIConstants = {
 
@@ -27,5 +26,4 @@ const NLIConstants = {
   EXPLORE_SCREEN_CONTROLS_LEFT_SIDE_INSET: 175
 };
 
-numberLineIntegers.register( 'NLIConstants', NLIConstants );
 export default NLIConstants;

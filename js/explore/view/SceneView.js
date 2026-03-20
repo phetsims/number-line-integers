@@ -16,7 +16,6 @@ import ResetButton from '../../../../scenery-phet/js/buttons/ResetButton.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import NLIConstants from '../../common/NLIConstants.js';
 import ComparisonStatementAccordionBox from '../../common/view/ComparisonStatementAccordionBox.js';
-import numberLineIntegers from '../../numberLineIntegers.js';
 import NumberLineIntegersStrings from '../../NumberLineIntegersStrings.js';
 
 // constants
@@ -154,5 +153,4 @@ class SceneView extends Node {
   }
 }
 
-numberLineIntegers.register( 'SceneView', SceneView );
 export default SceneView;
