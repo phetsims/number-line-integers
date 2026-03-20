@@ -81,4 +81,6 @@ const NumberLineIntegersImages = {
   } )
 };
 
+numberLineIntegers.register( 'NumberLineIntegersImages', NumberLineIntegersImages );
+
 export default NumberLineIntegersImages;

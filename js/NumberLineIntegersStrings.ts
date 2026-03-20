@@ -63,4 +63,6 @@ type StringsType = {
 
 const NumberLineIntegersStrings = getStringModule( 'NUMBER_LINE_INTEGERS' ) as StringsType;
 
+numberLineIntegers.register( 'NumberLineIntegersStrings', NumberLineIntegersStrings );
+
 export default NumberLineIntegersStrings;
